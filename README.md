@@ -46,6 +46,7 @@ Manual deletion can be done by deleting the configuration file and the file for 
 If you want to go to the path where those files exist, you can access them from the uninstall menu accessible from batch.
 Then delete the BATCH process.
 
-
-*chenge log is located in batch*
-
+## - **Chenge logs** -
+### - 1.12βb8 (minor update) 🔥
+#### chenged :
+- *First publish! yay*
