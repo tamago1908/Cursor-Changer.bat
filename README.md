@@ -5,7 +5,7 @@
 
 **IF YOU WANT USE THIS BATCH WITH ENGLISH, WAIT UPDATE!**
 
-## - **System Requirements** -
+## - **SYSTEM REQUIREMENTS** -
 **This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
 
 ## - **WHAT IS THIS?** -
@@ -14,7 +14,7 @@ We are pursuing what can be done with BATCH processing etc.
 
 `However, if you ask me why You make it, to tell the truth, I don't know either lol.`
 
-## - **Features** -
+## - **FREATURES** -
 Ability to change cursors, brand new CUI-based UI, tons of easter eggs, implement features in ways never done before, change themes, etc.
 and much more!
 
