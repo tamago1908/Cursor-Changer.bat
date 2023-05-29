@@ -47,6 +47,6 @@ If you want to go to the path where those files exist, you can access them from 
 Then delete the BATCH process.
 
 ## - **Chenge logs** -
-### - 1.12βb8 (minor update) 🔥
+### - 1.12β8b (minor update) 🔥
 #### chenged :
 - *First publish! yay*
