@@ -1,35 +1,38 @@
 # ***! WANING !***
 **FIRST OF ALL, ITS STILL BETA AND THIS VERSION IS STILL** ***NOT SUPPORT ANOTHER LANGUAGE*** (like english)
 
-**SO** ***THIS BATCH IS SUPPORT ONLY JAPANESE AT LEAST NOW!!***
+**SO THIS BATCH IS** ***SUPPORT ONLY JAPANESE*** **AT LEAST NOW!!**
 
 **IF YOU WANT USE THIS BATCH WITH ENGLISH, WAIT UPDATE!**
-
-## - **SYSTEM REQUIREMENTS** -
-**This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
 
 ## - **WHAT IS THIS?** -
 Cursor Chenger was created entirely with batch only.
 We are pursuing what can be done with BATCH processing etc.
 
+This Batch is similar to a *simplified OS*, if you will.
+At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
+
 `However, if you ask me why You make it, to tell the truth, I don't know either lol.`
+
+## - **SYSTEM REQUIREMENTS** -
+**This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
 
 ## - **FREATURES** -
 Ability to change cursors, brand new CUI-based UI, tons of easter eggs, implement features in ways never done before, change themes, etc.
 and much more!
 
-### ***In creating this BATCH process, I were inspired by the following.***
+### ***In creating this BATCH, I were inspired by the following.***
 
-- *Undertale and tobyfox*
+- *[Tobyfox](https://en.wikipedia.org/wiki/Toby_Fox) (Undertale)*
 
-- *BSOD (Blue screan of death)*
+- *[BSOD](https://en.wikipedia.org/wiki/Blue_screen_of_death) (Blue screan of death)*
 
-- *Debios (batch OS)*
+- *[Debios](https://github.com/debios/debios) (Batch OS)*
 
-- *SAO (Japan Anime, Sword Art Online)*
+- *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
 
 ## - **HOW TO USE THIS BAT** -
-just click Cursor chenger 1.12β8b.bat.
+Download .zip file, and just click "**Cursor chenger 1.12β8b.bat**".
 then have fun!
 
 ## - **PRECAUTIONS** -
