@@ -7,7 +7,7 @@
 
 ## - **WHAT IS THIS?** -
 Cursor Chenger was created entirely with batch only.
-We are pursuing what can be done with BATCH processing etc.
+Im are pursuing what can be done with BATCH processing etc.
 
 This Batch is similar to a *simplified OS*, if you will.
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
