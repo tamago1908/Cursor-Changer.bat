@@ -59,4 +59,4 @@ Then delete the BATCH process.
 - *Setting load code (more stable)*
 - *Added description about ctrl in settings*
 #### fixed :
-- ***Fixed all bugs in the issues***
+- ***Fixed all bugs*** *in the issues*
