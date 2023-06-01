@@ -5,6 +5,10 @@
 
 **IF YOU WANT USE THIS BATCH WITH ENGLISH, WAIT UPDATE!**
 
+Cursor Chenger is currently in the beta version of 1.12.
+Once the beta version is finished, it will officially be 1.12.
+The 1.12 version will be translated into English. (Of course, there will be many other changes as well.)
+
 ## - **WHAT IS THIS?** -
 Cursor Chenger was created entirely with batch only.
 Im are pursuing what can be done with BATCH processing etc.
