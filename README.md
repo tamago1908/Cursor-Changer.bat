@@ -50,6 +50,9 @@ If you want to go to the path where those files exist, you can access them from 
 Then delete the BATCH process.
 
 ## - **Chenge logs** -
-### - 1.12β8b (minor update) 🔥
+### - 1.12β9 (beta major update) 🔥
 #### chenged :
-- *First publish! yay*
+- *Setting load code (more stable)*
+- *Added description about ctrl in settings*
+#### fixed :
+- ***Fixed all bugs in the issues***
