@@ -36,7 +36,7 @@ and much more!
 - *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
 
 ## - **HOW TO USE THIS BAT** -
-Download .zip file, and just click "**Cursor chenger 1.12β8b.bat**".
+Download .zip file, and just click "**Cursor chenger 1.12.bat**".
 then have fun!
 
 ## - **PRECAUTIONS** -
