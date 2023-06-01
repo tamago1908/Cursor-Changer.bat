@@ -21,8 +21,11 @@ At the very least, it is by far larger and more complex than the Batch around th
 ## - **SYSTEM REQUIREMENTS** -
 **This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
 and if you want run with good performance, you should Prepare good pc.
-At a minimum, you will need a CPU that can run some windows 10. (In CineBench R15, over 100).
-Recommended requirements are 2 cores, 4 threads, and 2.0 Ghz or higher. (230 or higher in CineBench R15)
+
+At a minimum, you will need a CPU that can run some windows 10. (100 or higher In CineBench R15).
+Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (230 or higher in CineBench R15)
+
+Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
 
 ## - **FREATURES** -
 Ability to change cursors, brand new CUI-based UI, tons of easter eggs, implement features in ways never done before, change themes, etc.
