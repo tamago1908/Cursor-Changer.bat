@@ -62,7 +62,7 @@ Then delete the BATCH process.
 ## - **Chenge logs** -
 ### - 1.12β9 (beta major update) 🔥
 #### chenged :
-- *Setting load code (more stable)*
+- *settingloader code Improvements. (It is now more stable and starts up about 1.5 times faster.)*
 - *Added description about ctrl in settings*
 #### fixed :
-- ***Fixed all bugs*** *in the issues*
+- ***Fixed all bugs*** *on the issues*
