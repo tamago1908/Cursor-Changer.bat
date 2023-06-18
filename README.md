@@ -1,15 +1,13 @@
 # ***! WANING !***
-**FIRST OF ALL, AT LEAST NOW IS STILL** ***NOT SUPPORT ANOTHER LANGUAGE*** (like english)
 
-**SO THIS BATCH IS** ***SUPPORT ONLY JAPANESE*** **AT LEAST NOW!!**
-
-**IF YOU WANT USE THIS BATCH WITH ENGLISH, WAIT UPDATE!**
+**The beta version of the English version is now available!
+However, it may still be incomplete or have translation errors. If so, please report them in an issue!**
 
 Cursor Chenger is currently in the beta version of 1.12.
 Once the beta version is finished, it will officially be 1.12.
 The 1.12 version will be translated into English. (Of course, there will be many other changes as well.)
 
-> *Translate progress :* ***35%***
+> *Translate progress :* ***95%***
 
 ## - **WHAT IS THIS?** -
 Cursor Chenger was created entirely with batch only.
@@ -62,7 +60,15 @@ If you want to go to the path where those files exist, you can access them from 
 Then delete the BATCH process.
 
 ## - **Chenge logs** -
-### - 1.12β9 (beta major update) 🔥
+
+### - 1.12β10 (beta major update) 🔥
+#### added :
+- **English translation!**
+#### fixed :
+- *some bugs*
+
+
+### - 1.12β9 (beta major update) 
 #### chenged :
 - *settingloader code Improvements. (It is now more stable and starts up about 1.5 times faster.)*
 - *Added description about ctrl in settings*
