@@ -59,7 +59,7 @@ Then delete the BATCH process.
 ## - **Chenge logs** -
 
 ### - 1.12 (major update) 🔥
-> btw this update is VERYYYY BIG, 78.4KB(1.11a) -> **133KB**(1.12). *wtf*? (That doesn't mean that there are no more features we want to add. There are still some, there are about 15 or 20 more. Probably more in the future.)
+> btw this update is VERYYYY BIG, (1.11a)78.4KB -> (1.12)**133KB**. *wtf*? (That doesn't mean that there are no more features we want to add. There are still some, there are about 15 or 20 more. Probably more in the future.)
 #### Added :
 - **English translation!**
 - **New dogchack!**
