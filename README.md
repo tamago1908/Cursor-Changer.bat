@@ -1,13 +1,4 @@
-# ***! WANING !***
-
-**The beta version of the English version is now available!
-However, it may still be incomplete or have translation errors. If so, please report them in an issue!**
-
-Cursor Chenger is currently in the beta version of 1.12.
-Once the beta version is finished, it will officially be 1.12.
-The 1.12 version will be translated into English. (Of course, there will be many other changes as well.)
-
-> *Translate progress :* ***95%***
+> *Translate progress :* ***98%***
 
 ## - **WHAT IS THIS?** -
 Cursor Chenger was created entirely with batch only.
@@ -15,6 +6,8 @@ Im are pursuing what can be done with BATCH processing etc.
 
 This Batch is similar to a *simplified OS*, if you will.
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
+
+Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date. It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch. No additional files or components are required. (At most you will need a PC with windows 10 1511 or later).
 
 > However, if you ask me why You make it, to tell the truth, I don't know either lol.
 
@@ -26,6 +19,8 @@ At a minimum, you will need a CPU that can run some windows 10. (100 or higher I
 Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (230 or higher in CineBench R15)
 
 Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
+
+Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and we are currently looking for a solution.
 
 ## - **FREATURES** -
 Ability to change cursors, brand new CUI-based UI, tons of easter eggs, implement features in ways never done before, change themes, etc.
@@ -61,7 +56,32 @@ Then delete the BATCH process.
 
 ## - **Chenge logs** -
 
-### - 1.12β10 (beta major update) 🔥
+### - 1.12 (major update) 🔥
+> btw this update is VERYYYY BIG, 78.4KB -> **133KB**. *wtf*? (That doesn't mean that there are no more features we want to add. There are still some, there are about 15 or 20 more. Probably more in the future.)
+#### Added :
+- **English translation!**
+- **New dogchack!**
+- **New setting UI!**
+- **New Boot Screan!** (you can disable it in setting)
+- **windows version check!**
+- **setting fixer!**
+- *Some functions in uninstall manu*
+- *batch is now disable miximize button*
+- *bat argments*
+- *new easteregg*
+- *debug commands*
+- ***AND MORE!***
+#### Changed :
+- **debug setting is now gone**
+- **first start massage**
+- **setting apply txt**
+#### Fixed :
+- *so many bugs*
+- *tbh i dont remenber what i fix it.*
+> It took me 6 months to make this update!!! so I feel like I wanna skipping a version like one or two tbh though
+
+## - **1.12 beta update**
+### - 1.12β10 (beta major update) 
 #### added :
 - **English translation!**
 #### fixed :
