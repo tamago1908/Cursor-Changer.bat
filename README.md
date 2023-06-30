@@ -29,7 +29,7 @@ Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (230 or high
 
 Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
 
-Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and we are currently looking for a solution.
+Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and im currently looking for a solution.
 
 ## - **FREATURES** -
 Ability to change cursors, brand new CUI-based UI, tons of easter eggs, implement features in ways never done before, change themes, etc.
