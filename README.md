@@ -1,3 +1,4 @@
+# ***Cursor Changer.bat***
 > *Translate progress :* ***98%***
 
 # - **Latest News** -
@@ -10,7 +11,7 @@ Besides, both of them take a long time to run the Powershell scripts, and if i d
 
 > 07/03 Ps. btw there are a lot of features I would like to add to the cursor changer. For example, tutorials, a better CUI calculator, more advanced cursor changers, an exit menu (like Windows XP), and too many others to mention. I don't know when those will be completed, but I'd like to implement them.
 
-## - **WHAT IS THIS?** -
+## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
 Im are pursuing what can be done with BATCH processing etc.
 
