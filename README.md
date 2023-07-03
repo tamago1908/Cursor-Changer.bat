@@ -1,13 +1,14 @@
 > *Translate progress :* ***98%***
 
-# - **Latest News -**
+# - **Latest News** -
 ### Self update and sumcheck (2023/06/30)
-Hi, I wanted to post my current development progress in the readme. So, here is the current development progress, so far I am not developing the next update of Cursor Changer. Well, if I had to say so, I am currently testing the update feature and the more advanced Sumchack feature. Needless to say, the update feature is a must, but as for the SumChack feature, in a nutshell, it is the ability to add two values to the configuration file and then SumChack with them. With this, I'm thinking that it might be possible to add a feature like the one in Undertale, for example, where a hidden message is displayed if the save file is illegally changed..... That kind of functionality. Both use powershell, but no additional files are needed. The most likely implementation would be an update function.
-However, that function is having trouble determining if Cursor Changer, the source of the update, is a beta version or not, so it may take some time to implement.
-Besides, both of them take a long time to run the Powershell scripts, and if i do them at startup, the startup time would be so long that it would suck, so, well, basically, i would only be adding the ability to check for updates. At this stage, I'm hoping to be able to change the settings menu to confirm or deny updates at startup, but that's just the ideal. Well, that's about it.
+Hi, I wanted to post my current development progress in the readme. So, here is the current development progress, so far I am not developing the next update of Cursor Changer.  
+Well, if I had to say so, I am currently testing the update feature and the more advanced Sumchack feature. Needless to say, the update feature is a must, but as for the SumChack feature, in a nutshell, it is the ability to add two values to the configuration file and then SumChack with them.  
+With this, I'm thinking that it might be possible to add a feature like the one in Undertale, for example, where a hidden message is displayed if the save file is illegally changed..... That kind of functionality. Both use powershell, but no additional files are needed. The most likely implementation would be an update function.  
+However, that function is having trouble determining if Cursor Changer, the source of the update, is a beta version or not, so it may take some time to implement.  
+Besides, both of them take a long time to run the Powershell scripts, and if i do them at startup, the startup time would be so long that it would suck, so, well, basically, i would only be adding the ability to check for updates. At this stage, I'm hoping to be able to change the settings menu to confirm or deny updates at startup, but that's just the ideal. Well, that's about it.  
 
 > 07/03 Ps. btw there are a lot of features I would like to add to the cursor changer. For example, tutorials, a better CUI calculator, more advanced cursor changers, an exit menu (like Windows XP), and too many others to mention. I don't know when those will be completed, but I'd like to implement them.
-
 
 ## - **WHAT IS THIS?** -
 Cursor Chenger was created entirely with batch only.
@@ -65,6 +66,7 @@ Manual deletion can be done by deleting the configuration file and the file for 
 If you want to go to the path where those files exist, you can access them from the uninstall menu accessible from batch.
 Then delete the BATCH process.
 
+
 ## - **Chenge logs** -
 
 ### - 1.12 (major update) 🔥
@@ -74,12 +76,12 @@ Then delete the BATCH process.
 - **New dogchack!**
 - **New setting UI!**
 - **New Boot Screan!** (you can disable it in setting)
-- **windows version check!**
-- **setting fixer!**
-- *Some functions in uninstall manu*
-- *batch is now disable miximize button*
-- *bat argments*
+- **batch is now disable miximize button!**
 - *new easteregg*
+- *windows version check!*
+- *setting fixer!*
+- *Some functions in uninstall manu*
+- *bat argments*
 - *debug commands*
 - ***AND MORE!***
 #### Changed :
@@ -91,6 +93,7 @@ Then delete the BATCH process.
 - *so many bugs*
 - *tbh i dont remenber what i fix it.*
 > It took me 6 months to make this update!!! so I feel like I wanna skipping a version like one or two tbh though
+___
 
 ## - **1.12 beta update**
 ### - 1.12β10 (beta major update) 
@@ -98,7 +101,7 @@ Then delete the BATCH process.
 - **English translation!**
 #### fixed :
 - *some bugs*
-
+___
 
 ### - 1.12β9 (beta major update) 
 #### chenged :
@@ -106,3 +109,4 @@ Then delete the BATCH process.
 - *Added description about ctrl in settings*
 #### fixed :
 - ***Fixed all bugs*** *on the issues*
+___
