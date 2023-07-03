@@ -6,6 +6,8 @@ Hi, I wanted to post my current development progress in the readme. So, here is 
 However, that function is having trouble determining if Cursor Changer, the source of the update, is a beta version or not, so it may take some time to implement.
 Besides, both of them take a long time to run the Powershell scripts, and if i do them at startup, the startup time would be so long that it would suck, so, well, basically, i would only be adding the ability to check for updates. At this stage, I'm hoping to be able to change the settings menu to confirm or deny updates at startup, but that's just the ideal. Well, that's about it.
 
+ps. btw there are a lot of features I would like to add to the cursor changer. For example, tutorials, a better CUI calculator, more advanced cursor changers, an exit menu (like Windows XP), and too many others to mention. I don't know when those will be completed, but I'd like to implement them.
+
 
 ## - **WHAT IS THIS?** -
 Cursor Chenger was created entirely with batch only.
