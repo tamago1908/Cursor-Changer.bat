@@ -36,8 +36,8 @@ Basically, the higher the better but too high performance may worsen the appeara
 Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and im currently looking for a solution.
 
 ## - **FREATURES** -
-Ability to change cursors, brand new CUI-based UI, tons of easter eggs, implement features in ways never done before, change themes, etc.
-and much more!
+The most important feature is the ability to change the cursor. You can change it to white (windows default) or black. It also has a settings menu that allows you to change the behavior of Cursor Changer, a calculator, various easter eggs, hidden functions, advanced behavior using powershell, and much more. And best of all, all of these features are built with only a single BATCH file, no additional files are required!
+And this BATCH is still under development, with new new features and patches to come! (at least as long as the developers are motivated)
 
 ### ***In creating this BATCH, I were inspired by the following.***
  
