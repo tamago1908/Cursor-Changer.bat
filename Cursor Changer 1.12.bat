@@ -1,36 +1,38 @@
 @echo off
 setlocal
 
-rem ƒJ[ƒ\ƒ‹‘Ö‚¦ by tamago_1908
+rem ã“ã‚Œã¯è‹±èªç‰ˆã§ã™ï¼ã‚‚ã—æ—¥æœ¬èªç‰ˆã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ãŸã„å ´åˆã¯ã€æ—¥æœ¬èªã®åå‰ã®ç‰©ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ãã ã•ã„ã€‚
+
+rem ã‚«ãƒ¼ã‚½ãƒ«æ›¿ãˆ by tamago_1908
 rem Cursor Changer by tamago_1908
 
 
 rem https://github.com/tamago1908/cursor-changer.bat 
 
 
-rem ƒTƒCƒY‚Ìw’è
+rem ã‚µã‚¤ã‚ºã®æŒ‡å®š
 mode con: cols=75 lines=25
 
-rem ƒƒ‚ cd %~dp0 &start %~n0%~x0&exit trueŠˆ—p‚Å‚«‚é‚©‚à (batÄ‹N“®)
-rem ƒR[ƒh‚ÌÅ‰‚É“ü‚ê‚ê‚éˆ—‚Ì”‚ÍŒÀ‚ç‚ê‚Ä‚¢‚Ü‚·(“ü‚ê‚·‚¬‚é‚Æ‹N“®‚ª’x‚­‚È‚é‰Â”\«) (’x‚­‚È‚Á‚½ (è’x‚ê(‰½‚Æ‚©‚È‚Á‚½)) )
-rem ƒrƒ‹ƒhƒiƒ“ƒo[‚Æƒo[ƒWƒ‡ƒ“‚Ì‹L“ü‚Í•K‚¸‚µ‚Ä‚­‚¾‚³‚¢I‚ ‚ÆƒA[ƒJƒCƒu‚É“ü‚ê‚é‚Ì‚ğ–Y‚ê‚¸‚ÉI
-rem ‚»‚µ‚ÄÅ‹ßA‚±‚Ìƒoƒbƒ`ˆ—‚É‰pŒê‚ğ‘½‚­ŠÜ‚ß‚é‚æ‚¤‚É‚µ‚Ä‚¢‚éB‚È‚º‚È‚çA«—ˆ“I‚É‚±‚Ìƒoƒbƒ`ˆ—‚ğ–|–ó‚·‚é‚±‚Æ‚É‚È‚Á‚½A“ú–{Œê‚ª‘½‚¢‚Æ–Ê“|‚¾‚©‚çB
+rem ãƒ¡ãƒ¢ cd %~dp0 &start %~n0%~x0&exit trueæ´»ç”¨ã§ãã‚‹ã‹ã‚‚ (batå†èµ·å‹•)
+rem ã‚³ãƒ¼ãƒ‰ã®æœ€åˆã«å…¥ã‚Œã‚Œã‚‹å‡¦ç†ã®æ•°ã¯é™ã‚‰ã‚Œã¦ã„ã¾ã™(å…¥ã‚Œã™ãã‚‹ã¨èµ·å‹•ãŒé…ããªã‚‹å¯èƒ½æ€§) (é…ããªã£ãŸ (æ‰‹é…ã‚Œ(ä½•ã¨ã‹ãªã£ãŸ)) )
+rem ãƒ“ãƒ«ãƒ‰ãƒŠãƒ³ãƒãƒ¼ã¨ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®è¨˜å…¥ã¯å¿…ãšã—ã¦ãã ã•ã„ï¼ã‚ã¨ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã«å…¥ã‚Œã‚‹ã®ã‚’å¿˜ã‚Œãšã«ï¼
+rem ãã—ã¦æœ€è¿‘ã€ã“ã®ãƒãƒƒãƒå‡¦ç†ã«è‹±èªã‚’å¤šãå«ã‚ã‚‹ã‚ˆã†ã«ã—ã¦ã„ã‚‹ã€‚ãªãœãªã‚‰ã€å°†æ¥çš„ã«ã“ã®ãƒãƒƒãƒå‡¦ç†ã‚’ç¿»è¨³ã™ã‚‹ã“ã¨ã«ãªã£ãŸæ™‚ã€æ—¥æœ¬èªãŒå¤šã„ã¨é¢å€’ã ã‹ã‚‰ã€‚
 title Cursor Changer
 rem VER v1.12
 set batver=1.12
 set batbuild=build 44
 set hazimeeaster=false
 set firststartbat=no
-rem §ì‚É‚ ‚½‚Á‚Äg—p‚µ‚½ƒ\ƒtƒg windows notepad v10.2103.12.0 g—pƒtƒHƒ“ƒg@Nirmala UI‚Ì‘¾š
-rem 2021”N12Œ09“ú‚©‚ç windows notepad v10.2110.64.0 Nirmala UI‚Ì‘¾š
-rem ƒƒCƒ“ Visual Studio Code
-rem ƒfƒoƒbƒN—p Visual bat
+rem åˆ¶ä½œã«ã‚ãŸã£ã¦ä½¿ç”¨ã—ãŸã‚½ãƒ•ãƒˆ windows notepad v10.2103.12.0 ä½¿ç”¨ãƒ•ã‚©ãƒ³ãƒˆã€€Nirmala UIã®å¤ªå­—
+rem 2021å¹´12æœˆ09æ—¥ã‹ã‚‰ windows notepad v10.2110.64.0 Nirmala UIã®å¤ªå­—
+rem ãƒ¡ã‚¤ãƒ³ Visual Studio Code
+rem ãƒ‡ãƒãƒƒã‚¯ç”¨ Visual bat
 
 :argmentcheck
-rem ˆø”‚ª‚È‚¯‚ê‚ÎI—¹
+rem å¼•æ•°ãŒãªã‘ã‚Œã°çµ‚äº†
 if "%~1"=="" goto argmentcheckend
 title Cursor Changer argment checking...
-rem ˆø”‚ğ”z—ñ‚ÉŠi”[
+rem å¼•æ•°ã‚’é…åˆ—ã«æ ¼ç´
 setlocal enabledelayedexpansion
 set i=0
 for %%a in (%*) do (
@@ -38,21 +40,21 @@ for %%a in (%*) do (
   set arg[!i!]=%%a
 )
 
-rem ”z—ñ‚Ì—v‘f”‚ğæ“¾
+rem é…åˆ—ã®è¦ç´ æ•°ã‚’å–å¾—
 set n=%i%
-rem ”z—ñ‚Ì—v‘f‚ğ‡”Ô‚Éˆ—
+rem é…åˆ—ã®è¦ç´ ã‚’é †ç•ªã«å‡¦ç†
 for /l %%i in (1,1,%n%) do (
-  rem —áŠOˆ——p‚Ì•Ï”‚Ì‰Šú‰»B‚ ‚Æ‚Åg—p‚µ‚Ü‚·B
+  rem ä¾‹å¤–å‡¦ç†ç”¨ã®å¤‰æ•°ã®åˆæœŸåŒ–ã€‚ã‚ã¨ã§ä½¿ç”¨ã—ã¾ã™ã€‚
   set argmentserror=true
-  rem Œ»İ‚Ì—v‘f‚ğæ“¾
+  rem ç¾åœ¨ã®è¦ç´ ã‚’å–å¾—
   set current=!arg[%%i]!
-  rem Œ»İ‚Ì—v‘f‚ª‹ó‚Å‚È‚¯‚ê‚Îˆ—
+  rem ç¾åœ¨ã®è¦ç´ ãŒç©ºã§ãªã‘ã‚Œã°å‡¦ç†
   if not "!current!"=="" (
-    rem Œ»İ‚Ì—v‘f‚Æˆê’v‚·‚é—v‘f‚ğ‹ó‚É‚·‚éid•¡”rœj
+    rem ç¾åœ¨ã®è¦ç´ ã¨ä¸€è‡´ã™ã‚‹è¦ç´ ã‚’ç©ºã«ã™ã‚‹ï¼ˆé‡è¤‡æ’é™¤ï¼‰
     for /l %%j in (%%i,1,%n%) do (
       if "!arg[%%j]!"=="!current!" set arg[%%j]=
     )
-    rem Œ»İ‚Ì—v‘f‚É‰‚¶‚½ˆ—‚ğs‚¤
+    rem ç¾åœ¨ã®è¦ç´ ã«å¿œã˜ãŸå‡¦ç†ã‚’è¡Œã†
     if "!current!"=="bypsdisexit" (echo disableexitbutton is bypassed.&set disableexit=false&set argmentserror=false)
     if "!current!"=="enablesimpleboot" (title simpleboot is enabled.&set simpleboot=true&set argmentserror=false)
     if "!current!"=="devmode" (call :developermenu&set argmentserror=false)
@@ -60,7 +62,7 @@ for /l %%i in (1,1,%n%) do (
     if "!current!"=="bypsvck" (echo winver check is bypassed.&set bypasswinvercheck=true&set argmentserror=false)
     if "!current!"=="bypsadm" (echo getadmin is bypassed.&set adminbypass=true&set adminbypass=false&set argmentserror=false)
     if "!current!"=="bypsloadsg" (echo setting load is bypassed.&set settingbypass=true&set argmentserror=false)
-rem —áŠOˆ—
+rem ä¾‹å¤–å‡¦ç†
    if "!argmentserror!"=="true" (title Cursor Changer argment error&echo unvalid argment or something went worng ^(!current!^) error. please set valid argment. ^(or use ^"help^" ^)
       )
     )
@@ -71,8 +73,8 @@ setlocal disabledelayedexpansion
 set argmentserror=
 timeout 3 >nul
 
-rem windowsƒo[ƒWƒ‡ƒ“”»’f
-rem ‚¿‚å‚Á‚Æ•s‹ï‡‚ ‚é‚©‚àBˆê•”‚Ìƒo[ƒWƒ‡ƒ“‚Å‚Í³í‚ÉƒtƒBƒ‹ƒ^[‚ª“®ì‚µ‚È‚¢‰Â”\«‚ª‚ ‚éB
+rem windowsãƒãƒ¼ã‚¸ãƒ§ãƒ³åˆ¤æ–­
+rem ã¡ã‚‡ã£ã¨ä¸å…·åˆã‚ã‚‹ã‹ã‚‚ã€‚ä¸€éƒ¨ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§ã¯æ­£å¸¸ã«ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ãŒå‹•ä½œã—ãªã„å¯èƒ½æ€§ãŒã‚ã‚‹ã€‚
 :batbootcheckwinver
 if {%settingbypass%}=={true} (goto batbootcheckwinversafe)
 rem windows11 check
@@ -86,7 +88,7 @@ ver | find /i "Version 10.0.102" > nul
 if {%errorlevel%}=={0} (set windowsverfilter=windows10 1509&goto batbootcheckwinverbad)
 rem windows 8 or low check
 ver | find /i "Version 6." > nul
-if {%errorlevel%}=={0} (set windowsverfilter=windows8.1ˆÈ‘O&goto batbootcheckwinverbad) else set windowsverfilter=windows vistaˆÈ‘OiŒÃ‚·‚¬‚Ü‚·Ij goto batbootcheckwinverbad
+if {%errorlevel%}=={0} (set windowsverfilter=windows8.1ä»¥å‰&goto batbootcheckwinverbad) else set windowsverfilter=windows vistaä»¥å‰ï¼ˆå¤ã™ãã¾ã™ï¼ï¼‰ goto batbootcheckwinverbad
 
 :batbootcheckwinverbad
 ver | find /i "Version 6.1" > nul
@@ -109,23 +111,23 @@ pause
 exit
 
 :batbootcheckwinversafe
-rem –{ˆ— (•Ï”‚ÌƒZƒbƒg‚Æ‚©A‘O’iŠK)
+rem æœ¬å‡¦ç† (å¤‰æ•°ã®ã‚»ãƒƒãƒˆã¨ã‹ã€å‰æ®µéš)
 set bootbatnow=yes
 set exitbuttondisabled=false
-rem ŠÇ—ÒŒ ŒÀ‚ğ•Û—L‚µ‚Ä‚¢‚é‚©‚ÌŠm”F
+rem ç®¡ç†è€…æ¨©é™ã‚’ä¿æœ‰ã—ã¦ã„ã‚‹ã‹ã®ç¢ºèª
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
-rem ŠÇ—ÒŒ ŒÀ‚ğ•Û—L‚µ‚Ä‚¢‚éó‘Ô‚ÅAexitƒ{ƒ^ƒ“‚ğfalse‚É‚·‚é‚ÆA‹H‚ÉƒEƒCƒ‹ƒX‚Æ‚µ‚ÄŒŸo‚³‚ê‚Ä‚µ‚Ü‚¤ê‡‚ª‚ ‚éB‚È‚Ì‚ÅAŠÇ—ÒŒ ŒÀ•Û—L‚ÆAdisableexit‚Æ‚¢‚¤•Ï”‚ªfalse‚Ìê‡‚ÍAˆ—‚ğƒoƒCƒpƒX‚µ‚Ä‚¢‚éB
+rem ç®¡ç†è€…æ¨©é™ã‚’ä¿æœ‰ã—ã¦ã„ã‚‹çŠ¶æ…‹ã§ã€exitãƒœã‚¿ãƒ³ã‚’falseã«ã™ã‚‹ã¨ã€ç¨€ã«ã‚¦ã‚¤ãƒ«ã‚¹ã¨ã—ã¦æ¤œå‡ºã•ã‚Œã¦ã—ã¾ã†å ´åˆãŒã‚ã‚‹ã€‚ãªã®ã§ã€ç®¡ç†è€…æ¨©é™ä¿æœ‰æ™‚ã¨ã€disableexitã¨ã„ã†å¤‰æ•°ãŒfalseã®å ´åˆã¯ã€å‡¦ç†ã‚’ãƒã‚¤ãƒ‘ã‚¹ã—ã¦ã„ã‚‹ã€‚
 if {%disableexit%}=={false} (goto batbootdisabledexitbutton)
 
 :batbootdisableexitbutton
-rem startid~powershell ‚Ü‚Å‚ÌƒR[ƒh‚Í‚¸‚ç‚µ‚Ä‚Í‚¢‚¯‚È‚¢@‚»‚êˆÈ‘O‚©‚»‚êˆÈŒã‚È‚çok
+rem startid~powershell ã¾ã§ã®ã‚³ãƒ¼ãƒ‰ã¯ãšã‚‰ã—ã¦ã¯ã„ã‘ãªã„ã€€ãã‚Œä»¥å‰ã‹ãã‚Œä»¥å¾Œãªã‚‰ok
 :: StartID1908
 call :getLineNumber startLine StartID1908 0
 goto batbootdisableexitbuttonendcode
 :batbootdisableexitbuttoncodestart
 set /a startline=startline+4&set /a endline=endline-3
 title booting up cursor changer...&echo Please wait a while.&powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto batbootdisabledexitbutton
-#I—¹ƒ{ƒ^ƒ“‚ğ–³Œø‰»
+#çµ‚äº†ãƒœã‚¿ãƒ³ã‚’ç„¡åŠ¹åŒ–
 #Calling user32.dll methods for Windows and Menus
 $code = @'
 using System;
@@ -133,7 +135,7 @@ using System.Runtime.InteropServices;
 
 namespace CloseButtonToggle {
 
-// ŠÖ”‚ÌéŒ¾
+// é–¢æ•°ã®å®£è¨€
 
  internal static class WinAPI {
    [DllImport("kernel32.dll")]
@@ -163,32 +165,32 @@ namespace CloseButtonToggle {
    [DllImport("user32.dll")]
    internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-// éŒ¾I—¹
+// å®£è¨€çµ‚äº†
 
-// •K—v‚Èˆø”‚Ìİ’è
+// å¿…è¦ãªå¼•æ•°ã®è¨­å®š
    const int GWL_STYLE = -16;
    const int WS_MAXIMIZEBOX = 0x00010000;
 
    const uint SC_MAXIMIZE = 0xF030; 
    const uint MF_BYCOMMAND = 0;
 
-// ƒƒCƒ“‚Ìˆ—
+// ãƒ¡ã‚¤ãƒ³ã®å‡¦ç†
 internal static void ChangeCurrentState(bool state) {
      IntPtr hWnd = GetConsoleWindow();
      int style = GetWindowLong(hWnd, GWL_STYLE);
      if (state) {
-       style |= WS_MAXIMIZEBOX; // Å‘å‰»ƒ{ƒ^ƒ“‚ğ—LŒø‚É‚·‚é
+       style |= WS_MAXIMIZEBOX; // æœ€å¤§åŒ–ãƒœã‚¿ãƒ³ã‚’æœ‰åŠ¹ã«ã™ã‚‹
      } else {
-       style &= ~WS_MAXIMIZEBOX; // Å‘å‰»ƒ{ƒ^ƒ“‚ğ–³Œø‚É‚·‚é
+       style &= ~WS_MAXIMIZEBOX; // æœ€å¤§åŒ–ãƒœã‚¿ãƒ³ã‚’ç„¡åŠ¹ã«ã™ã‚‹
      }
      SetWindowLong(hWnd, GWL_STYLE, style);
      DrawMenuBar(hWnd);
    }
  }
-// •ÏX‚ÌŠm”F
+// å¤‰æ›´ã®ç¢ºèª
  public static class Status {
    public static void Disable() {
-     WinAPI.ChangeCurrentState(false); //ƒIƒ“‚É‚·‚é‚È‚ç 'true' ‚É•ÏX
+     WinAPI.ChangeCurrentState(false); //ã‚ªãƒ³ã«ã™ã‚‹ãªã‚‰ 'true' ã«å¤‰æ›´
    }
  }
 } 
@@ -212,7 +214,7 @@ ENDLOCAL
  goto :eof
 )
 
-rem –{ˆ—
+rem æœ¬å‡¦ç†
 :batbootdisabledexitbutton
 set startline=&set endline=&set exitbuttondisabled=
 cd /d %HOMEDRIVE%%HOMEPATH%
@@ -224,7 +226,7 @@ if {%errorlevel%}=={0} (goto batstart) else (goto nofastboot)
 rem goofy ahh txts
 
 rem ###################
-rem #    HELLO@WORLD    #  
+rem #    HELLOã€€WORLD    #  
 rem ###################
 
 REM Notification, YOU SHOULD READ IT
@@ -237,14 +239,14 @@ rem Well, I have no intention to stop developing in English, but just in case.
 rem ############################################################################################################################
 :fastboot
 
-rem Å‰‚Ì‹N“®‚È‚Ì‚©‚ğŒŸ’m
+rem æœ€åˆã®èµ·å‹•ãªã®ã‹ã‚’æ¤œçŸ¥
 :syokaicolorlogo
 cd /d %HOMEDRIVE%%HOMEPATH%
 if exist FIrstCursor.txt set firststartbat=no&set bootbatnow=yes&goto :batstart
-if exist CursorChangerSettings.txt title &echo AY BRO!! WHAT ARE U DOING??&pause&cls&echo You deleted firstcurosr for the pastime or something!&pause&cls&echo Why is there a CursorChangerSettings.txt but no FIrstCursor.txt? That's crazy, right? &pause&cls&echo You should be sorry, %username%I&pause&cls&echo What a joke. ...... but I am sure that FIrstCursor.txt does not exist. &pause&cls&echo If you don't want to hear this message again, you can either delete the configuration file as well or re-create FIrstCursor.txt yourself.&pause&cls&goto exit
+if exist CursorChangerSettings.txt title &echo AY BRO!! WHAT ARE U DOING??&pause&cls&echo You deleted firstcurosr for the pastime or something!&pause&cls&echo Why is there a CursorChangerSettings.txt but no FIrstCursor.txt? That's crazy, right? &pause&cls&echo You should be sorry, %username%ï¼&pause&cls&echo What a joke. ...... but I am sure that FIrstCursor.txt does not exist. &pause&cls&echo If you don't want to hear this message again, you can either delete the configuration file as well or re-create FIrstCursor.txt yourself.&pause&cls&goto exit
 if not exist FIrstCursor.txt set firststartbat=yes& goto :syokaiboot
 
-rem ‰‰ñ‹N“®ŒÀ’è‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶
+rem åˆå›èµ·å‹•é™å®šã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿ
 :syokaiboot
 title welcome to my bat file!
 powershell sleep -m 500
@@ -259,27 +261,27 @@ powershell sleep -m 100
 cls
 
 color 0a
-echo @rso
+echo ã€€rso
 powershell sleep -m 100
 cls
 
 color 0b
-echo @@er
+echo ã€€ã€€er
 powershell sleep -m 100
 cls
 
 color 0c
-echo @@@Cen
+echo ã€€ã€€ã€€Cen
 powershell sleep -m 100
 cls
 
 color 0d
-echo @@@@Ge
+echo ã€€ã€€ã€€ã€€Ge
 powershell sleep -m 100
 cls
 
 color 0e
-echo @@@@  r
+echo ã€€ã€€ã€€ã€€  r
 powershell sleep -m 100
 cls
 color 07
@@ -308,12 +310,12 @@ goto saisyonokidou
 
 
 cls
-rem ‰Šú‹N“®ˆ—
+rem åˆæœŸèµ·å‹•å‡¦ç†
 
-rem ŠÇ—ÒŒ ŒÀ‚Ìƒvƒƒ“ƒvƒg‚ÉŠÖ‚·‚éİ’è‚ğŒŸ’mA
+rem ç®¡ç†è€…æ¨©é™ã®ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆã«é–¢ã™ã‚‹è¨­å®šã‚’æ¤œçŸ¥ã€
 :batstart
 cls
-rem ŠÇ—ÒŒ ŒÀİ’è‚ÌŒŸ’m
+rem ç®¡ç†è€…æ¨©é™è¨­å®šã®æ¤œçŸ¥
 find "admin=true" CursorChangerSettings.txt > nul
 if {%adminbypass%}=={true} (goto gotadmin)
 if {%errorlevel%}=={0} (goto batstartadm)
@@ -335,8 +337,8 @@ if {%errorlevel%}=={1} (goto batstartadm)
 
 :batstartadm
 cls
-rem ŠÇ—ÒŒ ŒÀ‚Ìæ“¾
-rem ‚±‚ÌƒR[ƒhAç’·‚·‚¬‚é‹C‚ª‚·‚éB‚à‚µ‚©‚µ‚½‚çpowershell‚ğg‚Á‚Ä‚à‚Á‚Æ’Zk‚Å‚«‚é‚©‚àB
+rem ç®¡ç†è€…æ¨©é™ã®å–å¾—
+rem ã“ã®ã‚³ãƒ¼ãƒ‰ã€å†—é•·ã™ãã‚‹æ°—ãŒã™ã‚‹ã€‚ã‚‚ã—ã‹ã—ãŸã‚‰powershellã‚’ä½¿ã£ã¦ã‚‚ã£ã¨çŸ­ç¸®ã§ãã‚‹ã‹ã‚‚ã€‚
 echo copyright.Cursor Changer %batver% by tamago_1908
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
@@ -354,14 +356,14 @@ if '%errorlevel%' NEQ '0' (
     pushd "%CD%"
     CD /D "%~dp0"
 
-rem ‰‰ñ‹N“®‚©‚ğŒŸ’m
+rem åˆå›èµ·å‹•ã‹ã‚’æ¤œçŸ¥
 cd /d %HOMEDRIVE%%HOMEPATH%
-rem êŠ OS‚ª“ü‚Á‚½ƒhƒ‰ƒCƒu:\Users\ƒ†[ƒU[–¼
-rem (—á ƒ†[ƒU[‚Ì–¼‘O‚ªtest‚¾‚Á‚½ê‡‚ÆAOS‚ª“ü‚Á‚½êŠ‚ªCƒhƒ‰ƒCƒu‚¾‚Á‚½ê‡‚¾‚Æ C:\Users\Test)
+rem å ´æ‰€ OSãŒå…¥ã£ãŸãƒ‰ãƒ©ã‚¤ãƒ–:\Users\ãƒ¦ãƒ¼ã‚¶ãƒ¼å
+rem (ä¾‹ ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®åå‰ãŒtestã ã£ãŸå ´åˆã¨ã€OSãŒå…¥ã£ãŸå ´æ‰€ãŒCãƒ‰ãƒ©ã‚¤ãƒ–ã ã£ãŸå ´åˆã ã¨ C:\Users\Test)
 if exist FIrstCursor.txt goto hazime
 if not exist FIrstCursor.txt goto saisyonokidou
 
-rem ‰‰ñ‹N“®‚ÌƒƒbƒZ[ƒW
+rem åˆå›èµ·å‹•æ™‚ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 :saisyonokidou
 title Introduction to this batch file
 type nul > FIrstCursor.txt
@@ -531,7 +533,7 @@ goto checksum
 find "bootanimation=false" CursorChangerSettings.txt > nul
 if {%errorlevel%}=={0} (goto checksum)
 cls
-rem ƒu[ƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶B5•ª‚Ì1‚ÌŠm—¦‚Å•Êƒo[ƒWƒ‡ƒ“‚ªÄ¶‚³‚ê‚éBramdom‚Ìd—l(H)‚É‚æ‚Á‚Ä“ñ‰ñ˜A‘±‚Årandom‚ğ‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢B
+rem ãƒ–ãƒ¼ãƒˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å†ç”Ÿã€‚5åˆ†ã®1ã®ç¢ºç‡ã§åˆ¥ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãŒå†ç”Ÿã•ã‚Œã‚‹ã€‚ramdomã®ä»•æ§˜(ï¼Ÿ)ã«ã‚ˆã£ã¦äºŒå›é€£ç¶šã§randomã‚’ã—ãªã„ã¨ã„ã‘ãªã„ã€‚
 set /a bootegg=%random%*6/32767
 set /a bootegg=%random%*6/32767
 if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
@@ -564,7 +566,7 @@ echo.
 echo                      2021-2023 tamago1908 %batbuild%
 powershell sleep 1
 cls
-rem İ’è‚ÌŒ‡‘¹‚ğŠm”F
+rem è¨­å®šã®æ¬ æã‚’ç¢ºèª
 
 :checksum
 if {%firststartbat%}=={yes} (goto loads)
@@ -606,7 +608,7 @@ if not {%allsettingerror%} equ {0} (
     if {%allsettingerror%} gtr {3} (goto fixallsetting) else (goto hazimemenu)
 echo.
 :fixallsetting
-rem ©“®C•œ
+rem è‡ªå‹•ä¿®å¾©
 powershell sleep 2
 SET /P selected=Automatic Repair is available. When you run Auto Repair, all previous settings are initialized and reset to default settings. Do you wish to continue? (yes or no):
 if {%selected%}=={yes} (
@@ -642,10 +644,10 @@ if {%selected%}=={n} (hazimemenuskipboot)
 goto :hazimemenu
 :hazime
 
-rem İ’è‚Æ‚»‚Ì‘¼‚Ìƒ[ƒh
-rem ‰½‚ğ“Ç‚İ‚İA“Ç‚İ‚ñ‚¾Œã‚Ç‚±‚Égoto‚µ‚½‚¢‚©‚ğ•Ï”‚É‘ã“ü•K—v set wantload=setting1 set whatloadgoto=hazime “™ hazimeŠÖŒW‚Ìê‡‚Í‚»‚êƒIƒ“ƒŠ[
-rem ƒJ[ƒ\ƒ‹‚ÌF‚ÉŠÖ‚µ‚Ä‚ÍƒƒCƒ“‚Ì•ÏX•”•ª‚É‚ÍÀ‘•‚µ‚Ä‚¢‚Ü‚¹‚ñB•ÏX‚µ‚Ä‚©‚çhazime‚É–ß‚Á‚Ä—ˆ‚ê‚é‚æ‚¤‚ÉİŒv‚µ‚Ä‚È‚¢‚Ì‚ÅB
-rem İ’è‚ğ’Ç‰Á‚·‚éê‡‚ÍŠî–{ƒRƒsƒy‚Å‘åä•vB‚½‚¾Aƒƒjƒ…[‚ÌŒ©‚½–Ú‚Æ‚©‚É‚©‚©‚í‚é‚à‚Ì‚Å‚ÍƒR[ƒh‚ğ’Ç‰Á‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢‚©‚à
+rem è¨­å®šã¨ãã®ä»–ã®ãƒ­ãƒ¼ãƒ‰
+rem ä½•ã‚’èª­ã¿è¾¼ã¿ã€èª­ã¿è¾¼ã‚“ã å¾Œã©ã“ã«gotoã—ãŸã„ã‹ã‚’å¤‰æ•°ã«ä»£å…¥å¿…è¦ set wantload=setting1 set whatloadgoto=hazime ç­‰ hazimeé–¢ä¿‚ã®å ´åˆã¯ãã‚Œã‚ªãƒ³ãƒªãƒ¼
+rem ã‚«ãƒ¼ã‚½ãƒ«ã®è‰²ã«é–¢ã—ã¦ã¯ãƒ¡ã‚¤ãƒ³ã®å¤‰æ›´éƒ¨åˆ†ã«ã¯å®Ÿè£…ã—ã¦ã„ã¾ã›ã‚“ã€‚å¤‰æ›´ã—ã¦ã‹ã‚‰hazimeã«æˆ»ã£ã¦æ¥ã‚Œã‚‹ã‚ˆã†ã«è¨­è¨ˆã—ã¦ãªã„ã®ã§ã€‚
+rem è¨­å®šã‚’è¿½åŠ ã™ã‚‹å ´åˆã¯åŸºæœ¬ã‚³ãƒ”ãƒšã§å¤§ä¸ˆå¤«ã€‚ãŸã ã€ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¦‹ãŸç›®ã¨ã‹ã«ã‹ã‹ã‚ã‚‹ã‚‚ã®ã§ã¯ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã—ãªã„ã¨ã„ã‘ãªã„ã‹ã‚‚
 :settingloads
 if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
 cls
@@ -653,7 +655,7 @@ echo WHATTTT!? ITS IMPOSSIBLE!!!!!
 pause
 goto exit
 :setting1load
-rem ƒzƒƒCƒgƒ‚[ƒh‚ÌŒŸ’m‚ÆF‚Ì•ÏXB•ÏX‚Ì‚‘¬‰»‚Ì‚½‚ß˜”Õ‚É”z’uB
+rem ãƒ›ãƒ¯ã‚¤ãƒˆãƒ¢ãƒ¼ãƒ‰ã®æ¤œçŸ¥ã¨è‰²ã®å¤‰æ›´ã€‚å¤‰æ›´ã®é«˜é€ŸåŒ–ã®ãŸã‚åºç›¤ã«é…ç½®ã€‚
 find "wmode=true" CursorChangerSettings.txt > nul
 if {%errorlevel%}=={0} (color f0)
 set allsettingerror=0
@@ -736,7 +738,7 @@ goto loads
 goto whatloadgoto
 
 :allsettingtest
-rem İ’è‚ÌŒ‡‘¹‚ğŒŸØ
+rem è¨­å®šã®æ¬ æã‚’æ¤œè¨¼
 :setting1load2
 find "rebootokey=false" CursorChangerSettings.txt > nul
 cls
@@ -781,13 +783,13 @@ if {%bootbatnow%}=={yes} (goto wmodeload) else (goto whatloadgoto)
 find "wmode=false" CursorChangerSettings.txt > nul
 cls
 if {%bootbatnow%}=={no} (echo Processing...)
-if {%ErrorLevel%}=={0} (set wmodeonoff=Chenge to white mode&set wmodetoggle=false) else if {%ErrorLevel%}=={1} (set wmodeonoff=  null  ƒe[ƒ}‚É•ÏX&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1)
+if {%ErrorLevel%}=={0} (set wmodeonoff=Chenge to white mode&set wmodetoggle=false) else if {%ErrorLevel%}=={1} (set wmodeonoff=  null  ãƒ†ãƒ¼ãƒã«å¤‰æ›´&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1)
 if {%bootbatnow%}=={yes} (set batloadprgs=6&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto loads) else (goto whatloadgoto)
 
 :loads
 :wmodehazimeload
-rem ƒzƒƒCƒgƒ‚[ƒh‚ğŒŸ’m‚µ‚ÄF‚ğ•ÏX
+rem ãƒ›ãƒ¯ã‚¤ãƒˆãƒ¢ãƒ¼ãƒ‰ã‚’æ¤œçŸ¥ã—ã¦è‰²ã‚’å¤‰æ›´
 find "wmode=true" CursorChangerSettings.txt > nul
 if {%errorlevel%}=={0} (color f0)
 cls
@@ -800,7 +802,7 @@ if {%whatloadgoto%}=={hazime} (goto hazimemenu)
 goto debughazimeload
 
 :debughazimeload
-rem ƒfƒoƒbƒNƒ‚[ƒh‚ÌŒŸ’m
+rem ãƒ‡ãƒãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã®æ¤œçŸ¥
 find "debug=true" CursorChangerSettings.txt > nul
 cls
 if {%errorlevel%}=={0} (echo on&set debugmode=debugmode)
@@ -815,7 +817,7 @@ if {%whatloadgoto%}=={hazime} (goto hazimemenu)
 goto firststarttest
 
 :firststarttest
-rem FIrstCursor‚ÌŒŸ’m
+rem FIrstCursorã®æ¤œçŸ¥
 find "nodogcheckforfastboot" FIrstCursor.txt > nul
 cls
 if {%ErrorLevel%}=={1} (goto itazurasyokai)
@@ -828,9 +830,9 @@ if {%whatloadgoto%}=={hazime} (goto hazimemenu)
 goto cursorcolorload
 
 :cursorcolorload
-rem ƒJ[ƒ\ƒ‹‚ÌF‚ğŒŸ’m
-rem 0x0‚Í”’
-rem 0x2‚Í•
+rem ã‚«ãƒ¼ã‚½ãƒ«ã®è‰²ã‚’æ¤œçŸ¥
+rem 0x0ã¯ç™½
+rem 0x2ã¯é»’
 reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x0"
 cls
 if {%ErrorLevel%}=={0} (set cursorcolor=black)
@@ -857,8 +859,8 @@ goto hazimemenu
 
 :batbootprogress
 cls
-rem ƒu[ƒgƒAƒjƒ[ƒVƒ‡ƒ“B
-rem ‰º‚Í“Ç‚İ‚İ‚ÌƒeƒLƒXƒg•ªŠòB
+rem ãƒ–ãƒ¼ãƒˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã€‚
+rem ä¸‹ã¯èª­ã¿è¾¼ã¿æ™‚ã®ãƒ†ã‚­ã‚¹ãƒˆåˆ†å²ã€‚
 if {%bootbatnow%}=={no} (title Cursor Setting Processing... & echo Processing... & goto whatload) else (title Booting up...)
 if {%simpleboot%}=={true} (echo Booting up...& exit /b)
 cls
@@ -911,8 +913,8 @@ echo                         Loading up Cursor Changer...
 echo           O=====================================================O
 echo           I%loadscrnprgs0%%loadscrnprgs1%%loadscrnprgs2%%loadscrnprgs3%%loadscrnprgs4%%loadscrnprgs5%%loadscrnprgs6%%loadscrnprgs7%%loadscrnprgs8%%loadscrnprgs9%%loadscrnprgs10%I
 echo           O=====================================================O
-rem 37 ‘SŠp
-rem 74 ”¼Šp
+rem 37 å…¨è§’
+rem 74 åŠè§’
 exit /b
 :batbootinitializetionvariable
 set loadscrnprgs9=
@@ -923,7 +925,7 @@ goto hazimemenu
 
 :whatload
 cls
-rem ‚±‚±‚Ìˆ—A‚¢‚é‚©‚È‚ŸH•’Ê‚Ésetting‚Ì’l‚ª—~‚µ‚¢‚¾‚¯‚È‚çsetting1load‚Æ‚©‚Égoto‚µ‚½‚¤‚¦‚Ås‚«æ‚ğwhatloadgoto‚É‘ã“ü‚·‚ê‚Î“®‚­‚Æv‚¤‚ñ‚¾‚¯‚Ç....
+rem ã“ã“ã®å‡¦ç†ã€ã„ã‚‹ã‹ãªãï¼Ÿæ™®é€šã«settingã®å€¤ãŒæ¬²ã—ã„ã ã‘ãªã‚‰setting1loadã¨ã‹ã«gotoã—ãŸã†ãˆã§è¡Œãå…ˆã‚’whatloadgotoã«ä»£å…¥ã™ã‚Œã°å‹•ãã¨æ€ã†ã‚“ã ã‘ã©....
 if {%wantload%}=={setting1} (goto setting1load) 
 if {%wantload%}=={setting2} (goto setting2load)
 if {%wantload%}=={setting3} (goto setting3load)
@@ -944,7 +946,7 @@ cls
 set wantload=0null0
 exit /b
 
-rem ƒƒjƒ…[‚Ì¶¬‚Ì€”õ
+rem ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ç”Ÿæˆã®æº–å‚™
 :hazimemenu
 cls
 if {%bootbatnow%}=={no} (goto hazimemenuskipboot)
@@ -956,8 +958,8 @@ set settinghelptoggle=false
 mode con: cols=75 lines=25
 if {%hazimeeaster%}=={true} (set hazimebuild=%batbuild%)
 
-rem ƒƒjƒ…[‚Ì•`Ê
-rem ‹K‘¥‚Í5,10,20
+rem ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®æå†™
+rem è¦å‰‡ã¯5,10,20
 echo                              Cursor Changer %batver% %debugmode% %hazimebuild%
 title Cursor Changer %debugmode% 
 set selected=0nul0
@@ -973,7 +975,7 @@ echo.
 if {%selected%}=={0nul0} (goto hatenahazime)
 if not {%selected%}=={3} (echo %selected% was selected.)
 
-rem ‘I‘ğ‚Ì•ªŠò
+rem é¸æŠã®åˆ†å²
 if {%selected%}=={1} (set hatenaita=0&goto :cursorchange)
 if {%selected%}=={a} (set hatenaita=0&goto :cursorchange)
 if {%selected%}=={2} (set hatenaita=0&goto :startcal)
@@ -985,7 +987,7 @@ if {%selected%}=={d} (set hatenaita=0&goto :batver)
 if {%selected%}=={5} (set hatenaita=0&goto :setting)
 if {%selected%}=={e} (set hatenaita=0&goto :setting)
 
-rem ƒC[ƒXƒ^[ƒGƒbƒO
+rem ã‚¤ãƒ¼ã‚¹ã‚¿ãƒ¼ã‚¨ãƒƒã‚°
 if {%selected%}=={easteregg} (goto :easteregg)
 if {%selected%}=={egg} (goto :secret)
 if {%selected%}=={egg1} (color 1f&goto :erroralldef1)
@@ -1000,10 +1002,10 @@ if {%selected%}=={abcdefu} (start chrome.exe --window-size=0,0 --incognito -- ht
 if {%selected%}=={dogsong} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=H4wptBuM6zs&goto hazime)
 if {%selected%}=={Im tired} (echo you too&pause& goto hazime)
 
-rem ƒfƒoƒbƒO—pƒRƒ}ƒ“ƒh‚ÌQÆ
+rem ãƒ‡ãƒãƒƒã‚°ç”¨ã‚³ãƒãƒ³ãƒ‰ã®å‚ç…§
 if {%selected%}=={inspectentirecommandlist} (goto :allcommands)
 
-rem ƒfƒoƒbƒO—p
+rem ãƒ‡ãƒãƒƒã‚°ç”¨
 if {%selected%}=={alldefnow1} (goto :AllDefult1)
 if {%selected%}=={playdefboot} (set hatenaita=0&cls&goto :syokaiboot)
 if {%selected%}=={debugyesnow} (goto :kurogo)
@@ -1026,7 +1028,7 @@ if {%selected%}=={fucyou} (echo fuck you too&pause&goto hazime)
 if {%selected%}=={exit} (goto :exitmenu)
 if {%selected%}=={counttestdeb} (set hatenaita=0&goto :testinthecalbeep) else echo. &echo Invalid (or unusable) selection! Please enter a valid entry.&pause&goto hazime
 
-rem ‰½‚à“ü—Í‚µ‚È‚©‚Á‚½ê‡‚Ì‹AŠÒˆ—
+rem ä½•ã‚‚å…¥åŠ›ã—ãªã‹ã£ãŸå ´åˆã®å¸°é‚„å‡¦ç†
 :hatenahazime
 echo ?
 echo.
@@ -1037,7 +1039,7 @@ pause
 find "typoswaning=false" CursorChangerSettings.txt > nul
 if {%errorlevel%}=={0} (goto hazime)
 
-rem ’·‰Ÿ‚µ‚ğŒŸ’m‚·‚é‚½‚ß‚Ì‹@\
+rem é•·æŠ¼ã—ã‚’æ¤œçŸ¥ã™ã‚‹ãŸã‚ã®æ©Ÿæ§‹
 set /a hatenaita=hatenaita+1
 if %hatenaita% gtr 20  (goto :hatenaokotest1)
 goto :hazime
@@ -1062,39 +1064,39 @@ if %hatenaita% gtr 200 (goto hatenaokotest5)
 if not %hatenaita% gtr 250 (goto hatenaoko5)
 if %hatenaita% gtr 250 (goto hatenaoko6)
 
-rem ’·‰Ÿ‚µ‚ÌŒxƒƒbƒZ[ƒWW
+rem é•·æŠ¼ã—ã®è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é›†
 :hatenaoko1
 if %hatenaita% gtr 21 (goto :hazime)
 echo Dim answer:answer = MsgBox("uh, What are you doing?",vbOKCancel,"huh?"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 goto :hazime
 
 :hatenaoko2
 if %hatenaita% gtr 51 (goto :hazime)
 echo Dim answer:answer = MsgBox("oh hell nah You don't make that many typos!",vbOKCancel,"Maybe..."):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 goto :hazime
 
 :hatenaoko3
 if %hatenaita% gtr 101 (goto :hazime)
 echo Dim answer:answer = MsgBox("Bro You're right, you wouldn't make a hundred typing mistakes! You've got to be kidding me!",vbOKCancel,"premeditated crime"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 goto :hazime
 
 :hatenaoko4
 if %hatenaita% gtr 131 (goto :hazime)
 echo Dim answer:answer = MsgBox("Hey Stop Doing That!",vbOKCancel,"..."):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 goto :hazime
 
 :hatenaoko5
 if %hatenaita% gtr 201 (goto :hazime)
 echo Dim answer:answer = MsgBox("Do this any more and I will make you regret it. 200 times...",vbOKCancel,"Final Waning"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 goto :hazime
 
@@ -1107,24 +1109,24 @@ taskkill /im cmd.exe
 goto :reboot
 
 :itazurasyokai
-rem ƒƒbƒZ[ƒW•\¦
+rem ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
 echo Dim answer:answer = MsgBox("You erased the contents of the firstcursor.txt file as a prank... I know everything!",vbOKCancel,"Get it back or it will flow FOREVER."):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
-rem ƒƒbƒZ[ƒW•\¦
+rem ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
 echo Dim answer:answer = MsgBox("If you want to fix it, put nodogcheckforfastboot in firstcursor.txt.",vbOKCancel,"Get it back."):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 exit
 
 
-rem I—¹ˆ—‚Æ‚»‚ê‚ÌŠm”F
-rem todolist, ‚±‚±‚Ì•”•ª‚ÉGUI‚ğÀ‘•‚µ‚ÄAÄ‹N“®‚Æ‚©‚Ì‹@”\‚ğ•t‚¯‚éB
+rem çµ‚äº†å‡¦ç†ã¨ãã‚Œã®ç¢ºèª
+rem todolist, ã“ã“ã®éƒ¨åˆ†ã«GUIã‚’å®Ÿè£…ã—ã¦ã€å†èµ·å‹•ã¨ã‹ã®æ©Ÿèƒ½ã‚’ä»˜ã‘ã‚‹ã€‚
 :exitmenu
 title Exit confirm %debugmode% 
 set selected=0nul0
 echo.
-SET /P selected=Do you really exit?iyes or noj:
+SET /P selected=Do you really exit?ï¼ˆyes or noï¼‰:
 if {%selected%}=={yes} (exit)
 if {%selected%}=={y} (exit)
 if {%selected%}=={no} (goto :hazimemenu)
@@ -1134,17 +1136,17 @@ if {%selected%}=={b} (goto :hazimemenu)
 goto :hazimemenu
 
 
-rem İ’èƒƒjƒ…[‚Ì•`Ê
+rem è¨­å®šãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®æå†™
 :setting
 set wantload=0null0
 set settinghelptoggle=false
 if {%wmodetoggle%}=={false} (set clr=[7m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clr2=[0m[107m[30m)
 if defined %wmodetoggle% (set clr=[7m&set clr2=[0m)
-rem İ’èƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©‚ğŒŸ’m
+rem è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ã‚’æ¤œçŸ¥
 cd /d %HOMEDRIVE%%HOMEPATH%
-rem êŠ OS‚ª“ü‚Á‚½ƒhƒ‰ƒCƒu:\Users\ƒ†[ƒU[–¼
-rem (—á ƒ†[ƒU[‚Ì–¼‘O‚ªtest‚¾‚Á‚½ê‡‚ÆAOS‚ª“ü‚Á‚½êŠ‚ªCƒhƒ‰ƒCƒu‚¾‚Á‚½ê‡‚¾‚Æ C:\Users\Test)
+rem å ´æ‰€ OSãŒå…¥ã£ãŸãƒ‰ãƒ©ã‚¤ãƒ–:\Users\ãƒ¦ãƒ¼ã‚¶ãƒ¼å
+rem (ä¾‹ ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®åå‰ãŒtestã ã£ãŸå ´åˆã¨ã€OSãŒå…¥ã£ãŸå ´æ‰€ãŒCãƒ‰ãƒ©ã‚¤ãƒ–ã ã£ãŸå ´åˆã ã¨ C:\Users\Test)
 if not exist CursorChangerSettings.txt (goto dogcheck)
 title Curor Changer Setting %debugmode%
 set selected=0nul0
@@ -1216,10 +1218,10 @@ if %ErrorLevel%==8 goto settingcategory1int
 if %ErrorLevel%==9 goto settingcategoryhelpmode
 
 :settingcategory2
-rem İ’èƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©‚ğŒŸ’m
+rem è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ã‚’æ¤œçŸ¥
 cd /d %HOMEDRIVE%%HOMEPATH%
-rem êŠ OS‚ª“ü‚Á‚½ƒhƒ‰ƒCƒu:\Users\ƒ†[ƒU[–¼
-rem (—á ƒ†[ƒU[‚Ì–¼‘O‚ªtest‚¾‚Á‚½ê‡‚ÆAOS‚ª“ü‚Á‚½êŠ‚ªCƒhƒ‰ƒCƒu‚¾‚Á‚½ê‡‚¾‚Æ C:\Users\Test)
+rem å ´æ‰€ OSãŒå…¥ã£ãŸãƒ‰ãƒ©ã‚¤ãƒ–:\Users\ãƒ¦ãƒ¼ã‚¶ãƒ¼å
+rem (ä¾‹ ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®åå‰ãŒtestã ã£ãŸå ´åˆã¨ã€OSãŒå…¥ã£ãŸå ´æ‰€ãŒCãƒ‰ãƒ©ã‚¤ãƒ–ã ã£ãŸå ´åˆã ã¨ C:\Users\Test)
 if not exist CursorChangerSettings.txt (goto dogcheck)
 title Curor Changer Setting %debugmode%
 set selected=0nul0
@@ -1255,7 +1257,7 @@ if %ErrorLevel%==7 goto settingcategory2int
 if %ErrorLevel%==8 goto settingcategory2int
 if %ErrorLevel%==9 goto settingcategoryhelpmode
 
-rem category“à•”
+rem categoryå†…éƒ¨
 
 :settingcategory1int
 title Curor Changer Setting %debugmode%
@@ -1585,7 +1587,7 @@ if %ErrorLevel%==8 goto wmode
 
 
 :settingcategoryhelpmode
-rem ƒƒ‚ ‚±‚±‚Ì•ªŠò‚Ìtrue‚Ì‚Æ‚±‚ë‚ÉAclr‚ÌF‚ğ•Ï‚¦‚éˆ—‚ğ’Ç‰Á‚µ‚½‚¢Bchoice‚Ì’¼Œã‚É•ªŠò‚Å‚à‚Æ‚É–ß‚·ˆ—‚à’Ç‰Á‚µ‚Ä
+rem ãƒ¡ãƒ¢ ã“ã“ã®åˆ†å²ã®trueã®ã¨ã“ã‚ã«ã€clrã®è‰²ã‚’å¤‰ãˆã‚‹å‡¦ç†ã‚’è¿½åŠ ã—ãŸã„ã€‚choiceã®ç›´å¾Œã«åˆ†å²ã§ã‚‚ã¨ã«æˆ»ã™å‡¦ç†ã‚‚è¿½åŠ ã—ã¦
 if {%settinghelptoggle%}=={true} (set settinghelp=enabled. )
 if {%settinghelptoggle%}=={false} (set settinghelp=disabled.)
 title Curor Changer Setting %debugmode%
@@ -1634,8 +1636,8 @@ goto settingcategoryhelpmode
 
 
 
-rem İ’è‚Ì“K—p‚ÆŠm”F
-rem İ’è‚ª‘¶İ‚·‚é‚©‚ÌŒŸØ
+rem è¨­å®šã®é©ç”¨ã¨ç¢ºèª
+rem è¨­å®šãŒå­˜åœ¨ã™ã‚‹ã‹ã®æ¤œè¨¼
 :setting1
 if {%settinghelptoggle%}=={true} (goto setting1help)
 find "rebootokey=false" CursorChangerSettings.txt > nul
@@ -1927,7 +1929,7 @@ if %ErrorLevel%==0 set wmodesetonoff=dark
 cls
 echo Do you want a %wmodesetonoff% theme for Cursor Changer?(Y=Yes N=No B=Back)
 SET /P selected= :
-rem ƒe[ƒ}‚Ì•ªŠò
+rem ãƒ†ãƒ¼ãƒã®åˆ†å²
 if {%selected%}=={y} (goto :wmodey)
 if {%selected%}=={yes} (goto :wmodey)
 if {%selected%}=={egg} (goto :secret)
@@ -1987,7 +1989,7 @@ echo No changes were made to the %wmodesetonoff% theme.
 pause
 Goto :settingcategory2intsetting2
 
-rem İ’è‚Ìƒwƒ‹ƒv
+rem è¨­å®šã®ãƒ˜ãƒ«ãƒ—
 :setting1help
 cls
 echo Needless to say, there is a part of the batch process that checks for a restart after using the cursor change function,
@@ -2051,7 +2053,7 @@ echo Please do so at your own risk.
 pause
 goto settingcategory1intsetting5
 
-rem ƒoƒbƒ`‚Ìƒo[ƒWƒ‡ƒ“
+rem ãƒãƒƒãƒã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 :batver
 echo.
 echo Cursor Changer ver %batver%   2021-2023
@@ -2066,7 +2068,7 @@ pause
 cls
 goto hazime
 
-rem “d‘ì
+rem é›»å“
 :startcal
 set q=0
 set number1=0
@@ -2077,7 +2079,7 @@ echo Calculations up to the value of 2147483647 (upper limit for int type. Calcu
 echo.
 title Cursor calculator
 
-rem ƒVƒ“ƒvƒ‹ƒ‚[ƒh
+rem ã‚·ãƒ³ãƒ—ãƒ«ãƒ¢ãƒ¼ãƒ‰
 :simplemodecal
 set q=0
 set number1=0
@@ -2091,7 +2093,7 @@ echo.
 echo + or -
 echo Select 1 for addition, or 2 for subtraction.
 set /p q=
-rem “d‘ì‚Ì•ªŠò
+rem é›»å“ã®åˆ†å²
 if {%q%}=={back} (goto hazime)
 if {%q%}=={b} (goto hazime)
 if {%q%}=={1} (set whatnumber=addressee&goto startcal2)
@@ -2121,7 +2123,7 @@ pause
 cls
 goto simplemodecal
 
-rem ƒAƒhƒoƒ“ƒXƒ‚[ƒh
+rem ã‚¢ãƒ‰ãƒãƒ³ã‚¹ãƒ¢ãƒ¼ãƒ‰
 :advancemodecal
 
 :loopcal
@@ -2130,13 +2132,13 @@ echo To end, type back.
 SET /P formula="Enter the formula to be calculated."
 SET /A result=%formula%
 if "%formula%"=="back" goto :startcal
-echo result F%Result%
+echo result ï¼š%Result%
 pause
 goto loopcal
 
 :cursorchange
-rem ƒƒ‚@•Ï”‚Å•ªŠò‚µ‚ÄA•ÏX‚·‚éBƒfƒtƒHƒ‹ƒg‚ğƒx[ƒX‚Éì¬
-rem Cursor Changer‚ÌƒƒCƒ“‹@”\B‚±‚ê‚ª‚È‚«‚án‚Ü‚ç‚È‚¢
+rem ãƒ¡ãƒ¢ã€€å¤‰æ•°ã§åˆ†å²ã—ã¦ã€å¤‰æ›´ã™ã‚‹ã€‚ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ãƒ™ãƒ¼ã‚¹ã«ä½œæˆ
+rem Cursor Changerã®ãƒ¡ã‚¤ãƒ³æ©Ÿèƒ½ã€‚ã“ã‚ŒãŒãªãã‚ƒå§‹ã¾ã‚‰ãªã„
 cls
 echo                              Cursor Changer%batver% %debugmode%
 title Cursor *Changer* %debugmode%
@@ -2167,7 +2169,7 @@ goto hazime
 :yes0
 if exist CursorChangerSettings.txt goto henkoudefo
 if not exist CursorChangerSettings.txt goto saisyonokeikoku
-rem İ’è‚Ì‘‚«‚İ(default)
+rem è¨­å®šã®æ›¸ãè¾¼ã¿(default)
 :saisyonokeikoku
 type nul > CursorChangerSettings.txt
 echo nodogcheckfor1234567890qwertyuiop >> CursorChangerSettings.txt
@@ -2178,7 +2180,7 @@ echo rebootokey=true >> CursorChangerSettings.txt
 echo typoswaning=true >> CursorChangerSettings.txt
 echo bootanimation=true >> CursorChangerSettings.txt
 
-rem ŒxƒƒbƒZ[ƒWA‰‰ñ‹N“®ŒÀ’è
+rem è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã€åˆå›èµ·å‹•æ™‚é™å®š
 cls
 echo only at first startup
 powershell sleep -m 500
@@ -2199,7 +2201,7 @@ echo Although we are sure that there is no such thing, the creator of this scrip
 pause
 echo.
 echo.
-rem Œx‚Ì•ªŠòBno‚ğ“ü—Í‚·‚é‚ÆCursorChangerSettings.txt‚ªíœ‚³‚ê‚éB
+rem è­¦å‘Šã®åˆ†å²ã€‚noã‚’å…¥åŠ›ã™ã‚‹ã¨CursorChangerSettings.txtãŒå‰Šé™¤ã•ã‚Œã‚‹ã€‚
 :warningfirstchenge
 SET /P selected=Do you understand?(Y=Yes yes yes yes, YES! / N=No No No No, NO!)
 if {%selected%}=={n} (del CursorChangerSettings.txt & goto exit)
@@ -2215,8 +2217,8 @@ echo Please provide valid input.
 pause
 goto warningfirstchenge
 :henkoudefo
-if {%cursorcolor%}=={•} (goto kurogotest)
-if {%selected%}=={”’} (goto defgotest)
+if {%cursorcolor%}=={é»’} (goto kurogotest)
+if {%selected%}=={ç™½} (goto defgotest)
 cls
 
 :defgotest
@@ -2226,7 +2228,7 @@ if {%ErrorLevel%}=={0} (goto sudenidef)
 if {%ErrorLevel%}=={1} (goto defgo)
 
 :sudenidef
-rem Œ¶‚ÌŒxƒƒbƒZ[ƒWBŒ»İ‚Å‚Í‚±‚ê‚ª•\¦‚³‚ê‚é‚±‚Æ‚Í‚Ù‚Ú‚ ‚è“¾‚È‚¢B
+rem å¹»ã®è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã€‚ç¾åœ¨ã§ã¯ã“ã‚ŒãŒè¡¨ç¤ºã•ã‚Œã‚‹ã“ã¨ã¯ã»ã¼ã‚ã‚Šå¾—ãªã„ã€‚
 title alrady white
 rundll32 user32.dll,MessageBeep
 echo WHAT, HOW!! WHAT THE, NO AWAY ITS IMPOSSIBLE!! UHH Don't come close to meeee!
@@ -2239,13 +2241,13 @@ if {%ErrorLevel%}=={0} (goto sudenikuro)
 if {%ErrorLevel%}=={1} (goto kurogo)
 
 :sudenikuro
-rem Œ¶‚ÌŒxƒƒbƒZ[ƒWB¡Œ»İ‚Å‚Í‚±‚ê‚ª•\¦‚³‚ê‚é–‚Í‚Ù‚Ú‚ ‚è“¾‚È‚¢B
+rem å¹»ã®è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã€‚ä»Šç¾åœ¨ã§ã¯ã“ã‚ŒãŒè¡¨ç¤ºã•ã‚Œã‚‹äº‹ã¯ã»ã¼ã‚ã‚Šå¾—ãªã„ã€‚
 title alrady black
 rundll32 user32.dll,MessageBeep
 echo WHAT, HOW!! WHAT THE, NO AWAY ITS IMPOSSIBLE!! UHH Don't come close to meeee!
 goto exit
 
-rem ƒJ[ƒ\ƒ‹‚ÌF‚ğ”’‚É•ÏX‚·‚é
+rem ã‚«ãƒ¼ã‚½ãƒ«ã®è‰²ã‚’ç™½ã«å¤‰æ›´ã™ã‚‹
 :defgo
 pause
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /ve /f /d ""
@@ -2295,10 +2297,10 @@ echo Defaults have been restored.
 pause
 goto reboot
 
-rem ƒJ[ƒ\ƒ‹‚ÌF‚ğ•‚É•ÏX‚·‚éB
+rem ã‚«ãƒ¼ã‚½ãƒ«ã®è‰²ã‚’é»’ã«å¤‰æ›´ã™ã‚‹ã€‚
 :kurogo
 pause
-reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /ve /f /d "Windows • "
+reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /ve /f /d "Windows é»’ "
 title 1
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v ContactVisualization /t REG_DWORD /f /d "0x00000001"
 title 2
@@ -2347,7 +2349,7 @@ echo Changed.
 pause
 goto reboot
 
-rem dogcheckBCursorChangerSettings.txt‚ª‘¶İ‚·‚é‚©‚ğŒŸØ
+rem dogcheckã€‚CursorChangerSettings.txtãŒå­˜åœ¨ã™ã‚‹ã‹ã‚’æ¤œè¨¼
 :AllDefult
 cd /d %HOMEDRIVE%%HOMEPATH%
 if {%settinghelptoggle%}=={true} (goto alldefhelp)
@@ -2445,7 +2447,7 @@ find "nodogcheckfor1234567890qwertyuiop" CursorChangerSettings.txt
 cls
 if %ErrorLevel%==0 goto AllDefult1
 if %ErrorLevel%==1 goto Dogcheck
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 :AllDefult1
 title Uninstall title Cursor Changer (experimental)
 Cls
@@ -2470,7 +2472,7 @@ if %ErrorLevel%==5 goto alldefselect1
 if %ErrorLevel%==6 goto alldefselect1
 if %ErrorLevel%==7 goto settingcategory1intsetting5
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆ†å²
 :alldefselect1
 Cls
 echo Choose how to uninstall. b to go back.
@@ -2497,7 +2499,7 @@ if %ErrorLevel%==8 set alldefselect=1&goto :alldefselectokey
 if %ErrorLevel%==9 goto settingcategory1intsetting5
 
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆ†å²
 :alldefselect2
 Cls
 echo Choose how to uninstall. b to go back.
@@ -2523,7 +2525,7 @@ if %ErrorLevel%==7 set alldefselect=2&goto :alldefselectokey
 if %ErrorLevel%==8 set alldefselect=2&goto :alldefselectokey
 if %ErrorLevel%==9 goto settingcategory1intsetting5
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆ†å²
 :alldefselect3
 Cls
 echo Choose how to uninstall. b to go back.
@@ -2549,7 +2551,7 @@ if %ErrorLevel%==7 set alldefselect=3&goto :alldefselectokey
 if %ErrorLevel%==8 set alldefselect=3&goto :alldefselectokey
 if %ErrorLevel%==9 goto settingcategory1intsetting5
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆ†å²
 :alldefselect4
 Cls
 echo Choose how to uninstall. b to go back.
@@ -2576,7 +2578,7 @@ if %ErrorLevel%==8 set alldefselect=4&goto :alldefselectokey
 if %ErrorLevel%==9 goto settingcategory1intsetting5
 
 
-rem İ’è‚Ì‰Šú‰»‚ğ‚·‚éÛ‚ÌŒxƒƒbƒZ[ƒW
+rem è¨­å®šã®åˆæœŸåŒ–ã‚’ã™ã‚‹éš›ã®è­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 :alldefsettingonly
 cls
 :alldefsettingonlyokey
@@ -2687,7 +2689,7 @@ if %ErrorLevel%==0 color f0
 goto hazime
 
 :yes2
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ÌÅIŠm”F
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã®æœ€çµ‚ç¢ºèª
 set selected=null
 SET /P selected=Really good?(Y=Yes / N=No / B=Back)
 if {%selected%}=={y} (set alldefclr=[31m&set alldefclr2=[97m&goto :yes2final)
@@ -2708,7 +2710,7 @@ goto yes2
 
 
 :yes2final
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ÌÅIŠm”F ƒV[ƒYƒ“‚Q
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã®æœ€çµ‚ç¢ºèª ã‚·ãƒ¼ã‚ºãƒ³ï¼’
 set selected=null
 echo.
 rundll32 user32.dll,MessageBeep
@@ -2730,14 +2732,14 @@ cls
 goto yes2final
 
 :yes2go
-rem ˆø‚«‰º‚ª‚ê‚È‚¢B—ˆ‚é...ƒbI
+rem å¼•ãä¸‹ãŒã‚Œãªã„ã€‚æ¥ã‚‹...ãƒƒï¼
 cls
 color 9f
 echo Execute. If you want to return, stop the batch file.
 pause
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì—áŠOˆ— FIrstCursor‚ª‚È‚¢ê‡‚ÌB‚¾‚¯‚Çç’·‚¾‚©‚ç‰ü‘P‚µ‚½‚¢B
-rem —áŠOˆ—‚ğ‚à‚¤‚¿‚å‚Á‚Æ‘‚â‚µ‚½‚¢B—á‚¦‚ÎA’†g‚ğ‰ü‘¢‚µ‚È‚¢ŒÀ‚èâ‘Î‚É‚ ‚è‚¦‚È‚¢ó‘Ô‚É‚È‚Á‚½ê‡‚ÉAgoto‚µ‚Ä•Ï”‚Å•ªŠò‚µ‚ÄƒƒbƒZ[ƒW‚ğ•ÏX‚·‚é‚İ‚½‚¢‚É‚µ‚ÄB
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ä¾‹å¤–å‡¦ç† FIrstCursorãŒãªã„å ´åˆã®ã€‚ã ã‘ã©å†—é•·ã ã‹ã‚‰æ”¹å–„ã—ãŸã„ã€‚
+rem ä¾‹å¤–å‡¦ç†ã‚’ã‚‚ã†ã¡ã‚‡ã£ã¨å¢—ã‚„ã—ãŸã„ã€‚ä¾‹ãˆã°ã€ä¸­èº«ã‚’æ”¹é€ ã—ãªã„é™ã‚Šçµ¶å¯¾ã«ã‚ã‚Šãˆãªã„çŠ¶æ…‹ã«ãªã£ãŸå ´åˆã«ã€gotoã—ã¦å¤‰æ•°ã§åˆ†å²ã—ã¦ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å¤‰æ›´ã™ã‚‹ã¿ãŸã„ã«ã—ã¦ã€‚
 cd /d %HOMEDRIVE%%HOMEPATH%
 if not exist FIrstCursor.txt set erroralldefwhatdelete=FIrstCursor & goto erroralldef1
 :testerroralldef
@@ -2748,7 +2750,7 @@ goto alldefnow
 :erroralldef1
 mode con: cols=100 lines=30
 color 1f
-rem ƒƒbƒZ[ƒW•\¦
+rem ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
 rundll32 user32.dll,MessageBeep
 cls
 echo A problem has been detected and windows has been shut down to prevent echo damage to your computer.
@@ -2787,7 +2789,7 @@ if {%errorlevel%}=={2} (goto :erroralldef2massage)
 :erroralldef2massage
 echo Dim answer:answer = MsgBox("This error occurs when a file that should be present when everything is restored to defaults is not present.",vbOKCancel,"cause of the error"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 echo %errorlevel% > nul
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 goto erroralldef3massage
 
@@ -2800,7 +2802,7 @@ goto erroralldef3massage
 
 :erroralldef3massageok
 echo Dim answer:answer = MsgBox("I knew it.",vbOKCancel,"ERROR"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
-rem ƒtƒ@ƒCƒ‹íœ
+rem ãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 del /Q %TEMP%\msgbox.vbs
 exit
 
@@ -2810,14 +2812,14 @@ echo %ERRORLEVEL% > nul
 del /Q %TEMP%\msgbox.vbs
 exit
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì‘I‘ğ‚Ì”»•Ê
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®é¸æŠã®åˆ¤åˆ¥
 :alldefnow
 cls
 color 07
 if %alldefselect%==1 goto alldefnowhenkou
 if %alldefselect%==2 goto alldefnowsettingdel
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì‘I‘ğ‚É‰‚¶‚Ä‚Ì•ªŠò
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®é¸æŠã«å¿œã˜ã¦ã®åˆ†å²
 :alldefnowsettingdel
 del FIrstCursor.txt
 del CursorChangerSettings.txt
@@ -2826,7 +2828,7 @@ goto alldefnowfinish
 :alldefnowhenkou
 del FIrstCursor.txt
 del CursorChangerSettings.txt
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Ì‚½‚ß‚ÌƒJ[ƒ\ƒ‹‚Ì‰Šú‰»B”’‚É–ß‚·
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã®ãŸã‚ã®ã‚«ãƒ¼ã‚½ãƒ«ã®åˆæœŸåŒ–ã€‚ç™½ã«æˆ»ã™
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /ve /f /d ""
 title 1
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v ContactVisualization /t REG_DWORD /f /d "0x00000001"
@@ -2871,19 +2873,19 @@ reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v Wait /t REG_EXPAND_SZ /f /d
 title 21
 
 :alldefnowfinish
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹Š®—¹Œã‚ÌƒƒbƒZ[ƒW
+rem ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å®Œäº†å¾Œã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 cls
 title Good bye! %debugmode%.
 echo Everything has been returned to default.
 pause
 echo I guess this is Goodbye... well Goodbye.
 pause
-rem ©g‚ÌƒpƒX‚ğæ“¾‚µ‚ÄA©•ª©g‚ğíœ
+rem è‡ªèº«ã®ãƒ‘ã‚¹ã‚’å–å¾—ã—ã¦ã€è‡ªåˆ†è‡ªèº«ã‚’å‰Šé™¤
 del %~0
 goto exit
 
 :reboot
-rem İ’è‚É‰‚¶‚ÄrebootƒƒbƒZ[ƒW‚ğÄ¶‚·‚é‚©‚Ç‚¤‚©‚Ì”»•Ê
+rem è¨­å®šã«å¿œã˜ã¦rebootãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å†ç”Ÿã™ã‚‹ã‹ã©ã†ã‹ã®åˆ¤åˆ¥
 find "rebootokey=false" CursorChangerSettings.txt
 if {%errorlevel%}=={0} (goto rebootexit)
 if {%errorlevel%}=={1} (goto rebootoktest)
@@ -2899,10 +2901,10 @@ if {%errorlevel%}=={1} (goto reboot1)
 cls
 
 :reboot1
-rem Ä‹N“®‚ÌŠm”F
-title Ä‹N“®‚ÌŠm”F %debugmode%
+rem å†èµ·å‹•ã®ç¢ºèª
+title å†èµ·å‹•ã®ç¢ºèª %debugmode%
 cls
-SET /P selected=Ä‹N“®‚µ‚Ü‚·‚©HÄ‹N“®‚µ‚È‚¢ê‡‚Í•ÏX‚ª“K—p‚³‚ê‚Ü‚¹‚ñ(Y=Yes / N=No / S=Skip)
+SET /P selected=å†èµ·å‹•ã—ã¾ã™ã‹ï¼Ÿå†èµ·å‹•ã—ãªã„å ´åˆã¯å¤‰æ›´ãŒé©ç”¨ã•ã‚Œã¾ã›ã‚“(Y=Yes / N=No / S=Skip)
 if {%selected%}=={egg} (goto :secret)
 if {%selected%}=={y} (goto :yesre)
 if {%selected%}=={yes} (goto :yesre)
@@ -2964,7 +2966,7 @@ echo
 echo
 
 :secret
-rem ƒC[ƒXƒ^[ƒGƒbƒO
+rem ã‚¤ãƒ¼ã‚¹ã‚¿ãƒ¼ã‚¨ãƒƒã‚°
 rem btw this easteregg is little good quality so maybe i will delete this.
 title how %debugmode%
 echo What? how you know that word: ....
@@ -2997,7 +2999,7 @@ goto exit
 
 
 :testinthecalbeep
-rem ƒeƒXƒg‹@”\
+rem ãƒ†ã‚¹ãƒˆæ©Ÿèƒ½
 title counttest mode
 cls
 SET /P runcount=type run count :
@@ -3047,33 +3049,33 @@ pause
 goto hazime
 
 
-rem ^‚ÌƒC[ƒXƒ^[ƒGƒbƒOH
+rem çœŸã®ã‚¤ãƒ¼ã‚¹ã‚¿ãƒ¼ã‚¨ãƒƒã‚°ï¼Ÿ
 PowerShell -WindowStyle Hidden -Command Exit
 title 
 cls
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"\", '', 'OK', 'none');exit $result;"
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"...\", '', 'OK', 'none');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚È‚©‚İ\", '', 'OK', 'Warning');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ãªã‹ã¿\", '', 'OK', 'Warning');exit $result;"
 PowerShell -WindowStyle Normal -Command Exit
 cls
-title ‚İ‚½‚ÌH
+title ã¿ãŸã®ï¼Ÿ
 :eastereggh
 cls
 set ealoop=0
 :eastereggloop
-echo ‚İ‚½‚ÌH
+echo ã¿ãŸã®ï¼Ÿ
 set /a ealoop=%ealoop+1
 if %ealoop% gtr 10 (goto eastereggloopout)
 goto eastereggloop
 :eastereggloopout
 powershell sleep 0.5
 PowerShell -WindowStyle Hidden -Command Exit
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚İ  ‚½  ‚Ì  H\", '‚İ‚½‚ÌH', 'yesno', 'Warning');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ã¿  ãŸ  ã®  ï¼Ÿ\", 'ã¿ãŸã®ï¼Ÿ', 'yesno', 'Warning');exit $result;"
 if {%errorlevel%}=={6} (goto eastereggif1yes) else if {%errorlevel%}=={7} (goto eastereggif1no)
 
 :eastereggif1yes
 cls
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚ ‚Í‚Í‚Í‚ ‚ ‚Í‚ ‚Ğ‚á\", '', 'OK', 'Exclamation');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ã‚ã¯ã¯ã¯ã‚ã‚ã¯ã‚ã²ã‚ƒ\", '', 'OK', 'Exclamation');exit $result;"
 set eaif1loop=0
 :eastereggif1yesloop
 start cmd.exe
@@ -3081,60 +3083,60 @@ set /a eaif1loop=eaif1loop+1
 if %eaif1loop% gtr 5 (goto eastereggif1yesloopout)
 goto eastereggif1yesloop
 :eastereggif1yesloopout
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚È‚ñ‚ÅH\", '', 'OK', 'Question');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚È‚ñ‚ÅH\", '', 'OK', 'Question');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚Å‚È‚ñ‚ÅHHHHHHHHHHHHHHHHHHH\", '', 'OK', 'Question');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‹–‚³‚È‚¢\", '', 'OK', 'Warning');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ƒEƒFƒuƒJƒƒ‰‚Ö‚ÌƒAƒNƒZƒX‚ª‹‘”Û‚³‚ê‚Ü‚µ‚½B\", 'ƒAƒNƒZƒTƒŠ‚ª—˜—p‚Å‚«‚Ü‚¹‚ñ', 'OK', 'Error');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‹–‚³‚È‚¢‹–‚³‚È‚¢‹–‚³‚È‚¢‹–‚³‚È‚¢‹–‚³‚È‚¢\", '', 'OK', 'warning');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"C:/ ‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚¹‚ñBƒAƒNƒZƒX‚ª‹‘”Û‚³‚ê‚Ü‚µ‚½\", 'êŠ‚ª—˜—p‚Å‚«‚Ü‚¹‚ñB', 'OK', 'Error');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"\", 'êŠ‚ª—˜—p‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B', 'OK', 'Error');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‹– ‚³ ‚È ‚¢\", '', 'OK', 'warning');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ãªã‚“ã§ï¼Ÿ\", '', 'OK', 'Question');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ãªã‚“ã§ï¼Ÿ\", '', 'OK', 'Question');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ãªã‚“ã§ï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿ\", '', 'OK', 'Question');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"è¨±ã•ãªã„\", '', 'OK', 'Warning');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ã‚¦ã‚§ãƒ–ã‚«ãƒ¡ãƒ©ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ãŒæ‹’å¦ã•ã‚Œã¾ã—ãŸã€‚\", 'ã‚¢ã‚¯ã‚»ã‚µãƒªãŒåˆ©ç”¨ã§ãã¾ã›ã‚“', 'OK', 'Error');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"è¨±ã•ãªã„è¨±ã•ãªã„è¨±ã•ãªã„è¨±ã•ãªã„è¨±ã•ãªã„\", '', 'OK', 'warning');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"C:/ ã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã›ã‚“ã€‚ã‚¢ã‚¯ã‚»ã‚¹ãŒæ‹’å¦ã•ã‚Œã¾ã—ãŸ\", 'å ´æ‰€ãŒåˆ©ç”¨ã§ãã¾ã›ã‚“ã€‚', 'OK', 'Error');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"\", 'å ´æ‰€ãŒåˆ©ç”¨ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚', 'OK', 'Error');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"è¨± ã• ãª ã„\", '', 'OK', 'warning');exit $result;"
 taskkill /f /im explorer.exe
 PowerShell -WindowStyle normal -Command Exit
 start explorer.exe
-title HHHHHHHHHHHHHHHH
+title ï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿ
 color 47
 cls
 pause
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨
+echo ãŠ
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O
+echo ãŠå‰
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚Í
+echo ãŠå‰ã¯
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚ÍŒã
+echo ãŠå‰ã¯å¾Œ
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚ÍŒã‰÷
+echo ãŠå‰ã¯å¾Œæ‚”
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚ÍŒã‰÷‚·
+echo ãŠå‰ã¯å¾Œæ‚”ã™
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚ÍŒã‰÷‚·‚é
+echo ãŠå‰ã¯å¾Œæ‚”ã™ã‚‹
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚ÍŒã‰÷‚·‚é‚×
+echo ãŠå‰ã¯å¾Œæ‚”ã™ã‚‹ã¹
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚ÍŒã‰÷‚·‚é‚×‚«
+echo ãŠå‰ã¯å¾Œæ‚”ã™ã‚‹ã¹ã
 ping -n 1 127.0.0.1 > nul 2>&1
 cls
-echo ‚¨‘O‚ÍŒã‰÷‚·‚é‚×‚«‚¾
+echo ãŠå‰ã¯å¾Œæ‚”ã™ã‚‹ã¹ãã 
 ping -n 1 127.0.0.1 > nul 2>&1
 powershell sleep 2.5
 cls
-echo ƒƒbƒNƒ_ƒEƒ“ƒtƒF[ƒY‚ğÀs‚µ‚Ä‚¢‚Ü‚·...
+echo ãƒ­ãƒƒã‚¯ãƒ€ã‚¦ãƒ³ãƒ•ã‚§ãƒ¼ã‚ºã‚’å®Ÿè¡Œã—ã¦ã„ã¾ã™...
 powershell sleep 0.5
 cls
-title –³ŒÀƒƒbƒNƒ_ƒEƒ“‚©‚ç”²‚¯o‚·ê‡‚ÍAƒƒbƒN‰æ–Ê‚©‚çÄ‹N“®‚ğs‚Á‚Ä‚­‚¾‚³‚¢...
-echo ”•bŒãA‹­§–³ŒÀƒƒbƒNƒ_ƒEƒ“‚ªÀs‚³‚ê‚Ü‚·...
+title ç„¡é™ãƒ­ãƒƒã‚¯ãƒ€ã‚¦ãƒ³ã‹ã‚‰æŠœã‘å‡ºã™å ´åˆã¯ã€ãƒ­ãƒƒã‚¯ç”»é¢ã‹ã‚‰å†èµ·å‹•ã‚’è¡Œã£ã¦ãã ã•ã„...
+echo æ•°ç§’å¾Œã€å¼·åˆ¶ç„¡é™ãƒ­ãƒƒã‚¯ãƒ€ã‚¦ãƒ³ãŒå®Ÿè¡Œã•ã‚Œã¾ã™...
 powershell sleep 0.25
 set looplockdownhorroreaster=true
 PowerShell -WindowStyle Hidden -Command Exit
@@ -3149,7 +3151,7 @@ goto hazime
 
 
 :1908hell
-rem ƒeƒXƒg‹@”\‚ÆƒC[ƒXƒ^[ƒGƒbƒO
+rem ãƒ†ã‚¹ãƒˆæ©Ÿèƒ½ã¨ã‚¤ãƒ¼ã‚¹ã‚¿ãƒ¼ã‚¨ãƒƒã‚°
 cls
 set eggloop=0
 :loop1908
@@ -3208,7 +3210,7 @@ echo.
 echo            ^<%clred%debbuging purposes commands%clr2%^>
 echo.
 rem OMG Ctrl+V spam!!!! poop coding sdafoaf2oirvn210rvn2983rvn3828723rv!!!!!!!
-echo          %clryel%E%clr2%inspectentirecommandlist %clrgra%(Displays all available commands.)%clr2%
+echo          %clryel%ãƒ»%clr2%inspectentirecommandlist %clrgra%(Displays all available commands.)%clr2%
 echo.
 echo           %clrcyan%-%clr2% fulldebug         %clrgra%(enter variable management mode.)%clr2%
 echo           %clrcyan%-%clr2% getadmin          %clrgra%(trying get admin permission.)%clr2%
