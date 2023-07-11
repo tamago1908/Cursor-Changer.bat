@@ -2,7 +2,7 @@
 > *Translate progress :* ***98.999%***
 
 # - **Latest News** -
-Update and New UI (2023/07/12)
+Update and New UI (2023/07/12)  
 Currently, the update confirmation feature is finally taking shape. There are few problems, so it looks like it could be implemented as a trial feature, but it is not refined yet. Still, it will probably be implemented in the next update. (maybe around 1.13β1 or later)
 However, there are many features I want to implement, so it will take time to update. Currently, the Bat version menu has only simple functions, but 1.13 will have many more. The UI will be similar to the current settings menu, and the aforementioned update confirmation function will be implemented there... Something like that. This is just an ideal, but I have a plan.
 
