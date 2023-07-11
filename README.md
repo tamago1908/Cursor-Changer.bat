@@ -1,15 +1,11 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***98%***
+> *Translate progress :* ***98.999%***
 
 # - **Latest News** -
-### Self update and sumcheck (2023/06/30)
-Hi, I wanted to post my current development progress in the readme. So, here is the current development progress, so far I am not developing the next update of Cursor Changer.  
-Well, if I had to say so, I am currently testing the update feature and the more advanced Sumchack feature. Needless to say, the update feature is a must, but as for the SumChack feature, in a nutshell, it is the ability to add two values to the configuration file and then SumChack with them.  
-With this, I'm thinking that it might be possible to add a feature like the one in Undertale, for example, where a hidden message is displayed if the save file is illegally changed..... That kind of functionality. Both use powershell, but no additional files are needed. The most likely implementation would be an update function.  
-However, that function is having trouble determining if Cursor Changer, the source of the update, is a beta version or not, so it may take some time to implement.  
-Besides, both of them take a long time to run the Powershell scripts, and if i do them at startup, the startup time would be so long that it would suck, so, well, basically, i would only be adding the ability to check for updates. At this stage, I'm hoping to be able to change the settings menu to confirm or deny updates at startup, but that's just the ideal. Well, that's about it.  
+Update and New UI (2023/07/12)
+Currently, the update confirmation feature is finally taking shape. There are few problems, so it looks like it could be implemented as a trial feature, but it is not refined yet. Still, it will probably be implemented in the next update. (maybe around 1.13β1 or later)
+However, there are many features I want to implement, so it will take time to update. Currently, the Bat version menu has only simple functions, but 1.13 will have many more. The UI will be similar to the current settings menu, and the aforementioned update confirmation function will be implemented there... Something like that. This is just an ideal, but I have a plan.
 
-> 07/03 Ps. btw there are a lot of features I would like to add to the cursor changer. For example, tutorials, a better CUI calculator, more advanced cursor changers, an exit menu (like Windows XP), and too many others to mention. I don't know when those will be completed, but I'd like to implement them.
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
