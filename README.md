@@ -1,5 +1,5 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***98.999%***
+> *Translate progress :* ***98.999999999999.....%***
 
 # - **Latest News** -
 ### **Update and New UI (2023/07/12)**  
