@@ -1,10 +1,10 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***98.999999999999.....%***
+> *Translate progress :* ***99.05%***
 
 # - **Latest News** -
-### **Update and New UI (2023/07/12)**  
-Currently, the update confirmation feature is finally taking shape. There are few problems, so it looks like it could be implemented as a Experiment feature, but it is not refined yet. Still, it will probably be implemented in the next update. (maybe around 1.13β1 or later)
-However, there are many features I want to implement, so it will take time to update. Currently, the Bat version menu has only simple functions, but 1.13 will have many more. The UI will be similar to the current settings menu, and the aforementioned update confirmation function will be implemented there... Something like that. This is just an ideal, but I have a plan.
+### **Some idia (2023/07/18)**  
+I just thought of this, but currently, powershell is always invoked at startup. I have implemented this in a somewhat roundabout way, so it takes a long time to invoke powershell. I plan to implement a derivative of this method for checking for updates, but I think that if all I need to do is check for updates, I can just do it at startup, and if I do it all at once when powershell is started, it will be minimal and won't slow down the startup process too much.
+That's the idea.
 
 
 ## - **ABOUT THIS BATCH** -
