@@ -1,11 +1,13 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***99.05%***
+> *Translate progress :* ***99.98%***
 
 # - **Latest News** -
-### **Some idia (2023/07/18)**  
-I just thought of this, but currently, powershell is always invoked at startup. I have implemented this in a somewhat roundabout way, so it takes a long time to invoke powershell. I plan to implement a derivative of this method for checking for updates, but I think that if all I need to do is check for updates, I can just do it at startup, and if I do it all at once when powershell is started, it will be minimal and won't slow down the startup process too much.
-That's the idea.
-
+### **Update progress (2023/07/29)**  
+Soon, 1.13β1 will be released.  
+This update has a new windows version checking mechanism, bug fixes, translation fixes and additions.
+It does not include the update feature.  
+I am currently struggling with the version checking system and have not been able to get it completed. Or rather, it is 80% of the reason why I have not been able to update.  
+(Well, there is also the problem of motivation...)  
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
