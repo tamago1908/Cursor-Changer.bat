@@ -110,3 +110,5 @@ ___
 - *tbh i dont remenber what i fix it.*
 > It took me 6 months to make this update!!! so I feel like I wanna skipping a version like one or two tbh though
 ___
+
+> update logs are removed from the readme in order of oldest to newest. A rough rule of thumb is about 3~5 versions. The complete log can be found on the wiki, but it is long and not recommended.
