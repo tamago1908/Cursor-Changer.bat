@@ -20,8 +20,8 @@ rem And recently, I've been trying to include more English in this batch process
 title Cursor Changer
 rem VER v1.13β1
 set batver=1.13β1
-set batbuild=build 45
-set hazimeeaster=false
+set batbuild=build 45.5
+set Mainmenueaster=false
 set firststartbat=no
 rem Software used in the production windows notepad v10.2103.12.0 Font used Nirmala UI bold
 rem from Dec 09, 2021 windows notepad v10.2110.64.0 Nirmala UI bold
@@ -307,13 +307,13 @@ cls
 echo Cursor Changer by tamago_1908
 powershell sleep -m 1000
 cls
-goto saisyonokidou
+goto FirstBoot
 cls
 rem initial startup process
 
 rem Detects settings related to prompts for administrative privileges,
 :batstart
-if {%settingbypass%}=={true} (goto hazimemenuskipboot)
+if {%settingbypass%}=={true} (goto Mainmenuskipboot)
 cls
 rem Detection of administrative permission settings
 find "admin=true" CursorChangerSettings.txt > nul
@@ -330,7 +330,7 @@ cls
 find "admin=false" CursorChangerSettings.txt > nul
 set batloadprgs=0
 call :batbootprogress
-if {%errorlevel%}=={0} (goto hazime)
+if {%errorlevel%}=={0} (goto Mainmenuboot)
 if {%errorlevel%}=={1} (goto batstartadm)
 
 
@@ -360,11 +360,11 @@ rem Detects whether it is the first time starting
 cd /d %HOMEDRIVE%%HOMEPATH%
 rem location The drive where the OS is locate C:\Users\username
 rem (e.g. if the user's name is "test" and the OS is in drive is "C:\", like C:\Users\Test)
-if exist FirstCursor.txt goto hazime
-if not exist FirstCursor.txt goto saisyonokidou
+if exist FirstCursor.txt goto Mainmenuboot
+if not exist FirstCursor.txt goto FirstBoot
 
 rem Message at initial startup
-:saisyonokidou
+:FirstBoot
 title Introduction to this batch file
 type nul > FIrstCursor.txt
 echo nodogcheckforfastboot >> FIrstCursor.txt
@@ -513,7 +513,7 @@ echo        ABBA                   AAAAAAAAA
 echo           BBB                                                                        
 echo O===================================================================================O
 echo.
-echo                         Cursor Changer%batver% Welcome. 2021-2023 %debugmode%
+echo                         Cursor Changer %batver% Welcome. 2021-2023 %debugmode%
 powershell sleep 1
 color cf
 powershell sleep 0.1
@@ -541,7 +541,7 @@ if {%bootegg%}=={1} (goto batbootanimationfun)
 :batbootanimationbypassfun
 title WELCOME
 echo.
-echo                              Cursor Changer %batver% %debugmode%
+echo                            Cursor Changer %batver% %debugmode%
 echo.
 echo O=========================================================================O
 echo.
@@ -563,7 +563,7 @@ echo.
 echo.
 echo O=========================================================================O
 echo.
-echo                      2021-2023 tamago1908 %batbuild%
+echo                        2021-2023 tamago1908 %batbuild%
 powershell sleep 1
 cls
 rem Check for missing settings
@@ -605,7 +605,7 @@ if not {%allsettingerror%} equ {0} (
     echo To repair, go to Settings and toggle the setting true/false for the damaged area. It will be automatically completed and repaired. ^(When repairing, the settings will be set to the default default values. ^)
     pause
     )
-    if {%allsettingerror%} gtr {3} (goto fixallsetting) else (goto hazimemenu)
+    if {%allsettingerror%} gtr {3} (goto fixallsetting) else (goto Mainmenu)
 echo.
 :fixallsetting
 rem auto fix
@@ -638,15 +638,17 @@ echo Fix Complete.
 pause
 exit
 )
-if {%selected%}=={no} (hazimemenuskipboot)
-if {%selected%}=={n} (hazimemenuskipboot)
+if {%selected%}=={no} (Mainmenuskipboot)
+if {%selected%}=={n} (Mainmenuskipboot)
 
-goto :hazimemenu
-:hazime
+goto :Mainmenu
+:Mainmenuboot
+rem There is a difference between a goto Mainmenuboot and a direct goto to the menu. The difference is whether you go to the menu via the settings loading section or not.
+rem Basically, it is better to go through the settings, but if speed is important, you can go directly.
 
 rem setting and other loading
-rem need to assign variables to what to load and where to goto after loading set wantload=setting1 set whatloadgoto=hazime etc. only if it is hazime related
-rem The cursor color is not implemented in the main change section. It is not designed so that you can come back to hazime after changing it.
+rem need to assign variables to what to load and where to goto after loading set wantload=setting1 set whatloadgoto=Mainmenuboot etc. only if it is Mainmenuboot related
+rem The cursor color is not implemented in the main change section. It is not designed so that you can come back to Mainmenuboot after changing it.
 rem If you want to add a setting, you can copy and paste it. However, you may need to add some code if you want to change the look of the menu.
 :settingloads
 if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
@@ -769,7 +771,7 @@ cls
 if {%bootbatnow%}=={no} (echo Processing...)
 if %ErrorLevel%==0 (set setting4onoff=false) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=4&call :batbootprogress)
-if {%bootbatnow%}=={yes} (goto setting5load2) else (goto whatloadgoto)
+if {%bootbatnow%}=={yes} (goto setting5load) else (goto whatloadgoto)
 
 :setting5load2
 find "bootanimation=false" CursorChangerSettings.txt
@@ -788,7 +790,7 @@ if {%bootbatnow%}=={yes} (set batloadprgs=6&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto loads) else (goto whatloadgoto)
 
 :loads
-:wmodehazimeload
+:wmodeMainmenuload
 rem Detects white mode and changes color
 find "wmode=true" CursorChangerSettings.txt > nul
 if {%errorlevel%}=={0} (color f0)
@@ -796,12 +798,12 @@ cls
 if {%bootbatnow%}=={no} (echo Processing...) else (
 set batloadprgs=6
 call :batbootprogress
-goto debughazimeload
+goto debugMainmenuload
 )
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
-goto debughazimeload
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
+goto debugMainmenuload
 
-:debughazimeload
+:debugMainmenuload
 rem  Debug mode detection (WANING!!! ITS OLD CODE!!!)
 find "debug=true" CursorChangerSettings.txt > nul
 cls
@@ -813,7 +815,7 @@ call :batbootprogress
 goto firststarttest
 )
 if {%1}=={devmode} (set devmode=true&goto firststarttest)
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
 goto firststarttest
 
 :firststarttest
@@ -826,7 +828,7 @@ set batloadprgs=8
 call :batbootprogress
 goto cursorcolorload
 )
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
 goto cursorcolorload
 
 :cursorcolorload
@@ -840,11 +842,11 @@ if {%ErrorLevel%}=={1} (set cursorcolor=white)
 if {%bootbatnow%}=={no} (echo Processing...) else (
 set batloadprgs=9
 call :batbootprogress
-goto hazimecursorcolor2
+goto Mainmenucursorcolor2
 )
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
 
-:hazimecursorcolor2
+:Mainmenucursorcolor2
 reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x2"
 cls
 if {%ErrorLevel%}=={0} (set cursorcolor=white)
@@ -853,8 +855,8 @@ set batloadprgs=10
 call :batbootprogress
 goto :batbootinitializetionvariable
 )
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
-goto hazimemenu
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
+goto Mainmenu
 
 
 :batbootprogress
@@ -909,7 +911,7 @@ echo.
 echo.
 echo O=========================================================================O
 echo.
-echo                         Loading up Cursor Changer...
+echo                           Loading up Cursor Changer... 
 echo           O=====================================================O
 echo           I%loadscrnprgs0%%loadscrnprgs1%%loadscrnprgs2%%loadscrnprgs3%%loadscrnprgs4%%loadscrnprgs5%%loadscrnprgs6%%loadscrnprgs7%%loadscrnprgs8%%loadscrnprgs9%%loadscrnprgs10%I
 echo           O=====================================================O
@@ -921,7 +923,7 @@ set loadscrnprgs9=
 set loadscrnprgs10=
 set loadscrnprgsclr=
 set loadscrnprgsclr2=
-goto hazimemenu
+goto Mainmenu
 
 :whatload
 cls
@@ -932,11 +934,11 @@ if {%wantload%}=={setting3} (goto setting3load)
 if {%wantload%}=={setting4} (goto setting4load)
 if {%wantload%}=={setting5} (goto setting5load)
 if {%wantload%}=={wmode} (goto wmodeload)
-if {%wantload%}=={wmodehazime} (goto wmodehazimeload) 
-if {%wantload%}=={debughazime} (goto debughazimeload)
-if {%wantload%}=={syokaihazime} (goto syokaihazimeload)
+if {%wantload%}=={wmodeMainmenu} (goto wmodeMainmenuload) 
+if {%wantload%}=={debugMainmenu} (goto debugMainmenuload)
+if {%wantload%}=={syokaiMainmenu} (goto syokaiMainmenuload)
 if {%wantload%}=={cursorcolor} (goto cursorcolorload)
-if {%wantload%}=={0null0} (goto hazimemenu)
+if {%wantload%}=={0null0} (goto Mainmenu)
 echo Error! %wantload% is not exist! pls set it.
 pause
 exit
@@ -947,19 +949,19 @@ set wantload=0null0
 exit /b
 
 rem Preparation for menu depiction
-:hazimemenu
+:Mainmenu
 cls
-if {%bootbatnow%}=={no} (goto hazimemenuskipboot)
+if {%bootbatnow%}=={no} (goto Mainmenuskipboot)
 if {%bootbatnow%}=={yes} (set bootbatnow=no&goto batbootanimation)
-:hazimemenuskipboot
+:Mainmenuskipboot
 set wantload=0null0
 set clrhelp=& set clrhelp2=
 set settinghelptoggle=false
 mode con: cols=75 lines=25
-if {%hazimeeaster%}=={true} (set hazimebuild=%batbuild%)
+if {%Mainmenueaster%}=={true} (set Mainmenubuild=%batbuild%)
 
 rem menu depiction
-echo                              Cursor Changer %batver% %debugmode% %hazimebuild%
+echo                              Cursor Changer %batver% %debugmode% %Mainmenubuild%
 title Cursor Changer %debugmode% 
 set selected=0nul0
 echo.
@@ -971,64 +973,64 @@ echo   O=====================================================================O
 echo.
 SET /P selected=Enter any number or alphabet you wish to run...:
 echo.
-if {%selected%}=={0nul0} (goto hatenahazime)
+if {%selected%}=={0nul0} (goto typosMainmenu)
 if not {%selected%}=={3} (echo %selected% was selected.)
 
 rem Selection Branching
-if {%selected%}=={1} (set hatenaita=0&goto :cursorchange)
-if {%selected%}=={a} (set hatenaita=0&goto :cursorchange)
-if {%selected%}=={2} (set hatenaita=0&goto :startcal)
-if {%selected%}=={b} (set hatenaita=0&goto :startcal)
-if {%selected%}=={3} (set hatenaita=0&goto :exitmenu)
-if {%selected%}=={c} (set hatenaita=0&goto :exitmenu)
-if {%selected%}=={4} (set hatenaita=0&goto :batver)
-if {%selected%}=={d} (set hatenaita=0&goto :batver)
-if {%selected%}=={5} (set hatenaita=0&goto :setting)
-if {%selected%}=={e} (set hatenaita=0&goto :setting)
+if {%selected%}=={1} (set typosWaning=0&goto :cursorchange)
+if {%selected%}=={a} (set typosWaning=0&goto :cursorchange)
+if {%selected%}=={2} (set typosWaning=0&goto :startcal)
+if {%selected%}=={b} (set typosWaning=0&goto :startcal)
+if {%selected%}=={3} (set typosWaning=0&goto :exitmenu)
+if {%selected%}=={c} (set typosWaning=0&goto :exitmenu)
+if {%selected%}=={4} (set typosWaning=0&goto :batver)
+if {%selected%}=={d} (set typosWaning=0&goto :batver)
+if {%selected%}=={5} (set typosWaning=0&goto :setting)
+if {%selected%}=={e} (set typosWaning=0&goto :setting)
 
 rem Eastereggs
 if {%selected%}=={easteregg} (goto :easteregg)
 if {%selected%}=={egg} (goto :secret)
 if {%selected%}=={egg1} (color 1f&goto :erroralldef1)
 if {%selected%}=={egg2} (goto :Dogcheck)
-if {%selected%}=={wwssdadaba} (set hatenaita=0&goto littleeasteregg)
-if {%selected%}=={tamago1908} (echo :P&pause&goto hazime)
-if {%selected%}=={himazinnoob1908} (echo :D&pause&goto hazime)
-if {%selected%}=={mskg1908} (echo xD&pause&goto hazime)
+if {%selected%}=={wwssdadaba} (set typosWaning=0&goto littleeasteregg)
+if {%selected%}=={tamago1908} (echo :P&pause&goto Mainmenuboot)
+if {%selected%}=={himazinnoob1908} (echo :D&pause&goto Mainmenuboot)
+if {%selected%}=={mskg1908} (echo xD&pause&goto Mainmenuboot)
 if {%selected%}=={1908} (goto :1908hell)
-if {%selected%}=={toxic} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=N6ael_DEPcs&goto hazime)
-if {%selected%}=={abcdefu} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=qgRx58oItTk&goto hazime)
-if {%selected%}=={dogsong} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=H4wptBuM6zs&goto hazime)
-if {%selected%}=={Im tired} (echo you too&pause& goto hazime)
+if {%selected%}=={toxic} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=N6ael_DEPcs&goto Mainmenuboot)
+if {%selected%}=={abcdefu} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=qgRx58oItTk&goto Mainmenuboot)
+if {%selected%}=={dogsong} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=H4wptBuM6zs&goto Mainmenuboot)
+if {%selected%}=={Im tired} (echo you too&pause& goto Mainmenuboot)
 
 rem Debugging command references (SAO refarence)
 if {%selected%}=={inspectentirecommandlist} (goto :allcommands)
 
 rem For debugging
 if {%selected%}=={alldefnow1} (goto :AllDefult1)
-if {%selected%}=={playdefboot} (set hatenaita=0&cls&goto :syokaiboot)
+if {%selected%}=={playdefboot} (set typosWaning=0&cls&goto :syokaiboot)
 if {%selected%}=={debugyesnow} (goto :kurogo)
 if {%selected%}=={reload} (set bootbatnow=yes&goto batstart)
 if {%selected%}=={fulldebug} (goto fulldebug)
 if {%selected%}=={getadmin} (goto :batstartadm)
-if {%selected%}=={bypassfirstboot} (set hatenaita=0&set firststartbat=no&goto overwritesetting)
-if {%selected%}=={alldefdeletebat} (set hatenaita=0&echo delete bat, confirm to type something...&pause&goto alldefdeletefinish5)
+if {%selected%}=={bypassfirstboot} (set typosWaning=0&set firststartbat=no&goto overwritesetting)
+if {%selected%}=={alldefdeletebat} (set typosWaning=0&echo delete bat, confirm to type something...&pause&goto alldefdeletefinish5)
 if {%selected%}=={windowsfiltertest} (goto :batbootcheckwinverbad)
 if {%selected%}=={funanimationdeb} (goto :batbootanimationfun)
 if {%selected%}=={openie} (goto :openiedev)
-if {%selected%}=={setenter} (echo.&set /p hatenaita=pls type:&goto :hazime)
+if {%selected%}=={setenter} (echo.&set /p typosWaning=pls type:&goto :Mainmenuboot)
 
 rem FUCK YOU!!!!!!
-if {%selected%}=={fucku} (echo fuck you too&pause&goto hazime)
-if {%selected%}=={fuckyou} (echo fuck you too&pause&goto hazime)
-if {%selected%}=={fucu} (echo fuck you too&pause&goto hazime)
-if {%selected%}=={fucyou} (echo fuck you too&pause&goto hazime)
+if {%selected%}=={fucku} (echo fuck you too&pause&goto Mainmenuboot)
+if {%selected%}=={fuckyou} (echo fuck you too&pause&goto Mainmenuboot)
+if {%selected%}=={fucu} (echo fuck you too&pause&goto Mainmenuboot)
+if {%selected%}=={fucyou} (echo fuck you too&pause&goto Mainmenuboot)
 
 if {%selected%}=={exit} (goto :exitmenu)
-if {%selected%}=={counttestdeb} (set hatenaita=0&goto :testinthecalbeep) else echo. &echo Invalid (or unusable) selection! Please enter a valid entry.&pause&goto hazime
+if {%selected%}=={counttestdeb} (set typosWaning=0&goto :testinthecalbeep) else echo. &echo Invalid (or unusable) selection! Please enter a valid entry.&pause&goto Mainmenuboot
 
 rem Return process if no input is made
-:hatenahazime
+:typosMainmenu
 echo ?
 echo.
 pause
@@ -1036,71 +1038,71 @@ echo Can you type somethings?
 echo.
 pause
 find "typoswaning=false" CursorChangerSettings.txt > nul
-if {%errorlevel%}=={0} (goto hazime)
+if {%errorlevel%}=={0} (goto Mainmenuboot)
 
 rem Mechanism for detecting long presses
-set /a hatenaita=hatenaita+1
-if %hatenaita% gtr 20  (goto :hatenaokotest1)
-goto :hazime
+set /a typosWaning=typosWaning+1
+if %typosWaning% gtr 20  (goto :typosWaningtest1)
+goto :Mainmenuboot
 
-:hatenaokotest1
-if not %hatenaita% gtr 50 (goto hatenaoko1)
-if %hatenaita% gtr 50 (goto hatenaokotest2)
+:typosWaningtest1
+if not %typosWaning% gtr 50 (goto typosWaning1)
+if %typosWaning% gtr 50 (goto typosWaningtest2)
 
-:hatenaokotest2
-if not %hatenaita% gtr 100 (goto hatenaoko2)
-if %hatenaita% gtr 100 (goto hatenaokotest3)
+:typosWaningtest2
+if not %typosWaning% gtr 100 (goto typosWaning2)
+if %typosWaning% gtr 100 (goto typosWaningtest3)
 
-:hatenaokotest3
-if not %hatenaita% gtr 130 (goto hatenaoko3)
-if %hatenaita% gtr 130 (goto hatenaokotest4)
+:typosWaningtest3
+if not %typosWaning% gtr 130 (goto typosWaning3)
+if %typosWaning% gtr 130 (goto typosWaningtest4)
 
-:hatenaokotest4
-if not %hatenaita% gtr 200 (goto hatenaoko4)
-if %hatenaita% gtr 200 (goto hatenaokotest5)
+:typosWaningtest4
+if not %typosWaning% gtr 200 (goto typosWaning4)
+if %typosWaning% gtr 200 (goto typosWaningtest5)
 
-:hatenaokotest5
-if not %hatenaita% gtr 250 (goto hatenaoko5)
-if %hatenaita% gtr 250 (goto hatenaoko6)
+:typosWaningtest5
+if not %typosWaning% gtr 250 (goto typosWaning5)
+if %typosWaning% gtr 250 (goto typosWaning6)
 
 rem Collection of long press warning messages
-:hatenaoko1
-if %hatenaita% gtr 21 (goto :hazime)
+:typosWaning1
+if %typosWaning% gtr 21 (goto :Mainmenuboot)
 echo Dim answer:answer = MsgBox("uh, What are you doing?",vbOKCancel,"huh?"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 rem delete files, btw i found a way to dont use these vbs script, its powershell. using at easteregg.
 del /Q %TEMP%\msgbox.vbs
-goto :hazime
+goto :Mainmenuboot
 
-:hatenaoko2
-if %hatenaita% gtr 51 (goto :hazime)
+:typosWaning2
+if %typosWaning% gtr 51 (goto :Mainmenuboot)
 echo Dim answer:answer = MsgBox("oh hell nah You don't make that many typos!",vbOKCancel,"Maybe..."):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 rem file delete
 del /Q %TEMP%\msgbox.vbs
-goto :hazime
+goto :Mainmenuboot
 
-:hatenaoko3
-if %hatenaita% gtr 101 (goto :hazime)
+:typosWaning3
+if %typosWaning% gtr 101 (goto :Mainmenuboot)
 echo Dim answer:answer = MsgBox("Bro You're right, you wouldn't make a hundred typing mistakes! You've got to be kidding me!",vbOKCancel,"premeditated crime"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 rem file delete
 del /Q %TEMP%\msgbox.vbs
-goto :hazime
+goto :Mainmenuboot
 
-:hatenaoko4
-if %hatenaita% gtr 131 (goto :hazime)
+:typosWaning4
+if %typosWaning% gtr 131 (goto :Mainmenuboot)
 echo Dim answer:answer = MsgBox("Hey Stop Doing That!",vbOKCancel,"..."):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 rem file delete
 del /Q %TEMP%\msgbox.vbs
-goto :hazime
+goto :Mainmenuboot
 
-:hatenaoko5
-if %hatenaita% gtr 201 (goto :hazime)
+:typosWaning5
+if %typosWaning% gtr 201 (goto :Mainmenuboot)
 echo Dim answer:answer = MsgBox("Do this any more and I will make you regret it. 200 times...",vbOKCancel,"Final Waning"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 rem file delete
 del /Q %TEMP%\msgbox.vbs
-goto :hazime
+goto :Mainmenuboot
 
-:hatenaoko6
-if %hatenaita% gtr 251 (goto :hazime)
+:typosWaning6
+if %typosWaning% gtr 251 (goto :Mainmenuboot)
 echo Dim answer:answer = MsgBox("..........",vbOKCancel,""):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 del /Q %TEMP%\msgbox.vbs
 shutdown /s /t 5 /c "REGRET IT"
@@ -1128,11 +1130,11 @@ echo.
 SET /P selected=Do you really exit?（yes or no）:
 if {%selected%}=={yes} (exit)
 if {%selected%}=={y} (exit)
-if {%selected%}=={no} (goto :hazimemenu)
-if {%selected%}=={n} (goto :hazimemenu)
-if {%selected%}=={back} (goto :hazimemenu)
-if {%selected%}=={b} (goto :hazimemenu)
-goto :hazimemenu
+if {%selected%}=={no} (goto :Mainmenu)
+if {%selected%}=={n} (goto :Mainmenu)
+if {%selected%}=={back} (goto :Mainmenu)
+if {%selected%}=={b} (goto :Mainmenu)
+goto :Mainmenu
 
 
 rem Depiction of the settings menu
@@ -1157,13 +1159,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O====================O
 echo I                        I                                                I
-echo I Cursor Changer funtion I  category has not selected...                  I
+echo I Cursor Changer Feature I  category has not selected...                  I
 echo I                        I                                                I
 echo O========================I                                                I
 Echo O  Category  up or down  I                                                I
 Echo O========================I                                                I
 Echo I                        I  Press either [W S] or [1 2] to select the     I
-echo I Cursor Changer visuals I  category.                                     I
+echo I Cursor Changer Visuals I  category.                                     I
 echo I                        I                                                I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1176,7 +1178,7 @@ if %ErrorLevel%==2 goto settingcategory2
 if %ErrorLevel%==3 goto settingcategory1
 if %ErrorLevel%==4 goto settingcategory1
 if %ErrorLevel%==5 goto settingcategory1
-if %ErrorLevel%==6 goto hazime
+if %ErrorLevel%==6 goto Mainmenuboot
 if %ErrorLevel%==7 goto settingcategory1
 if %ErrorLevel%==8 goto settingcategory1
 if %ErrorLevel%==9 goto settingcategoryhelpmode
@@ -1192,13 +1194,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O====================O
 echo I%clr%                        %clr2%I                                                I
-echo I%clr% Cursor Changer funtion %clr2%I  This setting is related to the functionality  I
+echo I%clr% Cursor Changer Feature %clr2%I  This setting is related to the functionality  I
 echo I%clr%                        %clr2%I  of the Cursor Changer.                        I
 echo O========================I  (like theme)                                  I
 Echo O  category  up or down  I                                                I
 Echo O========================I                                                I
 Echo I                        I                                                I
-echo I Cursor Changer visuals I                                                I
+echo I Cursor Changer Visuals I                                                I
 echo I                        I                                                I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1211,7 +1213,7 @@ if %ErrorLevel%==2 goto settingcategory2
 if %ErrorLevel%==3 goto settingcategory1
 if %ErrorLevel%==4 goto settingcategory2
 if %ErrorLevel%==5 goto settingcategory1int
-if %ErrorLevel%==6 goto hazime
+if %ErrorLevel%==6 goto Mainmenuboot
 if %ErrorLevel%==7 goto settingcategory1int
 if %ErrorLevel%==8 goto settingcategory1int
 if %ErrorLevel%==9 goto settingcategoryhelpmode
@@ -1232,13 +1234,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O====================O
 echo I                        I                                                I
-echo I Cursor Changer funtion I  This setting is related to the functionality  I
+echo I Cursor Changer Feature I  This setting is related to the functionality  I
 echo I                        I  of the Cursor Changer.                        I
 echo O========================I                                                I
 Echo O  category  up or down  I                                                I
 Echo O========================I                                                I
 Echo I%clr%                        %clr2%I                                                I
-echo I%clr% Cursor Changer visuals %clr2%I                                                I
+echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1251,7 +1253,7 @@ if %ErrorLevel%==2 goto settingcategory2
 if %ErrorLevel%==3 goto settingcategory1
 if %ErrorLevel%==4 goto settingcategoryhelpmode
 if %ErrorLevel%==5 goto settingcategory2int
-if %ErrorLevel%==6 goto hazime
+if %ErrorLevel%==6 goto Mainmenuboot
 if %ErrorLevel%==7 goto settingcategory2int
 if %ErrorLevel%==8 goto settingcategory2int
 if %ErrorLevel%==9 goto settingcategoryhelpmode
@@ -1269,13 +1271,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I%clr%                        %clr2%I 1 Cofrm reboot when Chenged Curosor I  %setting1onoff%   I
-echo I%clr% Cursor Changer funtion %clr2%I                                     O==========O
+echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
 Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
-echo I Cursor Changer visuals I                                     O==========O
+echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1304,13 +1306,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I%clr%                        %clr2%I %clr%1 Cofrm reboot when Chenged Curosor%clr2% I  %setting1onoff%   I
-echo I%clr% Cursor Changer funtion %clr2%I                                     O==========O
+echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
 Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
-echo I Cursor Changer visuals I                                     O==========O
+echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1341,13 +1343,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I%clr%                        %clr2%I 1 Cofrm reboot when Chenged Curosor I  %setting1onoff%   I
-echo I%clr% Cursor Changer funtion %clr2%I                                     O==========O
+echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I %clr%2 Admin When Boot%clr2%                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
 Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
-echo I Cursor Changer visuals I                                     O==========O
+echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1379,13 +1381,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I%clr%                        %clr2%I 1 Cofrm reboot when Chenged Curosor I  %setting1onoff%   I
-echo I%clr% Cursor Changer funtion %clr2%I                                     O==========O
+echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
 Echo O  category  up or down  I %clr%3 Fastbooting%clr2%                       I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
-echo I Cursor Changer visuals I                                     O==========O
+echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1417,13 +1419,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I%clr%                        %clr2%I 1 Cofrm reboot when Chenged Curosor I  %setting1onoff%   I
-echo I%clr% Cursor Changer funtion %clr2%I                                     O==========O
+echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
 Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I %clr%4 Long press detection of enter%clr2%     I  %setting4onoff%   I
-echo I Cursor Changer visuals I                                     O==========O
+echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1455,13 +1457,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I%clr%                        %clr2%I 1 Cofrm reboot when Chenged Curosor I  %setting1onoff%   I
-echo I%clr% Cursor Changer funtion %clr2%I                                     O==========O
+echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
 Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
-echo I Cursor Changer visuals I                                     O==========O
+echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I %clr%5 Initialization or Uninstallation %clr2%            I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1492,13 +1494,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I                        I 1 Boot animation                    I  %setting5onoff%   I
-echo I Cursor Changer funtion I                                     O==========O
+echo I Cursor Changer Feature I                                     O==========O
 echo I                        I 2 %wmodeonoff%                         I
 echo O========================I                                                I
 Echo O  category  up or down  I                                                I
 Echo O========================I                                                I
 Echo I%clr%                        %clr2%I                                                I
-echo I%clr% Cursor Changer visuals %clr2%I                                                I
+echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1527,13 +1529,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I                        I %clr%1 Boot animation%clr2%                    I  %setting5onoff%   I
-echo I Cursor Changer funtion I                                     O==========O
+echo I Cursor Changer Feature I                                     O==========O
 echo I                        I 2 %wmodeonoff%                         I
 echo O========================I                                                I
 Echo O  category  up or down  I                                                I
 Echo O========================I                                                I
 Echo I%clr%                        %clr2%I                                                I
-echo I%clr% Cursor Changer visuals %clr2%I                                                I
+echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1561,13 +1563,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
 echo I                        I 1 Boot animaion                     I  %setting5onoff%   I
-echo I Cursor Changer funtion I                                     O==========O
+echo I Cursor Changer Feature I                                     O==========O
 echo I                        I %clr%2 %wmodeonoff%%clr2%                         I
 echo O========================I                                                I
 Echo O  category  up or down  I                                                I
 Echo O========================I                                                I
 Echo I%clr%                        %clr2%I                                                I
-echo I%clr% Cursor Changer visuals %clr2%I                                                I
+echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1599,13 +1601,13 @@ echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O====================O
 echo I                        I                                                I
-echo I Cursor Changer funtion I  Help Mode. After selecting this function,     I
+echo I Cursor Changer Feature I  Help Mode. After selecting this function,     I
 echo I                        I  Select the you want to see an overview of it, I
 echo O========================I  You can see an overview of it.                I
 Echo O  category  up or down  I                                                I
 Echo O========================I  If you want to disable help mode,             I
 Echo I                        I  select this feature again.                    I
-echo I Cursor Changer visuals I                                                I
+echo I Cursor Changer Visuals I                                                I
 echo I                        I  Help mode is %settinghelp%                        I
 echo O========================O==O=====================O==========O============O
 echo I%clr%       Help  Mode       %clr2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
@@ -1617,7 +1619,7 @@ if %ErrorLevel%==1 goto settingcategory1
 if %ErrorLevel%==2 goto settingcategory2
 if %ErrorLevel%==3 goto settingcategory2
 if %ErrorLevel%==4 goto settingcategoryhelpmode
-if %ErrorLevel%==5 goto hazime
+if %ErrorLevel%==5 goto Mainmenuboot
 if %ErrorLevel%==6 goto settingcategoryhelpmodetoggle
 if %ErrorLevel%==7 goto settingcategoryhelpmodetoggle
 if %ErrorLevel%==8 goto settingcategoryhelpmode
@@ -2054,7 +2056,7 @@ rem Version of batch
 :batver
 echo.
 echo Cursor Changer ver %batver%   2021-2023
-if %hazimeeaster%==true echo %batbuild%
+if %Mainmenueaster%==true echo %batbuild%
 title CCursor Changer thenks so much %username%
 powershell sleep -m 200
 echo and...
@@ -2063,7 +2065,7 @@ echo create by tamago_1908
 
 pause
 cls
-goto hazime
+goto Mainmenuboot
 
 rem calculator
 :startcal
@@ -2091,8 +2093,8 @@ echo + or -
 echo Select 1 for addition, or 2 for subtraction.
 set /p q=
 rem calculator branch
-if {%q%}=={back} (goto hazime)
-if {%q%}=={b} (goto hazime)
+if {%q%}=={back} (goto Mainmenuboot)
+if {%q%}=={b} (goto Mainmenuboot)
 if {%q%}=={1} (set whatnumber=addressee&goto startcal2)
 if {%q%}=={2} (set whatnumber=subtracter&goto startcal2) 
 if {%q%}=={3} (goto advancemodecal) else (
@@ -2120,7 +2122,7 @@ pause
 cls
 goto simplemodecal
 
-rem アドバンスモード
+rem advancemode
 :advancemodecal
 
 :loopcal
@@ -2137,7 +2139,7 @@ goto loopcal
 rem note Branch by variable and change. Created based on defaults.
 rem Main function of Cursor Changer. Can't start without it.
 cls
-echo                              Cursor Changer%batver% %debugmode%
+echo                              Cursor Changer %batver% %debugmode%
 title Cursor *Changer* %debugmode%
 echo.
 SET /P selected=Would you like to revert to %cursorcolor% color?(Y=Yes / N=No / B=Back)
@@ -2146,8 +2148,8 @@ if {%selected%}=={yes} (goto :yes0)
 if {%selected%}=={egg} (goto :secret)
 if {%selected%}=={n} (goto :no0)
 if {%selected%}=={no} (goto :no0)
-if {%selected%}=={back} (goto :hazime)
-if {%selected%}=={b} (goto :hazime)
+if {%selected%}=={back} (goto :Mainmenuboot)
+if {%selected%}=={b} (goto :Mainmenuboot)
 if {%selected%}=={debugyesnow} (goto :defgo)
 
 echo ?
@@ -2161,13 +2163,13 @@ goto default
 :no0
 echo Change has been canceled.
 pause
-goto hazime
+goto Mainmenuboot
 
 :yes0
 if exist CursorChangerSettings.txt goto henkoudefo
-if not exist CursorChangerSettings.txt goto saisyonokeikoku
+if not exist CursorChangerSettings.txt goto FirstWaning
 rem Write settings (default)
-:saisyonokeikoku
+:FirstWaning
 type nul > CursorChangerSettings.txt
 echo nodogcheckfor1234567890qwertyuiop >> CursorChangerSettings.txt
 echo fastboot=false >> CursorChangerSettings.txt
@@ -2358,7 +2360,7 @@ if not exist CursorChangerSettings.txt goto Dogcheck
 :Dogcheck
 rem dogcheck, respect tobyfox and dog
 rem AND I LOVE HIM 
-if {%firststartbat%}=={yes} (cls&echo First change the cursor color!&echo.&pause&goto hazime)
+if {%firststartbat%}=={yes} (cls&echo First change the cursor color!&echo.&pause&goto Mainmenuboot)
 title Dogcheck %debugmode%
 mode con: cols=87 lines=9
 echo '########:::'#######:::'######:::::::'######::'##::::'##:'########::'######::'##:::'##:
@@ -2439,7 +2441,7 @@ taskkill /im chrome.exe
 del /Q %TEMP%\msgbox.vbs
 exit
 
-rem alldef
+rem alldef (i mean its uninstall menu)
 :AllDefulttest
 cd /d %HOMEDRIVE%%HOMEPATH% 
 find "nodogcheckfor1234567890qwertyuiop" CursorChangerSettings.txt
@@ -2660,8 +2662,8 @@ if {%selected%}=={y} (goto :yes2)
 if {%selected%}=={yes} (goto :yes2)
 if {%selected%}=={n} (goto :no2)
 if {%selected%}=={no} (goto :no2)
-if {%selected%}=={back} (color 07&goto :hazime)
-if {%selected%}=={b} (color 07&goto :hazime)
+if {%selected%}=={back} (color 07&goto :Mainmenuboot)
+if {%selected%}=={b} (color 07&goto :Mainmenuboot)
 if {%selected%}=={debugyesnow} (goto :yes2go)
 echo ?
 echo.
@@ -2685,7 +2687,7 @@ if %ErrorLevel%==1 goto wmodeonoffkenti
 :wmodeonoffkentialldefno2
 find "wmode=true" CursorChangerSettings.txt > nul
 if %ErrorLevel%==0 color f0
-goto hazime
+goto Mainmenuboot
 
 :yes2
 rem Final confirmation of uninstallation
@@ -2695,8 +2697,8 @@ if {%selected%}=={y} (set alldefclr=[31m&set alldefclr2=[97m&goto :yes2final)
 if {%selected%}=={yes} (setalldefclr=[31m&set alldefclr2=[97m&goto :yes2final)
 if {%selected%}=={n} (goto :no2)
 if {%selected%}=={no} (goto :no2)
-if {%selected%}=={back} (color 07&goto :hazime)
-if {%selected%}=={b} (color 07&goto :hazime)
+if {%selected%}=={back} (color 07&goto :Mainmenuboot)
+if {%selected%}=={b} (color 07&goto :Mainmenuboot)
 if {%selected%}=={debugyesnow} (goto :yes2go)
 echo.
 echo ?
@@ -2718,8 +2720,8 @@ if {%selected%}=={y} (goto :yes2go)
 if {%selected%}=={yes} (goto :yes2go)
 if {%selected%}=={n} (goto :no2)
 if {%selected%}=={no} (goto :no2)
-if {%selected%}=={back} (color 07&goto :hazime)
-if {%selected%}=={b} (color 07&goto :hazime)
+if {%selected%}=={back} (color 07&goto :Mainmenuboot)
+if {%selected%}=={b} (color 07&goto :Mainmenuboot)
 if {%selected%}=={debugyesnow} (goto :yes2go)
 echo.
 echo ?
@@ -3035,7 +3037,7 @@ pause
 echo.
 echo b n
 SET /P selected=back or next count
-if {%selected%}=={b} (goto :hazime) 
+if {%selected%}=={b} (goto :Mainmenuboot) 
 if {%selected%}=={n} (goto :testinthecalbeep) else goto testinthecalbeep
 goto finishcalbeep
 exit
@@ -3047,8 +3049,8 @@ PowerShell -WindowStyle Hidden -Command Exit
 title 
 cls
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"\", '', 'OK', 'none');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"...\", '', 'OK', 'none');exit $result;"
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"Contents of batch file....\", '', 'OK', 'Warning');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"DID YOU SEE THE...\", '', 'OK', 'none');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"Contents of batch file...\", '', 'OK', 'Warning');exit $result;"
 PowerShell -WindowStyle Normal -Command Exit
 cls
 title  Did you see it?
@@ -3139,7 +3141,7 @@ goto lock
 cls
 echo Dim answer:answer = MsgBox(".....",vbExclamation,""):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 PowerShell -WindowStyle normal -Command Exit
-goto hazime
+goto Mainmenuboot
 
 
 
@@ -3157,7 +3159,7 @@ if {%eggrandom%}=={2} (echo 1908 xD)
 if {%eggrandom%}=={3} (echo 1908 :C)
 if {%eggrandom%}=={4} (echo 1908 :O)
 set /a eggloop=eggloop+1
-if %eggloop% gtr 1908 (pause&echo 1 9 0 8 :D :D :D :D :D :D&pause&goto hazime)
+if %eggloop% gtr 1908 (pause&echo 1 9 0 8 :D :D :D :D :D :D&pause&goto Mainmenuboot)
 goto loop1908
 
 :developermenu
@@ -3176,15 +3178,15 @@ echo InternetExplorer is will open.
 echo CreateObject("InternetExplorer.Application").Visible=true > %TEMP%\openie.vbs & %TEMP%\openie.vbs
 del %temp%\openie.vbs
 powershell sleep 0.2
-goto hazime
+goto Mainmenuboot
 
 :allcommands
 rem Sword art online War of Underworld refarence
 set selected=0null0
-if {%allcommandlock%}=={true} (goto hazime) else if {%allcommandlock%}=={false} (goto allcommandsmain)
+if {%allcommandlock%}=={true} (goto Mainmenuboot) else if {%allcommandlock%}=={false} (goto allcommandsmain)
 title enter the password!
 set /p selected=enter the password:
-if {%selected%}=={1908} (echo correct.&set allcommandlock=false&pause) else if {%selected%}=={0null0} (echo please type something.&pause&goto allcommands) else (echo incorrect! now you need restart bat to try again.&set allcommandlock=true&pause&goto hazime)
+if {%selected%}=={1908} (echo correct.&set allcommandlock=false&pause) else if {%selected%}=={0null0} (echo please type something.&pause&goto allcommands) else (echo incorrect! now you need restart bat to try again.&set allcommandlock=true&pause&goto Mainmenuboot)
 :allcommandsmain
 cls
 rem dumbass code, wtf hell no who make it fr (damn its me but)!!!!! ITS ABSOLUTE TRASH!!!! THATS IS SO HARD TO READ
@@ -3268,7 +3270,7 @@ set clrgrn=
 set clryel=
 set clrmag=
 if {%batargmentonly%}=={true} (set batargmentonly= &cls&exit /b)
-goto hazime
+goto Mainmenuboot
 
 
 :fulldebug
@@ -3284,8 +3286,8 @@ set fulldebugsetvariable=0null0
 set fulldebugvariableapply=0null0
 set
 set /p fulldebugsetvariable=Enter the variable to change :
-if {%fulldebugsetvariable%}=={back} (goto hazime)
-if {%fulldebugsetvariable%}=={exit} (goto hazime)
+if {%fulldebugsetvariable%}=={back} (goto Mainmenuboot)
+if {%fulldebugsetvariable%}=={exit} (goto Mainmenuboot)
 if {%fulldebugsetvariable%}=={help} (echo goto&echo set&echo help&echo back&pause&cls&set fulldebugsetvariable=0null0&goto fulldebugtypevariable)
 if {%fulldebugsetvariable%}=={goto} (goto fulldebuggoto)
 if {%fulldebugsetvariable%}=={set} (goto fulldebugsetnew)
@@ -3353,8 +3355,8 @@ goto fulldebugtypevariable
 if {%fulldebugsetvariableerrorif%}=={n} (goto fulldebug)
 
 :littleeasteregg
-if {%hazimeeaster%}=={true} (goto hazimemenu)
-cls&pause&echo hello! this is easteregg!&pause&cls&title The build number is now displayed in the main menu and the About section in the hidden features.&echo and bye!&pause&cls&set hazimeeaster=true&goto hazime
+if {%Mainmenueaster%}=={true} (goto Mainmenu)
+cls&pause&echo hello! this is easteregg!&pause&cls&title The build number is now displayed in the main menu and the About section in the hidden features.&echo and bye!&pause&cls&set Mainmenueaster=true&goto Mainmenuboot
 
 
 :Lock

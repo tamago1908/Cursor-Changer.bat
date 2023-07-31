@@ -4,6 +4,7 @@ setlocal
 rem カーソル替え by tamago_1908
 rem Cursor Changer by tamago_1908
 
+rem Japanese version
 
 rem https://github.com/tamago1908/cursor-changer.bat 
 
@@ -18,7 +19,7 @@ rem そして最近、このバッチ処理に英語を多く含めるように�
 title カーソル変え
 rem VER v1.13β1
 set batver=1.13β1
-set batbuild=build 45
+set batbuild=build 45.5
 set hazimeeaster=false
 set firststartbat=no
 rem 制作にあたって使用したソフト windows notepad v10.2103.12.0 使用フォント　Nirmala UIの太字
@@ -334,6 +335,9 @@ rem build 39 マイナーアップデート。新しく引数にenablesimpleboot
 rem バージョン 1.12β9 1.12のベータ版9。このバージョンでは、細かな不具合が修正された。そして、settingの読み込み部分が変更され、gotoを使用した方法からcallを使用した方法に変更され、より安定するようになった。それ以外にも細かい部分の不具合が修正された。ちなみにもうすぐ1.12が完成する。
 rem build 41 マイナーアップデート。終了ボタンを無効化していたのが、最大化ボタンの無効化に変更された。
 rem バージョン 1.12β10 1.12のベータ版10 このバージョンでは、英語翻訳が追加され、細かいバグが修正された。あまり大きな変化はない。そしてこれが1.12βの最終バージョンになる予定だ。
+
+rem ver1.13
+rem バージョン 1.12β1 最初の1.13のベータ版。このバージョンでは、英語版での英訳の修正と、ウィンドウズのバージョンを確認する機構が少し変更され、また英語版ではeastereggが解放された。また、バグも修正された。とりあえず、主に英語版でのアップデートになる。
 
 
 rem 今後の予定 (roadmap)
