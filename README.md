@@ -1,13 +1,9 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***99.98%***
+> *Translate progress :* ***99.99998%***
 
 # - **Latest News** -
-### **Update progress (2023/07/29)**  
-Soon, 1.13β1 will be released.  
-This update has a new windows version checking mechanism, bug fixes, translation fixes and additions.
-It does not include the update feature.  
-I am currently struggling with the version checking system and have not been able to get it completed. Or rather, it is 80% of the reason why I have not been able to update.  
-(Well, there is also the problem of motivation...)  
+### **Update progress (2023/07/31)**  
+Cursor Changer 1.13��1 has been released!  
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
@@ -68,7 +64,18 @@ Then delete the BATCH process.
 
 ## - **Chenge logs** -
 
-### - 1.12 (major update) 🔥
+### - 1.13β1 (beta major update) ?��
+#### Chenged :
+- **English translation**
+- **Windows Version Check code**
+- *some easter eggs*
+- *all comment in batch is now all english translated*
+#### fixed :
+- *some bugs*
+- *goofy ahh Translation*
+___
+
+### - 1.12 (major update) 
 > btw this update is VERYYYY BIG, (1.11a)78.4KB -> (1.12)**133KB**. *wtf*? (That doesn't mean that there are no more features we want to add. There are still some, there are about 15 or 20 more. Probably more in the future.)
 #### Added :
 - **English translation!**
@@ -92,20 +99,4 @@ Then delete the BATCH process.
 - *so many bugs*
 - *tbh i dont remenber what i fix it.*
 > It took me 6 months to make this update!!! so I feel like I wanna skipping a version like one or two tbh though
-___
-
-## - **1.12 beta update**
-### - 1.12β10 (beta major update) 
-#### added :
-- **English translation!**
-#### fixed :
-- *some bugs*
-___
-
-### - 1.12β9 (beta major update) 
-#### chenged :
-- *settingloader code Improvements. (It is now more stable and starts up about 1.5 times faster.)*
-- *Added description about ctrl in settings*
-#### fixed :
-- ***Fixed all bugs*** *on the issues*
 ___
