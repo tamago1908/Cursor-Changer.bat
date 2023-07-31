@@ -3,7 +3,7 @@
 
 # - **Latest News** -
 ### **Update progress (2023/07/31)**  
-Cursor Changer 1.13��1 has been released!  
+Cursor Changer 1.13 beta1 has been released!  
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
@@ -64,7 +64,7 @@ Then delete the BATCH process.
 
 ## - **Chenge logs** -
 
-### - 1.13β1 (beta major update) ?��
+### - 1.13β1 (beta major update) 🔥
 #### Chenged :
 - **English translation**
 - **Windows Version Check code**
