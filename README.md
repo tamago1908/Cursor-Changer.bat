@@ -1,5 +1,5 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***99.99998%***
+> *Translate progress :* ***99.9999999999999999999......%***
 
 # - **Latest News** -
 ### **Update progress (2023/07/31)**  
@@ -66,7 +66,15 @@ Then delete the BATCH process.
 
 ## - **Chenge logs** -
 
-### - 1.13β1 (beta major update) 🔥
+### - 1.13β1 build 45.5 (Hotfix version) 🔥
+#### Chenged :
+- *Main menu and Typos Warning Variable and lavel name*
+- *Setting category names*
+#### fixed :
+- *setting5 load bug*
+___
+
+### - 1.13β1 (beta major update) 
 #### Chenged :
 - **English translation**
 - **Windows Version Check code**
