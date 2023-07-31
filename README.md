@@ -3,7 +3,9 @@
 
 # - **Latest News** -
 ### **Update progress (2023/07/31)**  
-Cursor Changer 1.13��1 has been released!  
+Cursor Changer 1.13 beta1 has been released!  
+
+Btw, Im focusing on the 2048 game, which will be added in one of the updates, and the update functionality. 2048 is almost complete in that except it is not translated, and the update functionality is not yet perfect. Becouse I most use code language is batch but, and due to the fact that update Function is everything coding in powershell. In particular, the update Check function at startup has not been worked on, and there are some minor issues with version confirmation and determining between beta and minor updates. For now, the update functionality is our priority, but I have not yet decided when it will be implemented.
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
@@ -64,7 +66,7 @@ Then delete the BATCH process.
 
 ## - **Chenge logs** -
 
-### - 1.13β1 (beta major update) ?��
+### - 1.13β1 (beta major update) 🔥
 #### Chenged :
 - **English translation**
 - **Windows Version Check code**
