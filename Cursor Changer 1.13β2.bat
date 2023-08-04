@@ -8,7 +8,6 @@ rem https://github.com/tamago1908/cursor-changer.bat
 
 
 
-rem by the way, English is not my main language, so most of the comments or variables are in my native language. One of these days I'd like to delete all the comments or translate them into English, but, well, what can I say...
 
 rem Specify size
 mode con: cols=75 lines=25
@@ -18,9 +17,10 @@ rem The number of processes you can put in at the beginning of the code is limit
 rem Make sure to fill in the build number and version! Also, don't forget to put it in the archive!
 rem And recently, I've been trying to include more English in this batch process. Because if I have to translate this batch process in the future, it will be troublesome if there are too many Japanese words.
 title Cursor Changer
-rem VER v1.13β1
-set batver=1.13β1
-set batbuild=build 45.5
+rem VER v1.13β2
+set batver=1.13β2
+set batbuild=build 47
+set batverdev= beta 
 set Mainmenueaster=false
 set firststartbat=no
 rem Software used in the production windows notepad v10.2103.12.0 Font used Nirmala UI bold
@@ -1124,17 +1124,205 @@ exit
 rem exit process and confirmation of it
 rem todolist, implement GUI in this part and add restart and other functions.
 :exitmenu
-title Exit confirm %debugmode% 
+cls
+if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[46m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
+if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[90m[107m)
+if defined %wmodetoggle% (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
+title Shutdown menu (experimental) %debugmode% 
 set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
 echo.
-SET /P selected=Do you really exit?（yes or no）:
-if {%selected%}=={yes} (exit)
-if {%selected%}=={y} (exit)
-if {%selected%}=={no} (goto :Mainmenu)
-if {%selected%}=={n} (goto :Mainmenu)
-if {%selected%}=={back} (goto :Mainmenu)
-if {%selected%}=={b} (goto :Mainmenu)
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4b %clr2%I     ^|    I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
+echo                       I   \___/  I   \___/  I           I       
+echo                       O==========O==========O===========O
+echo                       I Nothing selected...             I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu1
+if %ErrorLevel%==6 goto exitmenu1
+if %ErrorLevel%==7 goto exitmenu1
 goto :Mainmenu
+
+:exitmenu1
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4b %clr2%I%clred%     ^|    %clr2%I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
+echo                       I%clred%   \___/  %clr2%I   \___/  I           I       
+echo                       O==========O==========O===========O
+echo                       I Shutdown selected.              I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu2
+if %ErrorLevel%==6 goto exitmenu1y
+if %ErrorLevel%==7 goto exitmenu1y
+goto :Mainmenu
+
+:exitmenu2
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4b %clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
+echo                       I   \___/  I%clrgrn%   \___/  %clr2%I           I       
+echo                       O==========O==========O===========O
+echo                       I Reboot selected.                I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu3
+if %ErrorLevel%==6 goto exitmenu2y
+if %ErrorLevel%==7 goto exitmenu2y
+goto :Mainmenu
+
+:exitmenu3
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4b %clr2%I     ^|    I   /~~~\  I%clrcyan%           %clr2%I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I  V    ∧ I%clrcyan%  ^-^-^-^-^-^-^>  %clr2%I%clrgra% ==============O%clr2%
+echo                       I   \___/  I   \___/  I%clrcyan%           %clr2%I       
+echo                       O==========O==========O===========O
+echo                       I Exit selected.                  I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu2
+if %ErrorLevel%==5 goto exitmenu3
+if %ErrorLevel%==6 call :exitmenuexit&goto mainmenuboot
+if %ErrorLevel%==7 call :exitmenuexit&goto mainmenuboot
+goto :Mainmenu
+
+
+rem confirm
+
+:exitmenu1y
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4b %clr2%I%clred%     ^|    %clr2%I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
+echo                       I%clred%   \___/  %clr2%I   \___/  I           I       
+echo                       O==========O==========O===========O
+echo                       I Confirm?                        I
+echo                       O=================================O
+echo.
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu2
+if %ErrorLevel%==6 goto batshutdown
+if %ErrorLevel%==7 goto batshutdown
+if %ErrorLevel%==8 goto exitmenu1
+goto :Mainmenu
+
+:exitmenu2y
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O===========O=========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4b %clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
+echo                       I   \___/  I%clrgrn%   \___/  %clr2%I           I       
+echo                       O==========O==========O===========O
+echo                       I Confirm?                        I
+echo                       O=================================O
+echo.
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu3
+if %ErrorLevel%==6 (set bootbatnow=yes&goto batstart)
+if %ErrorLevel%==7 (set bootbatnow=yes&goto batstart)
+if %ErrorLevel%==8 goto exitmenu2
+goto :Mainmenu
+
+
+:batshutdown
+title BYE
+cls
+echo.
+echo                            Cursor Changer %batver% %debugmode%
+echo.
+echo O=========================================================================O
+echo.
+echo.
+echo.
+echo.
+echo. 
+echo.
+echo.
+echo.
+echo                                                Shut Down...
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo O=========================================================================O
+echo.
+echo                        2021-2023 tamago1908 %batbuild%
+call :exitmenuexit
+powershell sleep 2
+exit
+
+:exitmenuexit
+set clrcyan=
+set clrgra=
+set clred=
+set clrgrn=
+set clryel=
+set clrmag=
+exit /b
+
 
 
 rem Depiction of the settings menu
@@ -1630,7 +1818,7 @@ if %settinghelptoggle%==false set settinghelptoggle=true&goto settingcategoryhel
 
 :settingcategoryhelpmodetoggleiftrue
 if {%wmodetoggle%}=={false} (set clrhelp=[7m&set clrhelp2=[0m)
-if {%wmodetoggle%}=={true} (set clrhelp=[100m[97m&set clrhelp2=[0m[107m[30m)
+if {%wmodetoggle%}=={true} (set clrhelp=[100m[97m&set clrhelp2=[0m[107m)
 goto settingcategoryhelpmode
 
 
@@ -1785,7 +1973,7 @@ powershell "(gc CursorChangerSettings.txt) -replace 'fastboot=true','fastboot=fa
 goto setting3yokey
 
 :setting3ygo1
-powershell "(gc CursorChangerSettings.txt) -replace 'fastboot=falsee','fastboot=true' | sc CursorChangerSettings.txt"
+powershell "(gc CursorChangerSettings.txt) -replace 'fastboot=false','fastboot=true' | sc CursorChangerSettings.txt"
 goto setting3yokey
 
 :setting3n
@@ -1979,7 +2167,7 @@ Pause
 set wantload=wmode
 call :batbootprogress
 if {%wmodetoggle%}=={false} (set clr=[7m&set clr2=[0m)
-if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clr2=[0m[107m[30m)
+if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clr2=[0m[107m)
 Goto settingcategory2intsetting2
 
 :no01
@@ -2054,18 +2242,37 @@ goto settingcategory1intsetting5
 
 rem Version of batch
 :batver
+title Cursor Changer version (experimental)
 echo.
-echo Cursor Changer ver %batver%   2021-2023
-if %Mainmenueaster%==true echo %batbuild%
-title CCursor Changer thenks so much %username%
-powershell sleep -m 200
-echo and...
-powershell sleep -m 200
-echo create by tamago_1908
-
+echo.
+echo     by tamago_1908   2021-2023
+echo     O========================================O
+echo     I                                        I
+echo     I      Cursor Changer %batverdev% Version     I
+echo     I                                        I
+echo     O========================================O 
+echo           Version : %batver%  %batbuild%
+echo.
+echo do you want to chack the update?
+set /p selected=Y or N : 
+if {%selected%}=={y} (goto batverupdate) else if {%selected%}=={yes} (goto batverupdate) else if {%selected%}=={n} (goto mainmenu) else if {%selected%}=={no} (goto mainmenu) else (echo what??? y or n &pause&cls&goto batver )
 pause
 cls
 goto Mainmenuboot
+
+:batverupdate
+cls
+echo sorry its still development, so this feature is not available at now.
+echo maybe 2 or 3 version later.
+echo so please wait update.
+pause
+cls
+echo well i mean...
+pause
+cls
+echo COMING SOON (almost lie)
+pause
+goto mainmenu
 
 rem calculator
 :startcal
@@ -3169,7 +3376,9 @@ exit /b
 
 :batstarthelp
 set batargmentonly=true
+if {%batargmentonly%}=={true} (
 set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m
+) else (wtf its inpossble bro. batargmentonly has not expect value. like true.&pause&exit)
 goto acbatargmentsonly
 
 :openiedev

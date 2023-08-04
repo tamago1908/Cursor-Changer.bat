@@ -17,9 +17,10 @@ rem コードの最初に入れれる処理の数は限られています(入れ
 rem ビルドナンバーとバージョンの記入は必ずしてください！あとアーカイブに入れるのを忘れずに！
 rem そして最近、このバッチ処理に英語を多く含めるようにしている。なぜなら、将来的にこのバッチ処理を翻訳することになった時、日本語が多いと面倒だから。
 title カーソル変え
-rem VER v1.13β1
-set batver=1.13β1
-set batbuild=build 45.5
+rem VER v1.13β2
+set batver=1.13β2
+set batbuild=build 47
+set batverdev=ベータ
 set hazimeeaster=false
 set firststartbat=no
 rem 制作にあたって使用したソフト windows notepad v10.2103.12.0 使用フォント　Nirmala UIの太字
@@ -1286,19 +1287,205 @@ del /Q %TEMP%\msgbox.vbs
 exit
 
 
-rem 終了処理とそれの確認
-rem todolist, ここの部分にGUIを実装して、再起動とかの機能を付ける。
 :exitmenu
-title 終了確認 %debugmode% 
+cls
+if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[46m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
+if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[90m[107m)
+if defined %wmodetoggle% (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
+title カーソル替えの終了 (試験的) %debugmode% 
 set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
 echo.
-SET /P selected=本当に終了しますか？（yesまたはno）:
-if {%selected%}=={yes} (exit)
-if {%selected%}=={y} (exit)
-if {%selected%}=={no} (goto :hazimemenu)
-if {%selected%}=={n} (goto :hazimemenu)
-if {%selected%}=={back} (goto :hazimemenu)
-if {%selected%}=={b} (goto :hazimemenu)
+echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4ba%clr2%I     ^|    I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O===================%clr2%I   / ^| \  I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo                       I   \___/  I   \___/  I           I       
+echo                       O==========O==========O===========O
+echo                       I 何も選択してない。             I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu1
+if %ErrorLevel%==6 goto exitmenu1
+if %ErrorLevel%==7 goto exitmenu1
+goto :hazime
+
+:exitmenu1
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %hazimebuild%%clr2%
+echo.
+echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4ba%clr2%I%clred%     ^|    %clr2%I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O===================%clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo                       I%clred%   \___/  %clr2%I   \___/  I           I       
+echo                       O==========O==========O===========O
+echo                       I 終了が選択。                     I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu2
+if %ErrorLevel%==6 goto exitmenu1y
+if %ErrorLevel%==7 goto exitmenu1y
+goto :hazime
+
+:exitmenu2
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4ba%clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
+echo   %clrgra%O===================%clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo                       I   \___/  I%clrgrn%   \___/  %clr2%I           I       
+echo                       O==========O==========O===========O
+echo                       I 再起動が選択。                   I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu3
+if %ErrorLevel%==6 goto exitmenu2y
+if %ErrorLevel%==7 goto exitmenu2y
+goto :hazime
+
+:exitmenu3
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4ba%clr2%I     ^|    I   /~~~\  I%clrcyan%           %clr2%I%clrgra%               I%clr2%
+echo   %clrgra%O===================%clr2%I   / ^| \  I  V    ∧ I%clrcyan%  ^-^-^-^-^-^-^>  %clr2%I%clrgra%===============O%clr2%
+echo                       I   \___/  I   \___/  I%clrcyan%           %clr2%I       
+echo                       O==========O==========O===========O
+echo                       I 戻るを選択。                     I
+echo                       O=================================O
+echo.
+choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu2
+if %ErrorLevel%==5 goto exitmenu3
+if %ErrorLevel%==6 call :exitmenuexit&goto hazime
+if %ErrorLevel%==7 call :exitmenuexit&goto hazime
+goto :hazime
+
+
+rem confirm
+
+:exitmenu1y
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4ba%clr2%I%clred%     ^|    %clr2%I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O===================%clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo                       I%clred%   \___/  %clr2%I   \___/  I           I       
+echo                       O==========O==========O===========O
+echo                       I 本当に？                        I
+echo                       O=================================O
+echo.
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu2
+if %ErrorLevel%==6 goto batshutdown
+if %ErrorLevel%==7 goto batshutdown
+if %ErrorLevel%==8 goto exitmenu1
+goto :hazime
+
+:exitmenu2y
+cls
+set selected=0nul0
+echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo.
+echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
+echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%I                   %clr2%O===========O=========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I                4ba%clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
+echo   %clrgra%O===================%clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo                       I   \___/  I%clrgrn%   \___/  %clr2%I           I       
+echo                       O==========O==========O===========O
+echo                       I 本当に？                        I
+echo                       O=================================O
+echo.
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+if %ErrorLevel%==1 goto exitmenu1
+if %ErrorLevel%==2 goto exitmenu2
+if %ErrorLevel%==3 goto exitmenu3
+if %ErrorLevel%==4 goto exitmenu1
+if %ErrorLevel%==5 goto exitmenu3
+if %ErrorLevel%==6 (set bootbatnow=yes&goto batstart)
+if %ErrorLevel%==7 (set bootbatnow=yes&goto batstart)
+if %ErrorLevel%==8 goto exitmenu2
+goto :hazime
+
+
+:batshutdown
+title アリーヴェデルチ
+cls
+echo.
+echo                            カーソル替え %batver% %debugmode%
+echo.
+echo O=========================================================================O
+echo.
+echo.
+echo.
+echo.
+echo. 
+echo.
+echo.
+echo.
+echo                                                さようなら
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.
+echo O=========================================================================O
+echo.
+echo                        2021-2023 tamago1908 %batbuild%
+call :exitmenuexit
+powershell sleep 2
+exit
+
+:exitmenuexit
+set clrcyan=
+set clrgra=
+set clred=
+set clrgrn=
+set clryel=
+set clrmag=
+exit /b
 goto :hazimemenu
 
 
@@ -2216,17 +2403,38 @@ goto settingcategory1intsetting5
 
 rem バッチのバージョン
 :batver
+rem Version of batch
+:batver
+title カーソル替え バージョン (試験的)
 echo.
-echo カーソル替え ver %batver%   2021-2023
-if %hazimeeaster%==true echo %batbuild%
-title カーソル替え thenks so much %username%
-powershell sleep -m 200
-echo and...
-powershell sleep -m 200
-echo create by tamago_1908
-
+echo.
+echo     by tamago_1908   2021-2023
+echo     O========================================O
+echo     I                                        I
+echo     I      カーソル替え %batverdev% 版        I
+echo     I                                        I
+echo     O========================================O 
+echo           Version : %batver%  %batbuild%
+echo.
+echo アップデートを確認しますか？
+set /p selected=Y or N : 
+if {%selected%}=={y} (goto batverupdate) else if {%selected%}=={yes} (goto batverupdate) else if {%selected%}=={n} (goto hazime) else if {%selected%}=={no} (goto hazime) else (echo すみません。YかNのみを入力してください。&pause&cls&goto batver )
 pause
 cls
+goto hazime
+
+:batverupdate
+cls
+echo 大変申し訳ございません。厳重注意いたします。
+echo ところで、この機能はまだ開発中で利用できません。
+echo 恐らく2～3バージョン後に利用可能になります。
+pause
+cls
+echo まぁ要するに...
+pause
+cls
+echo COMING SOON (嘘)
+pause
 goto hazime
 
 rem 電卓
@@ -3329,7 +3537,9 @@ exit /b
 
 :batstarthelp
 set batargmentonly=true
+if {%batargmentonly%}=={true} (
 set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m
+) else (おかしいな、そうに決まってる。だってbatargmentonlyが期待された値ではなかったんだから。だってよお、直近でsetしてるのにこうなるなんてありえねえよなぁ！？？！？！！？！？？！？！？！？！？！？&pause&exit)
 goto acbatargmentsonly
 
 :openiedev
