@@ -1,11 +1,9 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***99.9999999999999999999999999......%***
+> *Translate progress :* ***100%***
 
 # - **Latest News** -
-### **Update progress (2023/08/01)**  
-Cursor Changer 1.13 beta1 has been released! (and hotfix too)  
-
-Btw, Im focusing on the 2048 game, which will be added in one of the updates, and the update functionality. 2048 is almost complete in that except it is not translated, and the update functionality is not yet perfect. Becouse I most use code language is batch but, and due to the fact that update Function is everything coding in powershell. In particular, the update Check function at startup has not been worked on, and there are some minor issues with version confirmation and determining between beta and minor updates. For now, the update functionality is our priority, but I have not yet decided when it will be implemented.
+### **Update progress (2023/08/04)**  
+Cursor Changer 1.13 beta2 has been released! 
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
@@ -66,7 +64,17 @@ Then delete the BATCH process.
 
 ## - **Chenge logs** -
 
-### - 1.13β1 build 45.5 (Hotfix version) 🔥
+### - 1.13β1 build 47 (Hotfix version) 🔥
+#### Added : 
+- **Windows XP Style Exit Menu!**
+ - *Shutdown UI*
+#### Chenged :
+- *Batch Version UI*
+#### fixed :
+- *some bugs*
+___
+
+### - 1.13β1 build 45.5 (Hotfix version) 
 #### Added : 
 - *Bypsadm argument help*  
 #### Chenged :
@@ -77,7 +85,7 @@ Then delete the BATCH process.
 - *argument bugs*
 ___
 
-### - 1.13β1 (beta major update) 
+### - 1.13β1 build 45 (beta major update) 
 #### Chenged :
 - **English translation**
 - **Windows Version Check code**
@@ -88,7 +96,7 @@ ___
 - *goofy ahh Translation*
 ___
 
-### - 1.12 (major update) 
+### - 1.12 build 44 (major update) 
 > btw this update is VERYYYY BIG, (1.11a)78.4KB -> (1.12)**133KB**. *wtf*? (That doesn't mean that there are no more features we want to add. There are still some, there are about 15 or 20 more. Probably more in the future.)
 #### Added :
 - **English translation!**
