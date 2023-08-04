@@ -64,7 +64,7 @@ Then delete the BATCH process.
 
 ## - **Chenge logs** -
 
-### - 1.13β1 build 47 (Hotfix version) 🔥
+### - 1.13β2 build 47  🔥
 #### Added : 
 - **Windows XP Style Exit Menu!**
  - *Shutdown UI*
@@ -72,6 +72,8 @@ Then delete the BATCH process.
 - *Batch Version UI*
 #### fixed :
 - *some bugs*
+
+#### Now Batch has Fully Translated.
 ___
 
 ### - 1.13β1 build 45.5 (Hotfix version) 
