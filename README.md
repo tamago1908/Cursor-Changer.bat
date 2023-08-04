@@ -4,6 +4,9 @@
 # - **Latest News** -
 ### **Update progress (2023/08/04)**  
 Cursor Changer 1.13 beta2 has been released! 
+Progress on the update feature, but this is not making any real progress. If anything, the code has been shortened, judgments have been made a little better, etc., but other than that, development is progressing well.
+For example, cake is a lie, and the new admin right check script, trying to implement 2048 with use only batch, and so on...
+Anyway, some progress is being made.
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
