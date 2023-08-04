@@ -66,10 +66,11 @@ Then delete the BATCH process.
 
 ### - 1.13β2 build 47  🔥
 #### Added : 
-- **Windows XP Style Exit Menu!**
- - *Shutdown UI*
+- **Windows XP Style Exit Menu!** (Experimental)
+-- *Shutdown UI*
 #### Chenged :
-- *Batch Version UI*
+- *Batch Version UI* (Experimental)
+-- Update Function is not Available at now
 #### fixed :
 - *some bugs*
 
