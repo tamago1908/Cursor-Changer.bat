@@ -3,7 +3,8 @@
 
 # - **Latest News** -
 ### **Update progress (2023/08/18)**  
-Recently, the update function has finally become less buggy, so all that remains is to fix the determination of when the version of Cursor Changer on github matches its own version and when one of them is a beta version, and it will be almost complete. Once that is done, all that is left is to implement and release 1.13.b3. (Actually, I'd like a few more features, but implementation is the priority right now.)
+Recently, the update function has finally become less buggy, so all that remains is to fix the determination of when the version of Cursor Changer on github matches its own version and when one of them is a beta version, and it will be almost complete.  
+Once that is done, all that is left is to implement and release 1.13.b3. (Actually, I'd like a few more features, but implementation is the priority right now.)  
 There are various minor fixes in 1.13.b3. For example, mistranslations, incorrect English fixes, bug fixes, etc.
 
 ## - **ABOUT THIS BATCH** -
