@@ -2,10 +2,8 @@
 > *Translate progress :* ***100%***
 
 # - **Latest News** -
-### **Update progress (2023/08/18)**  
-Recently, the update function has finally become less buggy, so all that remains is to fix the determination of when the version of Cursor Changer on github matches its own version and when one of them is a beta version, and it will be almost complete.  
-Once that is done, all that is left is to implement and release 1.13.b3. (Actually, I'd like a few more features, but implementation is the priority right now.)  
-There are various minor fixes in 1.13.b3. For example, mistranslations, incorrect English fixes, bug fixes, etc.
+### **Update Change logs (2023/08/20)**  
+Today, the changelog was changed drastically. As a result, the changelog archive that was on the wiki is gone, and conversely, almost all of the previous changelogs have been moved to the release section. Some of the Readme changelogs will remain. probably for 2~3 versions.
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
@@ -65,7 +63,9 @@ Then delete the BATCH process.
 
 
 ## - **Chenge logs** -
-
+>  **Beta latest : 1.13β2**  
+>  **Stable latest : 1.12**
+___
 ### - 1.13β2 build 47  🔥
 #### Added : 
 - **Windows XP Style Exit Menu!** (Experimental)
@@ -99,33 +99,5 @@ ___
 #### fixed :
 - *some bugs*
 - *goofy ahh Translation*
-___
-
-## - **Stable latest** -
-
-### - 1.12 build 44 (major update)  
-> btw this update is VERYYYY BIG, (1.11a)78.4KB -> (1.12)**133KB**. *wtf*? (That doesn't mean that there are no more features we want to add. There are still some, there are about 15 or 20 more. Probably more in the future.)
-#### Added :
-- **English translation!**
-- **New dogchack!**
-- **New setting UI!**
-- **New Boot Screan!** (you can disable it in setting)
-- **batch is now disable miximize button!**
-- *new easteregg*
-- *windows version check!*
-- *setting fixer!*
-- *Some functions in uninstall manu*
-- *bat argments*
-- *debug commands*
-- ***AND MORE!***
-#### Changed :
-- **debug setting is now gone**
-- **first start massage**
-- **setting apply txt**
-- **exit button is moved to "3"**
-#### Fixed :
-- *so many bugs*
-- *tbh i dont remenber what i fix it.*
-> It took me 6 months to make this update!!! so I feel like I wanna skipping a version like one or two tbh though
 ___
 
