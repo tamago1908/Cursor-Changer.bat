@@ -101,7 +101,9 @@ ___
 - *goofy ahh Translation*
 ___
 
-### - 1.12 build 44 (major update) 
+## - **Stable latest** -
+
+### - 1.12 build 44 (major update)  
 > btw this update is VERYYYY BIG, (1.11a)78.4KB -> (1.12)**133KB**. *wtf*? (That doesn't mean that there are no more features we want to add. There are still some, there are about 15 or 20 more. Probably more in the future.)
 #### Added :
 - **English translation!**
@@ -127,4 +129,3 @@ ___
 > It took me 6 months to make this update!!! so I feel like I wanna skipping a version like one or two tbh though
 ___
 
-> update logs are removed from the readme in order of oldest to newest. A rough rule of thumb is about 3~5 versions. The complete log can be found on the wiki, but it is long and not recommended.
