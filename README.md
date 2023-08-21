@@ -78,7 +78,7 @@ ___
 - *Text in the settings menu, such as "like theme" is now semi-transparent*
 #### fixed :
 - *Problem with unstable startup screen when white mode is enabled*
-- *Collapse of configuration UI when settings are corrupted*
+- *Collapse of setting UI when settings are corrupted*
 - *Mistranslation*
 - *something* (i forget again)
 ___
