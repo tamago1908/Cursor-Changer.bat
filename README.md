@@ -78,9 +78,11 @@ ___
 - *Text in the settings menu, such as like theme is now semi-transparent*
 #### fixed :
 - *Problem with unstable startup screen when white mode is enabled*
+- *Collapse of configuration UI when settings are corrupted*
 - *Mistranslation*
 - *something* (i forget again)
 ___
+
 ### - 1.13β2 build 47  
 #### Added : 
 - **Windows XP Style Exit Menu!** (Experimental)
