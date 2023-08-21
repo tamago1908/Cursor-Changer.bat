@@ -75,7 +75,7 @@ ___
 - *Visualization of whether Help mode is enabled or not*
 #### Chenged :
 - *something* (i forget)
-- *Text in the settings menu, such as like theme is now semi-transparent*
+- *Text in the settings menu, such as "like theme" is now semi-transparent*
 #### fixed :
 - *Problem with unstable startup screen when white mode is enabled*
 - *Collapse of configuration UI when settings are corrupted*
