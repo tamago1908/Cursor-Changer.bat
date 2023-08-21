@@ -2,8 +2,11 @@
 > *Translate progress :* ***100%***
 
 # - **Latest News** -
-### **Update Change logs (2023/08/20)**  
-Today, the changelog was changed drastically. As a result, the changelog archive that was on the wiki is gone, and conversely, almost all of the previous changelogs have been moved to the release section. Some of the Readme changelogs will remain. probably for 2~3 versions.
+### **Update released! (2023/08/21)**  
+Cursor Changer 1.13β3 (1.13.b3) has been released!  
+This update includes a number of minor fixes, but the most significant is the implementation of the update feature. This feature is mainly built by powershell, but it is still great.  
+I've been developing it for about two months now and finally got it into shape and implemented it. (The reason it took so long is that I don't know powershell at all myself and created it all with AI. However, I think it turned out pretty good.)  
+There are still a large number of missing features in the update functionality, but they will probably be implemented in the official release of 1.13.  
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
@@ -63,10 +66,22 @@ Then delete the BATCH process.
 
 
 ## - **Chenge logs** -
->  **Beta latest : 1.13β2**  
+>  **Beta latest : 1.13β3**  
 >  **Stable latest : 1.12**
 ___
-### - 1.13β2 build 47  🔥
+### - 1.13β3 build 49  🔥
+#### Added : 
+- **Update Function!** (Experimental)
+- *Visualization of whether Help mode is enabled or not*
+#### Chenged :
+- *something* (i forget)
+- *Text in the settings menu, such as like theme is now semi-transparent*
+#### fixed :
+- *Problem with unstable startup screen when white mode is enabled*
+- *Mistranslation*
+- *something *(i forget again)
+___
+### - 1.13β2 build 47  
 #### Added : 
 - **Windows XP Style Exit Menu!** (Experimental)
   - *Shutdown UI*
