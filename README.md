@@ -66,8 +66,8 @@ Then delete the BATCH process.
 
 
 ## - **Chenge logs** -
->  **Beta latest : 1.13β3**  
->  **Stable latest : 1.12**
+>  **Beta latest : 1.13β3 (build 49)**  
+>  **Stable latest : 1.12 (build 44)**
 ___
 ### - 1.13β3 build 49  🔥
 #### Added : 
