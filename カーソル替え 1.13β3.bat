@@ -13,13 +13,12 @@ rem サイズの指定
 mode con: cols=75 lines=25
 
 rem メモ cd %~dp0 &start %~n0%~x0&exit 有効活用できるかも (bat再起動)
-rem コードの最初に入れれる処理の数は限られています(入れすぎると起動が遅くなる可能性) (遅くなった (手遅れ(何とかなった)) )
 rem ビルドナンバーとバージョンの記入は必ずしてください！あとアーカイブに入れるのを忘れずに！
 rem そして最近、このバッチ処理に英語を多く含めるようにしている。なぜなら、将来的にこのバッチ処理を翻訳することになった時、日本語が多いと面倒だから。
 title カーソル変え
-rem VER v1.13β2
-set batver=1.13β2
-set batbuild=build 47
+rem VER v1.13β3
+set batver=1.13β3
+set batbuild=build 49
 set batverdev=ベータ
 set hazimeeaster=false
 set firststartbat=no
@@ -338,7 +337,9 @@ rem build 41 マイナーアップデート。終了ボタンを無効化して�
 rem バージョン 1.12β10 1.12のベータ版10 このバージョンでは、英語翻訳が追加され、細かいバグが修正された。あまり大きな変化はない。そしてこれが1.12βの最終バージョンになる予定だ。
 
 rem ver1.13
-rem バージョン 1.12β1 最初の1.13のベータ版。このバージョンでは、英語版での英訳の修正と、ウィンドウズのバージョンを確認する機構が少し変更され、また英語版ではeastereggが解放された。また、バグも修正された。とりあえず、主に英語版でのアップデートになる。
+rem バージョン 1.13β1 最初の1.13のベータ版。このバージョンでは、英語版での英訳の修正と、ウィンドウズのバージョンを確認する機構が少し変更され、また英語版ではeastereggが解放された。また、バグも修正された。とりあえず、主に英語版でのアップデートになる。
+rem バージョン 1.13β2
+rem 1.13のベータ版1。このバージョンでは主に二つの新機能がある。それは、終了メニューと新しいバージョン表示UIだ。これに伴い、今まではreloadをしないと再起動できなかったのが、そのままメニューから再起動できるようになった。また、自己アップデート機能も新しくなったバージョン表示部分からアクセスできるようになる予定。また、他にもバグ修正などが行われた。
 
 
 rem 今後の予定 (roadmap)
@@ -472,7 +473,11 @@ rem 管理者権限のプロンプトに関する設定を検知、
 :batstart
 if {%settingbypass%}=={true} (goto hazimemenuskipboot)
 cls
-rem 管理者権限設定の検知
+rem 管理者権限設定の検知、起動画面用のテーマを検知（こうしないと不安定化）
+find "wmode=true" カーソル替え設定.txt > nul
+if {%ErrorLevel%}=={0} (set wmodetoggle=true)
+if {%ErrorLevel%}=={1} (set wmodetoggle=false)
+
 find "admin=true" カーソル替え設定.txt > nul
 if {%adminbypass%}=={true} (goto gotadmin)
 if {%errorlevel%}=={0} (goto batstartadm)
@@ -702,9 +707,11 @@ if {%errorlevel%}=={0} (goto checksum)
 cls
 rem ブートアニメーションを再生。5分の1の確率で別バージョンが再生される。ramdomの仕様(？)によって二回連続でrandomをしないといけない。
 set /a bootegg=%random%*6/32767
-set /a bootegg=%random%*6/32767
+set /a bootegg2=%random%*6/32767
 if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
-if {%bootegg%}=={1} (goto batbootanimationfun)
+if {%bootegg%}=={%bootegg2%} (goto batbootanimationfun)
+set bootegg=
+set bootegg2=
 :batbootanimationbypassfun
 title ようこそ
 echo.
@@ -730,7 +737,7 @@ echo.
 echo.
 echo O=========================================================================O
 echo.
-echo                      2021-2023 tamago1908 %batbuild%
+echo                       2021-2023 tamago1908 %batbuild%
 powershell sleep 1
 cls
 rem 設定の欠損を確認
@@ -824,7 +831,6 @@ goto exit
 :setting1load
 rem ホワイトモードの検知と色の変更。変更の高速化のため序盤に配置。
 find "wmode=true" カーソル替え設定.txt > nul
-if {%errorlevel%}=={0} (color f0)
 set allsettingerror=0
 cls
 find "rebootokey=true" カーソル替え設定.txt > nul
@@ -910,7 +916,7 @@ rem 設定の欠損を検証
 find "rebootokey=false" カーソル替え設定.txt > nul
 cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting1onoff=無効) else if %ErrorLevel%==1 set setting1onoff=null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting1onoff=無効) else if %ErrorLevel%==1 set setting1onoff= null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=1&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting2load) else (goto whatloadgoto)
 
@@ -918,7 +924,7 @@ if {%bootbatnow%}=={yes} (goto setting2load) else (goto whatloadgoto)
 find "admin=false" カーソル替え設定.txt > nul
 cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting2onoff=無効) else if %ErrorLevel%==1 set setting2onoff=null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting2onoff=無効) else if %ErrorLevel%==1 set setting2onoff= null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=2&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
 
@@ -926,7 +932,7 @@ if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
 find "fastboot=false" カーソル替え設定.txt > nul
 cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting3onoff=無効) else if %ErrorLevel%==1 set setting3onoff=null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting3onoff=無効) else if %ErrorLevel%==1 set setting3onoff= null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=3&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting4load) else (goto whatloadgoto)
 
@@ -934,7 +940,7 @@ if {%bootbatnow%}=={yes} (goto setting4load) else (goto whatloadgoto)
 find "hatenakeikoku=false" カーソル替え設定.txt > nul
 cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting4onoff=無効) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting4onoff=無効) else if %ErrorLevel%==1 set setting4onoff= null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=4&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting5load2) else (goto whatloadgoto)
 
@@ -942,7 +948,7 @@ if {%bootbatnow%}=={yes} (goto setting5load2) else (goto whatloadgoto)
 find "bootanimation=false" カーソル替え設定.txt
 cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting5onoff=無効) else if %ErrorLevel%==1 set setting5onoff=null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting5onoff=無効) else if %ErrorLevel%==1 set setting5onoff= null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=5&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto wmodeload) else (goto whatloadgoto)
 
@@ -1030,6 +1036,8 @@ rem ブートアニメーション。
 rem 下は読み込み時のテキスト分岐。
 if {%bootbatnow%}=={no} (title カーソル設定 処理中... & echo 処理中... & goto whatload) else (title 起動中...)
 if {%simpleboot%}=={true} (echo 起動中...& exit /b)
+if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclr2=[0m)
+if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[100m[97m&set loadscrnprgsclr2=[0m[107m[30m) else (set loadscrnprgsclr=[7m&set loadscrnprgsclr2=[0m)
 cls
 rem goofy ahh code
 set loadscrnprgs0=
@@ -1043,8 +1051,6 @@ set loadscrnprgs7=
 set loadscrnprgs8=
 set loadscrnprgs9=
 set loadscrnprgs10=
-if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclr2=[0m)
-if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[100m[97m&set loadscrnprgsclr2=[0m[107m[30m) else (set loadscrnprgsclr=[7m&set loadscrnprgsclr2=[0m)
 if {%batloadprgs%}=={0} (set loadscrnprgs0=                                                     )
 if {%batloadprgs%}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%                                                  )
 if {%batloadprgs%}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%                                              )
@@ -1290,7 +1296,7 @@ exit
 :exitmenu
 cls
 if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[46m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
-if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[90m[107m)
+if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[90m[107m[30m)
 if defined %wmodetoggle% (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 title カーソル替えの終了 (試験的) %debugmode% 
 set selected=0nul0
@@ -1303,7 +1309,7 @@ echo   %clrgra%I                4ba%clr2%I     ^|    I   /~~~\  I           I%cl
 echo   %clrgra%O===================%clr2%I   / ^| \  I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
 echo                       I   \___/  I   \___/  I           I       
 echo                       O==========O==========O===========O
-echo                       I 何も選択してない。             I
+echo                       I 何も選択していません。          I
 echo                       O=================================O
 echo.
 choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
@@ -1328,7 +1334,7 @@ echo   %clrgra%I                4ba%clr2%I%clred%     ^|    %clr2%I   /~~~\  I  
 echo   %clrgra%O===================%clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
 echo                       I%clred%   \___/  %clr2%I   \___/  I           I       
 echo                       O==========O==========O===========O
-echo                       I 終了が選択。                     I
+echo                       I 終了が選択されました。          I
 echo                       O=================================O
 echo.
 choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
@@ -1353,7 +1359,7 @@ echo   %clrgra%I                4ba%clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I 
 echo   %clrgra%O===================%clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
 echo                       I   \___/  I%clrgrn%   \___/  %clr2%I           I       
 echo                       O==========O==========O===========O
-echo                       I 再起動が選択。                   I
+echo                       I 再起動が選択されました。        I
 echo                       O=================================O
 echo.
 choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
@@ -1378,7 +1384,7 @@ echo   %clrgra%I                4ba%clr2%I     ^|    I   /~~~\  I%clrcyan%      
 echo   %clrgra%O===================%clr2%I   / ^| \  I  V    ∧ I%clrcyan%  ^-^-^-^-^-^-^>  %clr2%I%clrgra%===============O%clr2%
 echo                       I   \___/  I   \___/  I%clrcyan%           %clr2%I       
 echo                       O==========O==========O===========O
-echo                       I 戻るを選択。                     I
+echo                       I 戻るが選択されました。          I
 echo                       O=================================O
 echo.
 choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
@@ -1578,6 +1584,7 @@ rem (例 ユーザーの名前がtestだった場合と、OSが入った場所�
 if not exist カーソル替え設定.txt (goto dogcheck)
 title カーソル設定 %debugmode%
 set selected=0nul0
+if not defined {%clrgra%} (set clrgra=[90m)
 Cls
 Echo.
 Echo                               設定メニュー Ver2!!
@@ -1587,7 +1594,7 @@ echo I      カテゴリー        I                  I 設定 I
 echo O========================O==================O======O======================O
 echo I                        I                                                I
 echo I  カーソル替え  機能系  I  カーソル替えの見た目に関する設定です。        I
-echo I                        I （テーマなど）                                 I
+echo I                        I %clrgra%（テーマなど）%clr2%                                 I
 echo O========================I                                                I
 Echo O  カテゴリー  上か下か  I                                                I
 Echo O========================I                                                I
@@ -1600,6 +1607,7 @@ echo O========================O  O=====================O==========O============O
 echo.
 echo.
 choice /c 12wsdbye3 /n /m "変更するものを数字で指定又はwasdで移動して指定してください"
+set clrgra=
 if %ErrorLevel%==1 goto settingcategory1
 if %ErrorLevel%==2 goto settingcategory2
 if %ErrorLevel%==3 goto settingcategory1
@@ -1945,6 +1953,8 @@ if {%settinghelptoggle%}=={true} (set settinghelp=有効)
 if {%settinghelptoggle%}=={false} (set settinghelp=無効)
 title カーソル設定 %debugmode%
 set selected=0nul0
+if not defined {%clrgra%} (set clrgra=[90m)
+if {%settinghelptoggle%}=={true} (set clr=[46m)
 Cls
 echo.
 Echo                               設定メニュー Ver2!!
@@ -1960,13 +1970,16 @@ Echo O  カテゴリー  上か下か  I                                        
 Echo O========================I  ヘルプモードを無効にしたい場合は、            I
 Echo I                        I  再度この機能を選択してください。              I
 echo I カーソル替え  見た目系 I                                                I
-echo I                        I  ヘルプモードは%settinghelp%です                        I
+echo I                        I  %clrgra%ヘルプモードは%settinghelp%です%clr2%                        I
 echo O========================O==O=====================O==========O============O
 echo I%clr%      ヘルプモード      %clr2%I  I 移動 : W A S D 数字 I 戻る : B I 決定 : Y E I
 echo O========================O  O=====================O==========O============O
 echo.
 echo.
 choice /c 12wsbye3 /n /m "変更するものを数字で指定又はwasdで移動して指定してください"
+set clrgra=
+if {%wmodetoggle%}=={false} (set clr=[7m&set clr2=[0m)
+if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clr2=[0m[107m[30m)
 if %ErrorLevel%==1 goto settingcategory1
 if %ErrorLevel%==2 goto settingcategory2
 if %ErrorLevel%==3 goto settingcategory2
@@ -1977,12 +1990,13 @@ if %ErrorLevel%==7 goto settingcategoryhelpmodetoggle
 if %ErrorLevel%==8 goto settingcategoryhelpmode
 
 :settingcategoryhelpmodetoggle
-if %settinghelptoggle%==true set settinghelptoggle=false&set clrhelp=&set clrhelp2=&goto settingcategoryhelpmode
-if %settinghelptoggle%==false set settinghelptoggle=true&goto settingcategoryhelpmodetoggleiftrue
+if {%settinghelptoggle%}=={true} (set settinghelptoggle=false&set clrhelp=&set clrhelp2=&goto settingcategoryhelpmode)
+if {%settinghelptoggle%}=={false} (set settinghelptoggle=true&goto settingcategoryhelpmodetoggleiftrue)
+
 
 :settingcategoryhelpmodetoggleiftrue
-if {%wmodetoggle%}=={false} (set clrhelp=[7m&set clrhelp2=[0m)
-if {%wmodetoggle%}=={true} (set clrhelp=[100m[97m&set clrhelp2=[0m[107m[30m)
+if {%wmodetoggle%}=={false} (set clr=[46m&set clrhelp=[7m&set clrhelp2=[0m)
+if {%wmodetoggle%}=={true} (set clr=[46m&set clrhelp=[100m[97m&set clrhelp2=[0m[107m)
 goto settingcategoryhelpmode
 
 
@@ -2411,7 +2425,7 @@ echo.
 echo     by tamago_1908   2021-2023
 echo     O========================================O
 echo     I                                        I
-echo     I      カーソル替え %batverdev% 版        I
+echo     I          カーソル替え %batverdev% 版        I
 echo     I                                        I
 echo     O========================================O 
 echo           Version : %batver%  %batbuild%
@@ -2424,16 +2438,144 @@ cls
 goto hazime
 
 :batverupdate
+cd %~dp0
+echo アップデートプロセスを開始しています...
+:updatecode
+set runed=false
+:: StartIDupdate
+call :getLineNumber startLine StartIDupdate 0
+goto updatecodeend
+:updatecodestart
+set /a startline=startline+4&set /a endline=endline-3
+title カーソル更新 (ウルトラスーパー試験的) & powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto updatecodeend
 cls
-echo 大変申し訳ございません。厳重注意いたします。
-echo ところで、この機能はまだ開発中で利用できません。
-echo 恐らく2～3バージョン後に利用可能になります。
-pause
-cls
-echo まぁ要するに...
-pause
-cls
-echo COMING SOON (嘘)
+Write-Host "アップデートを確認しています..."
+#chack the update of Cursor Changer with github api, and Update it.
+$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
+$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = (Get-Item "Cursor.Changer.*.bat").name -replace "Cursor\.Changer\.|\.bat", ""
+$batName = Get-Item "Cursor.Changer.*.bat"
+
+
+if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
+    $fileverArray = $fileVersion -split "\."
+    $batverArray = $batVersion -split "\."
+
+
+    # Check if the file version is beta
+    if ($fileverArray[-1] -match "^[a-z][0-9]+$") {
+        $isFileBeta = $true
+    }
+    else {
+        $isFileBeta = $false
+    }
+
+    # Check if the bat version is beta
+    if ($batverArray[-1] -match "^[a-z][0-9]+$") {
+        $isBatBeta = $true
+    }
+    else {
+        $isBatBeta = $false
+    }
+
+    for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
+        # Cast the elements to int if possible
+        if ($fileverArray[$i] -as [int]) {
+            $fileElement = [int]$fileverArray[$i]
+        }
+        else {
+            $fileElement = $fileverArray[$i]
+        }
+
+        if ($batverArray[$i] -as [int]) {
+            $batElement = [int]$batverArray[$i]
+        }
+        else {
+            $batElement = $batverArray[$i]
+        }
+
+        if ($isFileBeta -eq $isBatBeta) {
+            # Compare the elements as usual
+            if ($fileElement -gt $batElement) {
+             if ($isFileBeta -eq "true") {
+            Write-Host "[TIP] このアップデートはベータ版です。なので、一部不安定な部分がある可能性があります。  " -ForegroundColor Gray
+            }
+                Write-Host "アップデートが利用可能です。現在のバージョンは、 `"$($batVersion)`"で、アップデートされたバージョンは `"$($fileVersion)`"です。"
+                Start-Sleep 2
+
+                $answer = Read-Host "アップデートしますか？ 尚、アップデートをインストールすると強制的に英語版へと変更されます。(y or n)"
+                if ($answer -eq "y") {
+                $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
+                $downloadFile = Join-Path $downloadFolder $file.name
+                Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
+                $newBatName = "Cursor.Changer.$fileVersion.bat"
+                Move-Item $downloadFile (Join-Path (Split-Path $batName) ("$newBatName")) -Force
+                Remove-Item "Cursor.Changer.$batVersion.bat" -Force
+
+                    Write-Host "アップデートは完了しました。"
+                    Start-Sleep 2
+
+                    break
+                }
+                else {
+                    Write-Host "アップデートはキャンセルされました。"
+                    Start-Sleep 2
+                    break
+                }
+            }
+            elseif ($fileElement -lt $batElement) {
+                Write-Host "[ERROR] You have a newer version (`"$($batVersion)`") than the update file (`"$($fileVersion)`")! Meybe you change the Version..." -ForegroundColor Red 
+                Start-Sleep 2
+                break
+            }
+        }
+        elseif ($isFileBeta -and -not $isBatBeta) {
+                    if ($isFileBeta -eq "true") {
+            Write-Host "[TIP] このアップデートはベータ版です。なので、一部不安定な部分がある可能性があります。 " -ForegroundColor Gray
+            }
+            # The file version is beta and the bat version is not, so the file version is newer
+            Write-Host "アップデートが利用可能です。現在のバージョンは、 `"$($batVersion)`"で、アップデートされたバージョンは `"$($fileVersion)`"です。"
+            Start-Sleep 2
+
+            $answer = Read-Host "アップデートしますか？尚、アップデートをインストールすると強制的に英語版へと変更されます。 (y or n)"
+            if ($answer -eq "y") {
+                $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
+                $downloadFile = Join-Path $downloadFolder $file.name
+                Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
+                $newBatName = "Cursor.Changer.$fileVersion.bat"
+                Move-Item $downloadFile (Join-Path (Split-Path $batName) ("$newBatName")) -Force
+                Remove-Item "Cursor.Changer.$batVersion.bat" -Force
+
+                Write-Host "アップデートは完了しました。"
+                Start-Sleep 2
+
+                break
+            }
+            else {
+                Write-Host "アップデートをキャンセルしました。"
+                Start-Sleep 2
+                break
+            }
+        }
+        elseif (-not $isFileBeta -and $isBatBeta) {
+            # The file version is not beta and the bat version is beta, so the bat version is newer
+            Write-Host "[ERROR] あなたのバージョン(`"$($batVersion)`")は、アップデートファイルよりも先行 (`"$($fileVersion)`")しています！(恐らく、あなたはカーソル替えのバージョンを故意に変えたのでしょう...)" -ForegroundColor Red 
+            Start-Sleep 2
+            break
+        }
+    }
+
+    if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
+        Write-Host "すでに最新バージョンです！ (`"$($batVersion)`") アップデートは必要ありません。"
+        Start-Sleep 2
+    }
+}
+:updatecodeend
+:: EndIDupdate
+call :getLineNumber endLine EndIDupdate 0
+if {%runed%}=={false} (set runed=true&goto updatecodestart)
+cd /d %HOMEDRIVE%%HOMEPATH%
 pause
 goto hazime
 
@@ -3558,6 +3700,7 @@ title enter the password!
 set /p selected=enter the password:
 if {%selected%}=={1908} (echo correct.&set allcommandlock=false&pause) else if {%selected%}=={0null0} (echo please type something.&pause&goto allcommands) else (echo incorrect! now you need restart bat to try again.&set allcommandlock=true&pause&goto hazime)
 :allcommandsmain
+title INSPECT:COMMANDLIST
 cls
 rem dumbass code, wtf hell no who make it fr (damn its me but)!!!!! ITS ABSOLUTE TRASH!!!! THATS IS SO HARD TO READ
 rem so many set uhhh
@@ -3568,9 +3711,8 @@ if defined %wmodetoggle% (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clry
 echo [Loading Command list...]
 powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=65;$w.BufferSize=$s;}"
 cls
-title INSPECT:COMMANDLIST
-echo %clr%::%clr2%                      [Entire list of menu commands]    %clrgra%6color test%clr2%
-echo                     (you can use all them it in main menu)
+echo %clr%::%clr2%                      [Entire list of menu commands]       %clrgra%6color test%clr2%
+echo                  (You can use all of them in the main menu.)
 echo.
 echo            ^<%clred%debbuging purposes commands%clr2%^>
 echo.
