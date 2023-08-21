@@ -79,7 +79,7 @@ ___
 #### fixed :
 - *Problem with unstable startup screen when white mode is enabled*
 - *Mistranslation*
-- *something *(i forget again)
+- *something* (i forget again)
 ___
 ### - 1.13β2 build 47  
 #### Added : 
