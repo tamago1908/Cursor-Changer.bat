@@ -2,11 +2,11 @@
 > *Translate progress :* ***100%***
 
 # - **Latest News** -
-### **Update released! (2023/08/21)**  
+### **Update released! (2023/08/24)**  
 Cursor Changer 1.13β3 (1.13.b3) has been released!  
-This update includes a number of minor fixes, but the most significant is the implementation of the update feature. This feature is mainly built by powershell, but it is still great.  
-I've been developing it for about two months now and finally got it into shape and implemented it. (The reason it took so long is that I don't know powershell at all myself and created it all with AI. However, I think it turned out pretty good.)  
-There are still a large number of missing features in the update functionality, but they will probably be implemented in the official release of 1.13.  
+Added music to be played during initial setup, to be implemented in the near future!
+It's not used at this time, but it will become important in time.
+Also, this feature requires an internet connection. So does the update feature, but both just get their data from github and don't need if you don't use it 
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
