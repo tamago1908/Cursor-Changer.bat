@@ -3,13 +3,14 @@
 
 # - **Latest News** -
 ### **Development News (2023/08/28)**  
-Feature i would like to implement in 1.13 (higher priority than todo list in wiki)
-Initial setup (including set settings, theme, Notes, etc.)
+Feature i would like to implement in 1.13   (higher priority than todo list in wiki)  
+Initial setup (including set settings, theme, Notes, etc.)  
 Finish it features implemented as Experimental
-Implementation of 2048 games, and  garbage features (Cake is lie)💀
-Blue screen error handling (use what is used in Alldef for all errors)
-Ability to check for updates at startup (super hard!)
-Currently, Cursor Changer has too little processing at first startup, and it is old code, so it needs to be new. Ideally, the first time setup should be done with the background music of Windows XP's OOBE playing in the background. The latter is easy, and the code for playing music is complete already (I'm using the same method as for the update function, Powershell and C# variously)
+Implementation of 2048 games, and  garbage features (Cake is lie)💀  
+Blue screen error handling (use what is used in Alldef for all errors)  
+Ability to check for updates at startup (super hard!)  
+Currently, Cursor Changer has too little processing at first startup, and it is old code, so it needs to be new. Ideally, the first time setup should be done with the background music of Windows XP's OOBE playing in the background.  
+The latter is easy, and the code for playing music is complete already (I'm using the same method as for the update function, Powershell and C# variously)  
 
 
 ## - **ABOUT THIS BATCH** -
