@@ -17,6 +17,8 @@ Ability to check for updates at startup (super hard!)
 Currently, Cursor Changer has too little processing at first startup, and it is old code, so it needs to be new. Ideally, the first time setup should be done with the background music of Windows XP's OOBE playing in the background.  
 The latter is easy, and the code for playing music is complete already (I'm using the same method as for the update function, Powershell and C# variously)  
 
+> 2023/09/08 btw Wait, doesn't this BATCH have too much stupid stuff that only I can understand? like dogcheck, and inspectentirecommandlist, and etc... wtf??
+
 
 ## - **ABOUT THIS BATCH** -
 Cursor Chenger was created entirely with batch only.
