@@ -1,5 +1,5 @@
 # ***Cursor Changer.bat***
-> *Translate progress :* ***100%***
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="280px">
 
 # - **Latest News** -
 ### **Development News (2023/08/28)**  
@@ -23,8 +23,8 @@ At the very least, it is by far larger and more complex than the Batch around th
 Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch (If I may say so, it would be better to have an internet connection, but not essential.)  
 No additional files or components are required.
 
-main manu looks like this :   
-![main manu](https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true)
+main manu and setting menu looks like this :  
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="470px" > <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="470px" >
 
 
 ## - **SYSTEM REQUIREMENTS** -
