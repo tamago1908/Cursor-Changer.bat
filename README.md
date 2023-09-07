@@ -1,5 +1,9 @@
 # ***Cursor Changer.bat***
+<p align="left">
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="280px">
+</p>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***Cursor Changer Logo***
 
 # - **Latest News** -
 ### **Development News (2023/08/28)**  
@@ -21,11 +25,16 @@ This Batch is similar to a *simplified OS*, if you will.
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
 
 Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch (If I may say so, it would be better to have an internet connection, but not essential.)  
-No additional files or components are required.
-
-main manu looks like this :  
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="430px" ><img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >
-
+No additional files or components are required.  
+&nbsp;  
+&nbsp;  
+Main manu looks like This :  
+<p>
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="430px">
+<br clear="left">
+Setting menu looks like This :
+</p>
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
 
 ## - **SYSTEM REQUIREMENTS** -
 **This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
