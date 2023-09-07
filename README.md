@@ -24,7 +24,7 @@ Simply put, it would be a single, working batchOS that aims to surpass the quali
 No additional files or components are required.
 
 main manu and setting menu looks like this :  
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="470px" > <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="470px" >
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="420px" > <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="420px" >
 
 
 ## - **SYSTEM REQUIREMENTS** -
