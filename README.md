@@ -29,7 +29,8 @@ At the very least, it is by far larger and more complex than the Batch around th
 
 Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch (If I may say so, it would be better to have an internet connection, but not essential.)  
 No additional files or components are required.  
-&nbsp;  
+>  Incidentally, it is in no way related to the Real [Cursor Changer](https://github.com/L413/Cursor-Changer), and the name match is coincidental. However, I feel there are some similarities in concept...  
+  
 &nbsp;  
 Main manu looks like This :  
 <p>
