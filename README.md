@@ -1,17 +1,16 @@
 # ***Cursor Changer.bat***
-<p align="left">
+<div align="left">
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="280px">
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)
-</p>
 
 &nbsp;&nbsp;&nbsp;&nbsp; <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/github_its_me!!!.png?raw=true" width="35px"> ***Made by tamago1908*** <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/github_its_me!!!.png?raw=true" width="35px">
-
 <!--
 MOST IDIOT README
 BUT
 ITS WORK ON MY CONPUTER
 -->
+</div>
 
 # - **Latest News** -
 ### **Goofy ahh rebranding opinion (2023/09/14)**  
