@@ -30,7 +30,10 @@ This Batch is similar to a *simplified OS*, if you will.
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
 
 Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch (If I may say so, it would be better to have an internet connection, but not essential.)  
-No additional files or components are required.  
+And it have changes the color of the Windows cursor Function (the cursor you are currently moving). Not Cmd one. In addition to that, Cursor Changer haves various functions. At first glance, it may be difficult to understand what kind of batch it is, but it has the OS-like functions, and changing the cursor in Windows. In other words, it may be like Cursor Changer OS.
+
+No additional files or components are required.
+  
 >  Incidentally, it is in no way related to the Real [Cursor Changer](https://github.com/L413/Cursor-Changer), and the name match is coincidental. However, I feel there are some similarities in concept...  
   
 &nbsp;  
