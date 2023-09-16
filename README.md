@@ -12,6 +12,10 @@ ITS WORK ON MY CONPUTER
 -->
 </div>
 
+
+If you have any criticisms or problems with this batch, or find any, please submit an issue. I will respond as quickly as possible.  
+well. ***I Need reviews!***
+
 # - **Latest News** -
 ### **Goofy ahh rebranding opinion (2023/09/14)**  
 
