@@ -95,10 +95,23 @@ Then delete the BATCH process.
 
 
 ## - **Chenge logs** -
->  **Beta latest : 1.13β3 (build 49)**  
+>  **Beta latest : 1.13β3 (build 52)**  
 >  **Stable latest : 1.12 (build 44)**
 ___
-### - 1.13β3 build 49  🔥
+### - 1.13β3 build 52  🔥
+#### Added : 
+- ***Ability to display Change Log when update!***
+#### Chenged :
+- **Better Animation of Boot Animation!**
+- *Better SettingLoader and faster boot (More improvements will be made in the future)*  
+- *Better Wait of animation*
+- *Some UI stuffs*
+#### fixed :
+- *Slow theme change on boot*
+- *Some Bugs*
+___
+
+### - 1.13β3 build 49  
 #### Added : 
 - **Update Function!** (Experimental)
 - *Visualization of whether Help mode is enabled or not*
@@ -136,14 +149,4 @@ ___
 - *argument bugs*
 ___
 
-### - 1.13β1 build 45 (beta major update) 
-#### Chenged :
-- **English translation**
-- **Windows Version Check code**
-- *some easter eggs*
-- *all comment in batch is now all english translated*
-#### fixed :
-- *some bugs*
-- *goofy ahh Translation*
-___
 
