@@ -16,18 +16,21 @@ rem メモ cd %~dp0 &start %~n0%~x0&exit 有効活用できるかも (bat再起�
 rem ビルドナンバーとバージョンの記入は必ずしてください！あとアーカイブに入れるのを忘れずに！
 rem そして最近、このバッチ処理に英語を多く含めるようにしている。なぜなら、将来的にこのバッチ処理を翻訳することになった時、日本語が多いと面倒だから。
 title カーソル変え
-rem VER v1.13β3
-set batver=1.13β3
-set batbuild=build 49
-set batverdev=ベータ
+rem VER v1.13β4
+set batver=1.13β4
+set batbuild=build 52
+set batverdev=beta
 set hazimeeaster=false
 set firststartbat=no
+cd /d %HOMEDRIVE%%HOMEPATH%
 rem 制作にあたって使用したソフト windows notepad v10.2103.12.0 使用フォント　Nirmala UIの太字
 rem 2021年12月09日から windows notepad v10.2110.64.0 Nirmala UIの太字
 rem メイン Visual Studio Code
 rem デバック用 Visual bat
 
 :argmentcheck
+find "wmode=true" カーソル替え設定.txt > nul
+if {%errorlevel%}=={0} (color f0&set wmodetoggle=true) else (set wmodetoggle=false)
 rem 引数がなければ終了
 if "%~1"=="" goto argmentcheckend
 title Cursor Changer argment checking...
@@ -633,23 +636,6 @@ echo 注意点は以上です。
 pause
 echo それではメニューを開きます。
 pause
-cls
-ping -n 1 127.0.0.1 > nul 2>&1
-cls
-echo                     カ
-ping -n 1 127.0.0.1 > nul 2>&1
-cls
-echo                     カー
-ping -n 1 127.0.0.1 > nul 2>&1
-cls
-echo                     カーソル
-ping -n 1 127.0.0.1 > nul 2>&1
-cls
-echo                     カーソル替
-ping -n 1 127.0.0.1 > nul 2>&1
-cls
-echo                     カーソル替え
-ping -n 1 127.0.0.1 > nul 2>&1
 goto loads
 
 :batbootanimationfun
@@ -686,17 +672,17 @@ echo           BBB
 echo O===================================================================================O
 echo.
 echo                         カーソル替え%batver% ようこそ 2021-2023 %debugmode%
-powershell sleep 1
+timeout /t 2 /nobreak >nul
 color cf
-powershell sleep 0.1
+timeout /t 1 /nobreak >nul
 color 2f
-powershell sleep 0.1
+timeout /t 1 /nobreak >nul
 color bf
-powershell sleep 0.1
+timeout /t 1 /nobreak >nul
 color 9f
-powershell sleep 0.1
+timeout /t 1 /nobreak >nul
 color %funanimationclr%
-powershell sleep 1
+timeout /t 1 /nobreak >nul
 set funanimationclr=
 mode con: cols=75 lines=25
 goto checksum
@@ -705,9 +691,9 @@ goto checksum
 find "bootanimation=false" カーソル替え設定.txt > nul
 if {%errorlevel%}=={0} (goto checksum)
 cls
-rem ブートアニメーションを再生。5分の1の確率で別バージョンが再生される。ramdomの仕様(？)によって二回連続でrandomをしないといけない。
-set /a bootegg=%random%*6/32767
-set /a bootegg2=%random%*6/32767
+rem ブートアニメーションを再生。10分の1の確率で別バージョンが再生される。ramdomの仕様(？)によって二回連続でrandomをしないといけない。
+set /a bootegg=%random%*11/32767
+set /a bootegg2=%random%*11/32767
 if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
 if {%bootegg%}=={%bootegg2%} (goto batbootanimationfun)
 set bootegg=
@@ -738,12 +724,13 @@ echo.
 echo O=========================================================================O
 echo.
 echo                       2021-2023 tamago1908 %batbuild%
-powershell sleep 1
+timeout /t 3 /nobreak >nul
 cls
 rem 設定の欠損を確認
 
 :checksum
 if {%firststartbat%}=={yes} (goto loads)
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
 if not exist カーソル替え設定.txt (
 title カーソルエラー
 echo 設定ファイルが存在しません。
@@ -817,24 +804,26 @@ if {%selected%}=={n} (hazimemenuskipboot)
 
 goto :hazimemenu
 :hazime
-
+if {%alldefentered%}=={true} (
+set alldefno2clr=
+set alldefno2clr2=
+set alldefclr=
+set alldefclr2=
+)
 rem 設定とその他のロード
 rem 何を読み込み、読み込んだ後どこにgotoしたいかを変数に代入必要 set wantload=setting1 set whatloadgoto=hazime 等 hazime関係の場合はそれオンリー
 rem カーソルの色に関してはメインの変更部分には実装していません。変更してからhazimeに戻って来れるように設計してないので。
 rem 設定を追加する場合は基本コピペで大丈夫。ただ、メニューの見た目とかにかかわるものではコードを追加しないといけないかも
 :settingloads
 if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
-cls
 echo うそだっ！！こんなのありえないっっっ！
 pause
 goto exit
+
 :setting1load
 rem ホワイトモードの検知と色の変更。変更の高速化のため序盤に配置。
-find "wmode=true" カーソル替え設定.txt > nul
 set allsettingerror=0
-cls
 find "rebootokey=true" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
 if %ErrorLevel%==0 set setting1onoff=有効
 if %ErrorLevel%==1 goto setting1load2
@@ -848,7 +837,6 @@ goto whatloadgoto
 
 :setting2load
 find "admin=true" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
 if %ErrorLevel%==0 set setting2onoff=有効
 if %ErrorLevel%==1 goto setting2load2
@@ -873,7 +861,6 @@ goto whatloadgoto
 
 :setting4load
 find "hatenakeikoku=true" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
 if %ErrorLevel%==0 set setting4onoff=有効
 if %ErrorLevel%==1 goto setting4load2
@@ -886,7 +873,6 @@ goto whatloadgoto
 
 :setting5load
 find "bootanimation=true" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
 if %ErrorLevel%==0 set setting5onoff=有効
 if %ErrorLevel%==1 goto setting5load2
@@ -899,7 +885,6 @@ goto whatloadgoto
 
 :wmodeload
 find "wmode=true" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
 if {%ErrorLevel%}=={0} (set wmodeonoff=ダークテーマに変更  &set wmodetoggle=true)
 if {%ErrorLevel%}=={1} (goto wmodeload2)
@@ -914,47 +899,41 @@ goto whatloadgoto
 rem 設定の欠損を検証
 :setting1load2
 find "rebootokey=false" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting1onoff=無効) else if %ErrorLevel%==1 set setting1onoff= null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting1onoff=無効) else if %ErrorLevel%==1 set setting1onoff=null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=1&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting2load) else (goto whatloadgoto)
 
 :setting2load2
 find "admin=false" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting2onoff=無効) else if %ErrorLevel%==1 set setting2onoff= null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting2onoff=無効) else if %ErrorLevel%==1 set setting2onoff=null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=2&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
 
 :setting3load2
 find "fastboot=false" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting3onoff=無効) else if %ErrorLevel%==1 set setting3onoff= null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting3onoff=無効) else if %ErrorLevel%==1 set setting3onoff=null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=3&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting4load) else (goto whatloadgoto)
 
 :setting4load2
 find "hatenakeikoku=false" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting4onoff=無効) else if %ErrorLevel%==1 set setting4onoff= null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting4onoff=無効) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=4&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto setting5load2) else (goto whatloadgoto)
 
 :setting5load2
 find "bootanimation=false" カーソル替え設定.txt
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
-if %ErrorLevel%==0 (set setting5onoff=無効) else if %ErrorLevel%==1 set setting5onoff= null&set /a allsettingerror=allsettingerror+1
+if %ErrorLevel%==0 (set setting5onoff=無効) else if %ErrorLevel%==1 set setting5onoff=null&set /a allsettingerror=allsettingerror+1
 if {%bootbatnow%}=={yes} (set batloadprgs=5&call :batbootprogress)
 if {%bootbatnow%}=={yes} (goto wmodeload) else (goto whatloadgoto)
 
 :wmodeload2
 find "wmode=false" カーソル替え設定.txt > nul
-cls
 if {%bootbatnow%}=={no} (echo 処理中...)
 if {%ErrorLevel%}=={0} (set wmodeonoff=ホワイトテーマに変更&set wmodetoggle=false) else if {%ErrorLevel%}=={1} (set wmodeonoff=  null  テーマに変更&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1)
 if {%bootbatnow%}=={yes} (set batloadprgs=6&call :batbootprogress)
@@ -965,7 +944,6 @@ if {%bootbatnow%}=={yes} (goto loads) else (goto whatloadgoto)
 rem ホワイトモードを検知して色を変更
 find "wmode=true" カーソル替え設定.txt > nul
 if {%errorlevel%}=={0} (color f0)
-cls
 if {%bootbatnow%}=={no} (echo 処理中...) else (
 set batloadprgs=6
 call :batbootprogress
@@ -977,7 +955,6 @@ goto debughazimeload
 :debughazimeload
 rem デバックモードの検知
 find "debug=true" カーソル替え設定.txt > nul
-cls
 if {%errorlevel%}=={0} (echo on&set debugmode=debugmode)
 if {%errorlevel%}=={1} (echo off&set debugmode=)
 if {%bootbatnow%}=={no} (echo 処理中...) else (
@@ -992,7 +969,6 @@ goto firststarttest
 :firststarttest
 rem 初回カーソルの検知
 find "nodogcheckforfastboot" 初回カーソル.txt > nul
-cls
 if {%ErrorLevel%}=={1} (goto itazurasyokai)
 if {%bootbatnow%}=={no} (echo 処理中...) else (
 set batloadprgs=8
@@ -1006,8 +982,7 @@ goto cursorcolorload
 rem カーソルの色を検知
 rem 0x0は白
 rem 0x2は黒
-reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x0"
-cls
+reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x0" > nul
 if {%ErrorLevel%}=={0} (set cursorcolor=黒)
 if {%ErrorLevel%}=={1} (set cursorcolor=白)
 if {%bootbatnow%}=={no} (echo 処理中...) else (
@@ -1018,8 +993,7 @@ goto hazimecursorcolor2
 if {%whatloadgoto%}=={hazime} (goto hazimemenu)
 
 :hazimecursorcolor2
-reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x2"
-cls
+reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x2" > nul
 if {%ErrorLevel%}=={0} (set cursorcolor=白)
 if {%bootbatnow%}=={no} (echo 処理中...) else (
 set batloadprgs=10
@@ -1031,38 +1005,32 @@ goto hazimemenu
 
 
 :batbootprogress
-cls
 rem ブートアニメーション。
 rem 下は読み込み時のテキスト分岐。
 if {%bootbatnow%}=={no} (title カーソル設定 処理中... & echo 処理中... & goto whatload) else (title 起動中...)
 if {%simpleboot%}=={true} (echo 起動中...& exit /b)
-if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclr2=[0m)
-if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[100m[97m&set loadscrnprgsclr2=[0m[107m[30m) else (set loadscrnprgsclr=[7m&set loadscrnprgsclr2=[0m)
-cls
+if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[100m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[0;0H)
+if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[47m[97m&set loadscrnprgsclrgra=[100m&set loadscrnprgsclr2=[0m[107m[30m&set back_to_the_firstline=[0;0H) else (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[100m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[0;0H)
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
 rem goofy ahh code
-set loadscrnprgs0=
-set loadscrnprgs1=
-set loadscrnprgs2=
-set loadscrnprgs3=
-set loadscrnprgs4=
-set loadscrnprgs5=
-set loadscrnprgs6=
-set loadscrnprgs7=
-set loadscrnprgs8=
-set loadscrnprgs9=
-set loadscrnprgs10=
-if {%batloadprgs%}=={0} (set loadscrnprgs0=                                                     )
-if {%batloadprgs%}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%                                                  )
-if {%batloadprgs%}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%                                              )
-if {%batloadprgs%}=={3} (set loadscrnprgs3=%loadscrnprgsclr%           %loadscrnprgsclr2%                                          )
-if {%batloadprgs%}=={4} (set loadscrnprgs4=%loadscrnprgsclr%                %loadscrnprgsclr2%                                     )
-if {%batloadprgs%}=={5} (set loadscrnprgs5=%loadscrnprgsclr%                     %loadscrnprgsclr2%                                )
-if {%batloadprgs%}=={6} (set loadscrnprgs6=%loadscrnprgsclr%                           %loadscrnprgsclr2%                          )
-if {%batloadprgs%}=={7} (set loadscrnprgs7=%loadscrnprgsclr%                                  %loadscrnprgsclr2%                   )
-if {%batloadprgs%}=={8} (set loadscrnprgs8=%loadscrnprgsclr%                                         %loadscrnprgsclr2%            )
-if {%batloadprgs%}=={9} (set loadscrnprgs9=%loadscrnprgsclr%                                                %loadscrnprgsclr2%     )
+for /l %%i in (0,1,10) do (
+  set loadscrnprgs%%i=
+  if {%batloadprgs%}=={%%i} (
+    set loadscrnprgs%%i=%loadscrnprogresgscolorsclr%%...%loadscrgsclrsr2%
+  )
+)
+if {%batloadprgs%}=={0} (set loadscrnprgs0=%loadscrnprgsclrgra%                                                     %loadscrnprgsclr2%)
+if {%batloadprgs%}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%%loadscrnprgsclrgra%                                                  %loadscrnprgsclr2%)
+if {%batloadprgs%}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%%loadscrnprgsclrgra%                                              %loadscrnprgsclr2%)
+if {%batloadprgs%}=={3} (set loadscrnprgs3=%loadscrnprgsclr%           %loadscrnprgsclr2%%loadscrnprgsclrgra%                                          %loadscrnprgsclr2%)
+if {%batloadprgs%}=={4} (set loadscrnprgs4=%loadscrnprgsclr%                %loadscrnprgsclr2%%loadscrnprgsclrgra%                                     %loadscrnprgsclr2%)
+if {%batloadprgs%}=={5} (set loadscrnprgs5=%loadscrnprgsclr%                     %loadscrnprgsclr2%%loadscrnprgsclrgra%                                %loadscrnprgsclr2%)
+if {%batloadprgs%}=={6} (set loadscrnprgs6=%loadscrnprgsclr%                           %loadscrnprgsclr2%%loadscrnprgsclrgra%                          %loadscrnprgsclr2%)
+if {%batloadprgs%}=={7} (set loadscrnprgs7=%loadscrnprgsclr%                                  %loadscrnprgsclr2%%loadscrnprgsclrgra%                   %loadscrnprgsclr2%)
+if {%batloadprgs%}=={8} (set loadscrnprgs8=%loadscrnprgsclr%                                         %loadscrnprgsclr2%%loadscrnprgsclrgra%            %loadscrnprgsclr2%)
+if {%batloadprgs%}=={9} (set loadscrnprgs9=%loadscrnprgsclr%                                                %loadscrnprgsclr2%%loadscrnprgsclrgra%     %loadscrnprgsclr2%)
 if {%batloadprgs%}=={10} (set loadscrnprgs10=%loadscrnprgsclr%                                                     %loadscrnprgsclr2%)                                                  
-echo.
+echo %back_to_the_firstline%
 echo.
 echo.
 echo.
@@ -1094,10 +1062,12 @@ set loadscrnprgs9=
 set loadscrnprgs10=
 set loadscrnprgsclr=
 set loadscrnprgsclr2=
+set loadscrnprgsclrgra=
+set back_to_the_firstline=
 goto hazimemenu
 
 :whatload
-cls
+
 rem ここの処理、いるかなぁ？普通にsettingの値が欲しいだけならsetting1loadとかにgotoしたうえで行き先をwhatloadgotoに代入すれば動くと思うんだけど....
 if {%wantload%}=={setting1} (goto setting1load) 
 if {%wantload%}=={setting2} (goto setting2load)
@@ -1110,12 +1080,11 @@ if {%wantload%}=={debughazime} (goto debughazimeload)
 if {%wantload%}=={syokaihazime} (goto syokaihazimeload)
 if {%wantload%}=={cursorcolor} (goto cursorcolorload)
 if {%wantload%}=={0null0} (goto hazimemenu)
-echo Error! %wantload% is not exist! pls set it.
+echo うああああエラーだあ！！！! %wantload%というのは存在しません! 存在するようにするか存在しているものを指定しろやあああ！！！！
 pause
 exit
 
 :whatloadgoto
-cls
 set wantload=0null0
 exit /b
 
@@ -1130,7 +1099,7 @@ set clrhelp=& set clrhelp2=
 set settinghelptoggle=false
 mode con: cols=75 lines=25
 if {%hazimeeaster%}=={true} (set hazimebuild=%batbuild%)
-
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=&cls)
 rem メニューの描写
 rem 規則は5,10,20
 echo                              カーソル替え%batver% %debugmode% %hazimebuild%
@@ -1173,7 +1142,7 @@ if {%selected%}=={1908} (goto :1908hell)
 if {%selected%}=={toxic} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=N6ael_DEPcs&goto hazime)
 if {%selected%}=={abcdefu} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=qgRx58oItTk&goto hazime)
 if {%selected%}=={dogsong} (start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=H4wptBuM6zs&goto hazime)
-if {%selected%}=={私は眠いです} (echo me too&pause& goto hazime)
+if {%selected%}=={私は眠いです} (echo 俺もだ！&pause& goto hazime)
 
 rem デバッグ用コマンドの参照
 if {%selected%}=={inspectentirecommandlist} (goto :allcommands)
@@ -1300,19 +1269,19 @@ if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m
 if defined %wmodetoggle% (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 title カーソル替えの終了 (試験的) %debugmode% 
 set selected=0nul0
-echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo                              %clrgra%カーソル替え%batver% %debugmode% %Mainmenubuild%%clr2%
 echo.
-echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
-echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I       1カーソルを %clr2%I  バッチの終了  I%clrgra% 電卓              3終了        I%clr2%
 echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
-echo   %clrgra%I                4ba%clr2%I     ^|    I   /~~~\  I           I%clrgra%               I%clr2%
-echo   %clrgra%O===================%clr2%I   / ^| \  I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo   %clrgra%I               4バ %clr2%I     ^|    I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
 echo                       I   \___/  I   \___/  I           I       
 echo                       O==========O==========O===========O
 echo                       I 何も選択していません。          I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adye /n /m "[1 2 3] か、 [A D] を押して選択したのち、 [Y E]を押して決定します。"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -1325,19 +1294,19 @@ goto :hazime
 :exitmenu1
 cls
 set selected=0nul0
-echo                              %clrgra%Cursor Changer %batver% %debugmode% %hazimebuild%%clr2%
+echo                              %clrgra%カーソル替え%batver% %debugmode% %hazimebuild%%clr2%
 echo.
-echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
-echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I       1カーソルを %clr2%I  バッチの終了  I%clrgra% 電卓              3終了        I%clr2%
 echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
-echo   %clrgra%I                4ba%clr2%I%clred%     ^|    %clr2%I   /~~~\  I           I%clrgra%               I%clr2%
-echo   %clrgra%O===================%clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo   %clrgra%I               4バ %clr2%I%clred%     ^|    %clr2%I   /~~~\  I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
 echo                       I%clred%   \___/  %clr2%I   \___/  I           I       
 echo                       O==========O==========O===========O
 echo                       I 終了が選択されました。          I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adye /n /m "[1 2 3] か、 [A D] を押して選択したのち、 [Y E]を押して決定します。"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -1350,19 +1319,19 @@ goto :hazime
 :exitmenu2
 cls
 set selected=0nul0
-echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo                              %clrgra%カーソル替え%batver% %debugmode% %Mainmenubuild%%clr2%
 echo.
-echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
-echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I       1カーソルを %clr2%I  バッチの終了  I%clrgra% 電卓              3終了        I%clr2%
 echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
-echo   %clrgra%I                4ba%clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
-echo   %clrgra%O===================%clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo   %clrgra%I               4バ %clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
 echo                       I   \___/  I%clrgrn%   \___/  %clr2%I           I       
 echo                       O==========O==========O===========O
 echo                       I 再起動が選択されました。        I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adye /n /m "[1 2 3] か、 [A D] を押して選択したのち、 [Y E]を押して決定します。"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -1375,19 +1344,19 @@ goto :hazime
 :exitmenu3
 cls
 set selected=0nul0
-echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo                              %clrgra%カーソル替え%batver% %debugmode% %Mainmenubuild%%clr2%
 echo.
-echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
-echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I       1カーソルを %clr2%I  バッチの終了  I%clrgra% 電卓              3終了        I%clr2%
 echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
-echo   %clrgra%I                4ba%clr2%I     ^|    I   /~~~\  I%clrcyan%           %clr2%I%clrgra%               I%clr2%
-echo   %clrgra%O===================%clr2%I   / ^| \  I  V    ∧ I%clrcyan%  ^-^-^-^-^-^-^>  %clr2%I%clrgra%===============O%clr2%
+echo   %clrgra%I               4バ %clr2%I     ^|    I   /~~~\  I%clrcyan%           %clr2%I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I  V    ∧ I%clrcyan%  ^-^-^-^-^-^-^>  %clr2%I%clrgra% ==============O%clr2%
 echo                       I   \___/  I   \___/  I%clrcyan%           %clr2%I       
 echo                       O==========O==========O===========O
 echo                       I 戻るが選択されました。          I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adye /n /m "[1 2 3] か、 [A D] を押して選択したのち、 [Y E]を押して決定します。"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -1403,19 +1372,19 @@ rem confirm
 :exitmenu1y
 cls
 set selected=0nul0
-echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo                              %clrgra%カーソル替え%batver% %debugmode% %Mainmenubuild%%clr2%
 echo.
-echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
-echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I       1カーソルを %clr2%I  バッチの終了  I%clrgra% 電卓              3終了        I%clr2%
 echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
 echo   %clrgra%I                4ba%clr2%I%clred%     ^|    %clr2%I   /~~~\  I           I%clrgra%               I%clr2%
-echo   %clrgra%O===================%clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo   %clrgra%O================== %clr2%I%clred%   / ^| \  %clr2%I  V    ∧ I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
 echo                       I%clred%   \___/  %clr2%I   \___/  I           I       
 echo                       O==========O==========O===========O
 echo                       I 本当に？                        I
 echo                       O=================================O
 echo.
-choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adyeb /n /m "[1 2 3] か、 [A D] を押して選択したのち、 [Y E]を押して決定します。"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -1429,19 +1398,19 @@ goto :hazime
 :exitmenu2y
 cls
 set selected=0nul0
-echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
+echo                              %clrgra%カーソル替え%batver% %debugmode% %Mainmenubuild%%clr2%
 echo.
-echo   %clrgra%O===================%clr2%O================O%clrgra%================================O%clr2%
-echo   %clrgra%I      1Make the cu %clr2%I Turn off batch I%clrgra% calculator        3exit        I%clr2%
-echo   %clrgra%I                   %clr2%O===========O=========O===========O%clrgra%               I%clr2%
-echo   %clrgra%I                4ba%clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
-echo   %clrgra%O===================%clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra%===============O%clr2%
+echo   %clrgra%O================== %clr2%O================O%clrgra% ===============================O%clr2%
+echo   %clrgra%I       1カーソルを %clr2%I  バッチの終了  I%clrgra% 電卓              3終了        I%clr2%
+echo   %clrgra%I                   %clr2%O==========O==========O===========O%clrgra%               I%clr2%
+echo   %clrgra%I               4バ %clr2%I     ^|    I%clrgrn%   /~~~\  %clr2%I           I%clrgra%               I%clr2%
+echo   %clrgra%O================== %clr2%I   / ^| \  I%clrgrn%  V    ∧ %clr2%I  ^-^-^-^-^-^-^>  I%clrgra% ==============O%clr2%
 echo                       I   \___/  I%clrgrn%   \___/  %clr2%I           I       
 echo                       O==========O==========O===========O
 echo                       I 本当に？                        I
 echo                       O=================================O
 echo.
-choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adyeb /n /m "[1 2 3] か、 [A D] を押して選択したのち、 [Y E]を押して決定します。"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -1457,7 +1426,7 @@ goto :hazime
 title アリーヴェデルチ
 cls
 echo.
-echo                            カーソル替え %batver% %debugmode%
+echo                            カーソル替え%batver% %debugmode%
 echo.
 echo O=========================================================================O
 echo.
@@ -1481,7 +1450,7 @@ echo O=========================================================================O
 echo.
 echo                        2021-2023 tamago1908 %batbuild%
 call :exitmenuexit
-powershell sleep 2
+timeout /t 3 /nobreak >nul
 exit
 
 :exitmenuexit
@@ -1492,7 +1461,6 @@ set clrgrn=
 set clryel=
 set clrmag=
 exit /b
-goto :hazimemenu
 
 
 rem 設定メニューの描写
@@ -1509,6 +1477,7 @@ rem (例 ユーザーの名前がtestだった場合と、OSが入った場所�
 if not exist カーソル替え設定.txt (goto dogcheck)
 title カーソル設定 %debugmode%
 set selected=0nul0
+if not defined {%clrgra%} (set clrgra=[90m)
 Cls
 Echo.
 Echo                               設定メニュー Ver2!!
@@ -1522,8 +1491,8 @@ echo I                        I                                                I
 echo O========================I                                                I
 Echo O  カテゴリー  上か下か  I                                                I
 Echo O========================I                                                I
-Echo I                        I  [W S] か [1 2] どちらかを押してカテゴリーを   I
-echo I カーソル替え  見た目系 I  選択してください。                            I
+Echo I                        I  %clrgra%[W S] か [1 2] どちらかを押してカテゴリーを%clr2%   I
+echo I カーソル替え  見た目系 I  %clrgra%選択してください。%clr2%                            I
 echo I                        I                                                I
 echo O========================O==O=====================O==========O============O
 echo I%clrhelp%      ヘルプモード      %clrhelp2%I  I 移動 : W A S D 数字 I 戻る : B I 決定 : Y E I
@@ -1531,6 +1500,7 @@ echo O========================O  O=====================O==========O============O
 echo.
 echo.
 choice /c 12wsdbye3 /n /m "変更するものを数字で指定又はwasdで移動して指定してください"
+set clrgra=
 if %ErrorLevel%==1 goto settingcategory1
 if %ErrorLevel%==2 goto settingcategory2
 if %ErrorLevel%==3 goto settingcategory1
@@ -2420,12 +2390,14 @@ rem バッチのバージョン
 rem Version of batch
 :batver
 title カーソル替え バージョン (試験的)
+if {%batverdev%}=={beta} (set batverdevshow=ベータ)
+if {%batverdev%}=={stable} (set batverdevshow= 安定 )
 echo.
 echo.
 echo     by tamago_1908   2021-2023
 echo     O========================================O
 echo     I                                        I
-echo     I          カーソル替え %batverdev% 版        I
+echo     I          カーソル替え %batverdevshow% 版        I
 echo     I                                        I
 echo     O========================================O 
 echo           Version : %batver%  %batbuild%
@@ -2435,6 +2407,7 @@ set /p selected=Y or N :
 if {%selected%}=={y} (goto batverupdate) else if {%selected%}=={yes} (goto batverupdate) else if {%selected%}=={n} (goto hazime) else if {%selected%}=={no} (goto hazime) else (echo すみません。YかNのみを入力してください。&pause&cls&goto batver )
 pause
 cls
+set batverdevshow=
 goto hazime
 
 :batverupdate
@@ -2452,10 +2425,11 @@ cls
 Write-Host "アップデートを確認しています..."
 #chack the update of Cursor Changer with github api, and Update it.
 $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-$batVersion = (Get-Item "Cursor.Changer.*.bat").name -replace "Cursor\.Changer\.|\.bat", ""
-$batName = Get-Item "Cursor.Changer.*.bat"
+try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] githubのAPIレート制限に到達しました。これが意味するのは要するに、一時間以内に大量にアップデートを確認し過ぎ、ということです。一時間ほど間を置いたのち、再度アップデートを確認してください。" -foregroundcolor red}else{Write-Host "[ERROR] 何らかのエラーが発生しました。インターネット接続を確認するか、githubのサーバーが落ちていないかを確認したのち、再度試してください。`nエラーログ : $_" -foregroundcolor red};break}
+$fileVersion = $file.name -replace "Cursor.Changer\.|\.bat", ""
+$batVersion = (Get-Item "カーソル替え *.bat").name -replace "カーソル替え |\.bat", ""
+$batName = Get-Item "カーソル替え *.bat"
 
 
 if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
@@ -2496,14 +2470,22 @@ if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
         }
 
         if ($isFileBeta -eq $isBatBeta) {
+         cls
             # Compare the elements as usual
             if ($fileElement -gt $batElement) {
-             if ($isFileBeta -eq "true") {
-            Write-Host "[TIP] このアップデートはベータ版です。なので、一部不安定な部分がある可能性があります。  " -ForegroundColor Gray
-            }
-                Write-Host "アップデートが利用可能です。現在のバージョンは、 `"$($batVersion)`"で、アップデートされたバージョンは `"$($fileVersion)`"です。"
-                Start-Sleep 2
+            # The file version is beta and the bat version is not, so the file version is newer
+            Write-Host "アップデートが利用可能です。現在のバージョンは、 `"$($batVersion)`"で、アップデートされたバージョンは `"$($fileVersion)`"です。" `n
+            Start-Sleep 1
+try{if($env:wmodetoggle -eq "false"){Write-Host "チェンジログ :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "チェンジログ :" -foregroundcolor black }else{Write-Host "チェンジログ :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m;1m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};write-host "";rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] githubのAPIレート制限に到達しました。これが意味するのは要するに、一時間以内に大量にアップデートを確認し過ぎ、ということです。一時間ほど間を置いたのち、再度アップデートを確認してください。" -foregroundcolor red}else{Write-Host "[ERROR] 何らかのエラーが発生しました。インターネット接続を確認するか、githubのサーバーが落ちていないかを確認したのち、再度試してください。`nエラーログ : $_" -foregroundcolor red};break}
+            Start-Sleep 2
 
+             if ($isFileBeta -eq "true") {
+            $e=[char]27
+            $clrgra="$e[90m"
+            $c="$e[0m"
+            Write-Host "$clrgra[TIP] このアップデートはベータ版です。なので、一部不安定な部分がある可能性があります。$c "
+            rv clrgra,c,e
+            }
                 $answer = Read-Host "アップデートしますか？ 尚、アップデートをインストールすると強制的に英語版へと変更されます。(y or n)"
                 if ($answer -eq "y") {
                 $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
@@ -2531,12 +2513,20 @@ if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
             }
         }
         elseif ($isFileBeta -and -not $isBatBeta) {
-                    if ($isFileBeta -eq "true") {
-            Write-Host "[TIP] このアップデートはベータ版です。なので、一部不安定な部分がある可能性があります。 " -ForegroundColor Gray
-            }
+        cls
             # The file version is beta and the bat version is not, so the file version is newer
-            Write-Host "アップデートが利用可能です。現在のバージョンは、 `"$($batVersion)`"で、アップデートされたバージョンは `"$($fileVersion)`"です。"
+            Write-Host "アップデートが利用可能です。現在のバージョンは、 `"$($batVersion)`"で、アップデートされたバージョンは `"$($fileVersion)`"です。" `n
+            Start-Sleep 1
+try{if($env:wmodetoggle -eq "false"){Write-Host "チェンジログ :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "チェンジログ :" -foregroundcolor black }else{Write-Host "チェンジログ :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m;1m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};write-host "";rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] githubのAPIレート制限に到達しました。これが意味するのは要するに、一時間以内に大量にアップデートを確認し過ぎ、ということです。一時間ほど間を置いたのち、再度アップデートを確認してください。" -foregroundcolor red}else{Write-Host "[ERROR] 何らかのエラーが発生しました。インターネット接続を確認するか、githubのサーバーが落ちていないかを確認したのち、再度試してください。`nエラーログ : $_" -foregroundcolor red};break}
             Start-Sleep 2
+
+             if ($isFileBeta -eq "true") {
+            $e=[char]27
+            $clrgra="$e[90m"
+            $c="$e[0m"
+            Write-Host "$clrgra[TIP] このアップデートはベータ版です。なので、一部不安定な部分がある可能性があります。$c "
+            rv clrgra,c,e
+            }
 
             $answer = Read-Host "アップデートしますか？尚、アップデートをインストールすると強制的に英語版へと変更されます。 (y or n)"
             if ($answer -eq "y") {
@@ -2882,16 +2872,18 @@ echo ##:::: ##: ##:::: ##: ##::: ##::::: ##::: ##: ##:::: ##: ##::::::: ##::: ##
 echo ########::. #######::. ######::::::. ######:: ##:::: ##: ########:. ######:: ##::. ##::
 echo ........::::.......::::......::::::::......:::..:::::..::........:::......:::..::::..::
 start chrome.exe --window-size=0,0 --incognito -- https://www.youtube.com/watch?v=kO77pZFJp1o
-powershell sleep 1.5
+timeout /t 2 /nobreak >nul
 cls
 mode con: cols=85 lines=24
 set dogcheckcount=0
+set back_to_the_firstline=[0;0H
 :dogcheckanimation0f
 set /a dogcheckcount=dogcheckcount+1
 if %dogcheckcount% gtr 5 (title Dogcheck respect tobyfox)
 if %dogcheckcount% gtr 7 (title Dogcheck)
 if %dogcheckcount% gtr 30 (title dogrune chapter 1)
 if %dogcheckcount% gtr 32 (title Dogcheck)
+echo %back_to_the_firstline%
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -2921,7 +2913,7 @@ cls
 goto dogcheckanimation1f
 
 :dogcheckanimation1f
-echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+echo %back_to_the_firstline%
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
@@ -2944,7 +2936,7 @@ echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 echo BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-powershell sleep 0.7
+timeout /t 1 /nobreak >nul
 cls
 goto :dogcheckanimation0f
 taskkill /im chrome.exe
@@ -3155,6 +3147,7 @@ if %alldefselect%==3 goto alldefsettingonly
 if %alldefselect%==4 goto alldefshowsettingpass
 cls
 color 9f
+set alldefentered=true
 title カーソル替えのアンインストール %debugmode%
 echo このアンインストールメニューは、このバッチファイルが変更したレジストリ、初回記録用のファイルをすべて元の状態に戻し、カーソル替え自体を削除する物です。
 pause
@@ -3190,7 +3183,7 @@ set alldefno2clr2=[40m[3m
 cls
 color 0B
 echo %alldefno2clr2%%alldefno2clr%時を戻そう
-powershell sleep 2
+timeout /t 3 /nobreak >nul
 find "wmode=false" カーソル替え設定.txt > nul
 if %ErrorLevel%==0 color 07
 if %ErrorLevel%==1 goto wmodeonoffkenti
@@ -3264,23 +3257,22 @@ color 1f
 rem メッセージ表示
 rundll32 user32.dll,MessageBeep
 cls
-echo A problem has been detected and windows has been shut down to prevent echo damage to your computer.
+echo A problem has been detected and Cursor Changer has been shut down to prevent echo damage to your computer.
 echo If this is the first time you've seen this stop error screen,
 echo restart your computer.
 echo If this screen appears again,
 echo follow these steps:
 echo.
 echo Check to be sure you have adequate disk space.
-echo If a driver is identified in the stop message,
-echo disable the driver or check with the manufacturer for driver updates.
+echo If anythings is identified in the stop message,
+echo disable the untivirus softwere or check the updates of windows.
 echo Try changing Video adapters.
 echo.
-echo Check with your hardware vendor for any BIOS updates.
-echo Disable BIOS memory options such as caching or shadowing.
-echo If you need to use Safe Mode to remove or disable components,
-echo restart your computer, press F8 select Advanced Startup Options,
-echo and then select Safe Mode.
-echo.
+echo Check with Github for any Cursor Changer updates.
+echo Disable Something options such as uhh... i dont know but
+echo If you need to use Arguments to remove or disable components,
+echo Use Ctrl+R, then Enter cmd, then copy and paste the full path to this batch, and then specify the arguments available to the batch.
+echo Im (tamago1908) recommend "Bypsloadsg". A list of available arguments can be found by specifying "help" as an argument.
 echo Technical information:
 echo.
 echo *** STOP: 0x0000008E (0xC0000005,0x8054DF87,0xB8F97810,0x00000000,)
@@ -3708,8 +3700,10 @@ rem STOP SPAMMING SET AUHAUAHAUAHAUHAUAHAHAHAUAHUAHUUAUHHUHUHUHUHHHHHHHHHHHHHHHH
 if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m[107m[30m)
 if defined %wmodetoggle% (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrcyan=[96m&set clrgra=[90m&set clr2=[0m)
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
+cls
 echo [Loading Command list...]
-powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=65;$w.BufferSize=$s;}"
+powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=60;$w.BufferSize=$s;}"
 cls
 echo %clr%::%clr2%                      [Entire list of menu commands]       %clrgra%6color test%clr2%
 echo                  (You can use all of them in the main menu.)
@@ -3729,7 +3723,7 @@ echo           %clrcyan%-%clr2% openie            %clrgra%(trying open internet 
 echo           %clrcyan%-%clr2% counttestdeb      %clrgra%(enter the count test mode.)%clr2%
 echo           %clrcyan%-%clr2% alldefnow1        %clrgra%(forced to enter alldefault.)%clr2%
 echo           %clrcyan%-%clr2% funanimationdeb   %clrgra%(play rare boot animation.)%clr2%
-echo           %clrcyan%-%clr2% windowsfiltertest %clrgra%(play bad win ver waning.)%clr2%
+echo           %clrcyan%-%clr2% windowsfiltertest %clrgra%(play bad win ver Warning.)%clr2%
 echo.
 echo            ^<%clrgrn%easter egg purposes commands%clr2%^>
 echo.
@@ -3772,9 +3766,9 @@ echo            %clrcyan%-%clr2% goto %clrgra%(goto for labels that exist.)%clr2
 echo            %clrcyan%-%clr2% set  %clrgra%(create new variable.)%clr2%
 echo            %clrcyan%-%clr2% help %clrgra%(Show commands available in fulldebug.)%clr2%
 echo.
+echo.
 :allcommandswait
-echo %clred%^/^/%clr2%[Type something to back to menu...]                           %clrgra%%batver%%clr2%
-pause >nul
+set /p nothing=%clred%^/^/%clr2%[Type something to back to menu...]                          %clrgra%%batver%%clr2% <nul&pause >nul
 set clrcyan=
 set clrgra=
 set clred=
