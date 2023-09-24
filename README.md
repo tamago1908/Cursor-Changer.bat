@@ -18,12 +18,10 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Goofy ahh rebranding opinion (2023/09/14)**  
-
-Personally, I have recently begun to think about it.  
-That is to rebrand this BATCH name to something like CSCG OS. The reason is that Cursor Changer currently has almost no functions to change the cursor, and the only functions it actually has are similar to those of an OS, and the only functions that are actually being developed are those of the OS part.  
-CSCG OS is named after "C" ur "S" or "C " han "G" er. Another idea is to keep the current name and simply add "OS" and call it Cursor Changer OS.bat, but needless to say, it would be better to add more OS functions before changing the name.  
-I'm thinking of a mode that omits the OS functions and starts as a true Cursor Changer, but, well, what can I say...? That's for later. If I do implement it, it will probably be in 1.15 or so.  
+### **Goofy ahh rebranding opinion (2023/09/24)**  
+Cursor Changer 1.13β4 has been released!
+This update includes the ability to display a new changelog. Also, those using 1.13β3 should be able to receive this update as a batch by itself.
+For more information, see the Change Log.
 
 &nbsp;
 
