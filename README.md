@@ -18,7 +18,7 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Goofy ahh rebranding opinion (2023/09/24)**  
+### **Update Released! (2023/09/24)**  
 Cursor Changer 1.13β4 has been released!
 This update includes the ability to display a new changelog. Also, those using 1.13β3 should be able to receive this update as a batch by itself.
 For more information, see the Change Log.
