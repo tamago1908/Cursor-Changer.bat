@@ -96,9 +96,9 @@ Then delete the BATCH process.
 >  **Beta latest : 1.13β3 (build 52)**  
 >  **Stable latest : 1.12 (build 44)**
 ___
-### - 1.13β3 build 52  🔥
+### - 1.13β4 build 52  🔥
 #### Added : 
-- ***Ability to display Change Log when update!***
+- **Ability to display Change Log when update!**
 #### Chenged :
 - **Better Animation of Boot Animation!**
 - *Better SettingLoader and faster boot (More improvements will be made in the future)*  
