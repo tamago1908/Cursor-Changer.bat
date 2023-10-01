@@ -6,7 +6,7 @@ if %h%==16 call :tilespawn&call :tilespawn
 :startloop
 if %score% gtr %bestscore% set bestscore=%score%
 call :drawboard 0&choice /c wasdbn /n /m ""
-echo ˆ—’†...
+echo å‡¦ç†ä¸­...
 if %errorlevel%==1 call :rotateclockwise&call :rotateclockwise&call :rotateclockwise&call :compress&call :merge&call :compress&call :compress&call :rotateclockwise
 if %errorlevel%==2 call :compress&call :merge&call :compress&call :compress
 if %errorlevel%==3 call :rotateclockwise&call :compress&call :merge&call :compress&call :compress&call :rotateclockwise&call :rotateclockwise&call :rotateclockwise
@@ -79,10 +79,10 @@ set board2[%%g]=!board2[%%g]:~-6!)
 for /l %%g in (0,1,15)do (set "board2[%%g]=      !board[%%g]!"&if !board[%%g]!==0 set "board2[%%g]=      "
 if %moves% gtr 0 if %%g==%randtile% set board2[%%g]=   + !board[%%g]!
 set board2[%%g]=!board2[%%g]:~-6!)
-cls&echo  ___     ___    _  _      ___&echo ^|__ \   / _ \  ^| ^|^| ^|    / _ \&echo    ) ^| ^| ^| ^| ^| ^| ^|^| ^|_  ^| (_) ^|&echo   / /  ^| ^| ^| ^| ^|__   _^|  ^> _ ^<&echo  / /_  ^| ^|_^| ^|    ^| ^|   ^| (_) ^|&echo ^|____^|  \___/     ^|_^|    \___/&echo(&echo        ƒ^ƒCƒ‹‚ð‘«‚µ‡‚í‚¹‚ÄA  &echo   @2048‚Ìƒ^ƒCƒ‹‚ðì‚è‚Ü‚µ‚å‚¤^^!&echo(&if %1==0 echo     (N‚ÅV‚µ‚¢ƒQ[ƒ€‚ðŠJŽn)&echo            (B‚ÅI—¹)&&echo(
-if %1==1 echo             ‚ ‚È‚½‚ÌŸ‚¿I&echo C‚ð‰Ÿ‚µ‚Ä‘±s‚·‚é‚©A N‚ÅƒŠƒZƒbƒg‚µ‚Ü‚µ‚å‚¤B
-if %1==2 echo            Game Over!&echo        N‚ð‰Ÿ‚µ‚ÄƒŠƒZƒbƒg...
-echo  ƒXƒRƒA: %score%&echo  Å‚‹L˜^: %bestscore%&echo  +------+------+------+------+&echo  ^|%board2[0]%^|%board2[1]%^|%board2[2]%^|%board2[3]%^|&echo  +------+------+------+------+&echo  ^|%board2[4]%^|%board2[5]%^|%board2[6]%^|%board2[7]%^|&echo  +------+------+------+------+&echo  ^|%board2[8]%^|%board2[9]%^|%board2[10]%^|%board2[11]%^|&echo  +------+------+------+------+&echo  ^|%board2[12]%^|%board2[13]%^|%board2[14]%^|%board2[15]%^|&echo  +------+------+------+------+&echo ƒvƒŒƒC•û–@: WASDƒL[‚ðŽg‚Á‚Äƒ^ƒCƒ‹‚ð“®‚©‚µ‚Ü‚·B“¯‚¶”Žš‚Ì2‚Â‚Ìƒ^ƒCƒ‹‚ªƒ^ƒbƒ`‚·‚é‚ÆA1‚Â‚É“‡‚³‚ê‚Ü‚·&exit /b
+cls&echo  ___     ___    _  _      ___&echo ^|__ \   / _ \  ^| ^|^| ^|    / _ \&echo    ) ^| ^| ^| ^| ^| ^| ^|^| ^|_  ^| (_) ^|&echo   / /  ^| ^| ^| ^| ^|__   _^|  ^> _ ^<&echo  / /_  ^| ^|_^| ^|    ^| ^|   ^| (_) ^|&echo ^|____^|  \___/     ^|_^|    \___/&echo(&echo        ã‚¿ã‚¤ãƒ«ã‚’è¶³ã—åˆã‚ã›ã¦ã€  &echo   ã€€2048ã®ã‚¿ã‚¤ãƒ«ã‚’ä½œã‚Šã¾ã—ã‚‡ã†^^!&echo(&if %1==0 echo     (Nã§æ–°ã—ã„ã‚²ãƒ¼ãƒ ã‚’é–‹å§‹)&echo            (Bã§çµ‚äº†)&&echo(
+if %1==1 echo             ã‚ãªãŸã®å‹ã¡ï¼&echo Cã‚’æŠ¼ã—ã¦ç¶šè¡Œã™ã‚‹ã‹ã€ Nã§ãƒªã‚»ãƒƒãƒˆã—ã¾ã—ã‚‡ã†ã€‚
+if %1==2 echo            Game Over!&echo        Nã‚’æŠ¼ã—ã¦ãƒªã‚»ãƒƒãƒˆ...
+echo  ã‚¹ã‚³ã‚¢: %score%&echo  æœ€é«˜è¨˜éŒ²: %bestscore%&echo  +------+------+------+------+&echo  ^|%board2[0]%^|%board2[1]%^|%board2[2]%^|%board2[3]%^|&echo  +------+------+------+------+&echo  ^|%board2[4]%^|%board2[5]%^|%board2[6]%^|%board2[7]%^|&echo  +------+------+------+------+&echo  ^|%board2[8]%^|%board2[9]%^|%board2[10]%^|%board2[11]%^|&echo  +------+------+------+------+&echo  ^|%board2[12]%^|%board2[13]%^|%board2[14]%^|%board2[15]%^|&echo  +------+------+------+------+&echo ãƒ—ãƒ¬ã‚¤æ–¹æ³•: WASDã‚­ãƒ¼ã‚’ä½¿ã£ã¦ã‚¿ã‚¤ãƒ«ã‚’å‹•ã‹ã—ã¾ã™ã€‚åŒã˜æ•°å­—ã®2ã¤ã®ã‚¿ã‚¤ãƒ«ãŒã‚¿ãƒƒãƒã™ã‚‹ã¨ã€1ã¤ã«çµ±åˆã•ã‚Œã¾ã™&exit /b
 exit /b
 :2048end
 cls
