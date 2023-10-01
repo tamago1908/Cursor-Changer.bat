@@ -48,6 +48,20 @@ Setting menu looks like This :
 </p>
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
 
+## - **HOW TO USE THIS BAT** -
+To use Cursor Changer, you must first set it up. Here is the procedure.  
+
+1 : Download the latest version from "Release" on Github. The following image shows a concrete example.  
+![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%201.png)  
+1.5 : Download it at here.  
+![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%202.png)  
+2 : After downloading, either run it as is or move it to your desktop and run it.  
+3 : Wait a few seconds, and the first setup will start automatically. Follow the instructions. At that time, you will be asked to confirm precautions and settings, themes, etc.  
+4 : Once setup is complete, you are then free to use the software. All functions in the menu after startup are available.  
+
+You can change the cursor, use the calculator, check for updates, or even find Easter eggs.
+Keep in mind, however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
+
 ## - **SYSTEM REQUIREMENTS** -
 **This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
 and if you want run with good performance, you should Prepare good pc.
@@ -57,7 +71,8 @@ Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (230 or high
 
 Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
 
-Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and im currently looking for a solution.
+Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and im currently looking for a solution.  
+
 
 ## - **FREATURES** -
 The most important feature is the ability to change the cursor. You can change it to white (windows default) or black. It also has a settings menu that allows you to change the behavior of Cursor Changer, a calculator, various easter eggs, hidden functions, advanced behavior using powershell, and much more. And best of all, all of these features are built with only a single BATCH file, no additional files are required!
@@ -72,10 +87,6 @@ And this BATCH is still under development, with new new features and patches to 
 - *[Debios](https://github.com/debios/debios) (Batch OS)*
 
 - *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
-
-## - **HOW TO USE THIS BAT** -
-Download batch file, and just click "**Cursor chenger 1.12.bat**".
-then have fun!
 
 ## - **PRECAUTIONS** -
 This batch generates several new files. The details are explained in the batch process, but two main files are generated: a configuration file and a txt file used to determine initial startup.
