@@ -19,7 +19,7 @@ well.
 
 # - **Latest News** -
 ### **Development News (2023/10/21)**  
-Im developing 1.13β5 little by little. Recently, we have been developing new error handling processes, etc., which are almost complete. However, there are still many things that need to be corrected.
+Im developing 1.13β5 little by little. Recently, I have been developing new error handling processes, etc., which are almost complete. However, there are still many things that need to be corrected.
 Nevertheless, if only the OOBE functionality is completed and implemented, 1.13β5 can be released.
 (By the way, Beta 5 will include many relatively minor corrections)
 
