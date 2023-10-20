@@ -18,10 +18,10 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Update Released! (2023/09/24)**  
-Cursor Changer 1.13β4 has been released!
-This update includes the ability to display a new changelog. Also, those using 1.13β3 should be able to receive this update as a batch by itself.
-For more information, see the Change Log.
+### **Development News (2023/10/21)**  
+Im developing 1.13β5 little by little. Recently, we have been developing new error handling processes, etc., which are almost complete. However, there are still many things that need to be corrected.
+Nevertheless, if only the OOBE functionality is completed and implemented, 1.13β5 can be released.
+(By the way, Beta 5 will include many relatively minor corrections)
 
 &nbsp;
 
