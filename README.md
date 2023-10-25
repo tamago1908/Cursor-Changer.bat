@@ -23,6 +23,10 @@ Im developing 1.13β5 little by little. Recently, I have been developing new err
 Nevertheless, if only the OOBE functionality is completed and implemented, 1.13β5 can be released.
 (By the way, Beta 5 will include many relatively minor corrections)
 
+> 2023/10/26  
+> Sorry for not updating for almost a month.  
+As a matter of fact, I have lost motivation to update for Cursor Changer and it will take some time. I'm (almost) finished with 1.13β5, so if I don't have to implement OOBE, I can release it right now but... nope.
+
 &nbsp;
 
 ## - **ABOUT THIS BATCH** -
