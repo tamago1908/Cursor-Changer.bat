@@ -37,7 +37,7 @@ This Batch is similar to a *simplified OS*, if you will.
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
 
 Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch (If I may say so, it would be better to have an internet connection, but not essential.)  
-And it have changes the color of the Windows cursor Function (the cursor you are currently moving). Not Cmd one. In addition to that, Cursor Changer haves various functions. At first glance, it may be difficult to understand what kind of batch it is, but it has the OS-like functions, and changing the cursor in Windows. In other words, it may be like Cursor Changer OS.
+And it have changes the color of the Windows cursor Function (the cursor you are currently moving rn). Not Cmd one. In addition to that, Cursor Changer haves various functions. At first glance, it may be difficult to understand what kind of batch it is, but it has the OS-like functions, and changing the cursor in Windows. In other words, it may be like Cursor Changer OS.
 
 No additional files or components are required.
   
@@ -61,10 +61,10 @@ To use Cursor Changer, you must first set it up. Here is the procedure.
 ![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%202.png)  
 2 : After downloading, either run it as is or move it to your desktop and run it.  
 3 : Wait a few seconds, and the first setup will start automatically. Follow the instructions. At that time, you will be asked to confirm precautions and settings, themes, etc.  
-4 : Once setup is complete, you are then free to use the software. All functions in the menu after startup are available.  
+4 : Once setup is complete, you are then free to use the Cursor Changer. All functions in the menu after startup are available.  
 
 You can change the cursor, use the calculator, check for updates, or even find Easter eggs.
-Keep in mind, however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
+however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
 
 ## - **SYSTEM REQUIREMENTS** -
 **This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
