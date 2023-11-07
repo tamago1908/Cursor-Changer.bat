@@ -20,7 +20,7 @@ well.
 # - **Latest News** -
 ### **Development Progress (2023/11/08)**  
 THE UPDATE IS STILL UNDONE!!!  
-Well, There are several reasons why we are not releasing an update at this time, the most important of which is that we have not yet implemented OOBE. Until this is completed, we cannot release an update.  
+Well, There are several reasons why Im not releasing an update at this time, the most important of which is that I have not yet implemented OOBE. Until this is completed, I cannot release an update.  
 Well, the update 1.13β5 of Cursor Changer is almost complete, with minor bug fixes and additional functions.  
 Personally, fixing bugs was the hardest part. Inconsistencies in functionality, unnecessary old code, what to do with features...There is a lot to think about. That is also why it is taking so long to develop the update.  
 
@@ -105,7 +105,7 @@ Then delete the BATCH process.
 
 
 ## - **Chenge logs** -
->  **Beta latest : 1.13β3 (build 52)**  
+>  **Beta latest : 1.13β4 (build 52)**  
 >  **Stable latest : 1.12 (build 44)**
 ___
 ### - 1.13β4 build 52  🔥
