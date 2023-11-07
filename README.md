@@ -18,14 +18,11 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Development News (2023/10/21)**  
-Im developing 1.13β5 little by little. Recently, I have been developing new error handling processes, etc., which are almost complete. However, there are still many things that need to be corrected.
-Nevertheless, if only the OOBE functionality is completed and implemented, 1.13β5 can be released.
-(By the way, Beta 5 will include many relatively minor corrections)
-
-> 2023/10/26  
-> Sorry for not updating for almost a month.  
-As a matter of fact, I have lost motivation to update for Cursor Changer and it will take some time. I'm (almost) finished with 1.13β5, so if I don't have to implement OOBE, I can release it right now but... nope.
+### **Development Progress (2023/11/08)**  
+THE UPDATE IS STILL UNDONE!!!
+Well, There are several reasons why we are not releasing an update at this time, the most important of which is that we have not yet implemented OOBE. Until this is completed, we cannot release an update.
+Well, the update 1.13β5 of Cursor Changer is almost complete, with minor bug fixes and additional functions.
+Personally, fixing bugs was the hardest part. Inconsistencies in functionality, unnecessary old code, what to do with features...There is a lot to think about. That is also why it is taking so long to develop the update.
 
 &nbsp;
 
