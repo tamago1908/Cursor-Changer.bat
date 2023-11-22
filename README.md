@@ -18,11 +18,11 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Development Progress (2023/11/08)**  
-THE UPDATE IS STILL UNDONE!!!  
-Well, There are several reasons why Im not releasing an update at this time, the most important of which is that I have not yet implemented OOBE. Until this is completed, I cannot release an update.  
-Well, the update 1.13β5 of Cursor Changer is almost complete, with minor bug fixes and additional functions.  
-Personally, fixing bugs was the hardest part. Inconsistencies in functionality, unnecessary old code, what to do with features...There is a lot to think about. That is also why it is taking so long to develop the update.  
+### **Development Progress (2023/11/22)**  
+Finally, OOBE is almost complete and has been implemented in Cursor Changer.
+In Cursor Changer 1.13β5 build 56, which is currently under development, OOBE as well as dogcheck related processes have been changed considerably and FirstCursor.txt has become less important. This will be fixed in build 57.
+Rather, 1.13β5 will probably be completed when build 57 is completed.
+The fact that I did not update for about two months has resulted in various fixes, changes, and feature additions. Please look forward to it.
 
 &nbsp;
 
