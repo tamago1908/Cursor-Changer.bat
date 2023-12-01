@@ -27,8 +27,8 @@ The only thing I can say for sure is that I can release it this year probably
 &nbsp;
 
 ## - **ABOUT THIS BATCH** -
-Cursor Chenger was created entirely with batch only.
-Im are pursuing what can be done with BATCH processing etc.
+Cursor Chenger was created almost batch only, and No additional files or components are required.  
+Im are pursuing what can be done with BATCH processing and etc.
 
 This Batch is similar to a *simplified OS*, if you will.
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
@@ -36,8 +36,6 @@ At the very least, it is by far larger and more complex than the Batch around th
 Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch (If I may say so, it would be better to have an internet connection, but not essential.)  
 And it have changes the color of the Windows cursor Function (the cursor you are currently moving rn). Not Cmd one. In addition to that, Cursor Changer haves various functions. At first glance, it may be difficult to understand what kind of batch it is, but it has the OS-like functions, and changing the cursor in Windows. In other words, it may be like Cursor Changer OS.
 
-No additional files or components are required.
-  
 >  Incidentally, it is in no way related to the Real [Cursor Changer](https://github.com/L413/Cursor-Changer), and the name match is coincidental. However, I feel there are some similarities in concept...  
   
 &nbsp;  
@@ -76,8 +74,12 @@ Also, the UI and animations of batch may collapse in some environments even thou
 
 
 ## - **FREATURES** -
-The most important feature is the ability to change the cursor. You can change it to white (windows default) or black. It also has a settings menu that allows you to change the behavior of Cursor Changer, a calculator, various easter eggs, hidden functions, advanced behavior using powershell, and much more. And best of all, all of these features are built with only a single BATCH file, no additional files are required!
-And this BATCH is still under development, with new new features and patches to come! (at least as long as the developers are motivated)
+The most important feature is the ability to change the cursor. You can change it to white (windows default) or black. It also has a settings menu that allows you to change the behavior of Cursor Changer, a calculator, various easter eggs, hidden functions, advanced behavior using powershell, and much more. And best of all, all of these features are built with only a single BATCH file, no additional files are required!  
+
+And this BATCH is still under development, with new new features and patches to come! (at least as long as the developers are motivated)  
+and the most recent report (Latest News) is given at least once a month.  
+At least as far as I have searched, almost all Batch OS have stopped updating in the last year.  
+~~No update and No news for 1 years over? That's pathetic lol.~~  
 
 ### ***In creating this BATCH, I were inspired by the following.***
  
@@ -86,6 +88,10 @@ And this BATCH is still under development, with new new features and patches to 
 - *[BSOD](https://en.wikipedia.org/wiki/Blue_screen_of_death) (Blue screan of death)*
 
 - *[Debios](https://github.com/debios/debios) (Batch OS)*
+
+- *[KByteOS](https://github.com/SesatGuy/KBytesOS) (Batch OS)*
+
+- *[Battles of Batch](https://github.com/136MasterNR/Battles-of-Batch) (Batch Project)*
 
 - *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
 
