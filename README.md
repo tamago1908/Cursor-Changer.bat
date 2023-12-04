@@ -77,7 +77,8 @@ Since this BATCH performs processing using powershell at startup, if powershell 
 The solution is to set powershell as an exception in the anti-virus software you are currently using, which will usually solve the problem.  
 Or, your device is simply too slow.  
 
-Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and im currently looking for a solution.  
+In addition, the UI within Cursor Changer may collapse in rare cases, usually due to improper font widths, etc. Please set the font width that does not collapse and try again.
+If it still collapses, please change the resolution or report it in an issue.  
 
 
 ## - **FREATURES** -
