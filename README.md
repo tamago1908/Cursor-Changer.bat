@@ -72,6 +72,11 @@ Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (230 or high
 
 Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
 
+Also, in some environments, batch startup speed, etc., may be significantly reduced, but this is due to powershell.  
+Since this BATCH performs processing using powershell at startup, if powershell startup is slow, startup will inevitably be slow as well.  
+The solution is to set powershell as an exception in the anti-virus software you are currently using, which will usually solve the problem.  
+Or, your device is simply too slow.  
+
 Also, the UI and animations of batch may collapse in some environments even though it is running on windows 10 1511 or later. This is probably due to the difference in resolution between the development environment and the actual device, and im currently looking for a solution.  
 
 
@@ -110,11 +115,6 @@ Manual deletion can be done by deleting the configuration file and the file for 
 
 If you want to go to the path where those files exist, you can access them from the uninstall menu accessible from batch.
 Then delete the BATCH process.  
-
-Also, in some environments, batch startup speed, etc., may be significantly reduced, but this is due to powershell.  
-Since this BATCH performs processing using powershell at startup, if powershell startup is slow, startup will inevitably be slow as well.  
-The solution is to set powershell as an exception in the anti-virus software you are currently using, which will usually solve the problem.  
-Or, your device is simply too slow.  
 
 
 ## - **Chenge logs** -
