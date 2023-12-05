@@ -131,6 +131,7 @@ ___
   - **(not yet completed, So it's not working right now)**  
 - *A warning message is now displayed in the function for debugging*
 - *YOU SHOULDN'T TRYING TO EDIT THIS BATCH... DISCLAIMER ADDED.*
+- *And More...*
 #### Chenged :
 - **New Password GUI at AllCommand List**
 - *Dogcheck related processing has been significantly changed*
@@ -138,7 +139,9 @@ ___
 - *Chance of Fun Animation changed from 1 in 10 to 1 in 50*(more rare)
 - *Some Debug Feature*
 - *Some Lavel Names*
+- *And More...*
 #### fixed :
+- **More Faster Boot!**
 - *Slow theme change on boot* (More faster Apply)
 - *batch no longer exits when denied administrative privileges*
 - *Update Changer is Now Can Show Longer Chenge logs*
