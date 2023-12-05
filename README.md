@@ -149,10 +149,10 @@ ___
 - *Some Bugs*
 
 > The size of BATCH is now about 220KB and the number of lines has exceeded 5000... Most of the increase is due to OOBE.  
-> Also, the changelog for this update is long and will likely be missed by the update checker as of 1.13 beta4.  
+> Also, the changelog for this update is long and will likely be missed by the update checker as of 1.13 β4.  
 
 > Known issues :  
-> In very rare cases, a message saying that the configuration file does not exist even though it does, and when regenerated, the configuration file is generated on the desktop
+> In very rare cases, a message saying that the configuration file does not exist even though it does, and when regenerated, the configuration file is generated on the desktop.  
 > Some features are incomplete and not perfect. Probably Complete at 1.13β6
 ___
 
