@@ -18,11 +18,11 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Development Progress (2023/12/01)**  
-Frankly, I am impatient.  
-I hope to release it within another month, but I don't know if I can.  
-But to be honest, I feel like I can release it right now if I ignore the details and bugs. However, my pride won't allow it. (I guess that's why I haven't been able to update it.)  
-The only thing I can say for sure is that I can release it this year probably  
+### **Update Released! (2023/12/05)**  
+Cursor Changer 1.13β5 has been released!
+This update fixes quite a variety of bugs and glitches.
+In addition, four major new features have been added.
+Please see the changelog at the bottom or in the release tab for more details.
 
 &nbsp;
 
@@ -119,10 +119,41 @@ Then delete the BATCH process.
 
 
 ## - **Chenge logs** -
->  **Beta latest : 1.13β4 (build 52)**  
+>  **Beta latest : 1.13β5 (build 57)**  
 >  **Stable latest : 1.12 (build 44)**
 ___
-### - 1.13β4 build 52  🔥
+### - 1.13β5 build 57 (Beta Major Update)  🔥
+#### Added :  
+- **OOBE (Set up) Feature!**  
+- **New BSOD (Error Handling) Feature!**  
+  - **And Recovory Menu and Console**
+- **Feature to check for updates at startup!**
+  - **(not yet completed, So it's not working right now)**  
+- *A warning message is now displayed in the function for debugging*
+- *YOU SHOULDN'T TRYING TO EDIT THIS BATCH... DISCLAIMER ADDED.*
+#### Chenged :
+- **New Password GUI at AllCommand List**
+- *Dogcheck related processing has been significantly changed*
+- *Improvement of powershell processing part at startup*
+- *Chance of Fun Animation changed from 1 in 10 to 1 in 50*(more rare)
+- *Some Debug Feature*
+- *Some Lavel Names*
+#### fixed :
+- *Slow theme change on boot* (More faster Apply)
+- *batch no longer exits when denied administrative privileges*
+- *Update Changer is Now Can Show Longer Chenge logs*
+- *Mistranslate*
+- *Some Bugs*
+
+> The size of BATCH is now about 220KB and the number of lines has exceeded 5000... Most of the increase is due to OOBE.  
+> Also, the changelog for this update is long and will likely be missed by the update checker as of 1.13 beta4.  
+
+> Known issues :  
+> In very rare cases, a message saying that the configuration file does not exist even though it does, and when regenerated, the configuration file is generated on the desktop
+> Some features are incomplete and not perfect. Probably Complete at 1.13β6
+___
+
+### - 1.13β4 build 52  
 #### Added : 
 - **Ability to display Change Log when update!**
 #### Chenged :
@@ -160,17 +191,6 @@ ___
 - *some bugs*
 
 #### Now Batch has Fully Translated.
-___
-
-### - 1.13β1 build 45.5 (Hotfix version) 
-#### Added : 
-- *Bypsadm argument help*  
-#### Chenged :
-- *Main menu and Typos Warning Variable and lavel name*
-- *Setting category names*
-#### fixed :
-- *setting5 load bug*
-- *argument bugs*
 ___
 
 
