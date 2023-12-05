@@ -136,7 +136,7 @@ ___
 - **New Password GUI at AllCommand List**
 - *Dogcheck related processing has been significantly changed*
 - *Improvement of powershell processing part at startup*
-- *Chance of Fun Animation changed from 1 in 10 to 1 in 50*(more rare)
+- *Chance of Fun Animation changed from 1 in 10 to 1 in 50* (more rare)
 - *Some Debug Feature*
 - *Some Lavel Names*
 - *And More...*
