@@ -18,11 +18,11 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Update Released! (2023/12/05)**  
-Cursor Changer 1.13β5 has been released!
-This update fixes quite a variety of bugs and glitches.
-In addition, four major new features have been added.
-Please see the changelog at the bottom or in the release tab for more details.
+### **Happy Xmas! (2023/12/05)**  
+Christmas! How's day going? Well, I don't care how you all are spending your Christmas.  
+Tamago_1908 (me) has no friends or girlfriend to spend Christmas with, but Im happy.  
+I thought about making a Cursor Changer 1.13β5_XMAS version as a Christmas update, but I didn't because it would be too much trouble. In the future (after 1~2 updates), I plan to implement a function to display a message depending on the terminal time, so it should be no problem.  
+This is probably the last README update for this year. See you next year!  
 
 &nbsp;
 
