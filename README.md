@@ -18,13 +18,13 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Happy Xmas! (2023/12/25)**  
-Christmas! How's day going? Well, I don't care how you all are spending your Christmas.  
-Tamago_1908 (me) has no friends or girlfriend to spend Christmas with, but Im happy.  
-I thought about making a Cursor Changer 1.13β5_XMAS version as a Christmas update, but I didn't because it would be too much trouble.  
-In the future (after 1~2 updates), I plan to implement a function to display a message depending on the terminal time, so it should be no problem.  
-
-This is probably the last README update for this year. See you next year!  
+### **Happy New Year! (it's too late but) (2024/01/03)**  
+I know I'm a little late, but Happy New Year to everyone.  
+I am living a peaceful life for now.  
+And I am currently working on Cursor Changer.bat 1.13 beta6.  
+The function to check for updates on startup, which was incomplete in Beta 5, is now working, and the startup process has been optimized and improved. The functions of β5 update finally have been implemented in my native language version, and β6 will be completed when I translate and implement the functions I want to implement.  
+It will probably be released by the end of this month!
+> and btw, Recently, I myself have become unclear about what this batch is aiming for, but for now, it is clear that the goal is to provide OS-like functionality. Recently, I have been feeling more and more that I want to rename (rebrand) this batch to Cursor Changer OS.  
 
 &nbsp;
 
