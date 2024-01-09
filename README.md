@@ -18,13 +18,10 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Happy New Year! (it's too late but) (2024/01/03)**  
-I know I'm a little late, but Happy New Year to everyone.  
-I am living a peaceful life for now.  
-And I am currently working on Cursor Changer.bat 1.13 beta6.  
-The function to check for updates on startup, which was incomplete in Beta 5, is now working, and the startup process has been optimized and improved. The functions of β5 update finally have been implemented in my native language version, and β6 will be completed when I translate and implement the functions I want to implement.  
-It will probably be released by the end of this month!
-> and btw, Recently, I myself have become unclear about what this batch is aiming for, but for now, it is clear that the goal is to provide OS-like functionality. Recently, I have been feeling more and more that I want to rename (rebrand) this batch to Cursor Changer OS.  
+### **Development News (2024/01/09)**  
+Im continuing development of 1.13 β6, albeit a little bit at a time.  
+So far, the feature to check for updates at boot is finally working, and the Fastboot setting has been completely replaced by Check Update at boot. With this, Fastboot has completely disappeared. (R.I.P Fastboot😔)   still incomplete, but it is getting pretty much complete.  
+If I fix the bugs related to the update, and finish implementing some of the features that have not been implemented, 1.13 will be stable version within like 3 months.  
 
 &nbsp;
 
