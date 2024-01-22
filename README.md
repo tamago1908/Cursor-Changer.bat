@@ -18,10 +18,11 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Development News (2024/01/09)**  
+### **Development News (2024/01/22)**  
 Im continuing development of 1.13 β6, albeit a little bit at a time.  
-So far, the feature to check for updates at boot is finally working, and the Fastboot setting has been completely replaced by Check Update at boot. With this, Fastboot has completely disappeared. (R.I.P Fastboot😔)   still incomplete, but it is getting pretty much complete.  
-If I fix the bugs related to the update, and finish implementing some of the features that have not been implemented, 1.13 will be stable version within like 3 months.  
+I don't have much motivation to develop these days. Perhaps if I were serious about it, I could complete it in a few days, but that is not going to happen.  
+However, I have some features that I want to implement by the time 1.13 is completed. Further efficiency improvements, more advanced exception handling, modification detection, etc...  
+Well, I will create it patiently.  
 
 &nbsp;
 
