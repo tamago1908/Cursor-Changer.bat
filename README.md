@@ -103,19 +103,17 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 
 - *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
 
-## - **PRECAUTIONS** -
-This batch generates several new files. The details are explained in the batch process, but two main files are generated: a configuration file and a txt file used to determine initial startup.
+## - **DISCLAIMER** -
+The author of Cursor Changer.bat (hereinafter referred to as "Batch"), tamago_1908 (hereinafter referred to as "I" or "Developer"), is not responsible for any damages or losses caused or resulting from the execution of this batch.
+In other words, all responsibility for the execution of this BATCH belongs to the person who executes it.
+All disclaimers, notices, and copyrights are governed by the Apache License 2.0.
+However, the developer shall provide fixes and updates for any bugs, problems, or imperfections that may exist in this Batch.
 
-The configuration file and a txt file used to determine initial startup.
-No other files are generated.
+the Developer will not be liable for any liability resulting from bugs or problems that may be added in future updates. This is permanent and will continue to apply. Please keep in mind, however, that the developer has not intentionally created the kind of program that causes problems, and has no intention of doing so.
+The user (the user of the Batch) may report to the developer any bugs or problems found in the batch that need to be fixed.
 
-There is no modification of the files except by user operation. In other words, files are not and will not be modified unless operated on by the user.
-
-Deletion of the BATCH process should be done from the uninstall menu that exists inside BATCH.
-Manual deletion can be done by deleting the configuration file and the file for determining initial startup.
-
-If you want to go to the path where those files exist, you can access them from the uninstall menu accessible from batch.
-Then delete the BATCH process.  
+The above disclaimer is in accordance with the Apache License 2.0 only, and does not imply any modification of the license.
+This disclaimer applies only when you download and run the batch and is implied.
 
 
 ## - **Chenge logs** -
