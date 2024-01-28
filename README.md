@@ -18,11 +18,15 @@ well.
 > ***I Need reviews!***
 
 # - **Latest News** -
-### **Development News (2024/01/22)**  
-Im continuing development of 1.13 β6, albeit a little bit at a time.  
-I don't have much motivation to develop these days. Perhaps if I were serious about it, I could complete it in a few days, but that is not going to happen.  
-However, I have some features that I want to implement by the time 1.13 is completed. Further efficiency improvements, more advanced exception handling, modification detection, etc...  
-Well, I will create it patiently.  
+### **Development News (2024/01/28)**  
+As a matter of fact, I have not been able to develop Cursor Changer 1.13β6 at all recently.  
+I have been having a hard time developing Calculator GUI, which I have been secretly developing, and this is the only thing I have been developing.  
+Of course, I will resume full development of Cursor Changer when Calculator GUI is completed or when I give up development.   
+ofc I'm still develop it occasionally, but it's not a high priority.  
+in my think, Calculator GUI will be available on github as a project and also will certainly be implemented in Cursor Changer. Or rather, that's what I'm developing it for.  
+For now, the Calculator GUI is about halfway through development, and I can already use W,A,S,D to move around, etc., and a few other features are already in place.  
+ However, the important part of the calculations function is not done at all, and the only thing that can be done now is entering numbers. I can't even erase them, so I need to finish that part.  
+That's about it for now.  
 
 &nbsp;
 
