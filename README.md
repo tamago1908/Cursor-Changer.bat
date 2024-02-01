@@ -47,11 +47,13 @@ If you need any other backstory or detailed explanations, please visit the [Wiki
 >  Incidentally, it is in no way related to the Real [Cursor Changer](https://github.com/L413/Cursor-Changer), and the name match is coincidental. However, I feel there are some similarities in concept...  
   
 &nbsp;  
-Main manu looks like This :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Setting menu looks like This :
+Main manu looks like This :  
 <p>
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="430px">  <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="430px">
 <br clear="left">
+Setting menu looks like This :
 </p>
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
 &nbsp;  
 
 ## 🔎	 - **FREATURES** -
