@@ -34,13 +34,13 @@ That's about it for now.
 &nbsp;
 
 ## 💡 - **ABOUT THIS BATCH** -
-Cursor Chenger was created almost batch only, and No additional files or components are required.  
-Im are pursuing what can be done with BATCH processing and etc.
-
-This Batch is similar to a *simplified OS*, if you will.
-At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
+Cursor Changer was created using only Batch for most of its functionality and requires no additional files or components, and This Batch is similar to a *simplified OS*, if you will.  
+At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**  
 
 Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will **run in a single batch** (If I may say so, it would be better to have an internet connection, but not essential.)  
+
+and also, This Cursor Changer is a batch that has been in **development since 2021 and is still being developed over three years later**.  
+It is probably one of the longest developing Batch OS in the world. Moreover, development is scheduled to continue in the future.  
 
 If you need any other backstory or detailed explanations, please visit the [Wiki](https://github.com/tamago1908/Cursor-Changer.bat/wiki).
 
@@ -70,6 +70,8 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 - *[Tobyfox](https://en.wikipedia.org/wiki/Toby_Fox) (Undertale and Deltarune)*
 
 - *[BSOD](https://en.wikipedia.org/wiki/Blue_screen_of_death) (Blue screan of death)*
+
+- *[Windows XP](https://en.wikipedia.org/wiki/Windows_XP) (Operating system)*
 
 - *[Debios](https://github.com/debios/debios) (Batch OS)*
 
