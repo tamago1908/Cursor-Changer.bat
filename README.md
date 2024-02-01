@@ -1,6 +1,6 @@
 # <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="32px"> ***Cursor Changer.bat***
 <div align="left">
-<a href="https://github.com/tamago1908/blob/main/resource/Cursor_Changer_message?raw=true">
+<a href="https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor_Changer_message">
   <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="280px">
 </a>
 
