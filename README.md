@@ -1,6 +1,8 @@
 # <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="32px"> ***Cursor Changer.bat***
 <div align="left">
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="280px">
+<a href="https://github.com/tamago1908/blob/main/resource/Cursor_Changer_message?raw=true">
+  <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="280px">
+</a>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)
 
@@ -9,6 +11,7 @@
 MOST IDIOT README
 BUT
 ITS WORK ON MY MACHINE
+AND I LOVE &nbsp; AF BECAUSE IT'S VERY USEFULL AND EASY!! OFC I KNOW SHOULDN'T USE IT TOO MUCH BUT...
 -->
 </div>
 
@@ -37,56 +40,23 @@ Im are pursuing what can be done with BATCH processing and etc.
 This Batch is similar to a *simplified OS*, if you will.
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**
 
-Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will run in a single batch (If I may say so, it would be better to have an internet connection, but not essential.)  
-And it have changes the color of the Windows cursor Function (the cursor you are currently moving rn). Not Cmd one. In addition to that, Cursor Changer haves various functions. At first glance, it may be difficult to understand what kind of batch it is, but it has the OS-like functions, and changing the cursor in Windows. In other words, it may be like Cursor Changer OS.
+Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will **run in a single batch** (If I may say so, it would be better to have an internet connection, but not essential.)  
 
 If you need any other backstory or detailed explanations, please visit the [Wiki](https://github.com/tamago1908/Cursor-Changer.bat/wiki).
 
 >  Incidentally, it is in no way related to the Real [Cursor Changer](https://github.com/L413/Cursor-Changer), and the name match is coincidental. However, I feel there are some similarities in concept...  
   
 &nbsp;  
-Main manu looks like This :  
+Main manu looks like This :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Setting menu looks like This :
 <p>
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="430px">
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="430px">  <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
 <br clear="left">
-Setting menu looks like This :
 </p>
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
-
-## ❓ - **HOW TO USE THIS BAT** -
-To use Cursor Changer, you must first set it up. Here is the procedure.  
-
-1 : Download the latest version from "Release" on Github. The following image shows a concrete example.  
-![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%201.png)  
-1.5 : Download it at here.  
-![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%202.png)  
-2 : After downloading, either run it as is or move it to your desktop and run it.  
-3 : Wait a few seconds, and the first setup will start automatically. Follow the instructions. At that time, you will be asked to confirm precautions and settings, themes, etc.  
-4 : Once setup is complete, you are then free to use the Cursor Changer. All functions in the menu after startup are available.  
-
-You can change the cursor, use the calculator, check for updates, or even find Easter eggs.
-however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
-
-## 💻 - **SYSTEM REQUIREMENTS** -
-**This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
-and if you want run with good performance, you should Prepare good pc.
-
-At a minimum, you will need a CPU that can run some windows 10. (100 or higher In CineBench R15).
-Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (230 or higher in CineBench R15)
-
-Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
-
-Also, in some environments, batch startup speed, etc., may be significantly reduced, but this is due to powershell.  
-Since this BATCH performs processing using powershell at startup, if powershell startup is slow, startup will inevitably be slow as well.  
-The solution is to set powershell as an exception in the anti-virus software you are currently using, which will usually solve the problem.  
-Or, your device is simply too slow.  
-
-In addition, the UI within Cursor Changer may collapse in rare cases, usually due to improper font widths, etc. Please set the font width that does not collapse and try again.
-If it still collapses, please change the resolution or report it in an issue.  
-
+&nbsp;  
 
 ## 🔎	 - **FREATURES** -
 The most important feature is the ability to change the cursor. You can change it to white (windows default) or black. It also has a settings menu that allows you to change the behavior of Cursor Changer, a calculator, various easter eggs, hidden functions, advanced behavior using powershell, and much more. And best of all, all of these features are built with only a single BATCH file, no additional files are required!  
+And it have changes the color of the Windows cursor Function (the cursor you are currently moving right now). Not Cmd one. In addition to that, Cursor Changer haves various functions. At first glance, it may be difficult to understand what kind of batch it is, but it has the OS-like functions, and changing the cursor in Windows. In other words, it may be like Cursor Changer OS.  
 
 And this BATCH is still under development, with new new features and patches to come! (at least as long as the developers are motivated)  
 and the most recent report (Latest News) is given at least once a month.  
@@ -106,6 +76,39 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 - *[Battles of Batch](https://github.com/136MasterNR/Battles-of-Batch) (Batch Project)*
 
 - *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
+
+&nbsp;  
+## ❓ - **HOW TO USE THIS BAT** -
+To use Cursor Changer, you must first set it up. Here is the procedure.  
+
+1 : Download the latest version from **"Release"** on Github. The following image shows a concrete example.  
+![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%201.png)  
+1.5 : Download it at here.  
+![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%202.png)  
+2 : After downloading, either run it as is or move it to your desktop and run it.  
+3 : Wait a few seconds, and the first setup will start automatically. Follow the instructions. At that time, you will be asked to confirm precautions and settings, themes, etc.  
+4 : Once setup is complete, you are then free to use the Cursor Changer. All functions in the menu after startup are available.  
+
+You can change the cursor, use the calculator, check for updates, or even find Easter eggs.
+however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
+
+## 💻 - **SYSTEM REQUIREMENTS** -
+**This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
+However, it may be possible to run it in lower version of windows 10 1511 (like windows 7) with external software that supports ANSII escape sequences, a separate installation of powershell 5.1, etc., but this is not recommended.  
+and if you want run with good performance, you should Prepare good pc.
+
+At a minimum, you will need a CPU that can run windows 10 1511. (150 or higher In CineBench R15).
+Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (250 or higher in CineBench R15)
+
+Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
+
+Also, in some environments, batch startup speeds is may be significantly reduced, but this is due to powershell.  
+Since this BATCH performs processing using powershell at startup, if powershell startup is slow, startup will inevitably be slow as well.  
+The solution is to set powershell as an exception in the anti-virus software you are currently using, which will usually solve the problem.  
+Or, *your device is simply too slow.*  
+
+In addition, the UI within Cursor Changer may collapse in rare cases, usually due to improper font widths, etc. Please set the font width that does not collapse and try again.
+If it still collapses, please change the resolution or report it in an issue.  
 
 ## 🚫 - **DISCLAIMER** -
 The author of Cursor Changer.bat (hereinafter referred to as "Batch"), tamago_1908 (hereinafter referred to as "I" or "Developer"), is not responsible for any damages or losses caused or resulting from the execution of this batch.
