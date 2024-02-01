@@ -123,8 +123,8 @@ However, the developer shall provide fixes and updates for any bugs, problems, o
 the Developer will not be liable for any liability resulting from bugs or problems that may be added in future updates. This is permanent and will continue to apply. Please keep in mind, however, that the developer has not intentionally created the kind of program that causes problems, and has no intention of doing so.
 The user (the user of the Batch) may report to the developer any bugs or problems found in the batch that need to be fixed.
 
-The above disclaimer is in accordance with the Apache License 2.0 only, and does not imply any modification of the license.
-This disclaimer applies only when you download and run the batch and is implied.
+This disclaimer is basically in accordance with the Apache License 2.0 and does not imply any license modification.  
+This disclaimer and license applies whether expressly or impliedly, only when you install and run the batch, or You will be deemed to have understood the disclaimer when you run the OOBE and recognize the message that says please refer to this disclaimer both. The merits of the decision will only be determined in this regard.  
 
 
 ## 📝 - **Chenge logs** -
