@@ -1,4 +1,4 @@
-# ***Cursor Changer.bat***
+# <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="32px"> ***Cursor Changer.bat***
 <div align="left">
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="280px">
 
@@ -17,7 +17,7 @@ ITS WORK ON MY MACHINE
 well.  
 > ***I Need reviews!***
 
-# - **Latest News** -
+# 📰 - **Latest News** -
 ### **Development News (2024/01/28)**  
 As a matter of fact, I have not been able to develop Cursor Changer 1.13β6 at all recently.  
 I have been having a hard time developing Calculator GUI, which I have been secretly developing, and this is the only thing I have been developing.  
@@ -30,7 +30,7 @@ That's about it for now.
 
 &nbsp;
 
-## - **ABOUT THIS BATCH** -
+## 💡 - **ABOUT THIS BATCH** -
 Cursor Chenger was created almost batch only, and No additional files or components are required.  
 Im are pursuing what can be done with BATCH processing and etc.
 
@@ -53,7 +53,7 @@ Setting menu looks like This :
 </p>
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
 
-## - **HOW TO USE THIS BAT** -
+## ❓ - **HOW TO USE THIS BAT** -
 To use Cursor Changer, you must first set it up. Here is the procedure.  
 
 1 : Download the latest version from "Release" on Github. The following image shows a concrete example.  
@@ -67,7 +67,7 @@ To use Cursor Changer, you must first set it up. Here is the procedure.
 You can change the cursor, use the calculator, check for updates, or even find Easter eggs.
 however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
 
-## - **SYSTEM REQUIREMENTS** -
+## 💻 - **SYSTEM REQUIREMENTS** -
 **This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
 and if you want run with good performance, you should Prepare good pc.
 
@@ -85,7 +85,7 @@ In addition, the UI within Cursor Changer may collapse in rare cases, usually du
 If it still collapses, please change the resolution or report it in an issue.  
 
 
-## - **FREATURES** -
+## 🔎	 - **FREATURES** -
 The most important feature is the ability to change the cursor. You can change it to white (windows default) or black. It also has a settings menu that allows you to change the behavior of Cursor Changer, a calculator, various easter eggs, hidden functions, advanced behavior using powershell, and much more. And best of all, all of these features are built with only a single BATCH file, no additional files are required!  
 
 And this BATCH is still under development, with new new features and patches to come! (at least as long as the developers are motivated)  
@@ -107,7 +107,7 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 
 - *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
 
-## - **DISCLAIMER** -
+## 🚫 - **DISCLAIMER** -
 The author of Cursor Changer.bat (hereinafter referred to as "Batch"), tamago_1908 (hereinafter referred to as "I" or "Developer"), is not responsible for any damages or losses caused or resulting from the execution of this batch.
 In other words, all responsibility for the execution of this BATCH belongs to the person who executes it.
 All disclaimers, notices, and copyrights are governed by the Apache License 2.0.
@@ -120,9 +120,9 @@ The above disclaimer is in accordance with the Apache License 2.0 only, and does
 This disclaimer applies only when you download and run the batch and is implied.
 
 
-## - **Chenge logs** -
->  **Beta latest : 1.13β5 (build 57)**  
->  **Stable latest : 1.12 (build 44)**
+## 📝 - **Chenge logs** -
+>  **Beta latest : [1.13β5](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.5) (build 57)**  
+>  **Stable latest : [1.12](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.12) (build 44)**
 ___
 ### - 1.13β5 build 57 (Beta Major Update)  🔥
 #### Added :  
