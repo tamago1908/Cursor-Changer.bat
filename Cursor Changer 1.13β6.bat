@@ -31,45 +31,67 @@ rem O==============================================================O
 rem                 This batch is created by tamago_1908
 rem                         Cursor Changer.bat
 
+rem   Copyright 2021 tamago_1908
 
-rem todo, Implement setting6? or just replace setting3. (fastbooting to update check), which is not fully implemented yet,
-rem as well as fully implement the ability to check for updates at startup, 
-rem but there is the problem of how to pass variables on to batch, and it is not perfect.
-rem Functionalize regenerate script
-
-rem Implement more startup animation easter eggs.
-rem Specifically, play something horrific with a 1 in 32768 chance and make it rickroll with a 1 in 256 chance.
-rem Eliminate all currently implemented youtube-related functions.
-rem and, replace dogcheck and startup rickroll with music playback in powershell.
-
-rem Currently, there are few problems.
-rem If there is no firstcursor, it is initialized as it is when the configuration file is deleted. The only solution is to add a value to firstcursor itself?
-rem Also, change the message when dogcheck of firstcursor is deleted and move it to the menu display part when all the startup process is done.
-rem And porting all previous implementations to the Japanese version.
-
-
-rem cd %~dp0 &start %~n0%~x0&exit (Might be able to make use of it (bat restart))
+rem   Licensed under the Apache License, Version 2.0 (the "License");
+rem   you may not use this file except in compliance with the License.
+rem   You may obtain a copy of the License at
 rem
-rem for /F "delims=#" %a in ('prompt #$E# ^& for %a in ^(1^) do rem') do set escinvisible=%a  (invisible cursor)
-rem and
-rem echo.%escinvisible%[?25l  (invisibled)
-rem echo.%escinvisible%[?25h (uninvisible)
-rem meybe useable for boot animation or somethings
+rem       http://www.apache.org/licenses/LICENSE-2.0
+rem
+rem   Unless required by applicable law or agreed to in writing, software
+rem   distributed under the License is distributed on an "AS IS" BASIS,
+rem   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+rem   See the License for the specific language governing permissions and
+rem   limitations under the License.
+
 
 rem Make sure to fill in the build number and version! Also, don't forget to put it in the archive!
 title Cursor Changer
-rem VER v1.13ƒÀ5
-set batver=1.13ƒÀ5
-set batbuild=build 57
+rem VER v1.13ƒÀ6
+set batver=1.13ƒÀ6
+set batbuild=build 60
 set batverdev=beta
 set Mainmenueaster=false
 set firststartbat=no
+set messagealreadyshowed=false
 set batpath=%~0
 cd /d %HOMEDRIVE%%HOMEPATH%
-rem Software used in the production windows notepad v10.2103.12.0 Font used Nirmala UI bold
-rem from Dec 09, 2021 windows notepad v10.2110.64.0 Nirmala UI bold
-rem Main Visual Studio Code
-rem Visual bat for debugging
+setlocal enabledelayedexpansion
+>nul 2>&1 find "bootanimation=true" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (
+    >nul 2>&1 find "s5_rawboot=true" CursorChangerSettings.txt
+if not "!errorlevel!"=="0" (
+>nul 2>&1 find "s5_linuxboot=true" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (
+    set linuxboot=true
+>nul 2>&1 find "wmode=true" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (set linuxishclr=[92m&set linuxishclr2=[107m[30m) 
+>nul 2>&1 find "wmode=false" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (set linuxishclr=[92m&set linuxishclr2=[0m)
+) else (set linuxboot=false)
+)
+)
+
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Linux-ish Boot Loader is just now started.)
+>nul 2>&1 find "bootanimation=true" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (
+>nul 2>&1 find "s5_simpleboot=true" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (
+    set simpleboot=true
+)
+)
+>nul 2>&1 find "bootanimation=true" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (
+>nul 2>&1 find "s5_rawboot=true" CursorChangerSettings.txt
+if "!errorlevel!"=="0" (
+@echo on
+)
+)
+setlocal disabledelayedexpansion
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Bootanimation Checked...)
+
+
 :batstartErrortracker
 rem I don't know why, but it seems that Argment_loader does not work within subroutines.
 rem So, it is run once outside the subroutine and then returned to the subroutine for processing.
@@ -124,10 +146,10 @@ for /l %%i in (1,1,%n%) do (
       )
     )
   )
-  set argmentloaded=true
-  timeout 3 >nul
-)
+    set argmentloaded=true
+    timeout /t 3 /nobreak >nul
 :Argments_Loaderend
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is done.)
 set n=
 setlocal disabledelayedexpansion
 if {%argmentloaded%}=={true} (set argmentloaded=&goto :batstarterrortrackermain)
@@ -140,29 +162,28 @@ setlocal disabledelayedexpansion
 ) else (set wmodetoggle=false)
 
 :batbootcheckwinver
-rem meybe its little baggy
-rem Windows Ver check
-for /f "tokens=2 delims==" %%a in ('wmic os get version /value') do set version=%%a
-rem windows10 1511 or newer check
-if %version% geq 10.0.10586 (goto batbootcheckwinversafe)
-rem windows10 1511 check 
-if %version% geq 10.0 (set windowsverfilter=windows10 1509&goto batbootcheckwinverbad)
-rem windows8.1 or older check
-if %version% geq 6.0 (set windowsverfilter=windows8.1ˆÈ‘O&goto batbootcheckwinverbad) else set windowsverfilter=windows vista or olderiits too old!j&goto batbootcheckwinverbad
+ver | find /i "Version 10.0.23" > nul
+if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
+ver | find /i "Version 10.0.22" > nul
+if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
+ver | find /i "Version 10.0.105" > nul
+if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
+ver | find /i "Version 10.0.102" > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows10 1509&goto batbootcheckwinverbad)
+ver | find /i "Version 10.0.10" > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows10&goto batbootcheckwinverbad)
+ver | find /i "Version 10.0.1" > nul
+if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
+ver | find /i "Version 6.3." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows 8.1&goto batbootcheckwinverbad)
+ver | find /i "Version 6.2." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows 8&goto batbootcheckwinverbad)
+ver | find /i "Version 6.1." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows7&goto batbootcheckwinverbad) else (
+set "windowsverfilter=too old! like windows xp?"&goto batbootcheckwinverbad
+)
 
 :batbootcheckwinverbad
-set version=
-rem if wmic is not supported, use old code.
-ver | find /i "Version 10.0.102" > nul
-if %errorlevel% == 0 (set windowsverfilter=windows10 1509&goto batbootcheckwinverbad2)
-ver | find /i "Version 6.1" > nul
-if %errorlevel% == 0 (set windowsverfilter=windows7&goto batbootcheckwinverbad2)
-ver | find /i "Version 6.2" > nul
-if %errorlevel% == 0 (set windowsverfilter=windows8&goto batbootcheckwinverbad2)
-ver | find /i "Version 6.3" > nul
-if %errorlevel% == 0 (set windowsverfilter=windows8.1&goto batbootcheckwinverbad2)
-
-:batbootcheckwinverbad2
 echo Cursor Changer is does not support Your version of windows! (%windowsverfilter%)
 pause
 cls
@@ -177,22 +198,51 @@ pause
 exit
 
 :batbootcheckwinversafe
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] WinverCheck is done.)
+
+:batbootcheckpowershell
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powershell Checking...)
+rem check powershell is available
+>nul 2>&1 powershell exit &&goto batbootcheckpowershellsafe
+cls
+echo Powershell check failed!
+pause
+cls
+echo It appears that powershell is not installed on your PC.
+pause
+cls
+echo Powershell is required for Cursor Changer to work.
+echo Since Powershell comes standard with Windows 10 1511 and later, it is likely intentionally uninstalled or unavailable due to an error.
+pause
+cls
+echo Please download Powershell 5.1 or later separately or try reinstalling it.
+pause
+cls
+echo If the problem persists (the message continues to appear), please report it in an issue on Github.
+pause
+cls
+exit
+:batbootcheckpowershellsafe
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powershell Check is done.)
 
 rem main code, (like set variable)
 set version=
 set bootbatnow=yes
+set exitbuttondisabled=false
 rem check admin permission
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 rem If the exit button is set to false while holding administrator privileges, it may be detected as a virus in rare cases. Therefore, the process is bypassed when the user has administrative privileges and when the variable "disableexit" is false.
 rem By the way, the reason why it is named disableexit is because this feature was a feature to disable the exit button in the beta version. After leaving beta, it was changed to disable maximization.
-if {%disableexit%}=={false} (goto batbootdisabledexitbutton)
 if exist CursorChangerSettings.txt find "CheckUpdate=true" CursorChangerSettings.txt > nul
-if {%errorlevel%}=={0} (set checkupdatetoggle=true) else (set checkupdatetoggle=false)
+if {%errorlevel%}=={0} (set checkupdatetoggle=true&set batverforpowershell=%batver:ƒÀ=.b%) else (set checkupdatetoggle=false)
+if {%disableexit%}=={false} (goto batbootdisabledexitbutton)
 
 :batbootpowershell
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is started...)
 set exitbuttondisabled=false
 rem chenge the boot message if it is the first time, or if a value is defined in batbotpowershell, or at boot up
 if not exist CursorChangerSettings.txt set firststartbat=yes
+if not "%linuxboot%"=="true" (
 if not "%firststartbat%"=="yes" (
 if {%bootbatnow%}=={yes} (title Cursor Changer Preparing...&echo Please wait a while...)
 ) else (
@@ -202,15 +252,17 @@ if {%bootbatnow%}=={yes} (title Cursor Changer Preparing...&echo Please wait a w
         ) else (title Cursor Changer Preparing...&echo Please wait a while...)
     )
 )
+)
 
 rem code from startid~powershell must not be displaced code before or after that is ok If it's before or after that, it's ok
 :: StartID1908
 call :getLineNumber startLine StartID1908 0
 goto batbootpowershellendcode
 :batbootpowershellcodestart
-set /a startline=startline+4&set /a endline=endline-3
-if not "%batbootpowershell%"=="OOBEMusic" (powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto batbootdisabledexitbutton) else start /min powershell.exe  -noexit -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto batbootdisabledexitbutton
-#disable maximize button
+set /a startline=startline+5&set /a endline=endline-3
+if "%batbootpowershell%"=="OOBEMusic" (start /min powershell.exe  -noexit -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto batbootdisabledexitbutton)
+if "%checkupdatetoggle%"=="true" (for /f "delims=" %%a in ('powershell -NoProfile "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*') do set Updateinfo=%%a&goto batbootdisabledexitbutton) else (powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto batbootdisabledexitbutton)
+
 
 # Define the function to disable the maximize button
 function Disablemax {
@@ -292,9 +344,10 @@ $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/lat
 try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
 }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
 $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-$batVersion = (Get-Item "Cursor.Changer.*.bat").name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = "$env:batverforpowershell", ""
 $batName = Get-Item "Cursor.Changer.*.bat"
 
+if ("$fileVersion" -eq "$env:batverforpowershell") {return "null";break}
 
 if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
     $fileverArray = $fileVersion -split "\."
@@ -337,14 +390,8 @@ if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
             cls
             # Compare the elements as usual
             if ($fileElement -gt $batElement) {
-            # The file version is beta and the bat version is not, so the file version is newer
-            # Set the environment variables for the update information
-            if ($isBatBeta -eq "true") {
-            $env:Updateisbeta = "true"
-             }
-            $env:UpdateAvailable = "true"
-            $env:UpdatemyVersion = $batVersion
-            $env:UpdateVersion = $fileVersion
+            if ($batElement -ge $FileElement -or (-not $batElement -lt $FileElement)) {return "null";break}
+            return "batbeta=$isfileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
 
             break # Exit the loop
             }
@@ -352,21 +399,19 @@ if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
         }
         elseif ($isFileBeta -and -not $isBatBeta) {
             cls
-            # The file version is beta and the bat version is not, so the file version is newer
-            # Set the environment variables for the update information
-          if ($isBatBeta -eq "true") {
-            $env:Updateisbeta = "true"
-           }
-       $env:UpdateAvailable = "true"
-       $env:UpdatemyVersion = $batVersion
-       $env:UpdateVersion = $fileVersion
-
-       break # Exit the loop
+            $fileElementsplit = $fileVersion -split "\."
+            $batElementsplit = $batVersion -split "\."
+            $fileElementsplit = [int]$fileElementsplit[2].Substring(1)
+            $batElementsplit = [int]$batElementsplit[2].Substring(1)
+            if ($batElementsplit -gt $fileElementsplit) {
+                return "null";break
+            }
+        return "batbeta=$isfileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
+        break # Exit the loop
         }
         
     }
 }
-
             function Doupdate {
                 $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
                 $downloadFile = Join-Path $downloadFolder $file.name
@@ -387,7 +432,6 @@ try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='appli
 $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
 $batVersion = (Get-Item "Cursor.Changer.*.bat").name -replace "Cursor\.Changer\.|\.bat", ""
 $batName = Get-Item "Cursor.Changer.*.bat"
-
 
 if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
     $fileverArray = $fileVersion -split "\."
@@ -514,12 +558,12 @@ try{if($env:wmodetoggle -eq "false"){Write-Host "Change Log :" -foregroundcolor 
             break
         }
     }
+}
 
     if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
         Write-Host "You already have latest Version (`"$($batVersion)`"), so you don't need to update."
         Start-Sleep 2
     }
-}
 }
 
 function OOBEMusic {
@@ -587,17 +631,40 @@ rem MAIN PROCESS (FR)
 set startline=&set endline=&set exitbuttondisabled=
 if {%bootbatnow%}=={no} (exit /b)
 if "%batbootpowershell%"=="OOBEMusic" (exit /b)
-cd /d %HOMEDRIVE%%HOMEPATH%
-if exist CursorChangerSettings.txt find "fastboot=true" CursorChangerSettings.txt >nul
-if {%errorlevel%}=={0} (goto :CursorChangerOOBE) else (goto nofastboot)
-rem goofy ahh lavel. well its not useable anymore
-:nofastboot
+rem get updater variable
+if "%checkupdatetoggle%"=="true" (goto batbootpowershell_get_updater_variable) else (goto batbootpowershell_get_updater_variable_end)
 
+:batbootpowershell_get_updater_variable
+rem conversion powershell return variable to batch variable
+setlocal enabledelayedexpansion
+if "%updateinfo%"=="null" (goto batbootpowershell_get_updater_variable_end)
+for /f "tokens=1-4 delims=," %%a in ("%updateinfo%") do (
+  for /f "tokens=1-2 delims==" %%x in ("%%a") do set "%%x=%%y"&for /f "tokens=1-2 delims==" %%x in ("%%b") do set "%%x=%%y"&for /f "tokens=1-2 delims==" %%x in ("%%c") do set "%%x=%%y"&for /f "tokens=1-2 delims==" %%x in ("%%d") do set "%%x=%%y"
+)
+setlocal disabledelayedexpansion
+set updatemyversion=%batver:ƒÀ=.b% & rem this is so idiot. guess powershell should have used this method to handle the bat version, but it is what it is. However, it is something that needs to be fixed, so I may fix it soon, maybe.
+set batverforpowershell=
+:batbootpowershell_get_updater_variable_end
+
+set updateinfo=
+set checkupdatetoggle=
+
+:batbootpowershell_get_updater_variable_end
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is Ended...)
+cd /d %HOMEDRIVE%%HOMEPATH%
 
 rem ############################################################################################################################
-:fastboot
 
 :CursorChangerOOBE
+if not "%bootbatnow%"=="true" (
+if "%linuxboot%"=="true" (
+    echo [%linuxishclr%info%linuxishclr2%] Bootloader ended
+echo.
+timeout /t 1 /nobreak >nul
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Mobas_Loader Calling...)
+timeout /t 2 /nobreak >nul
+)
+)
 rem Detects whether this is the first start
 if exist CursorChangerSettings.txt set firststartbat=no&set bootbatnow=yes&goto :batstart
 if not exist CursorChangerSettings.txt (
@@ -691,7 +758,7 @@ echo.
 echo.
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue     N=Repair                                                    %moveline%%clrwhi% <nul& choice /c YN /n >nul
+set /p nothing=%clr2%%clrwhi%     Y=Continue     N=No                                                        %moveline%%clrwhi% <nul& choice /c YN /n >nul
 if %ErrorLevel%==1 goto OOBEmainmusic
 if %ErrorLevel%==2 call :OOBEmainblank&timeout /t 1 /nobreak >nul&goto OOBEmain2
 
@@ -834,10 +901,10 @@ echo          batch belongs to the person who downloaded and executed it.
 echo.
 echo          However, Tamago_1908 will provide patches to fix bugs
 echo          and defects that may be included in this batch.
+echo          The above disclaimer has the same meaning as the one in the Readme 
+echo          disclaimer at Cursor Changer Github.
 echo.
 echo          (Y to Continue)
-echo.
-echo.
 echo.
 echo.
 set /p nothing=%clr2%%clrwhi%     Y=Continue                                                              2/3%moveline%%clrwhi% <nul&choice /c Y /n >nul
@@ -1229,7 +1296,7 @@ echo          I 1 Confirm reboot when Changed  I
 echo          O================================O   Nothing selected...
 echo          I 2 Admin when boot              I
 echo          O================================O   W or S and 1~5 to move.
-echo          I 3 Fastbooting                  I   Y to Toggle it, N or B to
+echo          I 3 Check update at boot         I   Y to Toggle it, N or B to
 echo          O================================O   Discard.
 echo          I 4 Longpress detection of enter I   move to "OK" and enter Y to
 echo          O================================O   confirm.
@@ -1269,7 +1336,7 @@ echo          I%OOBEsettingclr% 1 Confirm reboot when Changed  %OOBEsettingclr2%
 echo          O================================O   Change whether or not to confirm
 echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I   restart
 echo          O================================O   after changing the cursor with
-echo          I%OOBEsetting3clr% 3 Fastbooting                  %OOBEsetting3clr2%I   the Cursor Changer function.
+echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   the Cursor Changer function.
 echo          O================================O   If on, restart will be confirmed.
 echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I
 echo          O================================O   %clrgra%enable is recommended.%OOBEsettingclr2%
@@ -1311,7 +1378,7 @@ echo          I%OOBEsetting1clr% 1 Confirm reboot when Changed  %OOBEsetting1clr
 echo          O================================O   Attempts to obtain administrative
 echo          I%OOBEsettingclr% 2 Admin when boot              %OOBEsettingclr2%I   privileges at startup.
 echo          O================================O   Should be enabled in case of
-echo          I%OOBEsetting3clr% 3 Fastbooting                  %OOBEsetting3clr2%I   problems changing Cursors.
+echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   problems changing Cursors.
 echo          O================================O   Enabling may also faster boot up.
 echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I   
 echo          O================================O   %clrgra%disable is recommended.%OOBEsettingclr2%
@@ -1350,11 +1417,11 @@ echo.
 echo.
 echo          O================================O   Customize of Settings
 echo          I%OOBEsetting1clr% 1 Confirm reboot when Changed  %OOBEsetting1clr2%I
-echo          O================================O   As the name suggests, it attempts
-echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I   fast startup.
-echo          O================================O   However, it has little effect.
-echo          I%OOBEsettingclr% 3 Fastbooting                  %OOBEsettingclr2%I   It will be replaced by another
-echo          O================================O   setting in the future.
+echo          O================================O   Check Update at boot up.
+echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I   Updates, if any, can be applied.
+echo          O================================O   However, Boot time may be slower.
+echo          I%OOBEsettingclr% 3 Check update at boot         %OOBEsettingclr2%I   API rate limit of github
+echo          O================================O   may be reached.
 echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I
 echo          O================================O   %clrgra%disable is recommended.%OOBEsettingclr2%
 echo          I%OOBEsetting5clr% 5 Boot animation               %OOBEsetting5clr2%I
@@ -1395,7 +1462,7 @@ echo          I%OOBEsetting1clr% 1 Confirm reboot when Changed  %OOBEsetting1clr
 echo          O================================O   You can toggle the message when
 echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I   you press and hold enter without
 echo          O================================O   typing anything in the main menu.
-echo          I%OOBEsetting3clr% 3 Fastbooting                  %OOBEsetting3clr2%I   However, this setting may not be
+echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   However, this setting may not be
 echo          O================================O   meaningful.
 echo          I%OOBEsettingclr% 4 Longpress detection of enter %OOBEsettingclr2%I
 echo          O================================O   %clrgra%enable is recommended.%OOBEsettingclr2%
@@ -1437,7 +1504,7 @@ echo          I%OOBEsetting1clr% 1 Confirm reboot when Changed  %OOBEsetting1clr
 echo          O================================O   You can toggle the startup
 echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I   animation after boot up
 echo          O================================O   If disabled, boot up will be
-echo          I%OOBEsetting3clr% 3 Fastbooting                  %OOBEsetting3clr2%I   2 seconds faster, but
+echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   2 seconds faster, but
 echo          O================================O   with less visual.
 echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I
 echo          O================================O   %clrgra%enable is recommended.%OOBEsettingclr2%
@@ -1475,7 +1542,7 @@ echo          I%OOBEsetting1clr% 1 Confirm reboot when Changed  %OOBEsetting1clr
 echo          O================================O   Confirms the setting.
 echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I
 echo          O================================O   However, it is recommended that
-echo          I%OOBEsetting3clr% 3 Fastbooting                  %OOBEsetting3clr2%I   at least one setting be enabled.
+echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   at least one setting be enabled.
 echo          O================================O   All of these settings can be
 echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I   change later.
 echo          O================================O   
@@ -1571,7 +1638,7 @@ echo          Customize of settings :
 echo.
 echo          1 Confirm reboot when Changed  : %OOBEsetting1toggle% %clrgra%(recommend true)%OOBEsettingclr2%
 echo          2 Admin when boot              : %OOBEsetting2toggle% %clrgra%(recommend false)%OOBEsettingclr2%
-echo          3 Fastbooting                  : %OOBEsetting3toggle% %clrgra%(recommend false)%OOBEsettingclr2%
+echo          3 Check update at boot         : %OOBEsetting3toggle% %clrgra%(recommend false)%OOBEsettingclr2%
 echo          4 Longpress Detection of enter : %OOBEsetting4toggle% %clrgra%(recommend true)%OOBEsettingclr2%
 echo          5 Boot animation               : %OOBEsetting5toggle% %clrgra%(recommend true)%OOBEsettingclr2%
 echo.
@@ -1606,10 +1673,10 @@ echo admin=false >> CursorChangerSettings.txt
     ) else (echo admin=false >> CursorChangerSettings.txt)
 
     if "%OOBEsetting3toggle%"=="false" (
-echo fastboot=false >> CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
     ) else if "%OOBEsetting3toggle%"=="true" (
-        echo fastboot=true >> CursorChangerSettings.txt
-    ) else (echo fastboot=false >> CursorChangerSettings.txt)
+        echo CheckUpdate=true >> CursorChangerSettings.txt
+    ) else (echo CheckUpdate=false >> CursorChangerSettings.txt)
 
     if "%OOBEsetting4toggle%"=="false" (
 echo typosWarning=false >> CursorChangerSettings.txt
@@ -1649,7 +1716,7 @@ echo.
 echo          Cursor Changer is still incomplete and unpolished.
 echo          Please understand that.
 echo.
-echo          (Leave setup with Y or E.)
+echo          (Leave setup and goto mainmenu with Y or E.)
 echo.
 echo.
 echo.
@@ -1864,7 +1931,7 @@ echo.
 choice /c YN /n 
 if %ErrorLevel%==1 (
 echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo fastboot=false >> CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
 echo wmode=false >> CursorChangerSettings.txt
 echo admin=false >> CursorChangerSettings.txt
 echo rebootokey=true >> CursorChangerSettings.txt
@@ -1939,7 +2006,7 @@ if {%selected%}=={fulldebug} (goto fulldebug)
 if {%selected%}=={getadmin} (goto :batstartadm)
 if {%selected%}=={restoresetting} (
 echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo fastboot=false >> CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
 echo wmode=false >> CursorChangerSettings.txt
 echo admin=false >> CursorChangerSettings.txt
 echo rebootokey=true >> CursorChangerSettings.txt
@@ -1956,8 +2023,10 @@ if {%selected%}=={setenter} (echo.&set /p typosWarning=pls type:&goto :Mainmenub
 
 
 :batbootanimationfun
+set bootegg=
+set bootegg2=
 mode con: cols=85 lines=29
-find "wmode=true" CursorChangerSettings.txt
+find "wmode=true" CursorChangerSettings.txt >nul
 if {%errorlevel%}=={0} (color f0&set funanimationclr=f0) else (set funanimationclr=07)
 cls
 title TROLL FACE LOLLL
@@ -1988,7 +2057,7 @@ echo        ABBA                   AAAAAAAAA
 echo           BBB                                                                        
 echo O===================================================================================O
 echo.
-echo                         Cursor Changer %batver% Welcome. 2021-2023 %debugmode%
+echo                         Cursor Changer %batver% Welcome. 2021-2024 %debugmode%
 timeout /t 2 /nobreak >nul
 color cf
 timeout /t 1 /nobreak >nul
@@ -2012,6 +2081,7 @@ cls
 rem Play the boot animation, with a 1 in 50 chance that another version will be played. The random specification(?) requires two consecutive random runs.
 set /a bootegg=%random%*51/32767
 set /a bootegg2=%random%*51/32767
+if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
 if {%bootegg%}=={%bootegg2%} (goto batbootanimationfun)
 set bootegg=
 set bootegg2=
@@ -2040,7 +2110,7 @@ echo.
 echo.
 echo O=========================================================================O
 echo.
-echo                         2021-2023 tamago1908 %batbuild%
+echo                         2021-2024 tamago1908 %batbuild%
 timeout /t 3 /nobreak >nul
 cls
 rem Check for missing settings
@@ -2065,7 +2135,7 @@ timeout /t 2 /nobreak >nul
 SET /P selected=Automatic Repair is available. When you run Auto Repair, all previous settings are initialized and reset to default settings. Do you wish to continue? (yes or no):
 if {%selected%}=={yes} (
 echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo fastboot=false >> CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
 echo wmode=false >> CursorChangerSettings.txt
 echo admin=false >> CursorChangerSettings.txt
 echo rebootokey=true >> CursorChangerSettings.txt
@@ -2079,7 +2149,7 @@ exit
 if {%selected%}=={y} (
 :overwritesetting
 echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo fastboot=false >> CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
 echo wmode=false >> CursorChangerSettings.txt
 echo admin=false >> CursorChangerSettings.txt
 echo rebootokey=true >> CursorChangerSettings.txt
@@ -2109,6 +2179,7 @@ rem need to assign variables to what to load and where to goto after loading set
 rem The cursor color is not implemented in the main change section. It is not designed so that you can come back to Mainmenuboot after changing it.
 rem If you want to add a setting, you can copy and paste it. However, you may need to add some code if you want to change the look of the menu.
 :settingloads
+cd /d %HOMEDRIVE%%HOMEPATH%
 if not exist CursorChangerSettings.txt (
 cls
 title Cursor Error
@@ -2122,7 +2193,7 @@ pause
 cls
 type nul > CursorChangerSettings.txt
 echo nodogcheckfor1234567890qwertyuiop >> CursorChangerSettings.txt
-echo fastboot=false >> CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
 echo wmode=false >> CursorChangerSettings.txt
 echo admin=false >> CursorChangerSettings.txt
 echo rebootokey=true >> CursorChangerSettings.txt
@@ -2137,7 +2208,7 @@ exit
 )
 if not exist FirstCursor.txt (
 type nul > FirstCursor.txt
-echo nodogcheckforfastboot >> FirstCursor.txt
+echo nodogcheckforCheckUpdate >> FirstCursor.txt
 )
 if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
 :setting1load
@@ -2168,7 +2239,7 @@ goto setting3load
 goto whatloadgoto
 
 :setting3load
-find "fastboot=true" CursorChangerSettings.txt > nul
+find "CheckUpdate=true" CursorChangerSettings.txt > nul
 if {%bootbatnow%}=={no} (echo Processing...)
 if %ErrorLevel%==0 set setting3onoff=true 
 if %ErrorLevel%==1 goto setting3load2
@@ -2237,7 +2308,7 @@ if {%bootbatnow%}=={yes} (set batloadprgs=2&call :MOBAS_Loader)
 if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
 
 :setting3load2
-find "fastboot=false" CursorChangerSettings.txt > nul
+find "CheckUpdate=false" CursorChangerSettings.txt > nul
 
 if {%bootbatnow%}=={no} (echo Processing...)
 if %ErrorLevel%==0 (set setting3onoff=false) else if %ErrorLevel%==1 set setting3onoff= null&set /a allsettingerror=allsettingerror+1
@@ -2345,22 +2416,17 @@ goto Mainmenu
 
 :MOBAS_Loader
 rem Boot animation.
+rem MOBAS_Loader mean is "Management Of Boot Animation and Setting load"
 rem Below is a text branch on loading.
 rem loadsscrnprgsclrgra = 808080, windows is loading files (windows 2000) is 838383. wow its close
 if {%bootbatnow%}=={no} (cls & title Cursor Setting Processing... & echo Processing... & goto whatload) else (title Booting up...)
 if {%simpleboot%}=={true} (cls & echo Booting up...& exit /b)
-if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[0;0H)
-if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[47m[97m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m[107m[30m&set back_to_the_firstline=[0;0H) else (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[0;0H)
+if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
+if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[47m[97m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m[107m[30m&set back_to_the_firstline=[18;0H) else (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
 if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
+
 rem goofy ahh code
-setlocal enabledelayedexpansion
-for /l %%i in (0,1,1) do (
-  set loadscrnprgs%%i=
-  if {%batloadprgs%}=={%%i} (
-    set loadscrnprgs%%i=%loadscrnprogresgscolorsclr%%...%loadscrgsclrsr2%
-  )
-)
-setlocal disabledelayedexpansion
+setlocal enabledelayedexpansion&if "!batloadprgs!" gtr "0" (set /a batloadprgsdelete=!batloadprgs!-1&set loadscrnprgs!batloadprgsdelete!=)&setlocal disabledelayedexpansion
 if {%batloadprgs%}=={0} (set loadscrnprgs0=%loadscrnprgsclrgra%                                                     %loadscrnprgsclr2%)
 if {%batloadprgs%}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%%loadscrnprgsclrgra%                                                  %loadscrnprgsclr2%)
 if {%batloadprgs%}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%%loadscrnprgsclrgra%                                              %loadscrnprgsclr2%)
@@ -2373,23 +2439,6 @@ if {%batloadprgs%}=={8} (set loadscrnprgs8=%loadscrnprgsclr%                    
 if {%batloadprgs%}=={9} (set loadscrnprgs9=%loadscrnprgsclr%                                                %loadscrnprgsclr2%%loadscrnprgsclrgra%     %loadscrnprgsclr2%)
 if {%batloadprgs%}=={10} (set loadscrnprgs10=%loadscrnprgsclr%                                                     %loadscrnprgsclr2%)                                                  
 echo %back_to_the_firstline%
-echo.
-echo.
-echo.
-echo.
-echo. 
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
 echo O=========================================================================O
 echo.
 echo                        Booting up Cursor Changer...
@@ -2399,15 +2448,11 @@ echo           O=====================================================O
 rem 37 full-width
 rem 74 half-width
 rem btw, its windows 2000 reference
-
 exit /b
+
 :MOBAS_Loader_initializeVaribale
-set loadscrnprgs9=
-set loadscrnprgs10=
-set loadscrnprgsclr=
-set loadscrnprgsclr2=
-set loadscrnprgsclrgra=
-set back_to_the_firstline=
+set loadscrnprgs9=&set loadscrnprgs10=&set loadscrnprgsclr=&set loadscrnprgsclr2=&set loadscrnprgsclrgra=
+set batloadprgsdelete=&set back_to_the_firstline=
 goto Mainmenu
 
 :whatload
@@ -2421,7 +2466,7 @@ if {%wantload%}=={setting5} (goto setting5load)
 if {%wantload%}=={wmode} (goto wmodeload)
 if {%wantload%}=={wmodeMainmenu} (goto wmodeMainmenuload) 
 if {%wantload%}=={debugMainmenu} (goto debugMainmenuload)
-if {%wantload%}=={syokaiMainmenu} (goto syokaiMainmenuload)
+if {%wantload%}=={FirstMainmenu} (goto FirstMainmenuload)
 if {%wantload%}=={cursorcolor} (goto cursorcolorload)
 if {%wantload%}=={} (goto Mainmenu)
 call :BSOD_Errors 2
@@ -2429,7 +2474,7 @@ pause
 exit
 
 :whatloadgoto
-
+rem I don't see why this label is necessary. But it is necessary anyway
 set wantload=
 exit /b
 
@@ -2448,9 +2493,9 @@ set settinghelptoggle=false
 mode con: cols=75 lines=25
 if {%Mainmenueaster%}=={true} (set Mainmenubuild=%batbuild%)
 if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=&cls)
+set selected=
 rem menu depiction
 title Cursor Changer %debugmode% 
-set selected=
 echo                              Cursor Changer %batver% %debugmode% %Mainmenubuild%
 echo.
 echo   O=====================================================================O
@@ -2467,7 +2512,6 @@ if not {%selected%}=={} (echo %selected% was selected.)
 
 rem Selection Branching
 if {%selected%}=={1} (set typosWarning=0&goto :cursorchange)
-if {%selected%}=={updatetest} (set batbootpowershell=Updater&call :batbootpowershell)
 if {%selected%}=={a} (set typosWarning=0&goto :cursorchange)
 if {%selected%}=={2} (set typosWarning=0&goto :startcal)
 if {%selected%}=={b} (set typosWarning=0&goto :startcal)
@@ -2600,19 +2644,23 @@ taskkill /im cmd.exe
 goto :reboot
 
 :MainmenuMessages
-if {%Updateavailable%}=={true} (
-  echo An update is available! do you want to update?
-  setlocal enabledelayedexpansion
+if "%messagealreadyshowed%"=="false" (set messagealreadyshowed=true) else (exit /b)
+if "%FirstCursorisEdited%"=="true" (echo                   Easy to change the FirstCursor.txt, huh?&echo.&set FirstCursorisEdited=)
+
+if "%Updateavailable%"=="true" (
+    title Cursor Changer Update Available! ^(Exprimental^)
+    setlocal enabledelayedexpansion
+    if "%batbeta%"=="True" (set batbetamessage=^(Tip : this version is beta, So it's probably have bugs.^))
+  echo New update is available^^! ^(%updatemyversion%to %updateversion%^)
+  echo do you want to update? !batbetamessage!
+  set batbetamessage=
   SET /P updateselected=^(Y or N^) :
-  if {!updateselected!}=={y} (set updateselected=&set updateavailable=&echo.&echo updating...&set batbootpowershell=Doupdate&call batbootpowershell&echo update complete successfully.&pause&exit)
-if {!updateselected!}=={n} (set updateselected=&set updateavailable=&echo.&echo update is canceled. If you wish to disable the function to check for updates at startup, you can do so in the settings.&pause&goto mainmenu)
+  if {!updateselected!}=={y} (set updateselected=&set updateavailable=&echo.&echo updating...&set batbootpowershell=Doupdate&call :batbootpowershell&echo update complete successfully.&pause&exit)
+if {!updateselected!}=={n} (set updateselected=&set updateavailable=&echo.&echo update is canceled.&echo.&echo If you wish to disable the function to check for updates at startup, you can do so in the settings.&pause&set checkupdatetoggle=false&set messagealreadyshowed=false&exit /b)
 setlocal disabledelayedexpansion
 )
-if "%FirstCursorisEdited%"=="true" (echo                Editing FirstCursor.txt was easy, wasn't it?&echo.&set FirstCursorisEdited=)
 exit /b
 
-rem exit process and confirmation of it
-rem todolist, implement GUI in this part and add restart and other functions.
 :exitmenu
 cls
 if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[46m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
@@ -2800,7 +2848,7 @@ echo.
 echo.
 echo O=========================================================================O
 echo.
-echo                        2021-2023 tamago1908 %batbuild%
+echo                        2021-2024 tamago1908 %batbuild%
 call :exitmenuexit
 timeout /t 3 /nobreak >nul
 exit
@@ -2957,7 +3005,7 @@ echo I%clr%                        %clr2%I 1 Confirm reboot when Changed       I
 echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
-Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
+Echo O  category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
@@ -2992,7 +3040,7 @@ echo I%clr%                        %clr2%I %clr%1 Confirm reboot when Changed%cl
 echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
-Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
+Echo O  category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
@@ -3029,7 +3077,7 @@ echo I%clr%                        %clr2%I 1 Confirm reboot when Changed       I
 echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I %clr%2 Admin When Boot%clr2%                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
-Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
+Echo O  category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
@@ -3067,7 +3115,7 @@ echo I%clr%                        %clr2%I 1 Confirm reboot when Changed       I
 echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
-Echo O  category  up or down  I %clr%3 Fastbooting%clr2%                       I  %setting3onoff%   I
+Echo O  category  up or down  I %clr%3 Check Update at boot%clr2%              I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
@@ -3105,7 +3153,7 @@ echo I%clr%                        %clr2%I 1 Confirm reboot when Changed       I
 echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
-Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
+Echo O  category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I %clr%4 Long press detection of enter%clr2%     I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
@@ -3143,7 +3191,7 @@ echo I%clr%                        %clr2%I 1 Confirm reboot when Changed       I
 echo I%clr% Cursor Changer Feature %clr2%I                                     O==========O
 echo I%clr%                        %clr2%I 2 Admin When Boot                   I  %setting2onoff%   I
 echo O========================I                                     O==========O
-Echo O  category  up or down  I 3 Fastbooting                       I  %setting3onoff%   I
+Echo O  category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 Echo O========================I                                     O==========O
 Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
@@ -3441,16 +3489,16 @@ goto settingcategory1intsetting2
 
 :setting3
 if {%settinghelptoggle%}=={true} (goto setting3help)
-find "fastboot=false" CursorChangerSettings.txt > nul
+find "CheckUpdate=false" CursorChangerSettings.txt > nul
 if %ErrorLevel%==0 set setting3setonoff=enable& goto setting3onoff
 if %ErrorLevel%==1 set setting3setonoff=Repair&goto setting3onoff
 
 :setting3onoff
-find "fastboot=true" CursorChangerSettings.txt > nul
+find "CheckUpdate=true" CursorChangerSettings.txt > nul
 if %ErrorLevel%==0 set setting3setonoff=disable&set setting3warning=
 :setting3okey
 cls
-echo Do you want to set fast startup to be %setting3setonoff%? (Y=Yes N=No B=Back)
+echo Do you want to set Check update at boot to be %setting3setonoff%? (Y=Yes N=No B=Back)
 SET /P selected= :
 echo %selected% has selected
 if {%selected%}=={y} (goto :setting3y)
@@ -3460,23 +3508,23 @@ if {%selected%}=={b} (goto :settingcategory1intsetting3)
 goto setting3okey
 
 :setting3y
-find "fastboot=false" CursorChangerSettings.txt > nul
+find "CheckUpdate=false" CursorChangerSettings.txt > nul
 echo Applying settings...
 
 if %ErrorLevel%==1 goto setting3ygo3test
 if %ErrorLevel%==0 goto setting3ygo1
 
 :setting3ygo3test
-find "fastboot=true" CursorChangerSettings.txt > nul
-if %ErrorLevel%==1 echo fastboot=false >> CursorChangerSettings.txt
+find "CheckUpdate=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==1 echo CheckUpdate=false >> CursorChangerSettings.txt
 if %ErrorLevel%==0 goto setting3ygo2
 
 :setting3ygo2
-powershell "(gc CursorChangerSettings.txt) -replace 'fastboot=true','fastboot=false' | sc CursorChangerSettings.txt"
+powershell "(gc CursorChangerSettings.txt) -replace 'CheckUpdate=true','CheckUpdate=false' | sc CursorChangerSettings.txt"
 goto setting3yokey
 
 :setting3ygo1
-powershell "(gc CursorChangerSettings.txt) -replace 'fastboot=false','fastboot=true' | sc CursorChangerSettings.txt"
+powershell "(gc CursorChangerSettings.txt) -replace 'CheckUpdate=false','CheckUpdate=true' | sc CursorChangerSettings.txt"
 goto setting3yokey
 
 :setting3n
@@ -3693,9 +3741,10 @@ goto settingcategory1intsetting2
 
 :setting3help
 cls
-echo As the name suggests, this setting reduces startup time.
-echo If this setting is set to true, some processing will be skipped (without affecting the main processing).
-echo Startup time is reduced by like 0.5 ~ 0.25 seconds, depending on PC specifications.
+echo This setting enables or disables the ability to check for updates when Cursor Changer is booted.
+echo If this feature is turned on, updates will be checked every time this batch is booted, and if updates are available, they will be applied as they are.
+echo However, this feature is not available when there is no Internet connection, and depending on the speed of the Internet connection, the boot up speed may be reduced.
+echo In addition, the hourly If you repeat launching more than 50 times, you may reach the API rate limit of github.
 echo This setting is false by default.
 pause
 goto settingcategory1intsetting3
@@ -3744,7 +3793,7 @@ if {%batverdev%}=={beta} (set batverdevshow= Beta )
 if {%batverdev%}=={stable} (set batverdevshow=Stable)
 echo.
 echo.
-echo     by tamago_1908   2021-2023
+echo     by tamago_1908   2021-2024
 echo     O========================================O
 echo     I                                        I
 echo     I      Cursor Changer %batverdevshow% Version     I
@@ -3874,9 +3923,9 @@ find "CursorChanged" FirstCursor.txt > nul
 if "%errorlevel%"=="0" goto changetodefault else goto FirstWarning
 rem Write settings (default)
 :FirstWarning
-if {%wmodetoggle%}=={false} (set clrfirstwarning=[107m[40m)
+if {%wmodetoggle%}=={false} (set clrfirstwarning=[37m[40m)
 if {%wmodetoggle%}=={true} (set clrfirstwarning=[30m[107m)
-if defined %wmodetoggle% (set clrfirstwarning=[107m[40m)
+if defined %wmodetoggle% (set clrfirstwarning=[37m[40m)
 rem warning message, first-time startup only
 cls
 echo only at first changing Cursor
@@ -3956,6 +4005,7 @@ goto exit
 
 rem Change cursor color to white
 :defgo
+if {%wmodetoggle%}=={true} (color f0) else (color 07)
 pause
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /ve /f /d ""
 title 1
@@ -4309,7 +4359,7 @@ pause
 cls
 type nul > CursorChangerSettings.txt
 echo nodogcheckfor1234567890qwertyuiop >> CursorChangerSettings.txt
-echo fastboot=false >> CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
 echo wmode=false >> CursorChangerSettings.txt
 echo admin=false >> CursorChangerSettings.txt
 echo rebootokey=true >> CursorChangerSettings.txt
@@ -4484,7 +4534,7 @@ echo Im (tamago1908) recommend "Bypsloadsg". A list of available arguments can b
 echo.
 echo Technical information:
 echo.
-echo *** STOP: 0x0000008E (0xC0000005,0x8054DF87,0xB8F97810,0x00000000,)
+echo *** STOP: 0x0000000%1
 echo *** MEMORY LOGS: 57 68 61 74 20 74 68 65 20 66 75 63 6b 69 6e 67 20 61 72 65 20 79 6f 75 20 74 68 69 6e 6b 69 6e 67 3f
 echo.
 echo Beginning dump of physical memory (lie)
@@ -4627,6 +4677,7 @@ echo THE SYSTEM HAS BEEN DESTROYED
 echo.
 echo error id : 6 (you cant call bsod_errors without argment, or goto.)
 pause
+if {%wmodetoggle%}=={true} (color f0) else (color 07)
 goto mainmenu
 
 
@@ -5091,13 +5142,13 @@ echo            ^<%clrgrn%easter egg purposes commands%clr2%^>
 echo.
 echo           %clrcyan%-%clr2% easteregg %clryel%[%clr2%%clred%!%clr2%%clryel%]%clr2%    %clrgra%(playing easteregg, its little dangerous.)%clr2%
 echo           %clrcyan%-%clr2% egg              %clrgra%(play seacret message.)%clr2%
-echo           %clrcyan%-%clr2% egg1             %clrgra%(play error massage in alldef.)%clr2%
+echo           %clrcyan%-%clr2% egg1             %clrgra%(play error message in alldef.)%clr2%
 echo           %clrcyan%-%clr2% egg2             %clrgra%(play dogcheck error, inspire toby fox.)%clr2%
-echo           %clrcyan%-%clr2% wwssdadaba       %clrgra%(seacret massage and show build number.)%clr2%
-echo           %clrcyan%-%clr2% tamago1908       %clrgra%(show goofy massage.)%clr2%
-echo           %clrcyan%-%clr2% himazionnoob1908 %clrgra%(show goofy massage.)%clr2%
-echo           %clrcyan%-%clr2% mskg1908         %clrgra%(show goofy massage.)%clr2%
-echo           %clrcyan%-%clr2% 1908             %clrgra%(show looped goofy massage.)%clr2%
+echo           %clrcyan%-%clr2% wwssdadaba       %clrgra%(seacret message and show build number.)%clr2%
+echo           %clrcyan%-%clr2% tamago1908       %clrgra%(show goofy message.)%clr2%
+echo           %clrcyan%-%clr2% himazionnoob1908 %clrgra%(show goofy message.)%clr2%
+echo           %clrcyan%-%clr2% mskg1908         %clrgra%(show goofy message.)%clr2%
+echo           %clrcyan%-%clr2% 1908             %clrgra%(show looped goofy message.)%clr2%
 echo           %clrcyan%-%clr2% toxic            %clrgra%(play music with your own browser.)%clr2%
 echo           %clrcyan%-%clr2% abcdefu          %clrgra%(play music with your own browser.)%clr2%
 echo           %clrcyan%-%clr2% dogsong          %clrgra%(play music with your own browser.)%clr2%
@@ -5256,12 +5307,15 @@ if {%fulldebugsetvariableerrorif%}=={n} (goto fulldebug)
 
 :littleeasteregg
 if {%Mainmenueaster%}=={true} (goto Mainmenu)
-cls&pause&echo hello! this is easteregg!&pause&cls&title The build number is now displayed in the main menu and the About section in the hidden features.&echo and bye!&pause&cls&set Mainmenueaster=true&goto Mainmenuboot
+cls&pause&echo hello! this is easteregg!&pause&cls&title Now you can see the build num at title&echo and bye!&pause&cls&set Mainmenueaster=true&goto Mainmenuboot
 
 
 :Lock
+set eggcount=0
+:lockloop1908
 rundll32.exe user32.dll, LockWorkStation
-if {%looplockdownhorroreaster%}=={true} (goto lock)
+if "%eggcount%" gtr "5" (exit)
+if {%looplockdownhorroreaster%}=={true} (set /a eggcount=eggcount+1&goto lockloop1908)
 goto reboot
 
 :exit
