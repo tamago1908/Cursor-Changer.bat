@@ -21,15 +21,10 @@ well.
 > ***I Need reviews!***
 
 # 📰 - **Latest News** -
-### **Development News (2024/01/28)**  
-As a matter of fact, I have not been able to develop Cursor Changer 1.13β6 at all recently.  
-I have been having a hard time developing Calculator GUI, which I have been secretly developing, and this is the only thing I have been developing.  
-Of course, I will resume full development of Cursor Changer when Calculator GUI is completed or when I give up development.   
-ofc I'm still develop it occasionally, but it's not a high priority.  
-in my think, Calculator GUI will be available on github as a project and also will certainly be implemented in Cursor Changer. Or rather, that's what I'm developing it for.  
-For now, the Calculator GUI is about halfway through development, and I can already use W,A,S,D to move around, etc., and a few other features are already in place.  
- However, the important part of the calculations function is not done at all, and the only thing that can be done now is entering numbers. I can't even erase them, so I need to finish that part.  
-That's about it for now.  
+### **Update Released! (2024/02/05)**  
+Cursor Changer 1.13β6 has been released!  
+This update adds the ability to check for updates on startup and other minor bugs have been fixed.  
+Please refer to the changelog for details.  
 
 &nbsp;
 
@@ -128,10 +123,39 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.13β5](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.5) (build 57)**  
+>  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60)**  
 >  **Stable latest : [1.12](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.12) (build 44)**
 ___
-### - 1.13β5 build 57 (Beta Major Update)  🔥
+
+### - 1.13β6 build 60 (Beta Major Update, Boot animation and rip fastboot Update)  🔥
+#### Added :  
+- **Check Update at boot Feature!**  
+- **New three Boot Animation!**
+  - (it's still undone, so it's hided.)
+- *batch now check powershell is available or not*  
+#### Chenged :
+- **More better win ver Check**
+- *fastboot is now gone. rip*
+- *some translation*
+- *2023 to 2024*
+#### fixed :
+- **Optimized boot process! (more more faster boot)**
+- *Some inappropriate parts*
+- *Remove useless comments and codes (a little bit)*
+- *Fixed some OOBE parts*
+- *Mistranslate*
+- *Some Bugs*
+
+> The three new boot animations are still incomplete and therefore hidden and unavailable at setting menu.  
+> can toggle it by entering one of the following texts directly in the configuration file like this :  
+> s5_linuxboot=true  
+> s5_rawboot=true  
+> s5_simpleboot=true  
+linuxboot can be used with simpleboot, but will not all others.  
+> Also, with linuxboot enabled, a message may appear when using some functions. so I'm looking for a fix.  
+___
+
+### - 1.13β5 build 57 
 #### Added :  
 - **OOBE (Set up) Feature!**  
 - **New BSOD (Error Handling) Feature!**  
@@ -191,20 +215,6 @@ ___
 - *Mistranslation*
 - *something* (i forget again)
 ___
-
-### - 1.13β2 build 47  
-#### Added : 
-- **Windows XP Style Exit Menu!** (Experimental)
-  - *Shutdown UI*
-#### Chenged :
-- *Batch Version UI* (Experimental)
-  - Update Function is not Available at now
-#### fixed :
-- *some bugs*
-
-#### Now Batch has Fully Translated.
-___
-
 
 <div align="center">
 <!-- "![]()" is dummy for use markdown and html at same tag😈-->
