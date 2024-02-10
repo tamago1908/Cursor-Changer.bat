@@ -21,10 +21,11 @@ well.
 > ***I Need reviews!***
 
 # 📰 - **Latest News** -
-### **Update Released! (2024/02/05)**  
-Cursor Changer 1.13β6 has been released!  
-This update adds the ability to check for updates on startup and other minor bugs have been fixed.  
-Please refer to the changelog for details.  
+### **Development News (2024/02/10)**  
+Development of Cursor Changer 1.13β7 is well underway.  
+Motivation to date has been manageable.  
+β7 will include some changes to the order of processing at startup, and probably other significant changes to the order of processing at startup as well. The current processing is a mess, like a building that has been repeatedly expanded. That will need to be corrected.  
+Also, there are a number of features I would like to implement before 1.13 is stable, so it will take some time.  
 
 &nbsp;
 
