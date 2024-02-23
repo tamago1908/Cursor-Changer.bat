@@ -21,12 +21,15 @@ well.
 > ***I Need reviews!***
 
 # 📰 - **Latest News** -
-### **Development News (2024/02/17)**  
-Development is progressing gradually. Currently, we are testing new error handling, new first-time startup (OOBE) animations, etc., but this is not a priority task right now.  
-I can't say for sure since I haven't gotten around to the important 1.13β7 work.  
+### **Development News (2024/02/23)**  
+Cursor Changer 1.13β7 Updates are being developed steadily.  
+Im not sure at what point we will release the update, but I can at least say that the update is about 50% complete. It is not perfect yet, but it is taking shape.  
+Also, the BSOD looks will be changed from the current Windows XP-ish look to a Windows 10-ish. Here is the snake peek...  
+
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor%20Changer%201.13.b7%20bsod%20snpk.png" width="550px">
+
 
 &nbsp;
-
 ## 💡 - **ABOUT THIS BATCH** -
 Cursor Changer was created using only Batch for most of its functionality and requires no additional files or components, and This Batch is similar to a *simplified OS*, if you will.  
 At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**  
