@@ -19,6 +19,9 @@ AND I LOVE &nbsp; AF BECAUSE IT'S VERY USEFULL AND EASY!! OFC I KNOW SHOULDN'T U
 > I will respond as quickly as possible.  
 well.  
 > ***I Need reviews!***
+> 
+> Known issues :  
+> Windows version check fails when booting on Windows 11 24H2 (already fixed in Cursor Changer 1.13β7 dev version)
 
 # 📰 - **Latest News** -
 ### **Development News (2024/02/23)**  
