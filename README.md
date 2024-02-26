@@ -25,7 +25,7 @@ well.
 > After checking update, crashing the batch and then restarting it, update screen appears for some reason. (will be fixed 1.13β7 update)
 
 # 📰 - **Latest News** -
-### **Development News (2024/02/23)**  
+### **Development News (2024/02/26)**  
 I have changed my plans and decided to make the next update a stable release of 1.13, although I had originally planned to release 1.13β7 as the next update.  
 Some new features that were originally planned to be implemented around the time of the 1.13 stable release is will be carried over to 1.14.  
 
