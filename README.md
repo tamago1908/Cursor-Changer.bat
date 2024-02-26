@@ -224,13 +224,18 @@ ___
 - *something* (i forget again)
 ___
 
+
 <div align="center">
 <!-- "![]()" is dummy for use markdown and html at same tag😈-->
   
 ![]()
 ***Congratulations! You have read the README to the end!
 To receive your reward, click below...***
-# [[**CLICK HERE**]](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+</div>
 
+<div align="center">
+<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+  <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/notascamfrnopaidallfreegetthispresentnow.gif?raw=true" alt="Your reward" width="280px">
+</a>
 </div>
 
