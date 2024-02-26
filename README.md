@@ -26,11 +26,13 @@ well.
 
 # 📰 - **Latest News** -
 ### **Development News (2024/02/23)**  
-Cursor Changer 1.13β7 Updates are being developed steadily.  
-Im not sure at what point release the update, but I can at least say that the update is about 50% complete. It is not perfect yet, but it is taking shape.  
-Also, the BSOD looks will be changed from the current Windows XP-ish look to a Windows 10-ish. Here is the snake peek...  
+I have changed my plans and decided to make the next update a stable release of 1.13, although I had originally planned to release 1.13β7 as the next update.  
+Some new features that were originally planned to be implemented around the time of the 1.13 stable release is will be carried over to 1.14.  
 
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor%20Changer%201.13.b7%20bsod%20snpk.png" width="550px">
+Instead, 1.14 will be released stable immediately without a beta release, and all that needs to be done for 1.13 are bugs, stability improvements, and some improvements to the setting menus.  
+So I can probably release it within 2 weeks. I don't know how many of ppl are watching this, but if you are, you can look forward to it.  
+1.13 will be as good as 1.12. 1.12 was honestly still not high enough quality to show to people, but 1.13 is a big improvement in that area.  
+
 
 
 &nbsp;
