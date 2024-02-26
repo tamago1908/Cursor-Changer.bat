@@ -22,6 +22,7 @@ well.
 > 
 > Known issues :  
 > Windows version check fails when booting on Windows 11 24H2 (already fixed in Cursor Changer 1.13β7 dev version)
+> After checking update, crashing the batch and then restarting it, update screen appears for some reason. (will be fixed 1.13β7 update)
 
 # 📰 - **Latest News** -
 ### **Development News (2024/02/23)**  
