@@ -26,14 +26,9 @@ well.
 
 # 📰 - **Latest News** -
 ### **Development News (2024/02/26)**  
-I have changed my plans and decided to make the next update a stable release of 1.13, although I had originally planned to release 1.13β7 as the next update.  
-Some new features that were originally planned to be implemented around the time of the 1.13 stable release is will be carried over to 1.14.  
-
-Instead, 1.14 will be released stable immediately without a beta release, and all that needs to be done for 1.13 are bugs, stability improvements, and some improvements to the setting menus.  
-So I can probably release it within 2 weeks. I don't know how many of ppl are watching this, but if you are, you can look forward to it.  
-1.13 will be as good as 1.12. 1.12 was honestly still not high enough quality to show to people, but 1.13 is a big improvement in that area.  
-
-
+The Stable Cursor Changer 1.13 update has been released!  
+This update contains a large number of fixes and advancements compared to 1.12!  
+Please check the changelog for more details.  
 
 &nbsp;
 ## 💡 - **ABOUT THIS BATCH** -
@@ -131,11 +126,57 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60)**  
->  **Stable latest : [1.12](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.12) (build 44)**
+>  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**  
+>  **Stable latest : [1.13](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.12) (build 64)**
 ___
 
-### - 1.13β6 build 60 (Beta Major Update, Boot animation and rip fastboot Update)  🔥
+### - 1.13 build 64 (Major Update, ULTRA SUPER BIG)  🔥
+
+#### From 1.12 Stable
+#### Added :  
+- **OOBE feature!**
+- **BSOD Screen (Error Tracker)!**
+- **New Exit Menu!**
+- **New Version Check Menu!**
+- **Update Check Feature!**
+- **Check Update When Boot feature!**
+- Mainmenu Messages
+- ShutDown Screen
+- New Three Boot Animation (You can toggle it at setting menu)
+- Batch now check powershell is available or not
+- And more...
+#### Chenged :
+- **Boot animation has been improved!**
+- Significant changes in processing around startup process and processing order
+- Now you can chenge the path of setting file is located (you need edit this batch)
+- Improvement of some debug feature
+- dogcheck related code is almost chenged
+- fastboot has been replaced by checkupdate
+- Many things
+#### fixed :
+- **English Translation!**
+- Some Bad things
+- Numerous other bug fixes
+- And More...
+
+> This update almost doubled the size of the file, from 133KB in 1.12 to 250KB. Most of this is due to OOBE.  
+> But it took us about 6 months to release a stable board, so I guess it's reasonable...  
+> and in a way it was doomed, since it took us 6 months to release 1.12 as well...  
+> If you find a bug or a glitch, please report it in an issue.  
+
+#### From 1.13β6
+#### Added :
+- **Now you can toggle New three Boot Animation at in setting menu!**
+#### Chenged :
+- More More More Better Boot code (little bit more faster boot)
+#### fixed :
+- **Issue with Windows 11 Cenary build not correctly identifying the version**
+- Significant changes in processing around startup process and processing order
+- some bugs 
+___
+
+
+### - 1.13β6 build 60
 #### Added :  
 - **Check Update at boot Feature!**  
 - **New three Boot Animation!**
@@ -195,33 +236,6 @@ ___
 > Known issues :  
 > In very rare cases, a message saying that the configuration file does not exist even though it does, and when regenerated, the configuration file is generated on the desktop.  
 > Some features are incomplete and not perfect. Probably Complete at 1.13β6
-___
-
-### - 1.13β4 build 52  
-#### Added : 
-- **Ability to display Change Log when update!**
-#### Chenged :
-- **Better Animation of Boot Animation!**
-- *Better SettingLoader and faster boot (More improvements will be made in the future)*  
-- *Better Wait of animation*
-- *Some UI stuffs*
-#### fixed :
-- *Slow theme change on boot*
-- *Some Bugs*
-___
-
-### - 1.13β3 build 49  
-#### Added : 
-- **Update Function!** (Experimental)
-- *Visualization of whether Help mode is enabled or not*
-#### Chenged :
-- *something* (i forget)
-- *Text in the settings menu, such as "like theme" is now semi-transparent*
-#### fixed :
-- *Problem with unstable startup screen when white mode is enabled*
-- *Collapse of setting UI when settings are corrupted*
-- *Mistranslation*
-- *something* (i forget again)
 ___
 
 
