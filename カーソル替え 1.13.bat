@@ -3,6 +3,7 @@ setlocal
 rem ÉTÉCÉYÇÃéwíË
 mode con: cols=75 lines=25
 title ÉJÅ[É\Éãë÷Ç¶
+
 rem ÉJÅ[É\Éãë÷Ç¶ by tamago_1908
 rem ì˙ñ{åÍÉoÅ[ÉWÉáÉì
 
@@ -47,51 +48,68 @@ rem   See the License for the specific language governing permissions and
 rem   limitations under the License.
 
 
+rem 1.14 :
+rem 1.14ÇÕÉxÅ[É^î≈Ç∆ÇµÇƒÉäÉäÅ[ÉXÇµÇ»Ç¢
+rem êVÇµÇ¢ÉAÉbÉvÉfÅ[ÉgóLå¯GUIÇé¿ëïÇ∑ÇÈÅB
+rem ÉoÅ[ÉWÉáÉìèÓïÒÇÃïîï™ÇÉIÅ[ÉoÅ[ÉåÉCãZèpÇóòópÇµÇƒâ¸ó«Ç∑ÇÈ
+rem ÇªÇÃëº ÇÉÅÉCÉìÉÅÉjÉÖÅ[Ç…é¿ëïÇ∑ÇÈÅBÇªÇÃç€Ç…ÇÕçÇìxÇ»ifÉJÉâÅ[ãZèpÇçÃópÇ∑ÇÈ
+rem Ç≈Ç´ÇÍÇŒÇÊÇËó«Ç¢ìdëÏÇäÆê¨Ç≥ÇπÇƒé¿ëïÇ∑ÇÈ
+
 rem ãNìÆéûÇÃì˙ïtÇóòópÇµÇƒÉÅÉbÉZÅ[ÉWÇï\é¶Ç∑ÇÈÅBÇªÇÃãGêﬂÇ…çáÇ¡ÇΩÉÅÉbÉZÅ[ÉWÅB
 rem exitÉÅÉjÉÖÅ[ÇÉIÅ[ÉoÅ[ÉåÉCâªÇ∑ÇÈÅBãÔëÃìIÇ…ÇÕç≈èâÇ…äDêFÇ≈ÉÅÉjÉÖÅ[Çï\é¶ÇµÇΩÇÃÇøÅAieclÇÃpswdÉçÉbÉNÇ∆ìØÇ∂ï˚éÆÇ≈ï`é Ç∑ÇÈÅB
 rem ê›íËÇÃèâä˙âªÇ»Ç«ÇÃç€Ç…óòópÇµÇƒÇ¢ÇÈïîï™Çä÷êîâªÇ∑ÇÈ
 rem Ç‡Ç§è≠Çµå´Ç¢ï˚ñ@Ç≈ê›íËÉtÉ@ÉCÉãÇ»Ç«ÇÃâ¸ïœÇåüímÇ∑ÇÈ
 rem ì˙ñ{åÍâªÇ≈Ç´ÇƒÇ¢Ç»Ç¢ïîï™Çì˙ñ{åÍâªÇ∑ÇÈ
-rem linuxïóÇÃãNìÆÉAÉjÉÅÅ[ÉVÉáÉìÇé¿ëïÇ∑ÇÈÅBó·Ç¶ÇŒÅA
-rem [Info] (time) Linux-ish Boot Progress is just started.
-rem [Info] (time) Error Tracking is Started.
-rem [Info] (time) Argment_Loader is Starting...
-rem [Info] (time) Argment_Loader is Ended.
-rem [Info] (time) BatbootPowershell is Started with "Boot"
-rem [Info] (time) BatbootPowershell is Ended.
-rem [Error] (time) Error! BSOD_Loader is called with ID 0.
 
 
 rem ÉXÉ^Å[ÉgÉAÉbÉvÉAÉjÉÅÅ[ÉVÉáÉìÇÃÉCÅ[ÉXÉ^Å[ÉGÉbÉOÇÇ‡Ç¡Ç∆é¿ëïÇ∑ÇÈÅB
 rem ãÔëÃìIÇ…ÇÕÅA32768ï™ÇÃ1ÇÃämó¶Ç≈ã∞ÇÎÇµÇ¢Ç‡ÇÃÇçƒê∂ÇµÅA256ï™ÇÃ1ÇÃämó¶Ç≈ÉäÉbÉNÉçÅ[ÉãÇ≥ÇπÇÈÅB
 rem åªç›é¿ëïÇ≥ÇÍÇƒÇ¢ÇÈyoutubeä÷òAÇÃèàóùÇÇ∑Ç◊ÇƒçÌèúÇµÇƒÅAdogcheckÇ∆startup rickrollÇpowershellÇÃâπäyçƒê∂Ç…íuÇ´ä∑Ç¶ÇÈÅB
 rem Ç‡Ç¡Ç∆ê›íËÇÉJÉeÉSÉiÉâÉCÉYÇ≥ÇπÇÈÅBbootanimationÇÃÉJÉeÉSÉäÅ[Ç∆Ç©ÅBsetting5_1Ç∆Ç©ÅH
+rem è„Ç…î∫Ç¢ÅAÇÊÇËÉJÉeÉSÉiÉâÉCÉYÇ≥ÇÍÇΩê›íËGUIÇé¿ëïÇ∑ÇÈÅB
+rem à¯êîéwíËéûÅAÉZÉbÉgÉAÉbÉvÇ≥ÇÍÇƒÇ¢Ç»Ç¢ÅEwindows version checkÇ…à¯Ç¡Ç©Ç©Ç¡ÇƒÇ¢ÇÈèÍçáÇ…ÉGÉâÅ[ÇèoÇ∑ (îºï™èIÇÌÇË)
 
 rem ÉJÅ[É\Éãë÷Ç¶ÇàÍÇ¬ÇÃì∆óßÇµÇΩcmdÇ©ÇÁåƒÇ—èoÇ≥ÇπÇƒãNìÆÇ≥ÇπÇÈÅBÇÊÇËó«Ç¢ÉGÉâÅ[èàóù
 rem è„Çé¿ëïÇ∑ÇÈÇ§Ç¶Ç≈àÍî‘ä»íPÇ»ÇÃÇÕÇ†ÇÁÇ©Ç∂Çﬂà¯êîÇó\ñÒÇ≥ÇπÇƒÇ®Ç≠Ç±Ç∆ÅBó·Ç¶ÇŒÅACSCG_BOOT_STARTERRORTRACKERÇ∆Ç¢Ç§à¯êîÇìnÇ≥ÇπÇÈÇ∆Ç©ÅB
-
-rem ê›íËÇÃì«Ç›çûÇ›éûÇÃÉGÉâÅ[ÇåüèoÇ∑ÇÈÇΩÇﬂÇ…ÅAñàê›íËÉçÅ[ÉhéûÇ…ïœêîÇê›íËÇ∑ÇÈÅBsetting_loader_errortrackerÇÃïœêîÇ0Ç∆1Ç≈
-rem ê›íËÇµÇƒÅAì«Ç›çûÇ›éûÇ…ÉGÉâÅ[Ç™î≠ê∂ÇµÇΩèÍçáÇ…ÇÕ1Ç…ê›íËÇ≥ÇÍÇƒÇ¢Ç»Ç¢Ç∆Ç¢Ç§Ç±Ç∆Ç≈ÉGÉâÅ[åüímÇµÅAì«Ç›çûÇ›êÿÇÍÇΩÇÃÇ»ÇÁ1Ç≈ÉGÉâÅ[Ç™Ç»Ç¢Ç∆Ç∑ÇÈÅB
-rem powershellèàóùïîï™Ç≈ÅAbatchÇ™â¸ïœÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©ÇåüímÇ∑ÇÈã@î\Çí«â¡Ç∑ÇÈÅBê›íËÇ≈ÇªÇÍÇñ≥å¯Ç…Ç≈Ç´ÇÈÇÊÇ§Ç…Ç‡Ç∑ÇÈÅB
-rem Ç‡Ç¡Ç∆ãNìÆÇëÅÇ≠Ç∑ÇÈÅBãÔëÃìIÇ…ÇÕÅAåªç›ÇÃÉoÅ[ÇÃèÛë‘Çê›íËÇµÇΩèuä‘Ç…exit /bÇ≈Ç´ÇÈÇÊÇ§Ç…Ç∑ÇÈÅBcallÇ≈ê›íËÇ∑ÇÍÇŒÇÊÇ¢ÅB
 
 
 rem îÒå¯ó¶Ç»GUIÇèCê≥ÇµÇƒÅAå¯ó¶ìIÇ»Ç‡ÇÃÇ…ïœçXÇ∑ÇÈÅBÇΩÇæÇµÅAí¥èdòJì≠ÅBÇ±ÇÍÇÇµÇ»Ç¢Ç∆è´óàìIÇ…å„â˜Ç∑ÇÈÇ±Ç∆Ç…Ç»ÇÈÇÃÇ≈ÅAÇπÇﬂÇƒê›íËÇ∆exitÇæÇØÇÕå¯ó¶ìIÇ…ÇµÇΩÇ¢ÅB
 
 
+rem powershellèàóùïîï™Ç≈ÅAbatchÇ™â¸ïœÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©ÇåüímÇ∑ÇÈã@î\Çí«â¡Ç∑ÇÈÅBê›íËÇ≈ÇªÇÍÇñ≥å¯Ç…Ç≈Ç´ÇÈÇÊÇ§Ç…Ç‡Ç∑ÇÈÅB
+
+
 rem Make sure to fill in the build number and version! Also, don't forget to put it in the archive!
-title ÉJÅ[É\Éãë÷Ç¶
-rem VER v1.13É¿6
-set batver=1.13É¿6
-set batbuild=build 60
-set batverdev=beta
+rem environment setting, It is not recommended to change.
+rem VER v1.13
+set batver=1.13
+set batbuild=build 64
+set batverdev=stable
 set hazimeeaster=false
 set firststartbat=no
+set bootbatnow=yes
 set messagealreadyshowed=false
 set batpath=%~0
-cd /d %HOMEDRIVE%%HOMEPATH%
 
+rem Here you can change the path to the location where configuration files and other files are placed and loaded
+rem Example : 
+rem %HOMEDRIVE%%HOMEPATH% (default)
+rem %HOMEDRIVE%%HOMEPATH%\desktop (desktop)
+rem %0 (batch placed path)
+rem O===================================O
+set "batchmainpath=%HOMEDRIVE%%HOMEPATH%"
+rem O===================================O
+cd /d %batchmainpath%
+
+:batbootloader_animationcheck
 setlocal enabledelayedexpansion
+
+rem bootloader animation loader. first of all, load theme setting.
+if exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt (
+find "wmode=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul 
+if {!errorlevel!}=={0} (color f0&set wmodetoggle=true) else (set wmodetoggle=false)
+) else (set wmodetoggle=false)
+
 >nul 2>&1 find "bootanimation=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
 if "!errorlevel!"=="0" (
     >nul 2>&1 find "s5_rawboot=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
@@ -99,31 +117,56 @@ if not "!errorlevel!"=="0" (
 >nul 2>&1 find "s5_linuxboot=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
 if "!errorlevel!"=="0" (
     set linuxboot=true
+    echo [%time: =%] Cursor Changer %batver% Bootloader - by tamago_1908&echo.&echo O================ Boot Start Here ================O&echo.
 >nul 2>&1 find "wmode=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
 if "!errorlevel!"=="0" (set linuxishclr=[92m&set linuxishclr2=[107m[30m) 
 >nul 2>&1 find "wmode=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
 if "!errorlevel!"=="0" (set linuxishclr=[92m&set linuxishclr2=[0m)
-) else (set linuxboot=false)
+)
 )
 )
 
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Linux-ish Boot Loader is just now started.)
->nul 2>&1 find "bootanimation=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+>nul 2>&1 find "bootanimation=true" ÉJÅ[É\Éãë÷Ç¶.txt
 if "!errorlevel!"=="0" (
->nul 2>&1 find "s5_simpleboot=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+>nul 2>&1 find "s5_simpleboot=true" ÉJÅ[É\Éãë÷Ç¶.txt
 if "!errorlevel!"=="0" (
+    if not "%linuxboot%"=="true" (
     set simpleboot=true
+    )
 )
 )
->nul 2>&1 find "bootanimation=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+>nul 2>&1 find "bootanimation=true" ÉJÅ[É\Éãë÷Ç¶.txt
 if "!errorlevel!"=="0" (
->nul 2>&1 find "s5_rawboot=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+>nul 2>&1 find "s5_rawboot=true" ÉJÅ[É\Éãë÷Ç¶.txt
 if "!errorlevel!"=="0" (
-@echo on
+    if not "%linuxboot%"=="true" (
+        if not "%simpleboot%"=="true" (
+        @echo on
+        set rawboot=true
+        )
+    )
 )
 )
 setlocal disabledelayedexpansion
+if "%animationrecheck%"=="true" (set animationrecheck=&exit /b)
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Bootanimation Checked...)
+
+
+rem chenge the boot message if it is the first time, or if a value is defined in batbotpowershell, or at boot up
+if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt set firststartbat=yes
+if not "%linuxboot%"=="true" (
+if not "%firststartbat%"=="yes" (
+if {%bootbatnow%}=={yes} (title ÉJÅ[É\Éãë÷Ç¶ èÄîıíÜ...&echo ÇµÇŒÇÁÇ≠Ç®ë“ÇøÇ≠ÇæÇ≥Ç¢ÅB)
+) else (
+    if not defined batbootpowershell (
+        if not exist èââÒÉJÅ[É\Éã.txt (
+        echo ÉZÉbÉgÉAÉbÉvÇÃèÄîıÇÇµÇƒÇ¢Ç‹Ç∑...
+        ) else (title ÉJÅ[É\Éãë÷Ç¶ èÄîıíÜ...&echo ÇµÇŒÇÁÇ≠Ç®ë“ÇøÇ≠ÇæÇ≥Ç¢ÅB)
+    )
+)
+)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Boot Message IS NO MORE WORKING...)
 
 :batstartErrortracker
 rem I don't know why, but it seems that Argment_loader does not work within subroutines.
@@ -141,7 +184,7 @@ set argmentloaded=
 goto :Argments_Loaderend
 
 :Argments_Loader
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is started...)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is Started...)
 rem à¯êîÇ™Ç»ÇØÇÍÇŒèIóπ
 if "%~1"=="" set argmentloaded=true& goto Argments_Loaderend
 title ÉJÅ[É\Éãà¯êî
@@ -171,8 +214,8 @@ for /l %%i in (1,1,%n%) do (
     if "!current!"=="bypsdisexit" (echo bypsdisexitÇóLå¯Ç…ÇµÇ‹ÇµÇΩÅB&set disableexit=false&set argmentserror=false)
     if "!current!"=="enablesimpleboot" (echo simplebootÇóLå¯Ç…ÇµÇ‹ÇµÇΩÅB&set simpleboot=true&set argmentserror=false)
     if "!current!"=="devmode" (call :developermenu&set argmentserror=false)
-    if "!current!"=="recovery" (echo recovery modeÇóLå¯Ç…ÇµÇ‹ÇµÇΩÅB&set argmentserror=false&goto Cursor_Changer_REmenu)
-    if "!current!"=="help" (title à¯êîÇÃÉwÉãÉv&call :batstarthelp&set argmentserror=false)
+    if "!current!"=="recovery" (call :batbootcheckwinver dynamic&echo recovery modeÇóLå¯Ç…ÇµÇ‹ÇµÇΩÅB&set argmentserror=false&goto Cursor_Changer_REmenu)
+    if "!current!"=="help" (call :batbootcheckwinver dynamic&title à¯êîÇÃÉwÉãÉv&call :batstarthelp&set argmentserror=false)
     if "!current!"=="bypsvck" (echo bypsvckÇóLå¯Ç…ÇµÇ‹ÇµÇΩÅB&set bypasswinvercheck=true&set argmentserror=false)
     if "!current!"=="bypsadm" (echo bypsadmÇóLå¯Ç…ÇµÇ‹ÇµÇΩÅB&set adminbypass=true&set adminbypass=false&set argmentserror=false)
     if "!current!"=="bypsloadsg" (echo bypsloadsgÇóLå¯Ç…ÇµÇ‹ÇµÇΩÅB&set settingbypass=true&set argmentserror=false)
@@ -184,41 +227,40 @@ rem ó·äOèàóù
     set argmentloaded=true
     timeout /t 3 /nobreak >nul
 :Argments_Loaderend
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is done.)
 set n=
 setlocal disabledelayedexpansion
 if {%argmentloaded%}=={true} (set argmentloaded=&goto :batstarterrortrackermain)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is done.)
 set argmentserror=
-if exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt (
-setlocal enabledelayedexpansion
-find "wmode=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul 
-if {!errorlevel!}=={0} (color f0&set wmodetoggle=true) else (set wmodetoggle=false)
-setlocal disabledelayedexpansion
-) else (set wmodetoggle=false)
+
 
 :batbootcheckwinver
-ver | find /i "Version 10.0.23" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 10.0.22" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 10.0.105" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 10.0.102" > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows10 1509&goto batbootcheckwinverbad)
-ver | find /i "Version 10.0.10" > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows10&goto batbootcheckwinverbad)
-ver | find /i "Version 10.0.1" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 6.3." > nul
+setlocal enabledelayedexpansion
+if not "%1"=="dynamic" (
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Checking Windows Version...)
+)
+rem check windows 10 1511 or higher
+for /f "tokens=6 delims=. " %%i in ('ver') do set version=%%i
+if "%version:~-0,-2%" gtr "105" (set batbootcheckwinversafe=true)
+for /f "usebackq delims=" %%a in (`ver`) do set version2=%%a
+rem check windows 8.1 or lower
+echo %version2% | find /i "Version 6.3." > nul
 if "%errorlevel%"=="0" (set windowsverfilter=windows 8.1&goto batbootcheckwinverbad)
-ver | find /i "Version 6.2." > nul
+echo %version2% | find /i "Version 6.2." > nul
 if "%errorlevel%"=="0" (set windowsverfilter=windows 8&goto batbootcheckwinverbad)
-ver | find /i "Version 6.1." > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows7&goto batbootcheckwinverbad) else (
-set "windowsverfilter=å√Ç∑Ç¨Ç‹Ç∑ÅI"&goto batbootcheckwinverbad
+echo %version2% | find /i "Version 6.1." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows7&goto batbootcheckwinverbad)
+echo %version2% | find /i "Version 6.0." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows vista) else (
+    if "%batbootcheckwinversafe%"=="true" (goto :batbootcheckwinversafe)
+    set "windowsverfilter=å√Ç∑Ç¨Ç‹Ç∑ÅI"
+    goto batbootcheckwinverbad
 )
 
+
 :batbootcheckwinverbad
+if "%bypasswinvercheck%"=="true" (goto :batbootcheckwinverbadwarning)
+rem winver check failed message
 echo Ç®égÇ¢ÇÃwindowsÇÃÉoÅ[ÉWÉáÉì(%windowsverfilter%)ÇÕÉJÅ[É\Éãë÷Ç¶Ç…ëŒâûÇµÇƒÇ¢Ç‹ÇπÇÒÅI
 pause
 cls
@@ -231,7 +273,30 @@ cls
 echo ç°Ç†Ç»ÇΩÇ™Ç®égÇ¢ÇÃwindowsÇÉAÉbÉvÉfÅ[ÉgÇ∑ÇÈÇ©ÅAÉJÅ[É\Éãë÷Ç¶ ÉoÅ[ÉWÉáÉì1.12à»ëOÇÇ≤óòópÇ≠ÇæÇ≥Ç¢ÅB
 pause
 exit
+
+:batbootcheckwinverbadwarning
+cls
+rem åxçêÉÅÉbÉZÅ[ÉW (winvercheckÇ…à·îΩÇµÇƒÇ¢ÇÈèÛë‘Ç≈bypsÇµÇÊÇ§Ç∆ÇµÇΩç€ÇÃ)
+set selected=
+cls
+echo.
+echo                                    åxçê
+echo.
+echo Ç†Ç»ÇΩÇ™Ç®égÇ¢ÇÃWindowsÇÃÉoÅ[ÉWÉáÉì (%windowsverfilter%)ÇÕÉJÅ[É\Éãë÷Ç¶Ç…ëŒâûÇµÇƒÇ¢Ç»Ç¢ÇÊÇ§Ç≈Ç∑ÅI
+echo à¯êîÇ≈bypsvckÇóòópÇµÇƒÇ¢ÇÈÇÊÇ§Ç≈Ç∑Ç™ÅAÇ±ÇÃÇ‹Ç‹ë±çsÇ∑ÇÈÇ∆ívñΩìIÇ»ñ‚ëËÇ…ëòãˆÇ∑ÇÈâ¬î\ê´Ç™îÒèÌÇ…çÇÇ¢Ç≈Ç∑ÅB
+echo âºÇ…ë±çsÇµÇΩèÍçáÅAÇªÇÃå„Ç…à¯Ç´ãNÇ±Ç≥ÇÍÇÈñ‚ëËÇ…ëŒÇ∑ÇÈê”îCÇÕÉJÅ[É\Éãë÷Ç¶ÇÃäJî≠é“Ç≈Ç†ÇÈtamago_1908ÇÕïâÇ¢Ç‹ÇπÇÒÅB
+echo.
+echo ÇªÇÍÇ≈Ç‡ë±çsÇµÇ‹Ç∑Ç©ÅH
+set /p selected=Y or N : 
+if %selected%==n exit
+if %selected%==y goto :batbootcheckwinversafe
+if %selected%== echo what? "Y" or "N".&pause&goto :batbootcheckwinverbadwarning
+
+
 :batbootcheckwinversafe
+setlocal disabledelayedexpansion
+set batbootcheckwinversafe=&set version=&set version2=
+if "%1"=="dynamic" (exit /b)
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] WinverCheck is done.)
 
 :batbootcheckpowershell
@@ -258,6 +323,9 @@ cls
 exit
 :batbootcheckpowershellsafe
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powershell Check is done.)
+
+
+
 rem ÉJÅ[É\Éãë÷Ç¶èàóùÇé¿çs
 
 rem ñ{èàóù (ïœêîÇÃÉZÉbÉgÇ∆Ç©ÅAëOíiäK)
@@ -273,21 +341,9 @@ if {%errorlevel%}=={0} (set checkupdatetoggle=true&set batverforpowershell=%batv
 if {%disableexit%}=={false} (goto batbootdisabledexitbutton)
 
 :batbootpowershell
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is started...)
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is started...)
 set exitbuttondisabled=false
-rem chenge the boot message if it is the first time, or if a value is defined in batbotpowershell, or at boot up
-if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt set firststartbat=yes
-if not "%linuxboot%"=="true" (
-if not "%firststartbat%"=="yes" (
-if {%bootbatnow%}=={yes} (title ÉJÅ[É\Éãë÷Ç¶ èÄîıíÜ...&echo ÇµÇŒÇÁÇ≠Ç®ë“ÇøÇ≠ÇæÇ≥Ç¢ÅB)
-) else (
-    if not defined batbootpowershell (
-        if not exist èââÒÉJÅ[É\Éã.txt (
-        echo ÉZÉbÉgÉAÉbÉvÇÃèÄîıÇÇµÇƒÇ¢Ç‹Ç∑...
-        ) else (title ÉJÅ[É\Éãë÷Ç¶ èÄîıíÜ...&echo ÇµÇŒÇÁÇ≠Ç®ë“ÇøÇ≠ÇæÇ≥Ç¢ÅB)
-    )
-)
-)
+
 rem startid~powershell Ç‹Ç≈ÇÃÉRÅ[ÉhÇÕÇ∏ÇÁÇµÇƒÇÕÇ¢ÇØÇ»Ç¢Å@ÇªÇÍà»ëOÇ©ÇªÇÍà»å„Ç»ÇÁok
 :: StartID1908
 call :getLineNumber startLine StartID1908 0
@@ -469,7 +525,6 @@ $fileVersion = $file.name -replace "Cursor.Changer\.|\.bat", ""
 $batVersion = (Get-Item "ÉJÅ[É\Éãë÷Ç¶ *.bat").name -replace "ÉJÅ[É\Éãë÷Ç¶ |\.bat", ""
 $batName = Get-Item "ÉJÅ[É\Éãë÷Ç¶ *.bat"
 
-if ( -not ($fileVerarray -eq $batVerarray)) {
 if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
     $fileverArray = $fileVersion -split "\."
     $batverArray = $batVersion -split "\."
@@ -596,11 +651,11 @@ try{if($env:wmodetoggle -eq "false"){Write-Host "É`ÉFÉìÉWÉçÉO :" -foregroundcolo
         }
     }
 }
+
     if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
         Write-Host "Ç∑Ç≈Ç…ç≈êVÉoÅ[ÉWÉáÉìÇ≈Ç∑ÅI (`"$($batVersion)`") ÉAÉbÉvÉfÅ[ÉgÇÕïKóvÇ†ÇËÇ‹ÇπÇÒÅB"
         Start-Sleep 2
     }
-}
 }
 
 function OOBEMusic {
@@ -666,8 +721,10 @@ ENDLOCAL
 rem ñ{èàóù
 :batbootdisabledexitbutton
 set startline=&set endline=&set exitbuttondisabled=
-if {%bootbatnow%}=={no} (exit /b)
-if "%batbootpowershell%"=="OOBEMusic" (exit /b)
+if {%bootbatnow%}=={no} (set batbootpowershell=&exit /b)
+if "%batbootpowershell%"=="OOBEMusic" (set batbootpowershell=&exit /b)
+set batbootpowershell=
+
 rem get updater variable
 if "%checkupdatetoggle%"=="true" (goto batbootpowershell_get_updater_variable) else (goto batbootpowershell_get_updater_variable_end)
 
@@ -688,7 +745,7 @@ set checkupdatetoggle=
 
 :batbootpowershell_get_updater_variable_end
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is Ended...)
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 
 rem Ç¢ÇÁÇ»Ç¢èÓïÒÇÃóÖóÒ
 
@@ -864,11 +921,8 @@ rem ############################################################################
 :CursorChangerOOBE
 if not "%bootbatnow%"=="true" (
 if "%linuxboot%"=="true" (
-    echo [%linuxishclr%info%linuxishclr2%] Bootloader ended
-echo.
-timeout /t 1 /nobreak >nul
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Mobas_Loader Calling...)
-timeout /t 2 /nobreak >nul
+echo [%linuxishclr%info%linuxishclr2%] Bootloader ended.&echo.
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Mobas_Loader Calling...&echo.)
 )
 )
 rem Detects whether this is the first start
@@ -877,12 +931,65 @@ if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt (
 if exist èââÒÉJÅ[É\Éã.txt goto settingloads
 )
 
+
+:CursorChangerOOBE_Animation
+setlocal enabledelayedexpansion
+rem Play CursorChangerOOBE_Animations that appear slowly
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
+cls
+set /a clr+=10
+set clresc=%clr%;%clr%;%clr%
+set "clr1=[38;2;%clresc%m                      ÉJÅ[É\Éãë÷Ç¶ %batver% Ç÷ÇÊÇ§Ç±Çª [0m"
+echo.
+echo %clr1%
+if "%clr%" == "200" (ping -n 3 localhost>nul&set clr=&goto :CursorChangerOOBE_Animation2) else (
+    ping -n 1 localhost>nul
+)
+goto :CursorChangerOOBE_Animation
+:CursorChangerOOBE_Animation2
+rem Play CursorChangerOOBE_Animations that appear slowly but more darker
+cls
+set /a clr+=10
+set clresc=%clr%;%clr%;%clr%
+set "clr2=[38;2;%clresc%m                         [âΩÇ©ÉLÅ[ÇâüÇµÇƒénÇﬂÇÈ] [0m"
+echo.
+echo %clr1%
+echo.& echo.
+echo %clr2%
+if "%clr%" == "120" (
+    set clresc=&pause >nul&cls&echo.&echo %clr1%&ping -n 2 localhost>nul
+    set clrmove=22&set clr2=&set clresc=204;204;204
+    goto :CursorChangerOOBE_Animation3
+) else (
+    ping -n 1 localhost>nul
+    goto :CursorChangerOOBE_Animation2
+)
+:CursorChangerOOBE_Animation3
+rem Play CursorChangerOOBE_Animations that move left
+cls
+set /a clrmove-=2
+set "clr1=[2;%clrmove%H[38;2;%clresc%mÉJÅ[É\Éãë÷Ç¶ %batver% Ç÷ÇÊÇ§Ç±Çª [0m"
+echo %clr1%
+if "%clrmove%" == "4" (
+    goto :CursorChangerOOBE_Animation4
+) else (
+    ping -n 1 localhost>nul
+    goto :CursorChangerOOBE_Animation3
+)
+:CursorChangerOOBE_Animation4
+rem WOW IT CHANGED INTO SETUP!!!!!!!!!
+ping -n 2 localhost>nul&cls
+set "clr1=[38;2;%clresc%m  ÉJÅ[É\Éãë÷Ç¶ %batver% ÉZÉbÉgÉAÉbÉv [0m"
+echo.
+echo %clr1%
+ping -n 2 localhost>nul
+set clr1=&set clresc=&set clrmove=&set clr2=&set clr=
+
 :CursorChangerOOBEdev
 rem Now, it's the beginning of a fucking trashy long goofy ahh idiot code.
 title ÉJÅ[É\Éãë÷Ç¶ %batver% Setup
-if {%wmodetoggle%}=={false} (set clr=[3m[97m&set clrhigh=[7m&set clrhighend=[0m&set clrwhi=[48;5;250m[30m&set clr2=[0m)
-if not defined {%clrgra%} (set clrgra=[90m)
-if {%wmodetoggle%}=={false} (set moveline=[22;0H) else (set moveline=[22;0H)
+if not defined dummy (set clr=[3m[97m&set clrhigh=[7m&set clrhighend=[0m&set clrwhi=[48;5;250m[30m&set clr2=[0m&set clrgra=[90m)
+if not defined dummy (set moveline=[22;0H) else (set moveline=[22;0H)
 if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
 mode con: cols=80 lines=22
 echo.
@@ -937,8 +1044,8 @@ echo.
 echo.
 set /p nothing=%clr2%%clrwhi%     Y=ÉXÉLÉbÉv     N,B=ÉXÉLÉbÉvÇµÇ»Ç¢                                          %moveline%%clrwhi% <nul& choice /c YNB /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEsetting1toggle=true&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=true&set OOBEsetting5toggle=true&goto OOBEmain8
-if %ErrorLevel%==2 color 07&cls&goto CursorChangerOOBE
-if %ErrorLevel%==3 color 07&cls&goto CursorChangerOOBE
+if %ErrorLevel%==2 color 07&cls&goto CursorChangerOOBEdev
+if %ErrorLevel%==3 color 07&cls&goto CursorChangerOOBEdev
 
 :OOBEmain
 color 07
@@ -1849,7 +1956,7 @@ echo          4 EnterÇÃí∑âüÇµÇåüímÇ∑ÇÈã@î\ : %OOBEsetting4toggle% %clrgra%(true
 echo          5 ãNìÆéûÇÃÉAÉjÉÅÅ[ÉVÉáÉì      : %OOBEsetting5toggle% %clrgra%(trueÇ™êÑèß)%OOBEsettingclr2%
 echo.
 echo          ë±çsÇ∑ÇÈÇ∆ÅAÇ±ÇÍÇÁÇÃê›íËÇ™Ç∑Ç◊Çƒê›íËÉtÉ@ÉCÉãÇ…èëÇ´çûÇ‹ÇÍÇ‹Ç∑ÅB
-echo          ÇÊÇÎÇµÇ¢Ç≈Ç∑Ç©ÅH %clrgra%(ê›íËÉtÉ@ÉCÉãÇÕ "%HOMEDRIVE%%HOMEPATH%"Ç…Ç†ÇËÇ‹Ç∑ÅB) %OOBEsettingclr2%
+echo          ÇÊÇÎÇµÇ¢Ç≈Ç∑Ç©ÅH %clrgra%(ê›íËÉtÉ@ÉCÉãÇÕ "%batchmainpath%"Ç…Ç†ÇËÇ‹Ç∑ÅB) %OOBEsettingclr2%
 echo.
 echo          (Y=ÇÕÇ¢)
 echo          (N=Ç¢Ç¢Ç¶ÅBÇ‚Ç¡ÇœÇËïœçXÇµÇΩÇ¢Ç≈Ç∑ÅB)
@@ -1901,6 +2008,9 @@ echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
     ) else if "%OOBEtheme%"=="white" (
         echo wmode=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
     ) else (echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt)
+    echo s5_linuxboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+    echo s5_simpleboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+    echo s5_rawboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
 
 if not exist èââÒÉJÅ[É\Éã.txt (
 type nul > èââÒÉJÅ[É\Éã.txt
@@ -1942,60 +2052,14 @@ set OOBEsetting1toggle=&set OOBEsetting2toggle=&set OOBEsetting3toggle=&set OOBE
 set OOBEsetting1clr=&set OOBEsetting2clr=&set OOBEsetting3clr=&set OOBEsetting4clr=&set OOBEsetting5clr=
 set OOBEsetting1clr2=&set OOBEsetting2clr2=&set OOBEsetting3clr2=&set OOBEsetting4clr2=&set OOBEsetting5clr2=
 set OOBEsettingclr=&set OOBEsettingclr2=
+set clr1=&set clresc=&set clrmove=&set clr2=&set clr=
 2>nul taskkill /im powershell.exe >nul
 exit /b
 
 
 
-
-rem ä«óùé“å†å¿ÇÃÉvÉçÉìÉvÉgÇ…ä÷Ç∑ÇÈê›íËÇåüímÅA
-:batstart
-mode con: cols=75 lines=25
-if {%settingbypass%}=={true} (goto hazimemenuskipboot)
-cls
-rem ä«óùé“å†å¿ê›íËÇÃåüím
-find "admin=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%adminbypass%}=={true} (goto gotadmin)
-if {%errorlevel%}=={0} (goto batstartadm)
-if {%errorlevel%}=={1} (
-set batloadprgs=0
-call :MOBAS_Loader
-goto batstarttest2
-)
-
-:batstarttest2
-cls
-find "admin=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-set batloadprgs=0
-call :MOBAS_Loader
-if {%errorlevel%}=={0} (goto hazime)
-if {%errorlevel%}=={1} (goto batstartadm)
-
-
-
-:batstartadm
-cls
-rem ä«óùé“å†å¿ÇÃéÊìæ
-rem Ç±ÇÃÉRÅ[ÉhÅAèÁí∑Ç∑Ç¨ÇÈãCÇ™Ç∑ÇÈÅBÇ‡ÇµÇ©ÇµÇΩÇÁpowershellÇégÇ¡ÇƒÇ‡Ç¡Ç∆íZèkÇ≈Ç´ÇÈÇ©Ç‡ÅB
-echo copyright.ÉJÅ[É\Éãë÷Ç¶%batver% by tamago_1908
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
-if '%errorlevel%' NEQ '0' (
-    goto UACPrompt
-) else ( goto gotAdmin )
-:UACPrompt
-powershell -NoProfile -Command "Start-Process '%batpath%' -Verb RunAs" >nul && exit
-echo.
-echo ä«óùé“å†å¿ÇÃóvãÅÇ™ãëî€Ç≥ÇÍÇ‹ÇµÇΩÅB
-echo ^(ÉqÉìÉg: ä«óùé“å†å¿ÇÃóvãÅÇÕê›íËÇ≈ñ≥å¯Ç…Ç≈Ç´Ç‹Ç∑ÅB^)
-timeout /t 2 /nobreak >nul
-:gotAdmin
-cls
-pushd "%CD%"
-goto :hazime
-
-
 :Cursor_Changer_REmenu
-rem recovery menu for ÉJÅ[É\Éãë÷Ç¶, and recobery console
+rem recovery menu for cursor changer, and recovery console
 cls
 mode con: cols=75 lines=25
 color 07
@@ -2046,8 +2110,8 @@ if %ErrorLevel%==3 goto :Cursor_Changer_REmenu3
 if %ErrorLevel%==4 goto :Cursor_Changer_REmenu4
 if %ErrorLevel%==5 goto :Cursor_Changer_REmenu1
 if %ErrorLevel%==6 goto :Cursor_Changer_REmenu2
-if %ErrorLevel%==7 set runningfromfulldebug=&set FromREConsole=&cd %~dp0 &start "" ^"%~n0%~x0^"&exit
-if %ErrorLevel%==8 set runningfromfulldebug=&set FromREConsole=&cd %~dp0 &start "" ^"%~n0%~x0^"&exit
+if %ErrorLevel%==7 set runningfromfulldebug=&set FromREConsole=&goto :batrestart
+if %ErrorLevel%==8 set runningfromfulldebug=&set FromREConsole=&goto :batrestart
 pause
 
 :Cursor_Changer_REmenu2
@@ -2139,13 +2203,7 @@ echo                           YÇ≈é¿çsÅANÇ≈ñﬂÇÈ
 echo.
 choice /c YN /n 
 if %ErrorLevel%==1 (
-echo nodogcheckfor1234567890qwertyuiop > ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo CheckUpdate=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo admin=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo rebootokey=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo hatenakeikoku=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo bootanimation=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+call :Wipealldeta
 goto :Cursor_Changer_REWipeYippeee
 )
 if %ErrorLevel%==2 goto :Cursor_Changer_REmenu2
@@ -2173,7 +2231,7 @@ set FromREConsole=true
 mode con: cols=75 lines=25
 color 07
 set bootbatnow=no
-if defined %wmodetoggle% (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
+if not defined dummy (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
 echo ÉäÉJÉoÉäÅ[ÉRÉìÉ\Å[ÉãÇì«Ç›çûÇÒÇ≈Ç¢Ç‹Ç∑...
 timeout /t 2 /nobreak >nul
 cls
@@ -2214,13 +2272,7 @@ if {%selected%}=={debugyesnow} (goto :kurogo)
 if {%selected%}=={fulldebug} (goto fulldebug)
 if {%selected%}=={getadmin} (goto :batstartadm)
 if {%selected%}=={restoresetting} (
-echo nodogcheckfor1234567890qwertyuiop > ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo CheckUpdate=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo admin=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo rebootokey=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo hatenakeikoku=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo bootanimation=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+call :Wipealldeta
 echo äÆóπÅBâΩÇ©ÉLÅ[ÇâüÇµÇƒë±çs...
 pause >nul
 )
@@ -2231,6 +2283,478 @@ if {%selected%}=={openie} (goto :openiedev)
 if {%selected%}=={setenter} (echo.&set /p hatenakeikoku=pls type:&goto :hazimeboot) else (set selected= &echo óLå¯Ç»ÉRÉ}ÉìÉhÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB&goto Cursor_Changer_REConsoleask)
 
 
+rem O========================================= OOBE and Receovery Code Ended =================================================O
+
+
+:Wipealldeta
+rem Wipe Setting file
+echo nodogcheckfor1234567890qwertyuiop > ÉJÅ[É\Éãë÷Ç¶.txt
+echo CheckUpdate=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo admin=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo rebootokey=true >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo typosWarning=true >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo bootanimation=true >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo s5_linuxboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo s5_simpleboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+echo s5_rawboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+exit /b
+
+
+rem Detects settings related to prompts for administrative privileges,
+:batstart
+if "%linuxboot%"=="false" (mode con: cols=75 lines=25)
+if {%settingbypass%}=={true} (goto hazimemenuskipboot)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] admin checked.) else (cls)
+rem ä«óùé“å†å¿ê›íËÇÃåüím
+find "admin=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if {%adminbypass%}=={true} (goto gotadmin)
+if {%errorlevel%}=={0} (goto batstartadm)
+if {%errorlevel%}=={1} (
+set batloadprgs=0
+call :MOBAS_Loader
+goto batstarttest2
+)
+
+:batstarttest2
+if "%linuxboot%"=="false" (cls)
+find "admin=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+set batloadprgs=0
+call :MOBAS_Loader
+if {%errorlevel%}=={0} (goto hazime)
+if {%errorlevel%}=={1} (goto batstartadm)
+
+
+
+:batstartadm
+cls
+rem ä«óùé“å†å¿ÇÃéÊìæ
+echo copyright.ÉJÅ[É\Éãë÷Ç¶%batver% by tamago_1908
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+if '%errorlevel%' NEQ '0' (
+    goto UACPrompt
+) else ( goto gotAdmin )
+:UACPrompt
+powershell -NoProfile -Command "Start-Process '%batpath%' -Verb RunAs" >nul && exit
+echo.
+echo ä«óùé“å†å¿ÇÃóvãÅÇ™ãëî€Ç≥ÇÍÇ‹ÇµÇΩÅB
+echo ^(ÉqÉìÉg: ä«óùé“å†å¿ÇÃóvãÅÇÕê›íËÇ≈ñ≥å¯Ç…Ç≈Ç´Ç‹Ç∑ÅB^)
+timeout /t 2 /nobreak >nul
+:gotAdmin
+cls
+pushd "%CD%"
+goto :hazime
+
+
+
+:hazime
+if {%alldefentered%}=={true} (
+set alldefno2clr=
+set alldefno2clr2=
+set alldefclr=
+set alldefclr2=
+set alldefentered=
+)
+if {%settingbypass%}=={true} (goto hazimemenuskipboot)
+rem ê›íËÇ∆ÇªÇÃëºÇÃÉçÅ[Éh
+rem âΩÇì«Ç›çûÇ›ÅAì«Ç›çûÇÒÇæå„Ç«Ç±Ç…gotoÇµÇΩÇ¢Ç©ÇïœêîÇ…ë„ì¸ïKóv set wantload=setting1 set whatloadgoto=hazime ìô hazimeä÷åWÇÃèÍçáÇÕÇªÇÍÉIÉìÉäÅ[
+rem ÉJÅ[É\ÉãÇÃêFÇ…ä÷ÇµÇƒÇÕÉÅÉCÉìÇÃïœçXïîï™Ç…ÇÕé¿ëïÇµÇƒÇ¢Ç‹ÇπÇÒÅBïœçXÇµÇƒÇ©ÇÁhazimeÇ…ñﬂÇ¡ÇƒóàÇÍÇÈÇÊÇ§Ç…ê›åvÇµÇƒÇ»Ç¢ÇÃÇ≈ÅB
+rem ê›íËÇí«â¡Ç∑ÇÈèÍçáÇÕäÓñ{ÉRÉsÉyÇ≈ëÂè‰ïvÅBÇΩÇæÅAÉÅÉjÉÖÅ[ÇÃå©ÇΩñ⁄Ç∆Ç©Ç…Ç©Ç©ÇÌÇÈÇ‡ÇÃÇ≈ÇÕÉRÅ[ÉhÇí«â¡ÇµÇ»Ç¢Ç∆Ç¢ÇØÇ»Ç¢Ç©Ç‡
+:settingloads
+cd /d %batchmainpath%
+if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt (
+cls
+title ÉJÅ[É\ÉãÉGÉâÅ[
+echo ê›íËÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇ‹ÇπÇÒÅB
+pause
+echo ã∞ÇÁÇ≠ÅAèââÒãNìÆÇÇµÇΩç€Ç…ÇªÇÃÇ‹Ç‹ÉJÅ[É\Éãë÷Ç¶Çï¬Ç∂ÇƒÇ©ÇÁçƒãNìÆÇµÇƒÇµÇ‹Ç¡ÇΩÇÃÇ™å¥àˆÇ≈ÇµÇÂÇ§ÅBÇªÇÍÇ©ÅAåÃà”Ç…ê›íËÉtÉ@ÉCÉãÇè¡ãéÇµÇΩÇ©...è≠Ç»Ç≠Ç∆Ç‡ÅAê›íËÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇ»Ç¢ÇÃÇÕéñé¿Ç≈Ç∑ÅB
+pause
+cls
+echo ê›íËÉtÉ@ÉCÉãÇçƒê∂ê¨ÇµÇ‹Ç∑ÅBÇ¢Ç‹Ç‹Ç≈ÇÃê›íËÇÕÇ∑Ç◊ÇƒçÌèúÇ≥ÇÍÇ‹Ç∑ÅB
+pause
+cls
+call :Wipealldeta
+title ...
+echo çƒê∂ê¨Ç™äÆóπÇµÇ‹ÇµÇΩÅB
+pause
+echo ïœçXÇìKópÇ∑ÇÈÇΩÇﬂÅAÉJÅ[É\Éãë÷Ç¶ÇçƒãNìÆÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB
+pause
+exit
+)
+if not exist FirstCursor.txt (
+type nul > FirstCursor.txt
+echo nodogcheckforfastboot >> FirstCursor.txt
+)
+
+
+if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
+:setting1load
+rem ÉzÉèÉCÉgÉÇÅ[ÉhÇÃåüímÇ∆êFÇÃïœçXÅBïœçXÇÃçÇë¨âªÇÃÇΩÇﬂèòî’Ç…îzíuÅB
+set allsettingerror=0
+find "rebootokey=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 set setting1onoff=óLå¯
+if %ErrorLevel%==1 goto setting1load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" if not "%bootbatnow%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting1 Loaded.)
+set batloadprgs=1
+call :MOBAS_Loader
+goto setting2load
+)
+goto whatloadgoto
+
+
+:setting2load
+find "admin=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 set setting2onoff=óLå¯
+if %ErrorLevel%==1 goto setting2load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting2 Loaded.)
+set batloadprgs=2
+call :MOBAS_Loader
+goto setting3load
+) 
+goto whatloadgoto
+
+:setting3load
+find "CheckUpdate=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 set setting3onoff=óLå¯
+if %ErrorLevel%==1 goto setting3load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting3 Loaded.)
+set batloadprgs=3
+call :MOBAS_Loader
+goto setting4load
+) 
+goto whatloadgoto
+
+:setting4load
+find "hatenakeikoku=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 set setting4onoff=óLå¯
+if %ErrorLevel%==1 goto setting4load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting4 Loaded.)
+set batloadprgs=4
+call :MOBAS_Loader
+goto setting5load
+) 
+goto whatloadgoto
+
+:setting5load
+find "bootanimation=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 set setting5onoff=óLå¯
+if %ErrorLevel%==1 goto setting5load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto setting5_s1load
+) 
+goto whatloadgoto
+
+
+:setting5_s1load
+find "s5_linuxboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_s1onoff=óLå¯
+if %ErrorLevel%==1 goto setting5_s1load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto setting5_s2load
+) 
+goto whatloadgoto
+
+:setting5_s2load
+find "s5_simpleboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_s2onoff=óLå¯
+if %ErrorLevel%==1 goto setting5_s2load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto setting5_s3load
+) 
+goto whatloadgoto
+
+:setting5_s3load
+find "s5_rawboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_s3onoff=óLå¯
+if %ErrorLevel%==1 goto setting5_s3load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto wmodeload
+) 
+goto whatloadgoto
+
+:wmodeload
+find "wmode=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if {%ErrorLevel%}=={0} (set wmodeonoff=É_Å[ÉNÉeÅ[É}Ç…ïœçX  &set wmodetoggle=true)
+if {%ErrorLevel%}=={1} (goto wmodeload2)
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded.)
+set batloadprgs=6
+call :MOBAS_Loader
+goto loads
+) 
+goto whatloadgoto
+
+:allsettingtest
+rem ê›íËÇÃåáëπÇåüèÿ
+:setting1load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting1 is not the true. Loaded.)
+find "rebootokey=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 (set setting1onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting1onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=1&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting2load) else (goto whatloadgoto)
+
+:setting2load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting2 is not the true. Loaded.)
+find "admin=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 (set setting2onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting2onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=2&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
+
+:setting3load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting3 is not the true. Loaded.)
+find "CheckUpdate=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 (set setting3onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting3onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=3&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting4load) else (goto whatloadgoto)
+
+:setting4load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting4 is not the true. Loaded.)
+find "hatenakeikoku=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 (set setting4onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=4&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5load) else (goto whatloadgoto)
+
+:setting5load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5 is not the true. Loaded.)
+find "bootanimation=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if %ErrorLevel%==0 (set setting5onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting5onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5_s1load) else (goto whatloadgoto)
+
+:setting5_s1load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 is not the true. Loaded.)
+find "s5_linuxboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 (set setting5_s1onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting5_s1onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5_s2load) else (goto whatloadgoto)
+
+:setting5_s2load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 is not the true. Loaded.)
+find "s5_simpleboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 (set setting5_s2onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting5_s2onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5_s3load) else (goto whatloadgoto)
+
+:setting5_s3load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 is not the true. Loaded.)
+find "s5_rawboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 (set setting5_s3onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting5_s3onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto wmodeload) else (goto whatloadgoto)
+
+:wmodeload2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting6 is not the true. Loaded.)
+find "wmode=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if {%ErrorLevel%}=={0} (set wmodeonoff=ÉzÉèÉCÉgÉeÅ[É}Ç…ïœçX&set wmodetoggle=false) else if {%ErrorLevel%}=={1} (set wmodeonoff=  null  ÉeÅ[É}Ç…ïœçX&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1)
+if {%bootbatnow%}=={yes} (set batloadprgs=6&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto loads) else (goto whatloadgoto)
+
+:loads
+:wmodehazimeload
+rem ÉzÉèÉCÉgÉÇÅ[ÉhÇåüímÇµÇƒêFÇïœçX
+find "wmode=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if {%errorlevel%}=={0} (color f0)
+if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] mainmenu theme loaded.)
+set batloadprgs=6
+call :MOBAS_Loader
+goto debughazimeload
+)
+if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+goto debughazimeload
+
+:debughazimeload
+rem ÉfÉoÉbÉNÉÇÅ[ÉhÇÃåüím
+find "debug=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if {%errorlevel%}=={0} (echo on&set debugmode=debugmode)
+if {%errorlevel%}=={1} (echo off&set debugmode=)
+if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Debug mode Loaded.)
+set batloadprgs=7
+call :MOBAS_Loader
+goto :firststarttest
+)
+if {%1}=={devmode} (set devmode=true&goto firststarttest)
+if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+goto :firststarttest
+
+:firststarttest
+rem detect firstcursor.txt
+setlocal enabledelayedexpansion
+if exist èââÒÉJÅ[É\Éã.txt (
+find "nodogcheckforfastboot" èââÒÉJÅ[É\Éã.txt > nul
+if "!ErrorLevel!"=="1" (
+set FirstCursorisEdited=true
+    )
+)
+setlocal disabledelayedexpansion
+if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] FirstCursor.txt is Loaded.)
+set batloadprgs=8
+call :MOBAS_Loader
+goto cursorcolorload
+)
+if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+goto cursorcolorload
+
+:cursorcolorload
+rem ÉJÅ[É\ÉãÇÃêFÇåüím
+rem 0x0ÇÕîí
+rem 0x2ÇÕçï
+reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x0" > nul
+if {%ErrorLevel%}=={0} (set cursorcolor=çï)
+if {%ErrorLevel%}=={1} (set cursorcolor=îí)
+if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Cursor Color is Loaded.)
+set batloadprgs=9
+call :MOBAS_Loader
+goto hazimecursorcolor2
+)
+if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+
+:hazimecursorcolor2
+reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x2" > nul
+if {%ErrorLevel%}=={0} (set cursorcolor=îí)
+if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Menu stuff All Loaded.)
+set batloadprgs=10
+call :MOBAS_Loader
+goto :MOBAS_Loader_initializeVaribale
+)
+if {%whatloadgoto%}=={hazime} (goto hazimemenu)
+goto hazimemenu
+
+
+:MOBAS_Loader
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Mobas_Loader Running...)
+rem ÉuÅ[ÉgÉAÉjÉÅÅ[ÉVÉáÉìÅB
+rem â∫ÇÕì«Ç›çûÇ›éûÇÃÉeÉLÉXÉgï™äÚÅB
+if {%bootbatnow%}=={no} (cls & title ÉJÅ[É\Éãê›íË èàóùíÜ... & echo èàóùíÜ... & goto whatload) else (title ãNìÆíÜ...)
+if {%simpleboot%}=={true} (cls & echo ãNìÆíÜ...& exit /b)
+if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
+if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[47m[97m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m[107m[30m&set back_to_the_firstline=[18;0H) else (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
+
+rem goofy ahh code
+setlocal enabledelayedexpansion&if "!batloadprgs!" gtr "0" (set /a batloadprgsdelete=!batloadprgs!-1&set loadscrnprgs!batloadprgsdelete!=)&setlocal disabledelayedexpansion
+call :MOBAS_Loader_prgbar %batloadprgs%&goto :MOBAS_Loader_prgbar_Main
+:MOBAS_Loader_prgbar
+if {%1}=={0} (set loadscrnprgs0=%loadscrnprgsclrgra%                                                     %loadscrnprgsclr2%&exit /b)
+if {%1}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%%loadscrnprgsclrgra%                                                  %loadscrnprgsclr2%&exit /b)
+if {%1}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%%loadscrnprgsclrgra%                                              %loadscrnprgsclr2%&exit /b)
+if {%1}=={3} (set loadscrnprgs3=%loadscrnprgsclr%           %loadscrnprgsclr2%%loadscrnprgsclrgra%                                          %loadscrnprgsclr2%&exit /b)
+if {%1}=={4} (set loadscrnprgs4=%loadscrnprgsclr%                %loadscrnprgsclr2%%loadscrnprgsclrgra%                                     %loadscrnprgsclr2%&exit /b)
+if {%1}=={5} (set loadscrnprgs5=%loadscrnprgsclr%                     %loadscrnprgsclr2%%loadscrnprgsclrgra%                                %loadscrnprgsclr2%&exit /b)
+if {%1}=={6} (set loadscrnprgs6=%loadscrnprgsclr%                           %loadscrnprgsclr2%%loadscrnprgsclrgra%                          %loadscrnprgsclr2%&exit /b)
+if {%1}=={7} (set loadscrnprgs7=%loadscrnprgsclr%                                  %loadscrnprgsclr2%%loadscrnprgsclrgra%                   %loadscrnprgsclr2%&exit /b)
+if {%1}=={8} (set loadscrnprgs8=%loadscrnprgsclr%                                         %loadscrnprgsclr2%%loadscrnprgsclrgra%            %loadscrnprgsclr2%&exit /b)
+if {%1}=={9} (set loadscrnprgs9=%loadscrnprgsclr%                                                %loadscrnprgsclr2%%loadscrnprgsclrgra%     %loadscrnprgsclr2%&exit /b)
+if {%1}=={10} (set loadscrnprgs10=%loadscrnprgsclr%                                                     %loadscrnprgsclr2%&exit /b)
+:MOBAS_Loader_prgbar_Main
+if not "%linuxboot%"=="true" (
+echo %back_to_the_firstline%
+echo O=========================================================================O
+echo.
+echo                       ÉJÅ[É\Éãë÷Ç¶Çì«Ç›çûÇÒÇ≈Ç¢Ç‹Ç∑...
+echo           O=====================================================O
+echo           I%loadscrnprgs0%%loadscrnprgs1%%loadscrnprgs2%%loadscrnprgs3%%loadscrnprgs4%%loadscrnprgs5%%loadscrnprgs6%%loadscrnprgs7%%loadscrnprgs8%%loadscrnprgs9%%loadscrnprgs10%I
+echo           O=====================================================O
+rem 37 ëSäp
+rem 74 îºäp
+)
+exit /b
+
+:MOBAS_Loader_initializeVaribale
+set loadscrnprgs9=&set loadscrnprgs10=&set loadscrnprgsclr=&set loadscrnprgsclr2=&set loadscrnprgsclrgra=
+set batloadprgsdelete=&set back_to_the_firstline=
+goto hazimemenu
+
+:whatload
+
+rem Ç±Ç±ÇÃèàóùÅAÇ¢ÇÈÇ©Ç»ÇüÅHïÅí Ç…settingÇÃílÇ™ó~ÇµÇ¢ÇæÇØÇ»ÇÁsetting1loadÇ∆Ç©Ç…gotoÇµÇΩÇ§Ç¶Ç≈çsÇ´êÊÇwhatloadgotoÇ…ë„ì¸Ç∑ÇÍÇŒìÆÇ≠Ç∆évÇ§ÇÒÇæÇØÇ«....
+if {%wantload%}=={setting1} (goto setting1load) 
+if {%wantload%}=={setting2} (goto setting2load)
+if {%wantload%}=={setting3} (goto setting3load)
+if {%wantload%}=={setting4} (goto setting4load)
+if {%wantload%}=={setting5} (goto setting5load)
+if {%wantload%}=={setting5_1} (goto setting5_s1load&set animationrecheck=true)
+if {%wantload%}=={setting5_2} (goto setting5_s2load&set animationrecheck=true)
+if {%wantload%}=={setting5_3} (goto setting5_s3load&set animationrecheck=true)
+if {%wantload%}=={wmode} (goto wmodeload)
+if {%wantload%}=={wmodehazime} (goto wmodehazimeload) 
+if {%wantload%}=={debughazime} (goto debughazimeload)
+if {%wantload%}=={syokaihazime} (goto syokaihazimeload)
+if {%wantload%}=={cursorcolor} (goto cursorcolorload)
+if {%wantload%}=={} (goto hazimemenu)
+call :BSOD_Errors 2
+pause
+exit
+
+:whatloadgoto
+if "%animationrecheck%"=="true" (call :batbootloader_animationcheck)
+set wantload=
+exit /b
+
+
+:batbootanimation
+if "%linuxboot%"=="true" (echo.&echo [%time: =%] O================ Boot End Here ================O&echo.&echo [%linuxishclr%info%linuxishclr2%] Boot Complete.&timeout /t 2 /nobreak >nul)
+cls
+if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
+find "bootanimation=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
+if {%errorlevel%}=={0} (goto checksum)
+rem ÉuÅ[ÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçƒê∂ÅB50ï™ÇÃ1ÇÃämó¶Ç≈ï ÉoÅ[ÉWÉáÉìÇ™çƒê∂Ç≥ÇÍÇÈÅBramdomÇÃédól(ÅH)Ç…ÇÊÇ¡ÇƒìÒâÒòAë±Ç≈randomÇÇµÇ»Ç¢Ç∆Ç¢ÇØÇ»Ç¢ÅB
+set /a bootegg=%random%*51/32767
+set /a bootegg2=%random%*51/32767
+if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
+if {%bootegg%}=={%bootegg2%} (goto batbootanimationfun)
+set bootegg=
+set bootegg2=
+:batbootanimationbypassfun
+title ÇÊÇ§Ç±Çª
+echo.
+echo                              ÉJÅ[É\Éãë÷Ç¶%batver% %debugmode%
+echo.
+echo O=========================================================================O
+echo.
+echo.
+echo.
+echo.
+echo :::::'########:::::'###::::'########:
+echo ::::: ##.... ##:::'## ##:::... ##..::
+echo ::::: ##:::: ##::'##:. ##::::: ##::::
+echo ::::: ########::'##:::. ##:::: ##::::
+echo ::::: ##.... ##: #########:::: ##::::            ÇÊÇ§Ç±Çª
+echo '###: ##:::: ##: ##.... ##:::: ##::::
+echo  ###: ########:: ##:::: ##:::: ##::::
+echo ...::........:::..:::::..:::::..:::::
+echo  For Windows 10-11
+echo.
+echo.
+echo.
+echo.
+echo O=========================================================================O
+echo.
+echo                       2021-2024 tamago1908 %batbuild%
+timeout /t 3 /nobreak >nul
+cls
+rem ê›íËÇÃåáëπÇämîF
+goto checksum
 
 :batbootanimationfun
 set bootegg=
@@ -2283,47 +2807,6 @@ set funanimationclr=
 mode con: cols=75 lines=25
 goto checksum
 
-:batbootanimation
-if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
-find "bootanimation=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%errorlevel%}=={0} (goto checksum)
-cls
-rem ÉuÅ[ÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçƒê∂ÅB50ï™ÇÃ1ÇÃämó¶Ç≈ï ÉoÅ[ÉWÉáÉìÇ™çƒê∂Ç≥ÇÍÇÈÅBramdomÇÃédól(ÅH)Ç…ÇÊÇ¡ÇƒìÒâÒòAë±Ç≈randomÇÇµÇ»Ç¢Ç∆Ç¢ÇØÇ»Ç¢ÅB
-set /a bootegg=%random%*51/32767
-set /a bootegg2=%random%*51/32767
-if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
-if {%bootegg%}=={%bootegg2%} (goto batbootanimationfun)
-set bootegg=
-set bootegg2=
-:batbootanimationbypassfun
-title ÇÊÇ§Ç±Çª
-echo.
-echo                              ÉJÅ[É\Éãë÷Ç¶%batver% %debugmode%
-echo.
-echo O=========================================================================O
-echo.
-echo.
-echo.
-echo.
-echo :::::'########:::::'###::::'########:
-echo ::::: ##.... ##:::'## ##:::... ##..::
-echo ::::: ##:::: ##::'##:. ##::::: ##::::
-echo ::::: ########::'##:::. ##:::: ##::::
-echo ::::: ##.... ##: #########:::: ##::::            ÇÊÇ§Ç±Çª
-echo '###: ##:::: ##: ##.... ##:::: ##::::
-echo  ###: ########:: ##:::: ##:::: ##::::
-echo ...::........:::..:::::..:::::..:::::
-echo  For Windows 10-11
-echo.
-echo.
-echo.
-echo.
-echo O=========================================================================O
-echo.
-echo                       2021-2024 tamago1908 %batbuild%
-timeout /t 3 /nobreak >nul
-cls
-rem ê›íËÇÃåáëπÇämîF
 
 :checksum
 if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
@@ -2333,7 +2816,7 @@ if not {%allsettingerror%} equ {0} (
     echo.
     echo ÉJÅ[É\Éãë÷Ç¶ÉoÅ[ÉWÉáÉì1.5Ç©ÇÁÉoÅ[ÉWÉáÉì1.9Ç‹Ç≈ÇÃÉoÅ[ÉWÉáÉìÇà»ëOÇ…égópÇµÇƒÇ¢Ç»Ç¢Ç±Ç∆ÇämîFÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB
     echo Ç‡ÇµÇ≠ÇÕÉJÅ[É\Éãê›íË.txtÇÃíÜêgÇämîFÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB
-    echo ÉtÉ@ÉCÉãÉpÉXÇÕ%HOMEDRIVE%%HOMEPATH%Ç≈Ç∑ÅB
+    echo ÉtÉ@ÉCÉãÉpÉXÇÕ%batchmainpath%Ç≈Ç∑ÅB
     echo èCïúÇ∑ÇÈèÍçáÇÕê›íËÇ…çsÇ´ÅAîjëπå¬èäÇÃïîï™ÇÃê›íËÇÃóLå¯/ñ≥å¯ÇêÿÇËë÷Ç¶ÇƒÇ≠ÇæÇ≥Ç¢ÅBé©ìÆìIÇ…ï‚äÆÇ≥ÇÍèCïúÇ≥ÇÍÇ‹Ç∑ÅB^(èCïúÇÃç€Ç…ÇÕÅAÉfÉtÉHÉãÉgÇÃä˘íËílÇ…ê›íËÇÕÉZÉbÉgÇ≥ÇÍÇ‹Ç∑ÅB^)
     pause
     )
@@ -2344,13 +2827,7 @@ rem é©ìÆèCïú
 powershell sleep 2
 SET /P selected=é©ìÆèCïúÇóòópÇ≈Ç´Ç‹Ç∑ÅBé©ìÆèCïúÇé¿çsÇ∑ÇÈÇ∆ÇªÇÍÇ‹Ç≈ÇÃê›íËÇ™Ç∑Ç◊Çƒèâä˙âªÇ≥ÇÍÅAÉfÉtÉHÉãÉgÇÃê›íËÇ…ÉäÉZÉbÉgÇ≥ÇÍÇ‹Ç∑ÅBë±çsÇµÇ‹Ç∑Ç©ÅH(yesÇ‹ÇΩÇÕno):
 if {%selected%}=={yes} (
-echo nodogcheckfor1234567890qwertyuiop > ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo CheckUpdate=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo admin=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo rebootokey=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo  hatenakeikoku=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo bootanimation=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+call :Wipealldeta
 echo.
 echo èCïúÇ™äÆóπÇµÇ‹ÇµÇΩÅB
 pause
@@ -2358,13 +2835,7 @@ exit
 )
 if {%selected%}=={y} (
 :overwritesetting
-echo nodogcheckfor1234567890qwertyuiop > ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo CheckUpdate=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo admin=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo rebootokey=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo hatenakeikoku=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo bootanimation=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+call :Wipealldeta
 echo.
 echo èCïúÇ™äÆóπÇµÇ‹ÇµÇΩÅB
 pause
@@ -2374,305 +2845,14 @@ if {%selected%}=={no} (hazimemenuskipboot)
 if {%selected%}=={n} (hazimemenuskipboot)
 
 goto :hazimemenu
-:hazime
-if {%alldefentered%}=={true} (
-set alldefno2clr=
-set alldefno2clr2=
-set alldefclr=
-set alldefclr2=
-)
-if {%settingbypass%}=={true} (goto hazimemenuskipboot)
-rem ê›íËÇ∆ÇªÇÃëºÇÃÉçÅ[Éh
-rem âΩÇì«Ç›çûÇ›ÅAì«Ç›çûÇÒÇæå„Ç«Ç±Ç…gotoÇµÇΩÇ¢Ç©ÇïœêîÇ…ë„ì¸ïKóv set wantload=setting1 set whatloadgoto=hazime ìô hazimeä÷åWÇÃèÍçáÇÕÇªÇÍÉIÉìÉäÅ[
-rem ÉJÅ[É\ÉãÇÃêFÇ…ä÷ÇµÇƒÇÕÉÅÉCÉìÇÃïœçXïîï™Ç…ÇÕé¿ëïÇµÇƒÇ¢Ç‹ÇπÇÒÅBïœçXÇµÇƒÇ©ÇÁhazimeÇ…ñﬂÇ¡ÇƒóàÇÍÇÈÇÊÇ§Ç…ê›åvÇµÇƒÇ»Ç¢ÇÃÇ≈ÅB
-rem ê›íËÇí«â¡Ç∑ÇÈèÍçáÇÕäÓñ{ÉRÉsÉyÇ≈ëÂè‰ïvÅBÇΩÇæÅAÉÅÉjÉÖÅ[ÇÃå©ÇΩñ⁄Ç∆Ç©Ç…Ç©Ç©ÇÌÇÈÇ‡ÇÃÇ≈ÇÕÉRÅ[ÉhÇí«â¡ÇµÇ»Ç¢Ç∆Ç¢ÇØÇ»Ç¢Ç©Ç‡
-:settingloads
-cd /d %HOMEDRIVE%%HOMEPATH%
-if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt (
-cls
-title ÉJÅ[É\ÉãÉGÉâÅ[
-echo ê›íËÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇ‹ÇπÇÒÅB
-pause
-echo ã∞ÇÁÇ≠ÅAèââÒãNìÆÇÇµÇΩç€Ç…ÇªÇÃÇ‹Ç‹ÉJÅ[É\Éãë÷Ç¶Çï¬Ç∂ÇƒÇ©ÇÁçƒãNìÆÇµÇƒÇµÇ‹Ç¡ÇΩÇÃÇ™å¥àˆÇ≈ÇµÇÂÇ§ÅBÇªÇÍÇ©ÅAåÃà”Ç…ê›íËÉtÉ@ÉCÉãÇè¡ãéÇµÇΩÇ©...è≠Ç»Ç≠Ç∆Ç‡ÅAê›íËÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇ»Ç¢ÇÃÇÕéñé¿Ç≈Ç∑ÅB
-pause
-cls
-echo ê›íËÉtÉ@ÉCÉãÇçƒê∂ê¨ÇµÇ‹Ç∑ÅBÇ¢Ç‹Ç‹Ç≈ÇÃê›íËÇÕÇ∑Ç◊ÇƒçÌèúÇ≥ÇÍÇ‹Ç∑ÅB
-pause
-cls
-type nul > ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo nodogcheckfor1234567890qwertyuiop >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo CheckUpdate=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo admin=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo rebootokey=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo hatenakeikoku=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo bootanimation=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-title ...
-echo çƒê∂ê¨Ç™äÆóπÇµÇ‹ÇµÇΩÅB
-pause
-echo ïœçXÇìKópÇ∑ÇÈÇΩÇﬂÅAÉJÅ[É\Éãë÷Ç¶ÇçƒãNìÆÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB
-pause
-exit
-)
 
-
-if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
-:setting1load
-rem ÉzÉèÉCÉgÉÇÅ[ÉhÇÃåüímÇ∆êFÇÃïœçXÅBïœçXÇÃçÇë¨âªÇÃÇΩÇﬂèòî’Ç…îzíuÅB
-set allsettingerror=0
-find "rebootokey=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 set setting1onoff=óLå¯
-if %ErrorLevel%==1 goto setting1load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=1
-call :MOBAS_Loader
-goto setting2load
-)
-goto whatloadgoto
-
-
-:setting2load
-find "admin=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 set setting2onoff=óLå¯
-if %ErrorLevel%==1 goto setting2load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=2
-call :MOBAS_Loader
-goto setting3load
-) 
-goto whatloadgoto
-
-:setting3load
-find "CheckUpdate=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 set setting3onoff=óLå¯
-if %ErrorLevel%==1 goto setting3load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=3
-call :MOBAS_Loader
-goto setting4load
-) 
-goto whatloadgoto
-
-:setting4load
-find "hatenakeikoku=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 set setting4onoff=óLå¯
-if %ErrorLevel%==1 goto setting4load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=4
-call :MOBAS_Loader
-goto setting5load
-) 
-goto whatloadgoto
-
-:setting5load
-find "bootanimation=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 set setting5onoff=óLå¯
-if %ErrorLevel%==1 goto setting5load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=5
-call :MOBAS_Loader
-goto wmodeload
-) 
-goto whatloadgoto
-
-:wmodeload
-find "wmode=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if {%ErrorLevel%}=={0} (set wmodeonoff=É_Å[ÉNÉeÅ[É}Ç…ïœçX  &set wmodetoggle=true)
-if {%ErrorLevel%}=={1} (goto wmodeload2)
-if {%bootbatnow%}=={yes} (
-set batloadprgs=6
-call :MOBAS_Loader
-goto loads
-) 
-goto whatloadgoto
-
-:allsettingtest
-rem ê›íËÇÃåáëπÇåüèÿ
-:setting1load2
-find "rebootokey=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 (set setting1onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting1onoff=null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=1&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting2load) else (goto whatloadgoto)
-
-:setting2load2
-find "admin=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 (set setting2onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting2onoff=null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=2&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
-
-:setting3load2
-find "CheckUpdate=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 (set setting3onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting3onoff=null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=3&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting4load) else (goto whatloadgoto)
-
-:setting4load2
-find "hatenakeikoku=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 (set setting4onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=4&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting5load2) else (goto whatloadgoto)
-
-:setting5load2
-find "bootanimation=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if %ErrorLevel%==0 (set setting5onoff=ñ≥å¯) else if %ErrorLevel%==1 set setting5onoff=null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto wmodeload) else (goto whatloadgoto)
-
-:wmodeload2
-find "wmode=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%bootbatnow%}=={no} (echo èàóùíÜ...)
-if {%ErrorLevel%}=={0} (set wmodeonoff=ÉzÉèÉCÉgÉeÅ[É}Ç…ïœçX&set wmodetoggle=false) else if {%ErrorLevel%}=={1} (set wmodeonoff=  null  ÉeÅ[É}Ç…ïœçX&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1)
-if {%bootbatnow%}=={yes} (set batloadprgs=6&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto loads) else (goto whatloadgoto)
-
-:loads
-:wmodehazimeload
-rem ÉzÉèÉCÉgÉÇÅ[ÉhÇåüímÇµÇƒêFÇïœçX
-find "wmode=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%errorlevel%}=={0} (color f0)
-if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
-set batloadprgs=6
-call :MOBAS_Loader
-goto debughazimeload
-)
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
-goto debughazimeload
-
-:debughazimeload
-rem ÉfÉoÉbÉNÉÇÅ[ÉhÇÃåüím
-find "debug=true" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
-if {%errorlevel%}=={0} (echo on&set debugmode=debugmode)
-if {%errorlevel%}=={1} (echo off&set debugmode=)
-if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
-set batloadprgs=7
-call :MOBAS_Loader
-goto firststarttest
-)
-if {%1}=={devmode} (set devmode=true&goto firststarttest)
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
-goto firststarttest
-
-:firststarttest
-rem detect firstcursor.txt
-setlocal enabledelayedexpansion
-if exist èââÒÉJÅ[É\Éã.txt (
-find "nodogcheckforfastboot" èââÒÉJÅ[É\Éã.txt > nul
-if "!ErrorLevel!"=="1" (
-set FirstCursorisEdited=true
-    )
-)
-setlocal disabledelayedexpansion
-if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
-set batloadprgs=8
-call :MOBAS_Loader
-goto cursorcolorload
-)
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
-goto cursorcolorload
-
-:cursorcolorload
-rem ÉJÅ[É\ÉãÇÃêFÇåüím
-rem 0x0ÇÕîí
-rem 0x2ÇÕçï
-reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x0" > nul
-if {%ErrorLevel%}=={0} (set cursorcolor=çï)
-if {%ErrorLevel%}=={1} (set cursorcolor=îí)
-if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
-set batloadprgs=9
-call :MOBAS_Loader
-goto hazimecursorcolor2
-)
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
-
-:hazimecursorcolor2
-reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x2" > nul
-if {%ErrorLevel%}=={0} (set cursorcolor=îí)
-if {%bootbatnow%}=={no} (echo èàóùíÜ...) else (
-set batloadprgs=10
-call :MOBAS_Loader
-goto :MOBAS_Loader_initializeVaribale
-)
-if {%whatloadgoto%}=={hazime} (goto hazimemenu)
-goto hazimemenu
-
-
-:MOBAS_Loader
-rem ÉuÅ[ÉgÉAÉjÉÅÅ[ÉVÉáÉìÅB
-rem â∫ÇÕì«Ç›çûÇ›éûÇÃÉeÉLÉXÉgï™äÚÅB
-if {%bootbatnow%}=={no} (cls & title ÉJÅ[É\Éãê›íË èàóùíÜ... & echo èàóùíÜ... & goto whatload) else (title ãNìÆíÜ...)
-if {%simpleboot%}=={true} (cls & echo ãNìÆíÜ...& exit /b)
-if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
-if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[47m[97m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m[107m[30m&set back_to_the_firstline=[18;0H) else (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
-if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
-
-rem goofy ahh code
-setlocal enabledelayedexpansion&if "!batloadprgs!" gtr "0" (set /a batloadprgsdelete=!batloadprgs!-1&set loadscrnprgs!batloadprgsdelete!=)&setlocal disabledelayedexpansion
-if {%batloadprgs%}=={0} (set loadscrnprgs0=%loadscrnprgsclrgra%                                                     %loadscrnprgsclr2%)
-if {%batloadprgs%}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%%loadscrnprgsclrgra%                                                  %loadscrnprgsclr2%)
-if {%batloadprgs%}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%%loadscrnprgsclrgra%                                              %loadscrnprgsclr2%)
-if {%batloadprgs%}=={3} (set loadscrnprgs3=%loadscrnprgsclr%           %loadscrnprgsclr2%%loadscrnprgsclrgra%                                          %loadscrnprgsclr2%)
-if {%batloadprgs%}=={4} (set loadscrnprgs4=%loadscrnprgsclr%                %loadscrnprgsclr2%%loadscrnprgsclrgra%                                     %loadscrnprgsclr2%)
-if {%batloadprgs%}=={5} (set loadscrnprgs5=%loadscrnprgsclr%                     %loadscrnprgsclr2%%loadscrnprgsclrgra%                                %loadscrnprgsclr2%)
-if {%batloadprgs%}=={6} (set loadscrnprgs6=%loadscrnprgsclr%                           %loadscrnprgsclr2%%loadscrnprgsclrgra%                          %loadscrnprgsclr2%)
-if {%batloadprgs%}=={7} (set loadscrnprgs7=%loadscrnprgsclr%                                  %loadscrnprgsclr2%%loadscrnprgsclrgra%                   %loadscrnprgsclr2%)
-if {%batloadprgs%}=={8} (set loadscrnprgs8=%loadscrnprgsclr%                                         %loadscrnprgsclr2%%loadscrnprgsclrgra%            %loadscrnprgsclr2%)
-if {%batloadprgs%}=={9} (set loadscrnprgs9=%loadscrnprgsclr%                                                %loadscrnprgsclr2%%loadscrnprgsclrgra%     %loadscrnprgsclr2%)
-if {%batloadprgs%}=={10} (set loadscrnprgs10=%loadscrnprgsclr%                                                     %loadscrnprgsclr2%)                                                  
-echo %back_to_the_firstline%
-echo O=========================================================================O
-echo.
-echo                       ÉJÅ[É\Éãë÷Ç¶Çì«Ç›çûÇÒÇ≈Ç¢Ç‹Ç∑...
-echo           O=====================================================O
-echo           I%loadscrnprgs0%%loadscrnprgs1%%loadscrnprgs2%%loadscrnprgs3%%loadscrnprgs4%%loadscrnprgs5%%loadscrnprgs6%%loadscrnprgs7%%loadscrnprgs8%%loadscrnprgs9%%loadscrnprgs10%I
-echo           O=====================================================O
-rem 37 ëSäp
-rem 74 îºäp
-exit /b
-
-:MOBAS_Loader_initializeVaribale
-set loadscrnprgs9=&set loadscrnprgs10=&set loadscrnprgsclr=&set loadscrnprgsclr2=&set loadscrnprgsclrgra=
-set batloadprgsdelete=&set back_to_the_firstline=
-goto hazimemenu
-
-:whatload
-
-rem Ç±Ç±ÇÃèàóùÅAÇ¢ÇÈÇ©Ç»ÇüÅHïÅí Ç…settingÇÃílÇ™ó~ÇµÇ¢ÇæÇØÇ»ÇÁsetting1loadÇ∆Ç©Ç…gotoÇµÇΩÇ§Ç¶Ç≈çsÇ´êÊÇwhatloadgotoÇ…ë„ì¸Ç∑ÇÍÇŒìÆÇ≠Ç∆évÇ§ÇÒÇæÇØÇ«....
-if {%wantload%}=={setting1} (goto setting1load) 
-if {%wantload%}=={setting2} (goto setting2load)
-if {%wantload%}=={setting3} (goto setting3load)
-if {%wantload%}=={setting4} (goto setting4load)
-if {%wantload%}=={setting5} (goto setting5load)
-if {%wantload%}=={wmode} (goto wmodeload)
-if {%wantload%}=={wmodehazime} (goto wmodehazimeload) 
-if {%wantload%}=={debughazime} (goto debughazimeload)
-if {%wantload%}=={syokaihazime} (goto syokaihazimeload)
-if {%wantload%}=={cursorcolor} (goto cursorcolorload)
-if {%wantload%}=={} (goto hazimemenu)
-call :BSOD_Errors 2
-pause
-exit
-
-:whatloadgoto
-set wantload=
-exit /b
 
 rem ÉÅÉjÉÖÅ[ÇÃê∂ê¨ÇÃèÄîı
 :hazimemenu
-cls
 if {%bootbatnow%}=={no} (goto hazimemenuskipboot)
 if {%bootbatnow%}=={yes} (set bootbatnow=no&goto batbootanimation)
 :hazimemenuskipboot
+cls
 setlocal disabledelayedexpansion
 set wantload=
 if {%runningfromfulldebug%}=={true} (set runningfromfulldebug=& exit /b)
@@ -2828,7 +3008,7 @@ goto :hazime
 if %hatenaita% gtr 251 (goto :hazime)
 echo Dim answer:answer = MsgBox("..........",vbOKCancel,""):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 del /Q %TEMP%\msgbox.vbs
-shutdown /s /t 5 /c "å„â˜Ç∑ÇÈÇ™ÇÊÇ¢ÅB"
+shutdown /r /t 5 /c "å„â˜Ç∑ÇÈÇ™ÇÊÇ¢ÅB"
 taskkill /im cmd.exe
 goto :reboot
 
@@ -2852,9 +3032,9 @@ exit /b
 
 :exitmenu
 cls
+if not defined dummy (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[46m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[90m[107m[30m)
-if defined %wmodetoggle% (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 title ÉJÅ[É\Éãë÷Ç¶ÇÃèIóπ %debugmode% 
 set selected=
 echo                              %clrgra%ÉJÅ[É\Éãë÷Ç¶%batver% %debugmode% %hazimebuild%%clr2%
@@ -2869,7 +3049,7 @@ echo                       O==========O==========O===========O
 echo                       I âΩÇ‡ëIëÇµÇƒÇ¢Ç‹ÇπÇÒÅB          I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
+choice /c 123adyeb /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2877,6 +3057,7 @@ if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu1
 if %ErrorLevel%==6 goto exitmenu1
 if %ErrorLevel%==7 goto exitmenu1
+if %ErrorLevel%==8 goto hazime
 goto :hazime
 
 :exitmenu1
@@ -2894,7 +3075,7 @@ echo                       O==========O==========O===========O
 echo                       I èIóπÇ™ëIëÇ≥ÇÍÇ‹ÇµÇΩÅB          I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
+choice /c 123adyeb /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2902,6 +3083,7 @@ if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu2
 if %ErrorLevel%==6 goto exitmenu1y
 if %ErrorLevel%==7 goto exitmenu1y
+if %ErrorLevel%==8 goto hazime
 goto :hazime
 
 :exitmenu2
@@ -2919,7 +3101,7 @@ echo                       O==========O==========O===========O
 echo                       I çƒãNìÆÇ™ëIëÇ≥ÇÍÇ‹ÇµÇΩÅB        I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
+choice /c 123adyeb /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2927,6 +3109,7 @@ if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu3
 if %ErrorLevel%==6 goto exitmenu2y
 if %ErrorLevel%==7 goto exitmenu2y
+if %ErrorLevel%==8 goto hazime
 goto :hazime
 
 :exitmenu3
@@ -2944,7 +3127,7 @@ echo                       O==========O==========O===========O
 echo                       I ñﬂÇÈÇ™ëIëÇ≥ÇÍÇ‹ÇµÇΩÅB          I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
+choice /c 123adyeb /n /m "[1 2 3] Ç©ÅA [A D] ÇâüÇµÇƒëIëÇµÇΩÇÃÇøÅA [Y E]ÇâüÇµÇƒåàíËÇµÇ‹Ç∑ÅB"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2952,6 +3135,7 @@ if %ErrorLevel%==4 goto exitmenu2
 if %ErrorLevel%==5 goto exitmenu3
 if %ErrorLevel%==6 call :exitmenuexit&goto hazime
 if %ErrorLevel%==7 call :exitmenuexit&goto hazime
+if %ErrorLevel%==8 goto hazime
 goto :hazime
 
 
@@ -3004,8 +3188,8 @@ if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
 if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu3
-if %ErrorLevel%==6 (call :exitmenuexit &set bootbatnow=yes&goto batstart)
-if %ErrorLevel%==7 (call :exitmenuexit &set bootbatnow=yes&goto batstart)
+if %ErrorLevel%==6 (call :exitmenuexit &goto :Rebootbatch)
+if %ErrorLevel%==7 (call :exitmenuexit &goto :Rebootbatch)
 if %ErrorLevel%==8 goto exitmenu2
 goto :hazime
 
@@ -3055,11 +3239,11 @@ rem ê›íËÉÅÉjÉÖÅ[ÇÃï`é 
 :setting
 set wantload=
 set settinghelptoggle=false
+if not defined dummy (set clr=[7m&set clr2=[0m)
 if {%wmodetoggle%}=={false} (set clr=[7m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clr2=[0m[107m[30m)
-if defined %wmodetoggle% (set clr=[7m&set clr2=[0m)
 rem ê›íËÉtÉ@ÉCÉãÇ™ë∂ç›Ç∑ÇÈÇ©Çåüím
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 rem èÍèä OSÇ™ì¸Ç¡ÇΩÉhÉâÉCÉu:\Users\ÉÜÅ[ÉUÅ[ñº
 rem (ó· ÉÜÅ[ÉUÅ[ÇÃñºëOÇ™testÇæÇ¡ÇΩèÍçáÇ∆ÅAOSÇ™ì¸Ç¡ÇΩèÍèäÇ™CÉhÉâÉCÉuÇæÇ¡ÇΩèÍçáÇæÇ∆ C:\Users\Test)
 if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt (goto dogcheck)
@@ -3136,7 +3320,7 @@ if %ErrorLevel%==9 goto settingcategoryhelpmode
 
 :settingcategory2
 rem ê›íËÉtÉ@ÉCÉãÇ™ë∂ç›Ç∑ÇÈÇ©Çåüím
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 rem èÍèä OSÇ™ì¸Ç¡ÇΩÉhÉâÉCÉu:\Users\ÉÜÅ[ÉUÅ[ñº
 rem (ó· ÉÜÅ[ÉUÅ[ÇÃñºëOÇ™testÇæÇ¡ÇΩèÍçáÇ∆ÅAOSÇ™ì¸Ç¡ÇΩèÍèäÇ™CÉhÉâÉCÉuÇæÇ¡ÇΩèÍçáÇæÇ∆ C:\Users\Test)
 if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt (goto dogcheck)
@@ -3411,7 +3595,7 @@ echo.
 echo O========================O                  O======O
 echo I      ÉJÉeÉSÉäÅ[        I                  I ê›íË I
 echo O========================O==================O======O======================O
-echo I                        I 1 ãNìÆéûÇÃÉAÉjÉÅÅ[ÉVÉáÉì            I   %setting5onoff%   I
+echo I                        I 1 ãNìÆéûÇÃÉAÉjÉÅÅ[ÉVÉáÉìÇÃê›íË      I     ^>    I
 echo I  ÉJÅ[É\Éãë÷Ç¶  ã@î\ån  I                                     O==========O
 echo I                        I 2 %wmodeonoff%                         I
 echo O========================I                                                I
@@ -3437,6 +3621,7 @@ if %ErrorLevel%==8 goto settingcategory2intsetting1
 if %ErrorLevel%==9 goto settingcategoryhelpmode
 
 :settingcategory2intsetting1
+set sc2s5s1lock=&set sc2s5s2lock=&set sc2s5s3lock=&set sc2s5s1lock2=&set sc2s5s2lock2=&set sc2s5s3lock2=&set setting5_stg_whereyou=
 title ÉJÅ[É\Éãê›íË %debugmode%
 set selected=
 Cls
@@ -3446,7 +3631,7 @@ echo.
 echo O========================O                  O======O
 echo I      ÉJÉeÉSÉäÅ[        I                  I ê›íË I
 echo O========================O==================O======O======================O
-echo I                        I %clr%1 ãNìÆéûÇÃÉAÉjÉÅÅ[ÉVÉáÉì%clr2%            I   %setting5onoff%   I
+echo I                        I %clr%1 ãNìÆéûÇÃÉAÉjÉÅÅ[ÉVÉáÉìÇÃê›íË%clr2%      I     ^>    I
 echo I  ÉJÅ[É\Éãë÷Ç¶  ã@î\ån  I                                     O==========O
 echo I                        I 2 %wmodeonoff%                         I
 echo O========================I                                                I
@@ -3467,8 +3652,8 @@ if %ErrorLevel%==3 goto settingcategory2intsetting1
 if %ErrorLevel%==4 goto settingcategory2intsetting2
 if %ErrorLevel%==5 goto settingcategory2int
 if %ErrorLevel%==6 goto settingcategory2int
-if %ErrorLevel%==7 goto setting5
-if %ErrorLevel%==8 goto setting5
+if %ErrorLevel%==7 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==8 goto settingcategory2intsetting5_stg0
 
 :settingcategory2intsetting2
 title ÉJÅ[É\Éãê›íË %debugmode%
@@ -3480,7 +3665,7 @@ echo.
 echo O========================O                  O======O
 echo I      ÉJÉeÉSÉäÅ[        I                  I ê›íË I
 echo O========================O==================O======O======================O
-echo I                        I 1 ãNìÆéûÇÃÉAÉjÉÅÅ[ÉVÉáÉì            I   %setting5onoff%   I
+echo I                        I 1 ãNìÆéûÇÃÉAÉjÉÅÅ[ÉVÉáÉìÇÃê›íË      I     ^>    I
 echo I  ÉJÅ[É\Éãë÷Ç¶  ã@î\ån  I                                     O==========O
 echo I                        I %clr%2 %wmodeonoff%%clr2%                         I
 echo O========================I                                                I
@@ -3503,6 +3688,214 @@ if %ErrorLevel%==5 goto settingcategory2int
 if %ErrorLevel%==6 goto settingcategory2int
 if %ErrorLevel%==7 goto wmode
 if %ErrorLevel%==8 goto wmode
+
+
+
+:settingcategory2intsetting5_stg0
+set setting5_stg_whereyou=stg0
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               ê›íËÉÅÉjÉÖÅ[ Ver2!!
+echo. 
+echo O========================O                  O======O O====================O
+echo I      ÉJÉeÉSÉäÅ[        I                  I ê›íË I I ê›íË5/...          I
+echo O========================O==================O======O=O====================O
+echo I                        I %clr%1 ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%clr2%                I   %setting5onoff%   I
+echo I  ÉJÅ[É\Éãë÷Ç¶  ã@î\ån  I                                     O==========O
+echo I                        I %sc2s5s1lock%2 ÉäÉiÉbÉNÉXïóãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s1lock2%    I   %setting5_s1onoff%   I
+echo O========================I                                     O==========O
+Echo O  ÉJÉeÉSÉäÅ[  è„Ç©â∫Ç©  I %sc2s5s2lock%3 ÉVÉìÉvÉãÇ»ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s2lock2%      I   %setting5_s2onoff%   I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %sc2s5s3lock%4 ê∂ÇÃãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s3lock2%            I   %setting5_s3onoff%   I
+echo I%clr% ÉJÅ[É\Éãë÷Ç¶  å©ÇΩñ⁄ån %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%      ÉwÉãÉvÉÇÅ[Éh      %clrhelp2%I  I à⁄ìÆ : W A S D êîéö I ñﬂÇÈ : B I åàíË : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5
+if %ErrorLevel%==9 goto setting5
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+
+:settingcategory2intsetting5_stg1
+if "%setting5onoff%"=="ñ≥å¯" if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg0) else if "%setting5onoff%"=="ñ≥å¯" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg2)
+if "%simpleboot%"=="true" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg2) else if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg0)
+if "%rawboot%"=="true" if "%setting5_stg_whereyou%"=="stg3" (goto :settingcategory2intsetting5_stg3) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg3)
+set setting5_stg_whereyou=stg1
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               ê›íËÉÅÉjÉÖÅ[ Ver2!!
+echo. 
+echo O========================O                  O======O O====================O
+echo I      ÉJÉeÉSÉäÅ[        I                  I ê›íË I I ê›íË5/...          I
+echo O========================O==================O======O=O====================O
+echo I                        I 1 ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì                I   %setting5onoff%   I
+echo I  ÉJÅ[É\Éãë÷Ç¶  ã@î\ån  I                                     O==========O
+echo I                        I %clr%2 ÉäÉiÉbÉNÉXïóãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%clr2%    I   %setting5_s1onoff%   I
+echo O========================I                                     O==========O
+Echo O  ÉJÉeÉSÉäÅ[  è„Ç©â∫Ç©  I %sc2s5s2lock%3 ÉVÉìÉvÉãÇ»ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s2lock2%      I   %setting5_s2onoff%   I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %sc2s5s3lock%4 ê∂ÇÃãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s3lock2%            I   %setting5_s3onoff%   I
+echo I%clr% ÉJÅ[É\Éãë÷Ç¶  å©ÇΩñ⁄ån %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%      ÉwÉãÉvÉÇÅ[Éh      %clrhelp2%I  I à⁄ìÆ : W A S D êîéö I ñﬂÇÈ : B I åàíË : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5_1
+if %ErrorLevel%==9 goto setting5_1
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+
+:settingcategory2intsetting5_stg2
+if "%linuxboot%"=="true" if "%setting5_stg_whereyou%"=="stg1" (goto :settingcategory2intsetting5_stg1)
+if "%rawboot%"=="true" if "%setting5_stg_whereyou%"=="stg3" (goto :settingcategory2intsetting5_stg0) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg3)
+set setting5_stg_whereyou=stg2
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               ê›íËÉÅÉjÉÖÅ[ Ver2!!
+echo. 
+echo O========================O                  O======O O====================O
+echo I      ÉJÉeÉSÉäÅ[        I                  I ê›íË I I ê›íË5/...          I
+echo O========================O==================O======O=O====================O
+echo I                        I 1 ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì                I   %setting5onoff%   I
+echo I  ÉJÅ[É\Éãë÷Ç¶  ã@î\ån  I                                     O==========O
+echo I                        I %sc2s5s1lock%2 ÉäÉiÉbÉNÉXïóãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s1lock2%    I   %setting5_s1onoff%   I
+echo O========================I                                     O==========O
+Echo O  ÉJÉeÉSÉäÅ[  è„Ç©â∫Ç©  I %clr%3 ÉVÉìÉvÉãÇ»ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%clr2%      I   %setting5_s2onoff%   I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %sc2s5s3lock%4 ê∂ÇÃãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s3lock2%            I   %setting5_s3onoff%   I
+echo I%clr% ÉJÅ[É\Éãë÷Ç¶  å©ÇΩñ⁄ån %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%      ÉwÉãÉvÉÇÅ[Éh      %clrhelp2%I  I à⁄ìÆ : W A S D êîéö I ñﬂÇÈ : B I åàíË : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg3
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5_2
+if %ErrorLevel%==9 goto setting5_2
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+:settingcategory2intsetting5_stg3
+if "%setting5onoff%"=="ñ≥å¯" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0) else if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg2)
+if "%linuxboot%"=="true" if "%setting5_stg_whereyou%"=="stg1" (goto :settingcategory2intsetting5_stg1)
+if "%simpleboot%"=="true" if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg2) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0)
+set setting5_stg_whereyou=stg3
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               ê›íËÉÅÉjÉÖÅ[ Ver2!!
+echo. 
+echo O========================O                  O======O O====================O
+echo I      ÉJÉeÉSÉäÅ[        I                  I ê›íË I I ê›íË5/...          I
+echo O========================O==================O======O=O====================O
+echo I                        I 1 ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì                I   %setting5onoff%   I
+echo I  ÉJÅ[É\Éãë÷Ç¶  ã@î\ån  I                                     O==========O
+echo I                        I %sc2s5s1lock%2 ÉäÉiÉbÉNÉXïóãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s1lock2%    I   %setting5_s1onoff%   I
+echo O========================I                                     O==========O
+Echo O  ÉJÉeÉSÉäÅ[  è„Ç©â∫Ç©  I %sc2s5s2lock%3 ÉVÉìÉvÉãÇ»ãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%sc2s5s2lock2%      I   %setting5_s2onoff%   I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %clr%4 ê∂ÇÃãNìÆÉAÉjÉÅÅ[ÉVÉáÉì%clr2%            I   %setting5_s3onoff%   I
+echo I%clr% ÉJÅ[É\Éãë÷Ç¶  å©ÇΩñ⁄ån %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%      ÉwÉãÉvÉÇÅ[Éh      %clrhelp2%I  I à⁄ìÆ : W A S D êîéö I ñﬂÇÈ : B I åàíË : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg3
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5_3
+if %ErrorLevel%==9 goto setting5_3
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+:settingcategory2intsetting5blockcheck
+set sc2s5s1lock=&set sc2s5s1lock2=&set sc2s5s2lock=&set sc2s5s2lock2=&set sc2s5s3lock=&set sc2s5s3lock2=&
+if "%linuxboot%"=="true" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s2lock=[0m[107m&set sc2s5s2lock2=[0m[107m[30m
+    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s2lock=[0m[90m&set sc2s5s2lock2=[0m
+    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
+    )
+    exit /b
+)
+if "%setting5_s2onoff%"=="óLå¯" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
+    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
+    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
+    )
+) 
+if "%setting5_s3onoff%"=="óLå¯" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
+    set sc2s5s2lock=[0m[107m&set sc2s5s2lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
+    set sc2s5s2lock=[0m[90m&set sc2s5s2lock2=[0m
+    )
+    exit /b
+)
+if "%setting5onoff%"=="ñ≥å¯" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
+    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
+    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
+    )
+    exit /b
+)
+exit /b
+
 
 
 :settingcategoryhelpmode
@@ -3554,7 +3947,7 @@ if {%settinghelptoggle%}=={false} (set settinghelptoggle=true&goto settingcatego
 
 :settingcategoryhelpmodetoggleiftrue
 if {%wmodetoggle%}=={false} (set clr=[46m&set clrhelp=[7m&set clrhelp2=[0m)
-if {%wmodetoggle%}=={true} (set clr=[46m&set clrhelp=[100m[97m&set clrhelp2=[0m[107m)
+if {%wmodetoggle%}=={true} (set clr=[46m&set clrhelp=[100m[97m&set clrhelp2=[0m[107m[30m)
 goto settingcategoryhelpmode
 
 
@@ -3796,8 +4189,8 @@ SET /P selected= :
 echo %selected% Ç™ëIëÇ≥ÇÍÇ‹ÇµÇΩÅB
 if {%selected%}=={y} (goto :setting5y)
 if {%selected%}=={n} (goto :setting5n)
-if {%selected%}=={back} (goto :settingcategory2intsetting1)
-if {%selected%}=={b} (goto :settingcategory2intsetting1)
+if {%selected%}=={back} (Goto settingcategory2intsetting5_stg0)
+if {%selected%}=={b} (Goto settingcategory2intsetting5_stg0)
 goto setting5okey
 
 :setting5y
@@ -3825,18 +4218,194 @@ Echo ê›íËÇïœçXÇµÇ‹ÇµÇΩÅB
 Pause
 set wantload=setting5
 call :MOBAS_Loader
-Goto settingcategory2intsetting1
+Goto settingcategory2intsetting5_stg0
+
 
 :setting5n
 cls
 Echo ê›íËÇïœçXÇµÇ‹ÇπÇÒÇ≈ÇµÇΩ
 Pause
-goto settingcategory2intsetting1
+Goto settingcategory2intsetting5_stg0
+
+
+:setting5_1
+if {%settinghelptoggle%}=={true} (goto setting5_1help)
+find "s5_linuxboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_1setonoff=óLå¯&goto setting5_1okey
+if %ErrorLevel%==1 set setting5_1setonoff=èCïúÇµÅAê≥èÌÇ»èÛë‘&goto setting5_1onoff
+
+:setting5_1onoff
+find "s5_linuxboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_1setonoff=ñ≥å¯
+
+:setting5_1okey
+cls
+echo ãNìÆéûÇÃlinuxïóÇÃãNìÆÉAÉjÉÅÅ[ÉVÉáÉìÇ%setting5_1setonoff%Ç…ÇµÇ‹Ç∑Ç©ÅH(Y=ÇÕÇ¢ N=Ç¢Ç¢Ç¶ B=ñﬂÇÈ)
+SET /P selected= :
+echo %selected% Ç™ëIëÇ≥ÇÍÇ‹ÇµÇΩÅB
+if {%selected%}=={y} (goto :setting5_1y)
+if {%selected%}=={n} (goto :setting5_1n)
+if {%selected%}=={back} (goto :settingcategory2intsetting5_stg0)
+if {%selected%}=={b} (goto :settingcategory2intsetting5_stg0)
+goto setting5_1okey
+
+:setting5_1y
+find "s5_linuxboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+echo ê›íËÇìKópíÜ...
+
+if %ErrorLevel%==1 goto setting5_1ygo3test
+if %ErrorLevel%==0 goto setting5_1ygo1
+
+:setting5_1ygo3test
+find "s5_linuxboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==1 echo s5_linuxboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+if %ErrorLevel%==0 goto setting5_1ygo2
+
+:setting5_1ygo2
+powershell "(gc ÉJÅ[É\Éãë÷Ç¶.txt) -replace 's5_linuxboot=true','s5_linuxboot=false' | sc ÉJÅ[É\Éãë÷Ç¶.txt"
+set linuxboot=false
+goto setting5_1yokey
+
+:setting5_1ygo1
+powershell "(gc ÉJÅ[É\Éãë÷Ç¶.txt) -replace 's5_linuxboot=false','s5_linuxboot=true' | sc ÉJÅ[É\Éãë÷Ç¶.txt"
+set linuxboot=true
+goto setting5_1yokey
+
+:setting5_1yokey
+cls
+Echo ê›íËÇïœçXÇµÇ‹ÇµÇΩÅB
+Pause
+set wantload=setting5_1
+call :MOBAS_Loader
+Goto settingcategory2intsetting5_stg1
+
+:setting5_1n
+cls
+Echo ê›íËÇïœçXÇµÇ‹ÇπÇÒÇ≈ÇµÇΩ
+Pause
+goto settingcategory2intsetting5_stg1
+
+
+:setting5_2
+if {%settinghelptoggle%}=={true} (goto setting5_2help)
+find "s5_simpleboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_2setonoff=óLå¯&goto setting5_2okey
+if %ErrorLevel%==1 set setting5_2setonoff=èCïúÇµÅAê≥èÌÇ»èÛë‘&goto setting5_2onoff
+
+:setting5_2onoff
+find "s5_simpleboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_2setonoff=ñ≥å¯
+
+:setting5_2okey
+cls
+echo ãNìÆéûÇÃÉVÉìÉvÉãÇ»ÉuÅ[ÉgÉAÉjÉÅÅ[ÉVÉáÉìÇ%setting5_2setonoff%Ç…ÇµÇ‹Ç∑Ç©ÅH(Y=ÇÕÇ¢ N=Ç¢Ç¢Ç¶ B=ñﬂÇÈ)
+SET /P selected= :
+echo %selected% Ç™ëIëÇ≥ÇÍÇ‹ÇµÇΩÅB
+if {%selected%}=={y} (goto :setting5_2y)
+if {%selected%}=={n} (goto :setting5_2n)
+if {%selected%}=={back} (goto :settingcategory2intsetting5_stg1)
+if {%selected%}=={b} (goto :settingcategory2intsetting5_stg1)
+goto setting5_2okey
+
+:setting5_2y
+find "s5_simpleboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+echo ê›íËÇìKópíÜ...
+if %ErrorLevel%==1 goto setting5_2ygo3test
+if %ErrorLevel%==0 goto setting5_2ygo1
+
+:setting5_2ygo3test
+find "s5_simpleboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==1 echo s5_simpleboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+if %ErrorLevel%==0 goto setting5_2ygo2
+
+:setting5_2ygo2
+powershell "(gc ÉJÅ[É\Éãë÷Ç¶.txt) -replace 's5_simpleboot=true','s5_simpleboot=false' | sc ÉJÅ[É\Éãë÷Ç¶.txt"
+set simpleboot=false
+goto setting5_2yokey
+
+:setting5_2ygo1
+powershell "(gc ÉJÅ[É\Éãë÷Ç¶.txt) -replace 's5_simpleboot=false','s5_simpleboot=true' | sc ÉJÅ[É\Éãë÷Ç¶.txt"
+set simpleboot=true
+goto setting5_2yokey
+
+:setting5_2yokey
+cls
+Echo ê›íËÇïœçXÇµÇ‹ÇµÇΩÅB
+Pause
+set wantload=setting5_2
+call :MOBAS_Loader
+Goto settingcategory2intsetting5_stg2
+
+:setting5_2n
+cls
+Echo ê›íËÇïœçXÇµÇ‹ÇπÇÒÇ≈ÇµÇΩ
+Pause
+goto settingcategory2intsetting5_stg2
+
+
+
+:setting5_3
+if {%settinghelptoggle%}=={true} (goto setting5_3help)
+find "s5_rawboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_3setonoff=óLå¯&goto setting5_3okey
+if %ErrorLevel%==1 set setting5_3setonoff=èCïúÇµÅAê≥èÌÇ»èÛë‘&goto setting5_3onoff
+
+:setting5_3onoff
+find "s5_rawboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==0 set setting5_3setonoff=ñ≥å¯
+
+:setting5_3okey
+cls
+echo ãNìÆéûÇÃê∂ÉAÉjÉÅÅ[ÉVÉáÉìÇ%setting5_3setonoff%Ç…ÇµÇ‹Ç∑Ç©ÅH(Y=ÇÕÇ¢ N=Ç¢Ç¢Ç¶ B=ñﬂÇÈ)
+SET /P selected= :
+echo %selected% Ç™ëIëÇ≥ÇÍÇ‹ÇµÇΩÅB
+if {%selected%}=={y} (goto :setting5_3y)
+if {%selected%}=={n} (goto :setting5_3n)
+if {%selected%}=={back} (goto :settingcategory2intsetting5_stg3)
+if {%selected%}=={b} (goto :settingcategory2intsetting5_stg3)
+goto setting5_3okey
+
+:setting5_3y
+find "s5_rawboot=false" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+echo ê›íËÇìKópíÜ...
+
+if %ErrorLevel%==1 goto setting5_3ygo3test
+if %ErrorLevel%==0 goto setting5_3ygo1
+
+:setting5_3ygo3test
+find "s5_rawboot=true" ÉJÅ[É\Éãë÷Ç¶.txt > nul
+if %ErrorLevel%==1 echo s5_rawboot=false >> ÉJÅ[É\Éãë÷Ç¶.txt
+if %ErrorLevel%==0 goto setting5_3ygo2
+
+:setting5_3ygo2
+powershell "(gc ÉJÅ[É\Éãë÷Ç¶.txt) -replace 's5_rawboot=true','s5_rawboot=false' | sc ÉJÅ[É\Éãë÷Ç¶.txt"
+set rawboot=false
+goto setting5_3yokey
+
+:setting5_3ygo1
+powershell "(gc ÉJÅ[É\Éãë÷Ç¶.txt) -replace 's5_rawboot=false','s5_rawboot=true' | sc ÉJÅ[É\Éãë÷Ç¶.txt"
+set rawboot=true
+goto setting5_3yokey
+
+:setting5_3yokey
+cls
+Echo ê›íËÇïœçXÇµÇ‹ÇµÇΩÅB
+Pause
+set wantload=setting5_3
+call :MOBAS_Loader
+Goto settingcategory2intsetting5_stg3
+
+:setting5_3n
+cls
+Echo ê›íËÇïœçXÇµÇ‹ÇπÇÒÇ≈ÇµÇΩ
+Pause
+goto settingcategory2intsetting5_stg3
+
 
 
 :wmode
 if {%settinghelptoggle%}=={true} (goto wmodehelp)
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 :wmodetest
 find "wmode=false" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt > nul
 if %ErrorLevel%==0 set wmodesetonoff=ÉzÉèÉCÉg
@@ -3948,7 +4517,34 @@ echo Ç±ÇÃê›íËÇÕÅAãNìÆéûÇ…ïKÇ∏ñàâÒó¨ÇÍÇÈÉuÅ[ÉgÉAÉjÉÅÅ[ÉVÉáÉìÅAÇ¢ÇÌÇŒãNìÆâÊñ Çñ≥å
 echo Ç±ÇÃê›íËÇñ≥å¯Ç…Ç∑ÇÈÇ±Ç∆Ç…ÇÊÇ¡ÇƒÅAãNìÆéûä‘ÇÃíZèkÇ‚Ç§Ç¡Ç∆Ç§ÇµÇ≥ÇÃåyå∏Ç…Ç¬Ç»Ç™ÇËÇ‹Ç∑ÅB
 echo Ç±ÇÃê›íËÇÕÉfÉtÉHÉãÉgÇ≈ÇÕóLå¯Ç≈Ç∑ÅB
 pause
-goto settingcategory2intsetting1
+Goto settingcategory2intsetting5_stg0
+
+:setting5_1help
+cls
+echo Ç±ÇÃê›íËÇÕÉäÉiÉbÉNÉXïóÇÃãNìÆÉAÉjÉÅÅ[ÉVÉáÉìÇçƒê∂Ç∑ÇÈÇÊÇ§Ç…Ç∑ÇÈê›íËÇ≈Ç∑ÅB
+echo ãNìÆíÜÇ»ÇÃÇ™ÇÌÇ©ÇËÇ‚Ç∑Ç≠ÅAå©ÇΩñ⁄Ç™ó«Ç¢Ç≈Ç∑ÅBÇ‹ÇΩÅAãNìÆíÜÇ…ÉGÉâÅ[Ç™î≠ê∂ÇµÇΩç€Ç…ÅAÉGÉâÅ[Ç™î≠ê∂ÇµÇΩå¬èäÇ™ÇÌÇ©ÇËÇ‚Ç∑Ç≠Ç»ÇÈÇ±Ç∆Ç™Ç†ÇËÇ‹Ç∑ÅB
+echo Ç±ÇÃê›íËÇÕsimplebootÇ®ÇÊÇ—rawbootÇ∆ïπópÇ≈Ç´Ç‹ÇπÇÒÅB
+echo Ç±ÇÃê›íËÇÕïWèÄÇ≈ÇÕfalseÇ≈Ç∑ÅB
+pause
+goto settingcategory2intsetting5_stg1
+
+:setting5_2help
+cls
+echo Ç±ÇÃê›íËÇÕãNìÆéûÇ…"ãNìÆíÜ..."Ç∆Ç¢Ç§ÉeÉLÉXÉgÇÃÇ›Ç≈ãNìÆÇ≥ÇπÇÈÇÊÇ§Ç…Ç∑ÇÈê›íËÇ≈Ç∑ÅB
+echo çÇë¨Ç©Ç¬ï™Ç©ÇËÇ‚Ç∑Ç≠ÅAÉVÉìÉvÉãÇ≈Ç∑ÅBÇΩÇæÇµÇ¬Ç‹ÇÁÇ»Ç≠å©Ç¶ÇÈâ¬î\ê´Ç™Ç†ÇËÉ}ÉXÅB
+echo Ç±ÇÃê›íËÇÕlinuxbootÇ®ÇÊÇ—rawbootÇ∆ïπópÇ≈Ç´Ç‹ÇπÇÒÅB
+echo Ç±ÇÃê›íËÇÕïWèÄÇ≈ÇÕfalseÇ≈Ç∑ÅB
+pause
+goto settingcategory2intsetting5_stg2
+
+:setting5_3help
+cls
+echo Ç±ÇÃê›íËÇÕãNìÆéûÇ…echo onÇÃèÛë‘Ç≈ãNìÆÇ∑ÇÈÇÊÇ§Ç…Ç∑ÇÈê›íËÇ≈Ç∑ÅB
+echo ÉVÉìÉvÉãÇ≈ÇÌÇ©ÇËÇ‚Ç∑Ç≠ÅAåªç›âΩÇ™é¿çsÇ≥ÇÍÇƒÇ¢ÇÈÇ©Ç™àÍñ⁄Ç≈ÇÌÇ©ÇËÇ‹Ç∑ÅBÇ‹ÇΩÅAÉnÉbÉJÅ[ãCï™Ç…Ç‡Ç»ÇÍÇ‹Ç∑ÅB
+echo Ç±ÇÃê›íËÇÕlinuxbootÇ®ÇÊÇ—simplebootÇ∆ïπópÇ≈Ç´Ç‹ÇπÇÒÅB
+echo Ç±ÇÃê›íËÇÕïWèÄÇ≈ÇÕfalseÇ≈Ç∑ÅB
+pause
+goto settingcategory2intsetting5_stg3
 
 :wmodehelp
 cls
@@ -4107,7 +4703,7 @@ find "CursorChanged" èââÒÉJÅ[É\Éã.txt > nul
 if "%errorlevel%"=="0" goto changetodefault else goto FirstWarning
 rem Write settings (default)
 :FirstWarning
-if defined wmodetoggle (set clrfirstwarning=[40m[37m)
+if not defined dummy (set clrfirstwarning=[40m[37m)
 if {%wmodetoggle%}=={false} (set clrfirstwarning=[40m[37m)
 if {%wmodetoggle%}=={true} (set clrfirstwarning=[107m[30m)
 rem warning message, first-time startup only
@@ -4291,7 +4887,7 @@ goto reboot
 
 rem dogcheckÅBÉJÅ[É\Éãë÷Ç¶ê›íË.txtÇ™ë∂ç›Ç∑ÇÈÇ©Çåüèÿ
 :AllDefult
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 if {%settinghelptoggle%}=={true} (goto alldefhelp)
 if exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt goto AllDefulttest
 if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt goto Dogcheck
@@ -4383,7 +4979,7 @@ exit
 
 rem alldef
 :AllDefulttest
-cd /d %HOMEDRIVE%%HOMEPATH% 
+cd /d %batchmainpath% 
 find "nodogcheckfor1234567890qwertyuiop" ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
 cls
 if %ErrorLevel%==0 goto AllDefult1
@@ -4539,18 +5135,11 @@ echo ê›íËÉtÉ@ÉCÉãÇèâä˙âªÇµÇ‹Ç∑ÅBÇ¢Ç‹Ç‹Ç≈ÇÃê›íËÇÕÇ∑Ç◊ÇƒçÌèúÇ≥ÇÍÇ‹Ç∑ÅB
 echo ÉLÉÉÉìÉZÉãÇ∑ÇÈèÍçáÇÕÅAÇ±ÇÃéûì_Ç≈ÉoÉbÉ`èàóùÇèIóπÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB
 pause
 cls
-type nul > ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo nodogcheckfor1234567890qwertyuiop >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo CheckUpdate=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo wmode=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo admin=false >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo rebootokey=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo hatenakeikoku=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
-echo bootanimation=true >> ÉJÅ[É\Éãë÷Ç¶ê›íË.txt
+call :Wipealldeta
 title ...
-echo èâä˙âªÇ™äÆóπÇµÇ‹ÇµÇΩÅBïœçXÇìKópÇ∑ÇÈÇΩÇﬂÅAÉJÅ[É\Éãë÷Ç¶ÇèIóπÇµÇ‹Ç∑ÅBÇ»ÇÃÇ≈çƒãNìÆÇÇ®äËÇ¢ÇΩÇµÇ‹Ç∑ÅB
-goto exit
-
+echo èâä˙âªÇ™äÆóπÇµÇ‹ÇµÇΩÅBïœçXÇìKópÇ∑ÇÈÇΩÇﬂÅAÉJÅ[É\Éãë÷Ç¶ÇçƒãNìÆÇµÇ‹Ç∑ÅBâΩÇ©ÉLÅ[ÇâüÇµÇƒçƒãNìÆ...
+pause >nul
+goto :Rebootbatch
 :alldefsettingno
 cls
 echo ê›íËÇÕèâä˙âªÇ≥ÇÍÇ‹ÇπÇÒÇ≈ÇµÇΩÅB
@@ -4567,7 +5156,7 @@ goto alldefsettingno2
 :alldefshowsettingpass
 cls
 echo ê›íËÉtÉ@ÉCÉãÇ™íuÇ©ÇÍÇƒÇ¢ÇÈÉpÉXÇï\é¶ÇµÇ‹Ç∑ÅB
-start explorer %HOMEDRIVE%%HOMEPATH%
+start explorer %batchmainpath%
 powershell sleep 5
 echo ä¬ã´Ç…Ç‡ÇÊÇËÇ‹Ç∑Ç™ÅAÇΩÇ¢ÇƒÇ¢ÇÃèÍçáÅAâ∫ÇÃÇŸÇ§Ç‹ÇΩÇÕè„ÇÃÇŸÇ§Ç…ÉJÅ[É\Éãë÷Ç¶ê›íË.txtÇ™Ç†ÇÈÇ∆évÇ¢Ç‹Ç∑ÅB
 pause
@@ -4680,7 +5269,7 @@ pause
 
 rem ÉAÉìÉCÉìÉXÉgÅ[ÉãÉÅÉjÉÖÅ[ÇÃó·äOèàóù èââÒÉJÅ[É\ÉãÇ™Ç»Ç¢èÍçáÇÃÅBÇæÇØÇ«èÁí∑ÇæÇ©ÇÁâ¸ëPÇµÇΩÇ¢ÅB
 rem ó·äOèàóùÇÇ‡Ç§ÇøÇÂÇ¡Ç∆ëùÇ‚ÇµÇΩÇ¢ÅBó·Ç¶ÇŒÅAíÜêgÇâ¸ë¢ÇµÇ»Ç¢å¿ÇËê‚ëŒÇ…Ç†ÇËÇ¶Ç»Ç¢èÛë‘Ç…Ç»Ç¡ÇΩèÍçáÇ…ÅAgotoÇµÇƒïœêîÇ≈ï™äÚÇµÇƒÉÅÉbÉZÅ[ÉWÇïœçXÇ∑ÇÈÇ›ÇΩÇ¢Ç…ÇµÇƒÅB
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 if not exist èââÒÉJÅ[É\Éã.txt set erroralldefwhatdelete=èââÒÉJÅ[É\Éã & goto BSOD_Errors
 :testerroralldef
 if not exist ÉJÅ[É\Éãë÷Ç¶ê›íË.txt set erroralldefwhatdelete=ÉJÅ[É\Éãë÷Ç¶ê›íË & goto BSOD_Errors
@@ -4691,38 +5280,38 @@ goto alldefnow
 set runningfromfulldebug=
 set FromREConsole=
 timeout /t 1 /nobreak >nul
-title ÉuÉãÅ[ÉXÉNÉäÅ[ÉìÅIÅI
-mode con: cols=100 lines=30
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
+title ÉuÉãÅ[ÉXÉNÉäÅ[ÉìÅI
+mode con: cols=97 lines=26
 color 1f
 rem message indication
 echo 
 cls
-echo A problem has been detected and Cursor Changer has been shut down to prevent echo damage to your computer.
-echo If this is the first time you've seen this stop error screen,
-echo restart your computer.
-echo If this screen appears again,
-echo follow these steps:
 echo.
-echo Check to be sure you have adequate disk space.
-echo If anythings is identified in the stop message,
-echo disable the untivirus softwere or check the updates of windows.
-echo Try changing Video adapters.
 echo.
-echo Check with Github for any Cursor Changer updates.
-echo Disable Something options such as uhh... i dont know but
-echo If you need to use Arguments to remove or disable components,
-echo Use Ctrl+R, then Enter cmd, then copy and paste the full path to this batch ^(or d^&d^), and then specify the arguments available to the batch.
-echo Im (tamago1908) recommend "Bypsloadsg". A list of available arguments can be found by specifying "help" as an argument.
+echo                            ###
+echo                            ###
+echo            ###          ###
+echo            ###          ###
+echo                         ###
+echo                         ###
+echo            ###          ###
+echo            ###          ###
+echo                            ###
+echo                            ###
 echo.
-echo Technical information:
 echo.
-echo *** STOP: 0x0000000%1
-echo *** MEMORY LOGS: 57 68 61 74 20 74 68 65 20 66 75 63 6b 69 6e 67 20 61 72 65 20 79 6f 75 20 74 68 69 6e 6b 69 6e 67 3f
+echo          ÉJÅ[É\Éãë÷Ç¶Ç™ÉNÉâÉbÉVÉÖÇµÇ‹ÇµÇΩÅI
 echo.
-echo Beginning dump of physical memory (lie)
-echo physical memory dump complete. (lier!!!!)
-echo Contact tamago1908 with ÉJÅ[É\Éãë÷Ç¶ Github for further echo assistance.
-
+echo          Ç±ÇÃâÊñ ÇÕâΩÇÁÇ©ÇÃóùóRÇ≈ÉJÅ[É\Éãë÷Ç¶Ç™ÉNÉâÉbÉVÉÖÇµÇΩç€Ç…ï\é¶Ç≥ÇÍÇ‹Ç∑ÅB
+echo          ÉTÉ|Å[ÉgÇìæÇÈç€Ç…ÇÕà»â∫ÇÃèÓïÒÇ™ñÇ…óßÇ¬Ç©Ç‡ÇµÇÍÇ‹ÇπÇÒ :
+echo.
+echo          ÉGÉâÅ[ID : %1
+echo.
+echo          Ç±ÇÃâÊñ Ç…Ç¬Ç¢ÇƒÇÃè⁄ç◊èÓïÒÇìæÇÈç€Ç…ÇÕà»â∫ÇÃÉäÉìÉNÇ…ÉAÉNÉZÉXÇµÇƒÇ≠ÇæÇ≥Ç¢ (âpåÍ) :
+echo.
+echo          https://github.com/tamago1908/Cursor-Changer.bat/wiki/BSOD-Crash-(Error-Screen)
+echo.
 if {%1}=={0} (goto :BSOD_Errors0message)
 if {%1}=={1} (goto :BSOD_Errors1message)
 if {%1}=={2} (goto :BSOD_Errors2message)
@@ -4811,6 +5400,7 @@ echo %errorlevel% > nul
 :BSOD_Errors3message3message
 echo Dim answer:answer = MsgBox("...Ç‹ÇüÅAé¿ç€Ç…ÇÕÇ†Ç»ÇΩÇ™%erroralldefwhatdelete%ÇçÌèúÇµÇΩÇÃÇ™å¥àˆÇæÇÎÇ§ÇØÇ«ÇÀÅB",vbYesno,""):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 echo %errorlevel% > nul
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
 if {%errorlevel%}=={6} (del /Q %TEMP%\msgbox.vbs&goto :BSOD_Errors3message3messageok)
 if {%errorlevel%}=={7} (del /Q %TEMP%\msgbox.vbs&goto :BSOD_Errors3message3messageno)
 goto BSOD_Errors3message3message
@@ -4860,6 +5450,7 @@ echo THE SYSTEM HAS BEEN DESTROYED
 echo.
 echo ÉGÉâÅ[ ID : 6 (bsod_errorsÇ™à¯êîÇ»ÇµÇ…callÇ‹ÇΩÇÕgotoÇ≥ÇÍÇ‹ÇµÇΩÅB)
 pause
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
 if {%wmodetoggle%}=={true} (color f0) else (color 07)
 goto hazime
 
@@ -4867,7 +5458,8 @@ goto hazime
 :BSOD_ErrorsRorR
 echo Dim answer:answer = MsgBox("ÇÕÇ¢ÇâüÇ∑Ç∆ç°Ç±ÇÃéûì_Ç≈çƒãNìÆÇµÅAÇ¢Ç¢Ç¶ÇâüÇ∑Ç∆ÉäÉJÉoÉäÅ[ÉÅÉjÉÖÅ[Ç…à⁄ìÆÇµÇ‹Ç∑ÅB",vbyesno,"Ç«ÇøÇÁÇ©ÇëIëÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 echo %errorlevel% > nul
-if {%errorlevel%}=={6} (del /Q %TEMP%\msgbox.vbs&cd %~dp0 &start "" ^"%~n0%~x0^"&exit)
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
+if {%errorlevel%}=={6} (del /Q %TEMP%\msgbox.vbs&goto :batrestart)
 if {%errorlevel%}=={7} (del /Q %TEMP%\msgbox.vbs&goto :Cursor_Changer_REmenu)
 
 
@@ -4943,7 +5535,7 @@ echo Ç±ÇÍÇ≈Ç®ï ÇÍÇ≈Ç∑ÇÀÅBÇ≥ÇÊÇ§Ç»ÇÁÅB
 pause
 rem é©êgÇÃÉpÉXÇéÊìæÇµÇƒÅAé©ï™é©êgÇçÌèú
 del %batpath%
-goto exit
+exit
 
 :reboot
 rem ê›íËÇ…âûÇ∂ÇƒrebootÉÅÉbÉZÅ[ÉWÇçƒê∂Ç∑ÇÈÇ©Ç«Ç§Ç©ÇÃîªï 
@@ -4993,7 +5585,7 @@ goto higan
 echo çƒãNìÆÇµÇ‹Ç∑ÅB
 pause
 shutdown /r /t 2
-goto reboot
+goto Rebootbatch
 
 :higan
 title îﬂäË %debugmode%
@@ -5015,7 +5607,7 @@ goto higan
 :nohi
 echo.
 echo ÇÌÇ©ÇËÇ‹ÇµÇΩ....
-goto exit
+goto Rebootbatch
 
 :yes
 echo Ç†ÇËÇ™Ç∆Ç§Ç≤Ç¥Ç¢Ç‹Ç∑ÅB
@@ -5053,10 +5645,10 @@ goto rebootok
 echo Ç¶Ç¡ÅHÇƒÇ±Ç∆ÇÕíºä¥Ç≈Ç‚Ç¡ÇΩÇ¡ÇƒÇ±Ç∆Ç»ÇÃÅH
 pause
 echo Ç§ÇªÇ≈ÇµÇÂ...?
-goto exit
+goto Rebootbatch
 :secrethentai
 echo ÉLÉÉÅ[ÉbÅI%USERNAME%Ç≥ÇÒÇÃÉGÉbÉ`Å[ÅI
-goto exit
+goto Rebootbatch
 
 
 :testinthecalbeep
@@ -5291,9 +5883,9 @@ cls
 rem dumbass code, wtf hell no who make it fr (damn its me but)!!!!! ITS ABSOLUTE TRASH!!!! THATS IS SO HARD TO READ
 rem so many set uhhh
 rem STOP SPAMMING SET AUHAUAHAUAHAUHAUAHAHAHAUAHUAHUUAUHHUHUHUHUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh&SET IHHHHGISJGIE
+if not defined dummy (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrcyan=[96m&set clrgra=[90m&set clr2=[0m)
 if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m[107m[30m)
-if defined %wmodetoggle% (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrcyan=[96m&set clrgra=[90m&set clr2=[0m)
 if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
 cls
 echo [Loading Command list...]
@@ -5500,6 +6092,10 @@ rundll32.exe user32.dll, LockWorkStation
 if "%eggcount%" gtr "5" (exit)
 if {%looplockdownhorroreaster%}=={true} (set /a eggcount=eggcount+1&goto lockloop1908)
 goto reboot
+
+:Rebootbatch
+cd %~dp0 &start "" ^"%~n0%~x0^"&Exit
+
 
 :exit
 pause

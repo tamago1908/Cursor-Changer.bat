@@ -47,17 +47,38 @@ rem   limitations under the License.
 
 
 rem Make sure to fill in the build number and version! Also, don't forget to put it in the archive!
-title Cursor Changer
-rem VER v1.13ƒÀ6
-set batver=1.13ƒÀ6
-set batbuild=build 60
-set batverdev=beta
+rem environment setting, It is not recommended to change.
+rem VER v1.13
+set batver=1.13
+set batbuild=build 64
+set batverdev=stable
 set Mainmenueaster=false
 set firststartbat=no
+set bootbatnow=yes
 set messagealreadyshowed=false
 set batpath=%~0
-cd /d %HOMEDRIVE%%HOMEPATH%
+
+rem Here you can change the path to the location where configuration files and other files are placed and loaded
+rem Example : 
+rem %HOMEDRIVE%%HOMEPATH% (default)
+rem %HOMEDRIVE%%HOMEPATH%\desktop (desktop)
+rem %0 (batch placed path)
+rem O===================================O
+set "batchmainpath=%HOMEDRIVE%%HOMEPATH%"
+rem O===================================O
+cd /d %batchmainpath%
+
+
+
+:batbootloader_animationcheck
 setlocal enabledelayedexpansion
+
+rem bootloader animation loader. first of all, load theme setting.
+if exist CursorChangerSettings.txt (
+find "wmode=true" CursorChangerSettings.txt > nul 
+if {!errorlevel!}=={0} (color f0&set wmodetoggle=true) else (set wmodetoggle=false)
+) else (set wmodetoggle=false)
+
 >nul 2>&1 find "bootanimation=true" CursorChangerSettings.txt
 if "!errorlevel!"=="0" (
     >nul 2>&1 find "s5_rawboot=true" CursorChangerSettings.txt
@@ -65,11 +86,12 @@ if not "!errorlevel!"=="0" (
 >nul 2>&1 find "s5_linuxboot=true" CursorChangerSettings.txt
 if "!errorlevel!"=="0" (
     set linuxboot=true
+        echo [%time: =%] Cursor Changer %batver% Bootloader - by tamago_1908&echo.&echo O================ Boot Start Here ================O&echo.
 >nul 2>&1 find "wmode=true" CursorChangerSettings.txt
 if "!errorlevel!"=="0" (set linuxishclr=[92m&set linuxishclr2=[107m[30m) 
 >nul 2>&1 find "wmode=false" CursorChangerSettings.txt
 if "!errorlevel!"=="0" (set linuxishclr=[92m&set linuxishclr2=[0m)
-) else (set linuxboot=false)
+)
 )
 )
 
@@ -78,19 +100,42 @@ if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Linux-ish Boot 
 if "!errorlevel!"=="0" (
 >nul 2>&1 find "s5_simpleboot=true" CursorChangerSettings.txt
 if "!errorlevel!"=="0" (
+    if not "%linuxboot%"=="true" (
     set simpleboot=true
+    )
 )
 )
 >nul 2>&1 find "bootanimation=true" CursorChangerSettings.txt
 if "!errorlevel!"=="0" (
 >nul 2>&1 find "s5_rawboot=true" CursorChangerSettings.txt
 if "!errorlevel!"=="0" (
-@echo on
+    if not "%linuxboot%"=="true" (
+        if not "%simpleboot%"=="true" (
+        @echo on
+        set rawboot=true
+        )
+    )
 )
 )
 setlocal disabledelayedexpansion
+if "%animationrecheck%"=="true" (set animationrecheck=&exit /b)
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Bootanimation Checked...)
 
+
+rem chenge the boot message if it is the first time, or if a value is defined in batbotpowershell, or at boot up
+if not exist CursorChangerSettings.txt set firststartbat=yes
+if not "%linuxboot%"=="true" (
+if not "%firststartbat%"=="yes" (
+if {%bootbatnow%}=={yes} (title Cursor Changer Preparing...&echo Please wait a while...)
+) else (
+    if not defined batbootpowershell (
+        if not exist FirstCursor.txt (
+        echo Preparing Setup...
+        ) else (title Cursor Changer Preparing...&echo Please wait a while...)
+    )
+)
+)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Boot Message IS NO MORE WORKING...)
 
 :batstartErrortracker
 rem I don't know why, but it seems that Argment_loader does not work within subroutines.
@@ -103,10 +148,12 @@ call :BSOD_Errors 0
 
 goto :batstarterrortrackermain
 :batstartErrortrackerstart
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Error_Tracker is started.)
 set argmentloaded=
 goto :Argments_Loaderend
 
 :Argments_Loader
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is Started...)
 rem Exit without argument
 if "%~1"=="" set argmentloaded=true& goto Argments_Loaderend
 title Cursor Changer argment checking...
@@ -136,8 +183,8 @@ for /l %%i in (1,1,%n%) do (
     if "!current!"=="bypsdisexit" (echo disableexitbutton is bypassed.&set disableexit=false&set argmentserror=false)
     if "!current!"=="enablesimpleboot" (echo simpleboot is enabled.&set simpleboot=true&set argmentserror=false)
     if "!current!"=="devmode" (call :developermenu&set argmentserror=false)
-    if "!current!"=="recovery" (echo recovery mode is enabled.&set argmentserror=false&goto Cursor_Changer_REmenu)
-    if "!current!"=="help" (call :batstarthelp&set argmentserror=false)
+    if "!current!"=="recovery" (call :batbootcheckwinver dynamic&echo recovery mode is enabled.&set argmentserror=false&goto Cursor_Changer_REmenu)
+    if "!current!"=="help" (call :batbootcheckwinver dynamic&call :batstarthelp&set argmentserror=false)
     if "!current!"=="bypsvck" (echo winver check is bypassed.&set bypasswinvercheck=true&set argmentserror=false)
     if "!current!"=="bypsadm" (echo getadmin is bypassed.&set adminbypass=true&set adminbypass=false&set argmentserror=false)
     if "!current!"=="bypsloadsg" (echo setting load is bypassed.&set settingbypass=true&set argmentserror=false)
@@ -149,42 +196,42 @@ for /l %%i in (1,1,%n%) do (
     set argmentloaded=true
     timeout /t 3 /nobreak >nul
 :Argments_Loaderend
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is done.)
 set n=
 setlocal disabledelayedexpansion
 if {%argmentloaded%}=={true} (set argmentloaded=&goto :batstarterrortrackermain)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Argment_Loader is done.)
 set argmentserror=
-if exist CursorChangerSettings.txt (
-setlocal enabledelayedexpansion
-find "wmode=true" CursorChangerSettings.txt > nul 
-if {!errorlevel!}=={0} (color f0&set wmodetoggle=true) else (set wmodetoggle=false)
-setlocal disabledelayedexpansion
-) else (set wmodetoggle=false)
+
+
 
 :batbootcheckwinver
-ver | find /i "Version 10.0.23" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 10.0.22" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 10.0.105" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 10.0.102" > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows10 1509&goto batbootcheckwinverbad)
-ver | find /i "Version 10.0.10" > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows10&goto batbootcheckwinverbad)
-ver | find /i "Version 10.0.1" > nul
-if "%errorlevel%"=="0" (goto batbootcheckwinversafe)
-ver | find /i "Version 6.3." > nul
+rem checking windows version
+setlocal enabledelayedexpansion
+if not "%1"=="dynamic" (
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Checking Windows Version...)
+)
+rem check windows 10 1511 or higher
+for /f "tokens=6 delims=. " %%i in ('ver') do set version=%%i
+if "%version:~-0,-2%" gtr "105" (set batbootcheckwinversafe=true)
+for /f "usebackq delims=" %%a in (`ver`) do set version2=%%a
+rem check windows 8.1 or lower
+echo %version2% | find /i "Version 6.3." > nul
 if "%errorlevel%"=="0" (set windowsverfilter=windows 8.1&goto batbootcheckwinverbad)
-ver | find /i "Version 6.2." > nul
+echo %version2% | find /i "Version 6.2." > nul
 if "%errorlevel%"=="0" (set windowsverfilter=windows 8&goto batbootcheckwinverbad)
-ver | find /i "Version 6.1." > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows7&goto batbootcheckwinverbad) else (
-set "windowsverfilter=too old! like windows xp?"&goto batbootcheckwinverbad
+echo %version2% | find /i "Version 6.1." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows7&goto batbootcheckwinverbad)
+echo %version2% | find /i "Version 6.0." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=windows vista) else (
+    if "%batbootcheckwinversafe%"=="true" (goto :batbootcheckwinversafe)
+    set "windowsverfilter=too old! like windows xp?"
+    goto batbootcheckwinverbad
 )
 
 :batbootcheckwinverbad
-echo Cursor Changer is does not support Your version of windows! (%windowsverfilter%)
+if "%bypasswinvercheck%"=="true" (goto :batbootcheckwinverbadwarning)
+rem winver check failed message
+echo Cursor Changer is does not support Your version of windows^^! (%windowsverfilter%)
 pause
 cls
 echo Cursor Changer is compatible with windows 10 version 1511 or later.
@@ -197,7 +244,30 @@ echo Please update your windows, or use Cursor Changer version 1.12 earlier (lik
 pause
 exit
 
+
+:batbootcheckwinverbadwarning
+cls
+rem Warning message (when use bypsvck in violation of winvercheck)
+set selected=
+cls
+echo.
+echo                                  WARNING
+echo.
+echo Your version of Windows (%windowsverfilter%) does not seem to support cursor changer^^!
+echo You seem to be using bypsvck with arguments, but if you continue, you are very likely to encounter fatal problems.
+echo If you continue, tamago_1908, the developer of the cursor swap, will not be held responsible for any subsequent problems caused.
+echo.
+echo Do you still wish to continue?
+set /p selected=Y or N : 
+if %selected%==n exit
+if %selected%==y goto :batbootcheckwinversafe
+if %selected%== echo what? "Y" or "N".&pause&goto :batbootcheckwinverbadwarning
+
+
 :batbootcheckwinversafe
+setlocal disabledelayedexpansion
+set batbootcheckwinversafe=&set version=&set version2=
+if "%1"=="dynamic" (exit /b)
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] WinverCheck is done.)
 
 :batbootcheckpowershell
@@ -225,6 +295,7 @@ exit
 :batbootcheckpowershellsafe
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powershell Check is done.)
 
+
 rem main code, (like set variable)
 set version=
 set bootbatnow=yes
@@ -238,21 +309,8 @@ if {%errorlevel%}=={0} (set checkupdatetoggle=true&set batverforpowershell=%batv
 if {%disableexit%}=={false} (goto batbootdisabledexitbutton)
 
 :batbootpowershell
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is started...)
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is started...)
 set exitbuttondisabled=false
-rem chenge the boot message if it is the first time, or if a value is defined in batbotpowershell, or at boot up
-if not exist CursorChangerSettings.txt set firststartbat=yes
-if not "%linuxboot%"=="true" (
-if not "%firststartbat%"=="yes" (
-if {%bootbatnow%}=={yes} (title Cursor Changer Preparing...&echo Please wait a while...)
-) else (
-    if not defined batbootpowershell (
-        if not exist FirstCursor.txt (
-        echo Preparing Setup...
-        ) else (title Cursor Changer Preparing...&echo Please wait a while...)
-    )
-)
-)
 
 rem code from startid~powershell must not be displaced code before or after that is ok If it's before or after that, it's ok
 :: StartID1908
@@ -629,8 +687,10 @@ ENDLOCAL
 rem MAIN PROCESS (FR)
 :batbootdisabledexitbutton
 set startline=&set endline=&set exitbuttondisabled=
-if {%bootbatnow%}=={no} (exit /b)
-if "%batbootpowershell%"=="OOBEMusic" (exit /b)
+if {%bootbatnow%}=={no} (set batbootpowershell=&exit /b)
+if "%batbootpowershell%"=="OOBEMusic" (set batbootpowershell=&exit /b)
+set batbootpowershell=
+
 rem get updater variable
 if "%checkupdatetoggle%"=="true" (goto batbootpowershell_get_updater_variable) else (goto batbootpowershell_get_updater_variable_end)
 
@@ -651,18 +711,16 @@ set checkupdatetoggle=
 
 :batbootpowershell_get_updater_variable_end
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Batbootpowershell is Ended...)
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
+
 
 rem ############################################################################################################################
 
 :CursorChangerOOBE
 if not "%bootbatnow%"=="true" (
 if "%linuxboot%"=="true" (
-    echo [%linuxishclr%info%linuxishclr2%] Bootloader ended
-echo.
-timeout /t 1 /nobreak >nul
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Mobas_Loader Calling...)
-timeout /t 2 /nobreak >nul
+echo [%linuxishclr%info%linuxishclr2%] Bootloader ended.&echo.
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Mobas_Loader Calling...&echo.)
 )
 )
 rem Detects whether this is the first start
@@ -671,12 +729,65 @@ if not exist CursorChangerSettings.txt (
 if exist FirstCursor.txt goto settingloads
 )
 
+
+:CursorChangerOOBE_Animation
+setlocal enabledelayedexpansion
+rem Play CursorChangerOOBE_Animations that appear slowly
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
+cls
+set /a clr+=10
+set clresc=%clr%;%clr%;%clr%
+set "clr1=[38;2;%clresc%m                      Welcome to Cursor Changer %batver% [0m"
+echo.
+echo %clr1%
+if "%clr%" == "200" (ping -n 3 localhost>nul&set clr=&goto :CursorChangerOOBE_Animation2) else (
+    ping -n 1 localhost>nul
+)
+goto :CursorChangerOOBE_Animation
+:CursorChangerOOBE_Animation2
+rem Play CursorChangerOOBE_Animations that appear slowly but more darker
+cls
+set /a clr+=10
+set clresc=%clr%;%clr%;%clr%
+set "clr2=[38;2;%clresc%m                         [PRESS ANY KEY TO BEGIN] [0m"
+echo.
+echo %clr1%
+echo.& echo.
+echo %clr2%
+if "%clr%" == "120" (
+    set clresc=&pause >nul&cls&echo.&echo %clr1%&ping -n 2 localhost>nul
+    set clrmove=22&set clr2=&set clresc=204;204;204
+    goto :CursorChangerOOBE_Animation3
+) else (
+    ping -n 1 localhost>nul
+    goto :CursorChangerOOBE_Animation2
+)
+:CursorChangerOOBE_Animation3
+rem Play CursorChangerOOBE_Animations that move left
+cls
+set /a clrmove-=2
+set "clr1=[2;%clrmove%H[38;2;%clresc%mWelcome to Cursor Changer %batver% [0m"
+echo %clr1%
+if "%clrmove%" == "4" (
+    goto :CursorChangerOOBE_Animation4
+) else (
+    ping -n 1 localhost>nul
+    goto :CursorChangerOOBE_Animation3
+)
+:CursorChangerOOBE_Animation4
+rem WOW IT CHANGED INTO SETUP!!!!!!!!!
+ping -n 2 localhost>nul&cls
+set "clr1=[38;2;%clresc%m  Cursor Changer %batver% Setup [0m"
+echo.
+echo %clr1%
+ping -n 2 localhost>nul
+
+
 :CursorChangerOOBEdev
 rem Now, it's the beginning of a fucking trashy long goofy ahh idiot code.
 title Cursor Changer %batver% Setup
-if {%wmodetoggle%}=={false} (set clr=[3m[97m&set clrhigh=[7m&set clrhighend=[0m&set clrwhi=[48;5;250m[30m&set clr2=[0m)
-if not defined {%clrgra%} (set clrgra=[90m)
-if {%wmodetoggle%}=={false} (set moveline=[22;0H) else (set moveline=[22;0H)
+if not defined dummy (set clr=[3m[97m&set clrhigh=[7m&set clrhighend=[0m&set clrwhi=[48;5;250m[30m&set clr2=[0m&set clrgra=[90m)
+if not defined dummy (set moveline=[22;0H) else (set moveline=[22;0H)
 if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
 mode con: cols=80 lines=22
 echo.
@@ -731,8 +842,8 @@ echo.
 echo.
 set /p nothing=%clr2%%clrwhi%     Y=Skip     N,B=Not Skip                                                    %moveline%%clrwhi% <nul& choice /c YNB /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEsetting1toggle=true&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=true&set OOBEsetting5toggle=true&goto OOBEmain8
-if %ErrorLevel%==2 color 07&cls&goto CursorChangerOOBE
-if %ErrorLevel%==3 color 07&cls&goto CursorChangerOOBE
+if %ErrorLevel%==2 color 07&cls&goto CursorChangerOOBEdev
+if %ErrorLevel%==3 color 07&cls&goto CursorChangerOOBEdev
 
 :OOBEmain
 color 07
@@ -1643,7 +1754,7 @@ echo          4 Longpress Detection of enter : %OOBEsetting4toggle% %clrgra%(rec
 echo          5 Boot animation               : %OOBEsetting5toggle% %clrgra%(recommend true)%OOBEsettingclr2%
 echo.
 echo          If you continue, these settings will be written to the Setting file.
-echo          Are you sure? %clrgra%(setting file pass is at "%HOMEDRIVE%%HOMEPATH%".) %OOBEsettingclr2%
+echo          Are you sure? %clrgra%(setting file pass is at "%batchmainpath%".) %OOBEsettingclr2%
 echo.
 echo          (Y=Yes, this is fine.)
 echo          (N=No, I want change it.)
@@ -1695,6 +1806,9 @@ echo wmode=false >> CursorChangerSettings.txt
     ) else if "%OOBEtheme%"=="white" (
         echo wmode=true >> CursorChangerSettings.txt
     ) else (echo wmode=false >> CursorChangerSettings.txt)
+    echo s5_linuxboot=false >> CursorChangerSettings.txt
+    echo s5_simpleboot=false >> CursorChangerSettings.txt
+    echo s5_rawboot=false >> CursorChangerSettings.txt
 
 if not exist FirstCursor.txt (
 type nul > FirstCursor.txt
@@ -1736,55 +1850,11 @@ set OOBEsetting1toggle=&set OOBEsetting2toggle=&set OOBEsetting3toggle=&set OOBE
 set OOBEsetting1clr=&set OOBEsetting2clr=&set OOBEsetting3clr=&set OOBEsetting4clr=&set OOBEsetting5clr=
 set OOBEsetting1clr2=&set OOBEsetting2clr2=&set OOBEsetting3clr2=&set OOBEsetting4clr2=&set OOBEsetting5clr2=
 set OOBEsettingclr=&set OOBEsettingclr2=
+set clr1=&set clresc=&set clrmove=&set clr2=&set clr=
 2>nul taskkill /im powershell.exe >nul
 exit /b
 
 
-
-
-rem Detects settings related to prompts for administrative privileges,
-:batstart
-mode con: cols=75 lines=25
-if {%settingbypass%}=={true} (goto Mainmenuskipboot)
-cls
-rem Detection of administrative permission settings
-find "admin=true" CursorChangerSettings.txt > nul
-if {%adminbypass%}=={true} (goto gotadmin)
-if {%errorlevel%}=={0} (goto batstartadm)
-if {%errorlevel%}=={1} (
-set batloadprgs=0
-call :MOBAS_Loader
-goto batstarttest2
-)
-
-:batstarttest2
-cls
-find "admin=false" CursorChangerSettings.txt > nul
-set batloadprgs=0
-call :MOBAS_Loader
-if {%errorlevel%}=={0} (goto Mainmenuboot)
-if {%errorlevel%}=={1} (goto batstartadm)
-
-
-:batstartadm
-cls
-rem Obtaining administrative privileges
-rem I think this code is too verbose. Perhaps it could be shortened more using powershell.
-echo copyright.Cursor Changer %batver% by tamago_1908
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
-if '%errorlevel%' NEQ '0' (
-    goto UACPrompt
-) else ( goto gotAdmin )
-:UACPrompt
-powershell -NoProfile -Command "Start-Process '%batpath%' -Verb RunAs" >nul && exit
-echo.
-echo Request for administrative privileges denied.
-echo ^(Tip : You can disable this furture at setting.^)
-timeout /t 2 /nobreak >nul
-:gotAdmin
-cls
-pushd "%CD%"
-goto Mainmenuboot
 
 :Cursor_Changer_REmenu
 rem recovery menu for Cursor Changer, and recovery console
@@ -1838,8 +1908,8 @@ if %ErrorLevel%==3 goto :Cursor_Changer_REmenu3
 if %ErrorLevel%==4 goto :Cursor_Changer_REmenu4
 if %ErrorLevel%==5 goto :Cursor_Changer_REmenu1
 if %ErrorLevel%==6 goto :Cursor_Changer_REmenu2
-if %ErrorLevel%==7 set runningfromfulldebug=&set FromREConsole=&cd %~dp0 &start "" ^"%~n0%~x0^"&exit
-if %ErrorLevel%==8 set runningfromfulldebug=&set FromREConsole=&cd %~dp0 &start "" ^"%~n0%~x0^"&exit
+if %ErrorLevel%==7 set runningfromfulldebug=&set FromREConsole=&goto :batrestart
+if %ErrorLevel%==8 set runningfromfulldebug=&set FromREConsole=&goto :batrestart
 pause
 
 :Cursor_Changer_REmenu2
@@ -1930,13 +2000,7 @@ echo                           Y to confirm, N to back.
 echo.
 choice /c YN /n 
 if %ErrorLevel%==1 (
-echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo CheckUpdate=false >> CursorChangerSettings.txt
-echo wmode=false >> CursorChangerSettings.txt
-echo admin=false >> CursorChangerSettings.txt
-echo rebootokey=true >> CursorChangerSettings.txt
-echo typosWarning=true >> CursorChangerSettings.txt
-echo bootanimation=true >> CursorChangerSettings.txt
+call :Wipealldeta
 goto :Cursor_Changer_REWipeYippeee
 )
 if %ErrorLevel%==2 goto :Cursor_Changer_REmenu2
@@ -1964,7 +2028,7 @@ set FromREConsole=true
 mode con: cols=75 lines=25
 color 07
 set bootbatnow=no
-if defined %wmodetoggle% (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
+if not defined dummy (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
 echo Preparing Recovery Console, Please wait a while...
 timeout /t 2 /nobreak >nul
 cls
@@ -2005,13 +2069,7 @@ if {%selected%}=={debugyesnow} (goto :darkgo)
 if {%selected%}=={fulldebug} (goto fulldebug)
 if {%selected%}=={getadmin} (goto :batstartadm)
 if {%selected%}=={restoresetting} (
-echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo CheckUpdate=false >> CursorChangerSettings.txt
-echo wmode=false >> CursorChangerSettings.txt
-echo admin=false >> CursorChangerSettings.txt
-echo rebootokey=true >> CursorChangerSettings.txt
-echo typosWarning=true >> CursorChangerSettings.txt
-echo bootanimation=true >> CursorChangerSettings.txt
+call :Wipealldeta
 echo done. enter somethings to continue.
 pause >nul
 )
@@ -2020,6 +2078,483 @@ if {%selected%}=={windowsfiltertest} (goto :batbootcheckwinverbad)
 if {%selected%}=={funanimationdeb} (goto :batbootanimationfun)
 if {%selected%}=={openie} (goto :openiedev)
 if {%selected%}=={setenter} (echo.&set /p typosWarning=pls type:&goto :Mainmenuboot) else (set selected= &echo enter valid command.&goto Cursor_Changer_REConsoleask)
+
+
+rem O========================================= OOBE and Receovery Code Ended =================================================O
+
+
+:Wipealldeta
+rem Wipe Setting file
+echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
+echo CheckUpdate=false >> CursorChangerSettings.txt
+echo wmode=false >> CursorChangerSettings.txt
+echo admin=false >> CursorChangerSettings.txt
+echo rebootokey=true >> CursorChangerSettings.txt
+echo typosWarning=true >> CursorChangerSettings.txt
+echo bootanimation=true >> CursorChangerSettings.txt
+echo s5_linuxboot=false >> CursorChangerSettings.txt
+echo s5_simpleboot=false >> CursorChangerSettings.txt
+echo s5_rawboot=false >> CursorChangerSettings.txt
+exit /b
+
+
+rem Detects settings related to prompts for administrative privileges,
+:batstart
+if "%linuxboot%"=="false" (mode con: cols=75 lines=25)
+if {%settingbypass%}=={true} (goto Mainmenuskipboot)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] admin checked.) else (cls)
+rem Detection of administrative permission settings
+find "admin=true" CursorChangerSettings.txt > nul
+if {%adminbypass%}=={true} (goto gotadmin)
+if {%errorlevel%}=={0} (goto batstartadm)
+if {%errorlevel%}=={1} (
+set batloadprgs=0
+call :MOBAS_Loader
+goto batstarttest2
+)
+
+:batstarttest2
+if "%linuxboot%"=="false" (cls)
+find "admin=false" CursorChangerSettings.txt > nul
+set batloadprgs=0
+call :MOBAS_Loader
+if {%errorlevel%}=={0} (goto Mainmenuboot)
+if {%errorlevel%}=={1} (goto batstartadm)
+
+
+:batstartadm
+cls
+rem Obtaining administrative privileges
+echo copyright.Cursor Changer %batver% by tamago_1908
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+if '%errorlevel%' NEQ '0' (
+    goto UACPrompt
+) else ( goto gotAdmin )
+:UACPrompt
+powershell -NoProfile -Command "Start-Process '%batpath%' -Verb RunAs" >nul && exit
+echo.
+echo Request for administrative privileges denied.
+echo ^(Tip : You can disable this furture at setting.^)
+timeout /t 2 /nobreak >nul
+:gotAdmin
+cls
+pushd "%CD%"
+goto Mainmenuboot
+
+
+:Mainmenuboot
+if {%alldefentered%}=={true} (
+set alldefno2clr=
+set alldefno2clr2=
+set alldefclr=
+set alldefclr2=
+set alldefentered=
+)
+if {%settingbypass%}=={true} (goto hazimemenuskipboot)
+rem There is a difference between a goto Mainmenuboot and a direct goto to the menu. The difference is whether you go to the menu via the settings loading section or not.
+rem Basically, it is better to go through the settings, but if speed is important, you can go directly.
+
+rem setting and other loading
+rem need to assign variables to what to load and where to goto after loading set wantload=setting1 set whatloadgoto=Mainmenuboot etc. only if it is Mainmenuboot related
+rem The cursor color is not implemented in the main change section. It is not designed so that you can come back to Mainmenuboot after changing it.
+rem If you want to add a setting, you can copy and paste it. However, you may need to add some code if you want to change the look of the menu.
+:settingloads
+cd /d %batchmainpath%
+if not exist CursorChangerSettings.txt (
+cls
+title Cursor Error
+echo setting file has does not exist.
+pause
+echo Perhaps it is because You moved it, or just a bug. OR, you intentionally erased the Setting file... At least it is true that the Setting file does not exist.
+pause
+cls
+echo Regenerate the Setting file. All previous settings will be deleted.
+pause
+cls
+call :Wipealldeta
+title ...
+echo Regenerate has Complete.
+pause
+echo Restart Cursor Changer to apply the changes.
+pause
+exit
+)
+if not exist FirstCursor.txt (
+type nul > FirstCursor.txt
+echo nodogcheckforfastboot >> FirstCursor.txt
+)
+if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
+:setting1load
+set allsettingerror=0
+find "rebootokey=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting1onoff=true 
+if %ErrorLevel%==1 goto setting1load2
+if {%bootbatnow%}=={yes} (
+        if "%linuxboot%"=="true" if not "%bootbatnow%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting1 Loaded.)
+set batloadprgs=1
+call :MOBAS_Loader
+goto setting2load
+)
+goto whatloadgoto
+
+
+:setting2load
+find "admin=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting2onoff=true 
+if %ErrorLevel%==1 goto setting2load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting2 Loaded.)
+set batloadprgs=2
+call :MOBAS_Loader
+goto setting3load
+) 
+goto whatloadgoto
+
+:setting3load
+find "CheckUpdate=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting3onoff=true 
+if %ErrorLevel%==1 goto setting3load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting3 Loaded.)
+set batloadprgs=3
+call :MOBAS_Loader
+goto setting4load
+) 
+goto whatloadgoto
+
+:setting4load
+find "typosWarning=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting4onoff=true 
+if %ErrorLevel%==1 goto setting4load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting4 Loaded.)
+set batloadprgs=4
+call :MOBAS_Loader
+goto setting5load
+) 
+goto whatloadgoto
+
+:setting5load
+find "bootanimation=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5onoff=true 
+if %ErrorLevel%==1 goto setting5load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto setting5_s1load
+) 
+goto whatloadgoto
+
+:setting5_s1load
+find "s5_linuxboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_s1onoff=true 
+if %ErrorLevel%==1 goto setting5_s1load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto setting5_s2load
+) 
+goto whatloadgoto
+
+:setting5_s2load
+find "s5_simpleboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_s2onoff=true 
+if %ErrorLevel%==1 goto setting5_s2load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto setting5_s3load
+) 
+goto whatloadgoto
+
+:setting5_s3load
+find "s5_rawboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_s3onoff=true 
+if %ErrorLevel%==1 goto setting5_s3load2
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 Loaded.)
+set batloadprgs=5
+call :MOBAS_Loader
+goto wmodeload
+) 
+goto whatloadgoto
+
+:wmodeload
+find "wmode=true" CursorChangerSettings.txt > nul
+if {%ErrorLevel%}=={0} (set wmodeonoff=Change To Darkmode  &set wmodetoggle=true)
+if {%ErrorLevel%}=={1} (goto wmodeload2)
+if {%bootbatnow%}=={yes} (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded.)
+set batloadprgs=6
+call :MOBAS_Loader
+goto loads
+) 
+goto whatloadgoto
+
+:allsettingtest
+rem Verify missing settings
+:setting1load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting1 is not the true. Loaded.)
+find "rebootokey=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting1onoff=false) else if %ErrorLevel%==1 set setting1onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=1&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting2load) else (goto whatloadgoto)
+
+:setting2load2
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting2 is not the true. Loaded.)
+find "admin=false"  CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting2onoff=false) else if %ErrorLevel%==1 set setting2onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=2&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
+
+:setting3load2
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting3 is not the true. Loaded.)
+find "CheckUpdate=false"  CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting3onoff=false) else if %ErrorLevel%==1 set setting3onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=3&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting4load) else (goto whatloadgoto)
+
+:setting4load2
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting4 is not the true. Loaded.)
+find "typosWarning=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting4onoff=false) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=4&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5load) else (goto whatloadgoto)
+
+:setting5load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5 is not the true. Loaded.)
+find "bootanimation=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting5onoff=false) else if %ErrorLevel%==1 set setting5onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5_s1load) else (goto whatloadgoto)
+
+:setting5_s1load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 is not the true. Loaded.)
+find "s5_linuxboot=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting5_s1onoff=false) else if %ErrorLevel%==1 set setting5_s1onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5_s2load) else (goto whatloadgoto)
+
+:setting5_s2load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 is not the true. Loaded.)
+find "s5_simpleboot=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting5_s2onoff=false) else if %ErrorLevel%==1 set setting5_s2onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto setting5_s3load) else (goto whatloadgoto)
+
+:setting5_s3load2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 is not the true. Loaded.)
+find "s5_rawboot=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 (set setting5_s3onoff=false) else if %ErrorLevel%==1 set setting5_s3onoff= null&set /a allsettingerror=allsettingerror+1
+if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto wmodeload) else (goto whatloadgoto)
+
+:wmodeload2
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting6 is not the true. Loaded.)
+find "wmode=false" CursorChangerSettings.txt > nul
+if {%ErrorLevel%}=={0} (set wmodeonoff=Change to white mode&set wmodetoggle=false) else if {%ErrorLevel%}=={1} (set wmodeonoff=Change to null theme&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1)
+if {%bootbatnow%}=={yes} (set batloadprgs=6&call :MOBAS_Loader)
+if {%bootbatnow%}=={yes} (goto loads) else (goto whatloadgoto)
+
+:loads
+:wmodeMainmenuload
+rem Detects white mode and changes color
+find "wmode=true" CursorChangerSettings.txt > nul
+if {%errorlevel%}=={0} (color f0)
+if {%bootbatnow%}=={no} (echo Processing...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] mainmenu theme loaded.)
+set batloadprgs=6
+call :MOBAS_Loader
+goto debugMainmenuload
+)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
+goto debugMainmenuload
+
+:debugMainmenuload
+rem  Debug mode detection (Warning!!! ITS OLD CODE!!!)
+find "debug=true" CursorChangerSettings.txt > nul
+if {%errorlevel%}=={0} (echo on&set debugmode=debugmode)
+if {%errorlevel%}=={1} (echo off&set debugmode=)
+if {%bootbatnow%}=={no} (echo Processing...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Debug mode Loaded.)
+set batloadprgs=7
+call :MOBAS_Loader
+goto :firststarttest
+)
+if {%1}=={devmode} (set devmode=true&goto :firststarttest)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
+goto :firststarttest
+
+:firststarttest
+rem detect firstcursor.txt
+setlocal enabledelayedexpansion
+if exist FirstCursor.txt (
+find "nodogcheckforfastboot" FirstCursor.txt > nul
+if "!ErrorLevel!"=="1" (
+set FirstCursorisEdited=true
+    )
+)
+setlocal disabledelayedexpansion
+if {%bootbatnow%}=={no} (echo Processing...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] FirstCursor.txt is Loaded.)
+set batloadprgs=8
+call :MOBAS_Loader
+goto cursorcolorload
+)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
+goto cursorcolorload
+
+:cursorcolorload
+rem Detect cursor color
+rem 0x0 is white
+rem 0x2 is black
+reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x0" > nul
+
+if {%ErrorLevel%}=={0} (set cursorcolor=black)
+if {%ErrorLevel%}=={1} (set cursorcolor=white)
+if {%bootbatnow%}=={no} (echo Processing...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Cursor Color is Loaded.)
+set batloadprgs=9
+call :MOBAS_Loader
+goto Mainmenucursorcolor2
+)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
+
+:Mainmenucursorcolor2
+reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x2" > nul
+
+if {%ErrorLevel%}=={0} (set cursorcolor=white)
+if {%bootbatnow%}=={no} (echo Processing...) else (
+    if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Menu stuff All Loaded.)
+set batloadprgs=10
+call :MOBAS_Loader
+goto :MOBAS_Loader_initializeVaribale
+)
+if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
+goto Mainmenu
+
+
+:MOBAS_Loader
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Mobas_Loader Running...)
+rem Boot animation.
+rem MOBAS_Loader mean is "Management Of Boot Animation and Setting load"
+rem Below is a text branch on loading.
+rem loadsscrnprgsclrgra = 808080, windows is loading files (windows 2000) is 838383. wow its close
+if {%bootbatnow%}=={no} (cls & title Cursor Setting Processing... & echo Processing... & goto whatload) else (title Booting up...)
+if {%simpleboot%}=={true} (cls & echo Booting up...& exit /b)
+if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
+if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[47m[97m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m[107m[30m&set back_to_the_firstline=[18;0H) else (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
+
+rem goofy ahh code
+setlocal enabledelayedexpansion&if "!batloadprgs!" gtr "0" (set /a batloadprgsdelete=!batloadprgs!-1&set loadscrnprgs!batloadprgsdelete!=)&setlocal disabledelayedexpansion
+call :MOBAS_Loader_prgbar %batloadprgs%&goto :MOBAS_Loader_prgbar_Main
+:MOBAS_Loader_prgbar
+if {%1}=={0} (set loadscrnprgs0=%loadscrnprgsclrgra%                                                     %loadscrnprgsclr2%&exit /b)
+if {%1}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%%loadscrnprgsclrgra%                                                  %loadscrnprgsclr2%&exit /b)
+if {%1}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%%loadscrnprgsclrgra%                                              %loadscrnprgsclr2%&exit /b)
+if {%1}=={3} (set loadscrnprgs3=%loadscrnprgsclr%           %loadscrnprgsclr2%%loadscrnprgsclrgra%                                          %loadscrnprgsclr2%&exit /b)
+if {%1}=={4} (set loadscrnprgs4=%loadscrnprgsclr%                %loadscrnprgsclr2%%loadscrnprgsclrgra%                                     %loadscrnprgsclr2%&exit /b)
+if {%1}=={5} (set loadscrnprgs5=%loadscrnprgsclr%                     %loadscrnprgsclr2%%loadscrnprgsclrgra%                                %loadscrnprgsclr2%&exit /b)
+if {%1}=={6} (set loadscrnprgs6=%loadscrnprgsclr%                           %loadscrnprgsclr2%%loadscrnprgsclrgra%                          %loadscrnprgsclr2%&exit /b)
+if {%1}=={7} (set loadscrnprgs7=%loadscrnprgsclr%                                  %loadscrnprgsclr2%%loadscrnprgsclrgra%                   %loadscrnprgsclr2%&exit /b)
+if {%1}=={8} (set loadscrnprgs8=%loadscrnprgsclr%                                         %loadscrnprgsclr2%%loadscrnprgsclrgra%            %loadscrnprgsclr2%&exit /b)
+if {%1}=={9} (set loadscrnprgs9=%loadscrnprgsclr%                                                %loadscrnprgsclr2%%loadscrnprgsclrgra%     %loadscrnprgsclr2%&exit /b)
+if {%1}=={10} (set loadscrnprgs10=%loadscrnprgsclr%                                                     %loadscrnprgsclr2%&exit /b)                   
+:MOBAS_Loader_prgbar_Main
+if not "%linuxboot%"=="true" (
+echo %back_to_the_firstline%
+echo O=========================================================================O
+echo.
+echo                        Booting up Cursor Changer...
+echo           O=====================================================O
+echo           I%loadscrnprgs0%%loadscrnprgs1%%loadscrnprgs2%%loadscrnprgs3%%loadscrnprgs4%%loadscrnprgs5%%loadscrnprgs6%%loadscrnprgs7%%loadscrnprgs8%%loadscrnprgs9%%loadscrnprgs10%I
+echo           O=====================================================O
+rem 37 full-width
+rem 74 half-width
+rem btw, its windows 2000 reference
+)
+exit /b
+
+:MOBAS_Loader_initializeVaribale
+set loadscrnprgs9=&set loadscrnprgs10=&set loadscrnprgsclr=&set loadscrnprgsclr2=&set loadscrnprgsclrgra=
+set batloadprgsdelete=&set back_to_the_firstline=
+goto Mainmenu
+
+:whatload
+
+rem I'm not sure if I need the process here. If you just want the value of setting as usual, I think it would work if you did a goto to setting1load or something and then assigned the destination to whatloadgoto....
+if {%wantload%}=={setting1} (goto setting1load) 
+if {%wantload%}=={setting2} (goto setting2load)
+if {%wantload%}=={setting3} (goto setting3load)
+if {%wantload%}=={setting4} (goto setting4load)
+if {%wantload%}=={setting5} (goto setting5load)
+if {%wantload%}=={setting5_1} (goto setting5_s1load&set animationrecheck=true)
+if {%wantload%}=={setting5_2} (goto setting5_s2load&set animationrecheck=true)
+if {%wantload%}=={setting5_3} (goto setting5_s3load&set animationrecheck=true)
+if {%wantload%}=={wmode} (goto wmodeload)
+if {%wantload%}=={wmodeMainmenu} (goto wmodeMainmenuload) 
+if {%wantload%}=={debugMainmenu} (goto debugMainmenuload)
+if {%wantload%}=={FirstMainmenu} (goto FirstMainmenuload)
+if {%wantload%}=={cursorcolor} (goto cursorcolorload)
+if {%wantload%}=={} (goto Mainmenu)
+call :BSOD_Errors 2
+pause
+exit
+
+:whatloadgoto
+rem I don't see why this label is necessary. But it is necessary anyway
+if "%animationrecheck%"=="true" (call :batbootloader_animationcheck)
+set wantload=
+exit /b
+
+
+
+:batbootanimation
+if "%linuxboot%"=="true" (echo.&echo [%time: =%] O================ Boot End Here ================O&echo.&echo [%linuxishclr%info%linuxishclr2%] Boot Complete.&timeout /t 2 /nobreak >nul)
+cls
+if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
+find "bootanimation=false" CursorChangerSettings.txt > nul
+if {%errorlevel%}=={0} (goto checksum)
+rem Play the boot animation, with a 1 in 50 chance that another version will be played. The random specification(?) requires two consecutive random runs.
+set /a bootegg=%random%*51/32767
+set /a bootegg2=%random%*51/32767
+if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
+if {%bootegg%}=={%bootegg2%} (goto batbootanimationfun)
+set bootegg=
+set bootegg2=
+:batbootanimationbypassfun
+title WELCOME
+echo.
+echo                            Cursor Changer %batver% %debugmode%
+echo.
+echo O=========================================================================O
+echo.
+echo.
+echo.
+echo.
+echo :::::'########:::::'###::::'########:
+echo ::::: ##.... ##:::'## ##:::... ##..::
+echo ::::: ##:::: ##::'##:. ##::::: ##::::
+echo ::::: ########::'##:::. ##:::: ##::::
+echo ::::: ##.... ##: #########:::: ##::::            Welcome
+echo '###: ##:::: ##: ##.... ##:::: ##::::
+echo  ###: ########:: ##:::: ##:::: ##::::
+echo ...::........:::..:::::..:::::..:::::
+echo  For Windows 10-11
+echo.
+echo.
+echo.
+echo.
+echo O=========================================================================O
+echo.
+echo                         2021-2024 tamago1908 %batbuild%
+timeout /t 3 /nobreak >nul
+cls
+goto checksum
 
 
 :batbootanimationfun
@@ -2073,46 +2608,6 @@ set funanimationclr=
 mode con: cols=75 lines=25
 goto checksum
 
-:batbootanimation
-if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
-find "bootanimation=false" CursorChangerSettings.txt > nul
-if {%errorlevel%}=={0} (goto checksum)
-cls
-rem Play the boot animation, with a 1 in 50 chance that another version will be played. The random specification(?) requires two consecutive random runs.
-set /a bootegg=%random%*51/32767
-set /a bootegg2=%random%*51/32767
-if {%firststartbat%}=={yes} (goto batbootanimationbypassfun)
-if {%bootegg%}=={%bootegg2%} (goto batbootanimationfun)
-set bootegg=
-set bootegg2=
-:batbootanimationbypassfun
-title WELCOME
-echo.
-echo                            Cursor Changer %batver% %debugmode%
-echo.
-echo O=========================================================================O
-echo.
-echo.
-echo.
-echo.
-echo :::::'########:::::'###::::'########:
-echo ::::: ##.... ##:::'## ##:::... ##..::
-echo ::::: ##:::: ##::'##:. ##::::: ##::::
-echo ::::: ########::'##:::. ##:::: ##::::
-echo ::::: ##.... ##: #########:::: ##::::            Welcome
-echo '###: ##:::: ##: ##.... ##:::: ##::::
-echo  ###: ########:: ##:::: ##:::: ##::::
-echo ...::........:::..:::::..:::::..:::::
-echo  For Windows 10-11
-echo.
-echo.
-echo.
-echo.
-echo O=========================================================================O
-echo.
-echo                         2021-2024 tamago1908 %batbuild%
-timeout /t 3 /nobreak >nul
-cls
 rem Check for missing settings
 
 :checksum
@@ -2123,7 +2618,7 @@ if not {%allsettingerror%} equ {0} (
     echo.
     echo Make sure you have not previously used Cursor Changer version 1.5 through version 1.9.
     echo Or check the contents of Cursor Changer Setting.txt.
-    echo The file path is %HOMEDRIVE%%HOMEPATH%
+    echo The file path is %batchmainpath%
     echo To repair, go to Settings and toggle the setting true/false for the damaged area. It will be automatically completed and repaired. ^(When repairing, the settings will be set to the default default values. ^)
     pause
     )
@@ -2134,13 +2629,7 @@ rem auto fix
 timeout /t 2 /nobreak >nul
 SET /P selected=Automatic Repair is available. When you run Auto Repair, all previous settings are initialized and reset to default settings. Do you wish to continue? (yes or no):
 if {%selected%}=={yes} (
-echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo CheckUpdate=false >> CursorChangerSettings.txt
-echo wmode=false >> CursorChangerSettings.txt
-echo admin=false >> CursorChangerSettings.txt
-echo rebootokey=true >> CursorChangerSettings.txt
-echo typosWarning=true >> CursorChangerSettings.txt
-echo bootanimation=true >> CursorChangerSettings.txt
+call :Wipealldeta
 echo.
 echo Fix Complete.
 pause
@@ -2148,13 +2637,7 @@ exit
 )
 if {%selected%}=={y} (
 :overwritesetting
-echo nodogcheckfor1234567890qwertyuiop > CursorChangerSettings.txt
-echo CheckUpdate=false >> CursorChangerSettings.txt
-echo wmode=false >> CursorChangerSettings.txt
-echo admin=false >> CursorChangerSettings.txt
-echo rebootokey=true >> CursorChangerSettings.txt
-echo typosWarning=true >> CursorChangerSettings.txt
-echo bootanimation=true >> CursorChangerSettings.txt
+call :Wipealldeta
 echo.
 echo Fix Complete.
 pause
@@ -2164,326 +2647,14 @@ if {%selected%}=={no} (Mainmenuskipboot)
 if {%selected%}=={n} (Mainmenuskipboot)
 
 goto :Mainmenu
-:Mainmenuboot
-if {%alldefentered%}=={true} (
-set alldefno2clr=
-set alldefno2clr2=
-set alldefclr=
-set alldefclr2=
-)
-rem There is a difference between a goto Mainmenuboot and a direct goto to the menu. The difference is whether you go to the menu via the settings loading section or not.
-rem Basically, it is better to go through the settings, but if speed is important, you can go directly.
 
-rem setting and other loading
-rem need to assign variables to what to load and where to goto after loading set wantload=setting1 set whatloadgoto=Mainmenuboot etc. only if it is Mainmenuboot related
-rem The cursor color is not implemented in the main change section. It is not designed so that you can come back to Mainmenuboot after changing it.
-rem If you want to add a setting, you can copy and paste it. However, you may need to add some code if you want to change the look of the menu.
-:settingloads
-cd /d %HOMEDRIVE%%HOMEPATH%
-if not exist CursorChangerSettings.txt (
-cls
-title Cursor Error
-echo setting file has does not exist.
-pause
-echo Perhaps it is because You moved it, or just a bug. OR, you intentionally erased the Setting file... At least it is true that the Setting file does not exist.
-pause
-cls
-echo Regenerate the Setting file. All previous settings will be deleted.
-pause
-cls
-type nul > CursorChangerSettings.txt
-echo nodogcheckfor1234567890qwertyuiop >> CursorChangerSettings.txt
-echo CheckUpdate=false >> CursorChangerSettings.txt
-echo wmode=false >> CursorChangerSettings.txt
-echo admin=false >> CursorChangerSettings.txt
-echo rebootokey=true >> CursorChangerSettings.txt
-echo typosWarning=true >> CursorChangerSettings.txt
-echo bootanimation=true >> CursorChangerSettings.txt
-title ...
-echo Regenerate has Complete.
-pause
-echo Restart Cursor Changer to apply the changes.
-pause
-exit
-)
-if not exist FirstCursor.txt (
-type nul > FirstCursor.txt
-echo nodogcheckforCheckUpdate >> FirstCursor.txt
-)
-if {%bootbatnow%}=={no} (goto whatload) else (goto setting1load)
-:setting1load
-set allsettingerror=0
-find "rebootokey=true" CursorChangerSettings.txt > nul
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 set setting1onoff=true 
-if %ErrorLevel%==1 goto setting1load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=1
-call :MOBAS_Loader
-goto setting2load
-)
-goto whatloadgoto
-
-
-:setting2load
-find "admin=true" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 set setting2onoff=true 
-if %ErrorLevel%==1 goto setting2load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=2
-call :MOBAS_Loader
-goto setting3load
-) 
-goto whatloadgoto
-
-:setting3load
-find "CheckUpdate=true" CursorChangerSettings.txt > nul
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 set setting3onoff=true 
-if %ErrorLevel%==1 goto setting3load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=3
-call :MOBAS_Loader
-goto setting4load
-) 
-goto whatloadgoto
-
-:setting4load
-find "typosWarning=true" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 set setting4onoff=true 
-if %ErrorLevel%==1 goto setting4load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=4
-call :MOBAS_Loader
-goto setting5load
-) 
-goto whatloadgoto
-
-:setting5load
-find "bootanimation=true" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 set setting5onoff=true 
-if %ErrorLevel%==1 goto setting5load2
-if {%bootbatnow%}=={yes} (
-set batloadprgs=5
-call :MOBAS_Loader
-goto wmodeload
-) 
-goto whatloadgoto
-
-:wmodeload
-find "wmode=true" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if {%ErrorLevel%}=={0} (set wmodeonoff=Change To Darkmode  &set wmodetoggle=true)
-if {%ErrorLevel%}=={1} (goto wmodeload2)
-if {%bootbatnow%}=={yes} (
-set batloadprgs=6
-call :MOBAS_Loader
-goto loads
-) 
-goto whatloadgoto
-
-:allsettingtest
-rem Verify missing settings
-:setting1load2
-find "rebootokey=false" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 (set setting1onoff=false) else if %ErrorLevel%==1 set setting1onoff= null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=1&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting2load) else (goto whatloadgoto)
-
-:setting2load2
-find "admin=false" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 (set setting2onoff=false) else if %ErrorLevel%==1 set setting2onoff= null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=2&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting3load) else (goto whatloadgoto)
-
-:setting3load2
-find "CheckUpdate=false" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 (set setting3onoff=false) else if %ErrorLevel%==1 set setting3onoff= null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=3&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting4load) else (goto whatloadgoto)
-
-:setting4load2
-find "typosWarning=false" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 (set setting4onoff=false) else if %ErrorLevel%==1 set setting4onoff= null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=4&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto setting5load) else (goto whatloadgoto)
-
-:setting5load2
-find "bootanimation=false" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if %ErrorLevel%==0 (set setting5onoff=false) else if %ErrorLevel%==1 set setting5onoff= null&set /a allsettingerror=allsettingerror+1
-if {%bootbatnow%}=={yes} (set batloadprgs=5&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto wmodeload) else (goto whatloadgoto)
-
-:wmodeload2
-find "wmode=false" CursorChangerSettings.txt > nul
-
-if {%bootbatnow%}=={no} (echo Processing...)
-if {%ErrorLevel%}=={0} (set wmodeonoff=Change to white mode&set wmodetoggle=false) else if {%ErrorLevel%}=={1} (set wmodeonoff=Change to null theme&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1)
-if {%bootbatnow%}=={yes} (set batloadprgs=6&call :MOBAS_Loader)
-if {%bootbatnow%}=={yes} (goto loads) else (goto whatloadgoto)
-
-:loads
-:wmodeMainmenuload
-rem Detects white mode and changes color
-find "wmode=true" CursorChangerSettings.txt > nul
-if {%errorlevel%}=={0} (color f0)
-
-if {%bootbatnow%}=={no} (echo Processing...) else (
-set batloadprgs=6
-call :MOBAS_Loader
-goto debugMainmenuload
-)
-if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
-goto debugMainmenuload
-
-:debugMainmenuload
-rem  Debug mode detection (Warning!!! ITS OLD CODE!!!)
-find "debug=true" CursorChangerSettings.txt > nul
-
-if {%errorlevel%}=={0} (echo on&set debugmode=debugmode)
-if {%errorlevel%}=={1} (echo off&set debugmode=)
-if {%bootbatnow%}=={no} (echo Processing...) else (
-set batloadprgs=7
-call :MOBAS_Loader
-goto :firststarttest
-)
-if {%1}=={devmode} (set devmode=true&goto :firststarttest)
-if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
-goto :firststarttest
-
-:firststarttest
-rem detect firstcursor.txt
-setlocal enabledelayedexpansion
-if exist FirstCursor.txt (
-find "nodogcheckforfastboot" FirstCursor.txt > nul
-if "!ErrorLevel!"=="1" (
-set FirstCursorisEdited=true
-    )
-)
-setlocal disabledelayedexpansion
-if {%bootbatnow%}=={no} (echo Processing...) else (
-set batloadprgs=8
-call :MOBAS_Loader
-goto cursorcolorload
-)
-if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
-goto cursorcolorload
-
-:cursorcolorload
-rem Detect cursor color
-rem 0x0 is white
-rem 0x2 is black
-reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x0" > nul
-
-if {%ErrorLevel%}=={0} (set cursorcolor=black)
-if {%ErrorLevel%}=={1} (set cursorcolor=white)
-if {%bootbatnow%}=={no} (echo Processing...) else (
-set batloadprgs=9
-call :MOBAS_Loader
-goto Mainmenucursorcolor2
-)
-if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
-
-:Mainmenucursorcolor2
-reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "Scheme Source" | find "0x2" > nul
-
-if {%ErrorLevel%}=={0} (set cursorcolor=white)
-if {%bootbatnow%}=={no} (echo Processing...) else (
-set batloadprgs=10
-call :MOBAS_Loader
-goto :MOBAS_Loader_initializeVaribale
-)
-if {%whatloadgoto%}=={Mainmenuboot} (goto Mainmenu)
-goto Mainmenu
-
-
-:MOBAS_Loader
-rem Boot animation.
-rem MOBAS_Loader mean is "Management Of Boot Animation and Setting load"
-rem Below is a text branch on loading.
-rem loadsscrnprgsclrgra = 808080, windows is loading files (windows 2000) is 838383. wow its close
-if {%bootbatnow%}=={no} (cls & title Cursor Setting Processing... & echo Processing... & goto whatload) else (title Booting up...)
-if {%simpleboot%}=={true} (cls & echo Booting up...& exit /b)
-if {%wmodetoggle%}=={false} (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
-if {%wmodetoggle%}=={true} (set loadscrnprgsclr=[47m[97m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m[107m[30m&set back_to_the_firstline=[18;0H) else (set loadscrnprgsclr=[7m&set loadscrnprgsclrgra=[48;5;244m&set loadscrnprgsclr2=[0m&set back_to_the_firstline=[18;0H)
-if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
-
-rem goofy ahh code
-setlocal enabledelayedexpansion&if "!batloadprgs!" gtr "0" (set /a batloadprgsdelete=!batloadprgs!-1&set loadscrnprgs!batloadprgsdelete!=)&setlocal disabledelayedexpansion
-if {%batloadprgs%}=={0} (set loadscrnprgs0=%loadscrnprgsclrgra%                                                     %loadscrnprgsclr2%)
-if {%batloadprgs%}=={1} (set loadscrnprgs1=%loadscrnprgsclr%   %loadscrnprgsclr2%%loadscrnprgsclrgra%                                                  %loadscrnprgsclr2%)
-if {%batloadprgs%}=={2} (set loadscrnprgs2=%loadscrnprgsclr%       %loadscrnprgsclr2%%loadscrnprgsclrgra%                                              %loadscrnprgsclr2%)
-if {%batloadprgs%}=={3} (set loadscrnprgs3=%loadscrnprgsclr%           %loadscrnprgsclr2%%loadscrnprgsclrgra%                                          %loadscrnprgsclr2%)
-if {%batloadprgs%}=={4} (set loadscrnprgs4=%loadscrnprgsclr%                %loadscrnprgsclr2%%loadscrnprgsclrgra%                                     %loadscrnprgsclr2%)
-if {%batloadprgs%}=={5} (set loadscrnprgs5=%loadscrnprgsclr%                     %loadscrnprgsclr2%%loadscrnprgsclrgra%                                %loadscrnprgsclr2%)
-if {%batloadprgs%}=={6} (set loadscrnprgs6=%loadscrnprgsclr%                           %loadscrnprgsclr2%%loadscrnprgsclrgra%                          %loadscrnprgsclr2%)
-if {%batloadprgs%}=={7} (set loadscrnprgs7=%loadscrnprgsclr%                                  %loadscrnprgsclr2%%loadscrnprgsclrgra%                   %loadscrnprgsclr2%)
-if {%batloadprgs%}=={8} (set loadscrnprgs8=%loadscrnprgsclr%                                         %loadscrnprgsclr2%%loadscrnprgsclrgra%            %loadscrnprgsclr2%)
-if {%batloadprgs%}=={9} (set loadscrnprgs9=%loadscrnprgsclr%                                                %loadscrnprgsclr2%%loadscrnprgsclrgra%     %loadscrnprgsclr2%)
-if {%batloadprgs%}=={10} (set loadscrnprgs10=%loadscrnprgsclr%                                                     %loadscrnprgsclr2%)                                                  
-echo %back_to_the_firstline%
-echo O=========================================================================O
-echo.
-echo                        Booting up Cursor Changer...
-echo           O=====================================================O
-echo           I%loadscrnprgs0%%loadscrnprgs1%%loadscrnprgs2%%loadscrnprgs3%%loadscrnprgs4%%loadscrnprgs5%%loadscrnprgs6%%loadscrnprgs7%%loadscrnprgs8%%loadscrnprgs9%%loadscrnprgs10%I
-echo           O=====================================================O
-rem 37 full-width
-rem 74 half-width
-rem btw, its windows 2000 reference
-exit /b
-
-:MOBAS_Loader_initializeVaribale
-set loadscrnprgs9=&set loadscrnprgs10=&set loadscrnprgsclr=&set loadscrnprgsclr2=&set loadscrnprgsclrgra=
-set batloadprgsdelete=&set back_to_the_firstline=
-goto Mainmenu
-
-:whatload
-
-rem I'm not sure if I need the process here. If you just want the value of setting as usual, I think it would work if you did a goto to setting1load or something and then assigned the destination to whatloadgoto....
-if {%wantload%}=={setting1} (goto setting1load) 
-if {%wantload%}=={setting2} (goto setting2load)
-if {%wantload%}=={setting3} (goto setting3load)
-if {%wantload%}=={setting4} (goto setting4load)
-if {%wantload%}=={setting5} (goto setting5load)
-if {%wantload%}=={wmode} (goto wmodeload)
-if {%wantload%}=={wmodeMainmenu} (goto wmodeMainmenuload) 
-if {%wantload%}=={debugMainmenu} (goto debugMainmenuload)
-if {%wantload%}=={FirstMainmenu} (goto FirstMainmenuload)
-if {%wantload%}=={cursorcolor} (goto cursorcolorload)
-if {%wantload%}=={} (goto Mainmenu)
-call :BSOD_Errors 2
-pause
-exit
-
-:whatloadgoto
-rem I don't see why this label is necessary. But it is necessary anyway
-set wantload=
-exit /b
 
 rem Preparation for menu depiction
 :Mainmenu
-cls
 if {%bootbatnow%}=={no} (goto Mainmenuskipboot)
 if {%bootbatnow%}=={yes} (set bootbatnow=no&goto batbootanimation)
 :Mainmenuskipboot
+cls
 setlocal disabledelayedexpansion
 set wantload=
 if {%runningfromfulldebug%}=={true} (set runningfromfulldebug=& exit /b)
@@ -2663,9 +2834,9 @@ exit /b
 
 :exitmenu
 cls
+if not defined dummy (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[46m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[90m[107m[30m)
-if defined %wmodetoggle% (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clryel=[43m&set clrmag=[45m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 title Cursor Changer Shutdown %debugmode% 
 set selected=
 echo                              %clrgra%Cursor Changer %batver% %debugmode% %Mainmenubuild%%clr2%
@@ -2680,7 +2851,7 @@ echo                       O==========O==========O===========O
 echo                       I Nothing selected...             I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2688,6 +2859,7 @@ if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu1
 if %ErrorLevel%==6 goto exitmenu1
 if %ErrorLevel%==7 goto exitmenu1
+if %ErrorLevel%==8 goto :Mainmenu
 goto :Mainmenu
 
 :exitmenu1
@@ -2705,7 +2877,7 @@ echo                       O==========O==========O===========O
 echo                       I Shutdown selected.              I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2713,6 +2885,7 @@ if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu2
 if %ErrorLevel%==6 goto exitmenu1y
 if %ErrorLevel%==7 goto exitmenu1y
+if %ErrorLevel%==8 goto :Mainmenu
 goto :Mainmenu
 
 :exitmenu2
@@ -2730,7 +2903,7 @@ echo                       O==========O==========O===========O
 echo                       I Reboot selected.                I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2738,6 +2911,7 @@ if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu3
 if %ErrorLevel%==6 goto exitmenu2y
 if %ErrorLevel%==7 goto exitmenu2y
+if %ErrorLevel%==8 goto :Mainmenu
 goto :Mainmenu
 
 :exitmenu3
@@ -2755,7 +2929,7 @@ echo                       O==========O==========O===========O
 echo                       I Exit selected.                  I
 echo                       O=================================O
 echo.
-choice /c 123adye /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
+choice /c 123adyeb /n /m "Enter the "1,2,3" or "a,d". and then press "y,e" :"
 if %ErrorLevel%==1 goto exitmenu1
 if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
@@ -2763,6 +2937,7 @@ if %ErrorLevel%==4 goto exitmenu2
 if %ErrorLevel%==5 goto exitmenu3
 if %ErrorLevel%==6 call :exitmenuexit&goto mainmenuboot
 if %ErrorLevel%==7 call :exitmenuexit&goto mainmenuboot
+if %ErrorLevel%==8 goto :Mainmenu
 goto :Mainmenu
 
 
@@ -2815,8 +2990,8 @@ if %ErrorLevel%==2 goto exitmenu2
 if %ErrorLevel%==3 goto exitmenu3
 if %ErrorLevel%==4 goto exitmenu1
 if %ErrorLevel%==5 goto exitmenu3
-if %ErrorLevel%==6 (call :exitmenuexit &set bootbatnow=yes&goto batstart)
-if %ErrorLevel%==7 (call :exitmenuexit &set bootbatnow=yes&goto batstart)
+if %ErrorLevel%==6 (call :exitmenuexit &goto :Rebootbatch)
+if %ErrorLevel%==7 (call :exitmenuexit &goto :Rebootbatch)
 if %ErrorLevel%==8 goto exitmenu2
 goto :Mainmenu
 
@@ -2868,11 +3043,11 @@ rem Depiction of the settings menu
 :setting
 set wantload=
 set settinghelptoggle=false
+if not defined dummy (set clr=[7m&set clr2=[0m)
 if {%wmodetoggle%}=={false} (set clr=[7m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clr2=[0m[107m[30m)
-if defined %wmodetoggle% (set clr=[7m&set clr2=[0m)
 rem Detect if a Setting file exists
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 rem Location The drive where the OS is located C:\Users\Username
 rem (e.g. if the user's name is "test" and the OS is in drive "C:\" C:\Users\Test)
 if not exist CursorChangerSettings.txt (goto dogcheck)
@@ -2949,7 +3124,7 @@ if %ErrorLevel%==9 goto settingcategoryhelpmode
 
 :settingcategory2
 rem Detect if a Setting file exists
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 rem Location The drive where the OS is located C:\Users\Username
 rem (e.g. if the user's name is "test" and the OS is in drive "C:\" C:\Users\Test)
 if not exist CursorChangerSettings.txt (goto dogcheck)
@@ -3224,7 +3399,7 @@ echo.
 echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
-echo I                        I 1 Boot animation                    I  %setting5onoff%   I
+echo I                        I 1 Boot animation Settings           I     ^>    I
 echo I Cursor Changer Feature I                                     O==========O
 echo I                        I 2 %wmodeonoff%                         I
 echo O========================I                                                I
@@ -3250,6 +3425,7 @@ if %ErrorLevel%==8 goto settingcategory2intsetting1
 if %ErrorLevel%==9 goto settingcategoryhelpmode
 
 :settingcategory2intsetting1
+set sc2s5s1lock=&set sc2s5s2lock=&set sc2s5s3lock=&set sc2s5s1lock2=&set sc2s5s2lock2=&set sc2s5s3lock2=&set setting5_stg_whereyou=
 title Cursor Changer Setting %debugmode%
 set selected=
 Cls
@@ -3259,7 +3435,7 @@ echo.
 echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
-echo I                        I %clr%1 Boot animation%clr2%                    I  %setting5onoff%   I
+echo I                        I %clr%1 Boot animation Settings%clr2%           I     ^>    I
 echo I Cursor Changer Feature I                                     O==========O
 echo I                        I 2 %wmodeonoff%                         I
 echo O========================I                                                I
@@ -3280,8 +3456,8 @@ if %ErrorLevel%==3 goto settingcategory2intsetting1
 if %ErrorLevel%==4 goto settingcategory2intsetting2
 if %ErrorLevel%==5 goto settingcategory2int
 if %ErrorLevel%==6 goto settingcategory2int
-if %ErrorLevel%==7 goto setting5
-if %ErrorLevel%==8 goto setting5
+if %ErrorLevel%==7 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==8 goto settingcategory2intsetting5_stg0
 
 :settingcategory2intsetting2
 title Cursor Changer Setting %debugmode%
@@ -3293,7 +3469,7 @@ echo.
 echo O========================O                 O=========O
 echo I        Category        I                 I setting I
 echo O========================O=================O=========O=========O==========O
-echo I                        I 1 Boot animation                    I  %setting5onoff%   I
+echo I                        I 1 Boot animation Settings           I     ^>    I
 echo I Cursor Changer Feature I                                     O==========O
 echo I                        I %clr%2 %wmodeonoff%%clr2%                         I
 echo O========================I                                                I
@@ -3316,6 +3492,211 @@ if %ErrorLevel%==5 goto settingcategory2int
 if %ErrorLevel%==6 goto settingcategory2int
 if %ErrorLevel%==7 goto wmode
 if %ErrorLevel%==8 goto wmode
+
+
+
+:settingcategory2intsetting5_stg0
+set setting5_stg_whereyou=stg0
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               Setting menu ver2!!!
+echo. 
+echo O========================O                 O=========O O==================O
+echo I        Category        I                 I setting I I Setting5/...     I
+echo O========================O=================O=========O=O=======O==========O
+echo I                        I %clr%1 Boot animation%clr2%                    I   %setting5onoff%  I
+echo I Cursor Changer Feature I                                     O==========O
+echo I                        I %sc2s5s1lock%2 Linux-ish Boot animation%sc2s5s1lock2%          I   %setting5_s1onoff%  I
+echo O========================I                                     O==========O
+Echo O  category  up or down  I %sc2s5s2lock%3 Simple boot animation%sc2s5s2lock2%             I   %setting5_s2onoff%  I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %sc2s5s3lock%4 Raw Boot animation%sc2s5s3lock2%                I   %setting5_s3onoff%  I
+echo I%clr% Cursor Changer Visuals %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5
+if %ErrorLevel%==9 goto setting5
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+
+:settingcategory2intsetting5_stg1
+if "%setting5onoff%"=="false" if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg0) else if "%setting5onoff%"=="false" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg2)
+if "%simpleboot%"=="true" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg2) else if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg0)
+if "%rawboot%"=="true" if "%setting5_stg_whereyou%"=="stg3" (goto :settingcategory2intsetting5_stg3) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg3)
+set setting5_stg_whereyou=stg1
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               Setting menu ver2!!!
+echo. 
+echo O========================O                 O=========O O==================O
+echo I        Category        I                 I setting I I Setting5/...     I
+echo O========================O=================O=========O=O=======O==========O
+echo I                        I 1 Boot animation                    I   %setting5onoff%  I
+echo I Cursor Changer Feature I                                     O==========O
+echo I                        I %clr%2 Linux-ish Boot animation%clr2%          I   %setting5_s1onoff%  I
+echo O========================I                                     O==========O
+Echo O  category  up or down  I %sc2s5s2lock%3 Simple boot animation%sc2s5s2lock2%             I   %setting5_s2onoff%  I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %sc2s5s3lock%4 Raw Boot animation%sc2s5s3lock2%                I   %setting5_s3onoff%  I
+echo I%clr% Cursor Changer Visuals %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5_1
+if %ErrorLevel%==9 goto setting5_1
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+
+:settingcategory2intsetting5_stg2
+if "%linuxboot%"=="true" if "%setting5_stg_whereyou%"=="stg1" (goto :settingcategory2intsetting5_stg1)
+if "%rawboot%"=="true" if "%setting5_stg_whereyou%"=="stg3" (goto :settingcategory2intsetting5_stg0) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg3)
+set setting5_stg_whereyou=stg2
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               Setting menu ver2!!!
+echo. 
+echo O========================O                 O=========O O==================O
+echo I        Category        I                 I setting I I Setting5/...     I
+echo O========================O=================O=========O=O=======O==========O
+echo I                        I 1 Boot animation                    I   %setting5onoff%  I
+echo I Cursor Changer Feature I                                     O==========O
+echo I                        I %sc2s5s1lock%2 Linux-ish Boot animation%sc2s5s1lock2%          I   %setting5_s1onoff%  I
+echo O========================I                                     O==========O
+Echo O  category  up or down  I %clr%3 Simple boot animation%clr2%             I   %setting5_s2onoff%  I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %sc2s5s3lock%4 Raw Boot animation%sc2s5s3lock2%                I   %setting5_s3onoff%  I
+echo I%clr% Cursor Changer Visuals %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg3
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5_2
+if %ErrorLevel%==9 goto setting5_2
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+:settingcategory2intsetting5_stg3
+if "%setting5onoff%"=="false" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0) else if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg2)
+if "%linuxboot%"=="true" if "%setting5_stg_whereyou%"=="stg1" (goto :settingcategory2intsetting5_stg1)
+if "%simpleboot%"=="true" if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg2) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0)
+set setting5_stg_whereyou=stg3
+title Cursor Changer Setting %debugmode%
+call :settingcategory2intsetting5blockcheck
+set selected=
+Cls
+Echo.
+Echo                               Setting menu ver2!!!
+echo. 
+echo O========================O                 O=========O O==================O
+echo I        Category        I                 I setting I I Setting5/...     I
+echo O========================O=================O=========O=O=======O==========O
+echo I                        I 1 Boot animation                    I   %setting5onoff%  I
+echo I Cursor Changer Feature I                                     O==========O
+echo I                        I %sc2s5s1lock%2 Linux-ish Boot animation%sc2s5s1lock2%          I   %setting5_s1onoff%  I
+echo O========================I                                     O==========O
+Echo O  category  up or down  I %sc2s5s2lock%3 Simple boot animation%sc2s5s2lock2%             I   %setting5_s2onoff%  I
+Echo O========================I                                     O==========O
+Echo I%clr%                        %clr2%I %clr%4 Raw Boot animation%clr2%                I   %setting5_s3onoff%  I
+echo I%clr% Cursor Changer Visuals %clr2%I                                     O==========O
+echo I%clr%                        %clr2%I                                                I
+echo O========================O==O=====================O==========O============O
+echo I%clrhelp%       Help  Mode       %clrhelp2%I  I  Move: W A S D  Num I Back : B I Slct : Y E I
+echo O========================O  O=====================O==========O============O
+echo.
+echo.
+choice /c 123wsabye4 /n /m "Specify what you want to change by number or by moving with wasd :"
+if %ErrorLevel%==1 goto settingcategory2intsetting5_stg0
+if %ErrorLevel%==2 goto settingcategory2intsetting5_stg1
+if %ErrorLevel%==3 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==4 goto settingcategory2intsetting5_stg2
+if %ErrorLevel%==5 goto settingcategory2intsetting5_stg3
+if %ErrorLevel%==6 goto settingcategory2intsetting1
+if %ErrorLevel%==7 goto settingcategory2intsetting1
+if %ErrorLevel%==8 goto setting5_3
+if %ErrorLevel%==9 goto setting5_3
+if %ErrorLevel%==10 goto settingcategory2intsetting5_stg3
+
+:settingcategory2intsetting5blockcheck
+set sc2s5s1lock=&set sc2s5s1lock2=&set sc2s5s2lock=&set sc2s5s2lock2=&set sc2s5s3lock=&set sc2s5s3lock2=&
+if "%linuxboot%"=="true" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s2lock=[0m[107m&set sc2s5s2lock2=[0m[107m[30m
+    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s2lock=[0m[90m&set sc2s5s2lock2=[0m
+    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
+    )
+    
+)
+if "%simpleboot%"=="true" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
+    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
+    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
+    )
+) 
+if "%rawboot%"=="true" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
+    set sc2s5s2lock=[0m[107m&set sc2s5s2lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
+    set sc2s5s2lock=[0m[90m&set sc2s5s2lock2=[0m
+    )
+)
+if "%setting5onoff%"=="false" (
+    if "%wmodetoggle%"=="true" (
+    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
+    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
+    ) else (
+    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
+    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
+    )
+)
+exit /b
 
 
 :settingcategoryhelpmode
@@ -3366,7 +3747,7 @@ if {%settinghelptoggle%}=={false} (set settinghelptoggle=true&goto settingcatego
 
 :settingcategoryhelpmodetoggleiftrue
 if {%wmodetoggle%}=={false} (set clr=[46m&set clrhelp=[7m&set clrhelp2=[0m)
-if {%wmodetoggle%}=={true} (set clr=[46m&set clrhelp=[100m[97m&set clrhelp2=[0m[107m)
+if {%wmodetoggle%}=={true} (set clr=[46m&set clrhelp=[100m[97m&set clrhelp2=[0m[107m[30m)
 goto settingcategoryhelpmode
 
 
@@ -3613,8 +3994,8 @@ SET /P selected= :
 echo %selected% has selected.
 if {%selected%}=={y} (goto :setting5y)
 if {%selected%}=={n} (goto :setting5n)
-if {%selected%}=={back} (goto :settingcategory2intsetting1)
-if {%selected%}=={b} (goto :settingcategory2intsetting1)
+if {%selected%}=={back} (goto :settingcategory2intsetting5_stg0)
+if {%selected%}=={b} (goto :settingcategory2intsetting5_stg0)
 goto setting5okey
 
 :setting5y
@@ -3643,18 +4024,193 @@ Echo The change was made successfully.
 Pause
 set wantload=setting5
 call :MOBAS_Loader
-Goto settingcategory2intsetting1
+Goto settingcategory2intsetting5_stg0
 
 :setting5n
 cls
 Echo Did not change settings.
 Pause
-goto settingcategory2intsetting1
+goto settingcategory2intsetting5_stg0
+
+
+:setting5_1
+if {%settinghelptoggle%}=={true} (goto setting5_1help)
+find "s5_linuxboot=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_1setonoff=enable&goto setting5_1okey
+if %ErrorLevel%==1 set setting5_1setonoff=Repair&goto setting5_1onoff
+
+:setting5_1onoff
+find "s5_linuxboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_1setonoff=disbale
+
+:setting5_1okey
+cls
+echo Do you want the linux-ish boot animation to be %setting5_1setonoff%? (Y=Yes N=No B=Back)
+SET /P selected= :
+echo %selected% has selected.
+if {%selected%}=={y} (goto :setting5_1y)
+if {%selected%}=={n} (goto :setting5_1n)
+if {%selected%}=={back} (goto :settingcategory2intsetting5_stg0)
+if {%selected%}=={b} (goto :settingcategory2intsetting5_stg0)
+goto setting5_1okey
+
+:setting5_1y
+find "s5_linuxboot=false" CursorChangerSettings.txt > nul
+echo Applying settings...
+
+if %ErrorLevel%==1 goto setting5_1ygo3test
+if %ErrorLevel%==0 goto setting5_1ygo1
+
+:setting5_1ygo3test
+find "s5_linuxboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==1 echo s5_linuxboot=false >> CursorChangerSettings.txt
+if %ErrorLevel%==0 goto setting5_1ygo2
+
+:setting5_1ygo2
+powershell "(gc CursorChangerSettings.txt) -replace 's5_linuxboot=true','s5_linuxboot=false' | sc CursorChangerSettings.txt"
+set linuxboot=false
+goto setting5_1yokey
+
+:setting5_1ygo1
+powershell "(gc CursorChangerSettings.txt) -replace 's5_linuxboot=false','s5_linuxboot=true' | sc CursorChangerSettings.txt"
+set linuxboot=true
+goto setting5_1yokey
+
+:setting5_1yokey
+cls
+Echo The change was made successfully.
+Pause
+set wantload=setting5_1
+call :MOBAS_Loader
+Goto settingcategory2intsetting5_stg1
+
+:setting5_1n
+cls
+Echo Did not change settings.
+Pause
+goto settingcategory2intsetting5_stg1
+
+
+:setting5_2
+if {%settinghelptoggle%}=={true} (goto setting5_2help)
+find "s5_simpleboot=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_2setonoff=enable&goto setting5_2okey
+if %ErrorLevel%==1 set setting5_2setonoff=Repair&goto setting5_2onoff
+
+:setting5_2onoff
+find "s5_simpleboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_2setonoff=disbale
+
+:setting5_2okey
+cls
+echo Do you want the simple boot animation to be %setting5_2setonoff%? (Y=Yes N=No B=Back)
+SET /P selected= :
+echo %selected% has selected.
+if {%selected%}=={y} (goto :setting5_2y)
+if {%selected%}=={n} (goto :setting5_2n)
+if {%selected%}=={back} (goto :settingcategory2intsetting5_stg1)
+if {%selected%}=={b} (goto :settingcategory2intsetting5_stg1)
+goto setting5_2okey
+
+:setting5_2y
+find "s5_simpleboot=false" CursorChangerSettings.txt > nul
+echo Applying settings...
+
+if %ErrorLevel%==1 goto setting5_2ygo3test
+if %ErrorLevel%==0 goto setting5_2ygo1
+
+:setting5_2ygo3test
+find "s5_simpleboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==1 echo s5_simpleboot=false >> CursorChangerSettings.txt
+if %ErrorLevel%==0 goto setting5_2ygo2
+
+:setting5_2ygo2
+powershell "(gc CursorChangerSettings.txt) -replace 's5_simpleboot=true','s5_simpleboot=false' | sc CursorChangerSettings.txt"
+set simpleboot=false
+goto setting5_2yokey
+
+:setting5_2ygo1
+powershell "(gc CursorChangerSettings.txt) -replace 's5_simpleboot=false','s5_simpleboot=true' | sc CursorChangerSettings.txt"
+set simpleboot=true
+goto setting5_2yokey
+
+:setting5_2yokey
+cls
+Echo The change was made successfully.
+Pause
+set wantload=setting5_2
+call :MOBAS_Loader
+Goto settingcategory2intsetting5_stg2
+
+:setting5_2n
+cls
+Echo Did not change settings.
+Pause
+goto settingcategory2intsetting5_stg2
+
+
+
+:setting5_3
+if {%settinghelptoggle%}=={true} (goto setting5_3help)
+find "s5_rawboot=false" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_3setonoff=enable&goto setting5_3okey
+if %ErrorLevel%==1 set setting5_3setonoff=Repair&goto setting5_3onoff
+
+:setting5_3onoff
+find "s5_rawboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==0 set setting5_3setonoff=disbale
+
+:setting5_3okey
+cls
+echo Do you want the raw boot animation to be %setting5_3setonoff%? (Y=Yes N=No B=Back)
+SET /P selected= :
+echo %selected% has selected.
+if {%selected%}=={y} (goto :setting5_3y)
+if {%selected%}=={n} (goto :setting5_3n)
+if {%selected%}=={back} (goto :settingcategory2intsetting5_stg3)
+if {%selected%}=={b} (goto :settingcategory2intsetting5_stg3)
+goto setting5_3okey
+
+:setting5_3y
+find "s5_rawboot=false" CursorChangerSettings.txt > nul
+echo Applying settings...
+
+if %ErrorLevel%==1 goto setting5_3ygo3test
+if %ErrorLevel%==0 goto setting5_3ygo1
+
+:setting5_3ygo3test
+find "s5_rawboot=true" CursorChangerSettings.txt > nul
+if %ErrorLevel%==1 echo s5_rawboot=false >> CursorChangerSettings.txt
+if %ErrorLevel%==0 goto setting5_3ygo2
+
+:setting5_3ygo2
+powershell "(gc CursorChangerSettings.txt) -replace 's5_rawboot=true','s5_rawboot=false' | sc CursorChangerSettings.txt"
+set rawboot=false
+goto setting5_3yokey
+
+:setting5_3ygo1
+powershell "(gc CursorChangerSettings.txt) -replace 's5_rawboot=false','s5_rawboot=true' | sc CursorChangerSettings.txt"
+set rawboot=true
+goto setting5_3yokey
+
+:setting5_3yokey
+cls
+Echo The change was made successfully.
+Pause
+set wantload=setting5_3
+call :MOBAS_Loader
+Goto settingcategory2intsetting5_stg3
+
+:setting5_3n
+cls
+Echo Did not change settings.
+Pause
+goto settingcategory2intsetting5_stg3
 
 
 :wmode
 if {%settinghelptoggle%}=={true} (goto wmodehelp)
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 :wmodetest
 find "wmode=false" CursorChangerSettings.txt > nul
 if %ErrorLevel%==0 set wmodesetonoff=white
@@ -3765,7 +4321,33 @@ echo This setting is a setting that makes the boot animation that always plays a
 echo Setting this setting to false will reduce startup time and annoyance.
 echo This setting is true by default.
 pause
-goto settingcategory2intsetting1
+goto settingcategory2intsetting5_stg0
+
+:setting5_1help
+cls
+echo This setting allows a Linux-like startup animation to be played.
+echo it is easy to see that the system is starting up and looks good. Also, when an error occurs during startup, it may be easier to see where the error occurred.
+echo This setting cannot be used with simpleboot and rawboot.
+echo This setting is false by default.
+pause
+goto settingcategory2intsetting5_stg1
+
+:setting5_2help
+cls
+echo This setting allows only "booting up" to be displayed at startup.
+echo It is very fast, simple and unobtrusive. However, it can be makes you little boring.
+echo This setting is false by default.
+pause
+goto settingcategory2intsetting5_stg2
+
+:setting5_3help
+cls
+echo This setting is to start within the "echo on" state at startup.
+echo It is simple, easy to understand, and shows at a glance what is currently being executed. It also makes you feel like a hacker.
+echo This setting cannot be used with linuxboot and rawboot.
+echo This setting is false by default.
+pause
+goto settingcategory2intsetting5_stg3
 
 :wmodehelp
 cls
@@ -3893,7 +4475,7 @@ rem and yea this "CURSOR CHANGER" code is old too! its fucking old
 rem This code has existed since the first version of Cursor Changer (1.0.2, maybe. at least since 1.0).
 cls
 echo                              Cursor Changer %batver% %debugmode%
-title Cursor *Changer* %debugmode%
+title Cursor *Changer* (VERY OLD CODE! MAY HAVE SOME ISSUE)%debugmode%
 echo.
 SET /P selected=Would you like to revert to %cursorcolor% color?(Y=Yes / N=No / B=Back)
 if {%selected%}=={y} (goto :yes0)
@@ -3923,9 +4505,9 @@ find "CursorChanged" FirstCursor.txt > nul
 if "%errorlevel%"=="0" goto changetodefault else goto FirstWarning
 rem Write settings (default)
 :FirstWarning
+if not defined dummy (set clrfirstwarning=[37m[40m)
 if {%wmodetoggle%}=={false} (set clrfirstwarning=[37m[40m)
 if {%wmodetoggle%}=={true} (set clrfirstwarning=[30m[107m)
-if defined %wmodetoggle% (set clrfirstwarning=[37m[40m)
 rem warning message, first-time startup only
 cls
 echo only at first changing Cursor
@@ -4109,7 +4691,7 @@ goto reboot
 
 rem dogcheck. verify if CursorChangerSettings.txt exists
 :AllDefult
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 if {%settinghelptoggle%}=={true} (goto alldefhelp)
 if exist CursorChangerSettings.txt goto AllDefulttest
 if not exist CursorChangerSettings.txt goto Dogcheck
@@ -4201,7 +4783,7 @@ exit
 
 rem alldef (i mean its uninstall menu)
 :AllDefulttest
-cd /d %HOMEDRIVE%%HOMEPATH% 
+cd /d %batchmainpath% 
 find "nodogcheckfor1234567890qwertyuiop" CursorChangerSettings.txt
 cls
 if %ErrorLevel%==0 goto AllDefult1
@@ -4357,17 +4939,11 @@ echo Initializes the Setting file. All previous settings will be deleted.
 echo If you wish to cancel, exit the batch process at this point.
 pause
 cls
-type nul > CursorChangerSettings.txt
-echo nodogcheckfor1234567890qwertyuiop >> CursorChangerSettings.txt
-echo CheckUpdate=false >> CursorChangerSettings.txt
-echo wmode=false >> CursorChangerSettings.txt
-echo admin=false >> CursorChangerSettings.txt
-echo rebootokey=true >> CursorChangerSettings.txt
-echo typosWarning=true >> CursorChangerSettings.txt
-echo bootanimation=true >> CursorChangerSettings.txt
+call :Wipealldeta
 title ...
-echo Initialization is complete. In order to apply the changes, Cursor Changer will close. Please restart Cursor Changer to apply the changes.
-goto exit
+echo Initialization is complete. In order to apply the changes, Cursor Changer will Restart. Press Any Key to Continue...
+pause >nul
+goto :Rebootbatch
 
 :alldefsettingno
 cls
@@ -4385,7 +4961,7 @@ goto alldefsettingno2
 :alldefshowsettingpass
 cls
 echo Displays the path where the Setting file is located.
-start explorer %HOMEDRIVE%%HOMEPATH%
+start explorer %batchmainpath%
 powershell sleep 5
 echo Depending on your environment, you will most likely find CursorChangerSettings.txt at the bottom or at the top.
 pause
@@ -4498,7 +5074,7 @@ pause
 
 rem Uninstall menu exception handling FIrstCursor in the absence of FIrstCursor. But it is redundant and I want to improve it.
 rem I want to add more exception handling. For example, if the message is never possible without modifying the contents, it should be able to do a goto, branch on a variable, and change the message.
-cd /d %HOMEDRIVE%%HOMEPATH%
+cd /d %batchmainpath%
 if not exist FirstCursor.txt set erroralldefwhatdelete=FirstCursor & goto BSOD_Errors
 :testerroralldef
 if not exist CursorChangerSettings.txt set erroralldefwhatdelete=CursorChangerSettings & goto BSOD_Errors
@@ -4509,37 +5085,38 @@ goto alldefnow
 set runningfromfulldebug=
 set FromREConsole=
 timeout /t 1 /nobreak >nul
+if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
 title Cursor Changer is CRASHED!
-mode con: cols=100 lines=30
+mode con: cols=97 lines=26
 color 1f
 rem message indication
 echo 
 cls
-echo A problem has been detected and Cursor Changer has been shut down to prevent echo damage to your computer.
-echo If this is the first time you've seen this stop error screen,
-echo restart your computer.
-echo If this screen appears again,
-echo follow these steps:
 echo.
-echo Check to be sure you have adequate disk space.
-echo If anythings is identified in the stop message,
-echo disable the untivirus softwere or check the updates of windows.
-echo Try changing Video adapters.
 echo.
-echo Check with Github for any Cursor Changer updates.
-echo Disable Something options such as uhh... i dont know but
-echo If you need to use Arguments to remove or disable components,
-echo Use Ctrl+R, then Enter cmd, then copy and paste the full path to this batch ^(or d^&d^), and then specify the arguments available to the batch.
-echo Im (tamago1908) recommend "Bypsloadsg". A list of available arguments can be found by specifying "help" as an argument.
+echo                            ###
+echo                            ###
+echo            ###          ###
+echo            ###          ###
+echo                         ###
+echo                         ###
+echo            ###          ###
+echo            ###          ###
+echo                            ###
+echo                            ###
 echo.
-echo Technical information:
 echo.
-echo *** STOP: 0x0000000%1
-echo *** MEMORY LOGS: 57 68 61 74 20 74 68 65 20 66 75 63 6b 69 6e 67 20 61 72 65 20 79 6f 75 20 74 68 69 6e 6b 69 6e 67 3f
+echo          Oops! The Cursor Changer is Crashed!
 echo.
-echo Beginning dump of physical memory (lie)
-echo physical memory dump complete. (lier!!!!)
-echo Contact tamago1908 with Cursor Changer Github for further echo assistance, or make issue.
+echo          This screen is displayed when Cursor Changer crashes for some reason.
+echo          The following information may be helpful in obtaining support.
+echo.
+echo          Error ID : %1
+echo.
+echo          For more information about this screen and possible fixes, visit this link:
+echo.
+echo          https://github.com/tamago1908/Cursor-Changer.bat/wiki/BSOD-Crash-(Error-Screen)
+echo.
 
 if {%1}=={0} (goto :BSOD_Errors0message)
 if {%1}=={1} (goto :BSOD_Errors1message)
@@ -4629,6 +5206,7 @@ echo %errorlevel% > nul
 :BSOD_Errors3message3message
 echo Dim answer:answer = MsgBox("Well, actually it was you who deleted %erroralldefwhatdelete%",vbYesno,""):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 echo %errorlevel% > nul
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
 if {%errorlevel%}=={6} (del /Q %TEMP%\msgbox.vbs&goto :BSOD_Errors3message3messageok)
 if {%errorlevel%}=={7} (del /Q %TEMP%\msgbox.vbs&goto :BSOD_Errors3message3messageno)
 goto BSOD_Errors3message3message
@@ -4677,6 +5255,7 @@ echo THE SYSTEM HAS BEEN DESTROYED
 echo.
 echo error id : 6 (you cant call bsod_errors without argment, or goto.)
 pause
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
 if {%wmodetoggle%}=={true} (color f0) else (color 07)
 goto mainmenu
 
@@ -4685,7 +5264,8 @@ goto mainmenu
 :BSOD_ErrorsRorR
 echo Dim answer:answer = MsgBox("Press Yes to restart Cursor Changer at this point, or No to enter the recovery menu.",vbyesno,"Witch one?"):WScript.Quit(answer) > %TEMP%\msgbox.vbs & %TEMP%\msgbox.vbs
 echo %errorlevel% > nul
-if {%errorlevel%}=={6} (del /Q %TEMP%\msgbox.vbs&cd %~dp0 &start "" ^"%~n0%~x0^"&exit)
+if {%invisiblecursor%}=={true} (echo [?25h&set invisiblecursor=)
+if {%errorlevel%}=={6} (del /Q %TEMP%\msgbox.vbs&goto :batrestart)
 if {%errorlevel%}=={7} (del /Q %TEMP%\msgbox.vbs&goto :Cursor_Changer_REmenu)
 
 
@@ -4763,6 +5343,7 @@ rem Get own path, delete own
 del %batpath%
 goto exit
 
+rem      ==============HEY!!! IF YOU SEE THIS, WATCH OUT!!! THESE CODE IS SO OLD AND TRASH AF!!============================================
 :reboot
 rem Determining whether or not to play reboot message depending on settings
 find "rebootokey=false" CursorChangerSettings.txt
@@ -4811,7 +5392,7 @@ goto higan
 echo rebooting...
 pause
 shutdown /r /t 2
-goto reboot
+exit
 
 :higan
 title earnest wish %debugmode%
@@ -4833,7 +5414,7 @@ goto higan
 :nohi
 echo.
 echo okey fine...
-goto exit
+goto :Rebootbatch
 
 :yes
 echo thank you...
@@ -4871,10 +5452,10 @@ goto rebootok
 echo What? Does that mean you did it on a hunch?
 pause
 echo No way...?
-goto exit
+goto :Rebootbatch
 :secrethentai
 echo Crikey! %USERNAME%!
-goto exit
+goto :Rebootbatch
 
 
 :testinthecalbeep
@@ -5109,9 +5690,9 @@ cls
 rem dumbass code, wtf hell no who make it fr (damn its me but)!!!!! ITS ABSOLUTE TRASH!!!! THATS IS SO HARD TO READ
 rem so many set uhhh
 rem STOP SPAMMING SET AUHAUAHAUAHAUHAUAHAHAHAUAHUAHUUAUHHUHUHUHUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh&SET IHHHHGISJGIE
+if not defined dummy (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrcyan=[96m&set clrgra=[90m&set clr2=[0m)
 if {%wmodetoggle%}=={false} (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m)
 if {%wmodetoggle%}=={true} (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m[107m[30m)
-if defined %wmodetoggle% (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrcyan=[96m&set clrgra=[90m&set clr2=[0m)
 if not defined invisiblecursor (echo [?25l&set invisiblecursor=true)
 cls
 echo [Loading Command list...]
@@ -5317,6 +5898,10 @@ rundll32.exe user32.dll, LockWorkStation
 if "%eggcount%" gtr "5" (exit)
 if {%looplockdownhorroreaster%}=={true} (set /a eggcount=eggcount+1&goto lockloop1908)
 goto reboot
+
+:Rebootbatch
+cd %~dp0 &start "" ^"%~n0%~x0^"&Exit
+
 
 :exit
 pause
