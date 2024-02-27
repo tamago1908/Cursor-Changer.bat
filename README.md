@@ -127,7 +127,7 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 
 ## 📝 - **Chenge logs** -
 >  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**  
->  **Stable latest : [1.13](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.12) (build 64)**
+>  **Stable latest : [1.13](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.13) (build 64)**
 ___
 
 ### - 1.13 build 64 (Major Update, ULTRA SUPER BIG)  🔥
