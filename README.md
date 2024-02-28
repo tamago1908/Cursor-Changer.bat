@@ -18,11 +18,7 @@ AND I LOVE &nbsp; AF BECAUSE IT'S VERY USEFULL AND EASY!! OFC I KNOW SHOULDN'T U
 > If you have any criticisms or problems with this batch, or find any, please submit an issue.  
 > I will respond as quickly as possible.  
 well.  
-> ***I Need reviews!***
-> 
-> Known issues :  
-> Windows version check fails when booting on Windows 11 24H2 (already fixed in Cursor Changer 1.13β7 dev version)  
-> After checking update, crashing the batch and then restarting it, update screen appears for some reason. (will be fixed 1.13β7 update)
+> ***I Need reviews!***  
 
 # 📰 - **Latest News** -
 ### **Development News (2024/02/26)**  
@@ -156,7 +152,8 @@ ___
 #### fixed :
 - **English Translation!**
 - Some Bad things
-- Numerous other bug fixes
+- Numerous other bug fixesS
+- Some Bugs
 - And More...
 
 > This update almost doubled the size of the file, from 133KB in 1.12 to 250KB. Most of this is due to OOBE.  
@@ -169,9 +166,11 @@ ___
 - **Now you can toggle New three Boot Animation at in setting menu!**
 #### Chenged :
 - More More More Better Boot code (little bit more faster boot)
+- New BSOD Screen (Windows 10 likey)
 #### fixed :
 - **Issue with Windows 11 Cenary build not correctly identifying the version**
 - Significant changes in processing around startup process and processing order
+- Multiple "processing..." messages displayed when changing settings
 - some bugs 
 ___
 
