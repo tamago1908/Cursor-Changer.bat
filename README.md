@@ -152,8 +152,7 @@ ___
 #### fixed :
 - **English Translation!**
 - Some Bad things
-- Numerous other bug fixesS
-- Some Bugs
+- Numerous other bug fixes
 - And More...
 
 > This update almost doubled the size of the file, from 133KB in 1.12 to 250KB. Most of this is due to OOBE.  
