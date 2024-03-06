@@ -22,9 +22,9 @@ well.
 
 # 📰 - **Latest News** -
 ### **Development News (2024/02/26)**  
-The Stable Cursor Changer 1.13 update has been released!  
-This update contains a large number of fixes and advancements compared to 1.12!  
-Please check the changelog for more details.  
+Development of 1.14 is progressing a bit.  
+In 1.14, there will be a new application menu and a major reworking of the **Real Cursor Changer** portion of the code. ando more.  
+There will be many other improvements as well, so please look forward to them!  
 
 &nbsp;
 ## 💡 - **ABOUT THIS BATCH** -
