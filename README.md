@@ -21,10 +21,11 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/02/26)**  
-Development of 1.14 is progressing a bit.  
-In 1.14, there will be a new application menu and a major reworking of the **Real Cursor Changer** portion of the code. ando more.  
-There will be many other improvements as well, so please look forward to them!  
+### **Development News (2024/03/10)**  
+Development of 1.14 is progressing well.  
+So far, the shutdown menu has been improved and bugs in the update feature have been fixed  
+We are also testing some other new features. The progress rate is about 35%.  
+
 
 &nbsp;
 ## 💡 - **ABOUT THIS BATCH** -
