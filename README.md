@@ -1,16 +1,17 @@
 # <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="32px"> ***Cursor Changer.bat***
 <div align="left">
-<a href="https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor_Changer_message">
+<a href="https://github.com/tamago1908/Cursor-Changer.bat/files/14654847/Cursor_Changer_logo_placeholder.png.txt?raw=true">
   <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="280px">
 </a>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)
 
-&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/github_its_me!!!.png?raw=true" width="35px"> ***Made by tamago1908*** <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/github_its_me!!!.png?raw=true" width="35px">
+&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/45b1830c-344f-42e6-afc1-d9be438ebf8b" width="35px"> ***Made by tamago1908*** <img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/45b1830c-344f-42e6-afc1-d9be438ebf8b" width="35px">
 <!--
 MOST IDIOT README
 BUT
-ITS WORK ON MY MACHINE
+ITS WORK ON MY MACHINE!
+
 AND I LOVE &nbsp; AF BECAUSE IT'S VERY USEFULL AND EASY!! OFC I KNOW SHOULDN'T USE IT TOO MUCH BUT...
 -->
 </div>
@@ -43,11 +44,11 @@ If you need any other backstory or detailed explanations, please visit the [Wiki
 &nbsp;  
 Main manu looks like This :  
 <p>
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_1.png?raw=true" width="430px">
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/6a6e1ae1-8dba-47ff-a953-c41ddbe6a77a" width="430px">
 <br clear="left">
 Setting menu looks like This :
 </p>
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_1.12_github_main_setting1.png?raw=true" width="430px" >  
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/05e33245-a193-466f-9192-217b57df45ff" width="430px" >  
 &nbsp;  
 
 ## 🔎	 - **FREATURES** -
@@ -81,9 +82,9 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 To use Cursor Changer, you must first set it up. Here is the procedure.  
 
 1 : Download the latest version from **"Release"** on Github. The following image shows a concrete example.  
-![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%201.png)  
+![Cursor Changer](https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/62967f2a-84fb-4790-8390-881dd749d3c3)  
 1.5 : Download it at here.  
-![Cursor Changer](https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Cursor%20Changer%20Github%20instruction%202.png)  
+![Cursor Changer](https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/0207ce78-175d-4cf7-bbfd-360d27afe076)  
 2 : After downloading, either run it as is or move it to your desktop and run it.  
 3 : Wait a few seconds, and the first setup will start automatically. Follow the instructions. At that time, you will be asked to confirm precautions and settings, themes, etc.  
 4 : Once setup is complete, you are then free to use the Cursor Changer. All functions in the menu after startup are available.  
@@ -244,7 +245,7 @@ To receive your reward, click below...***
 
 <div align="center">
 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-  <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/notascamfrnopaidallfreegetthispresentnow.gif?raw=true" alt="Your reward" width="280px">
+  <img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/d16599a1-bcd3-486e-b467-527b28d4ca3b" alt="Your reward" width="280px">
 </a>
 </div>
 
