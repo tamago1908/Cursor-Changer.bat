@@ -29,10 +29,9 @@ We are also testing some other new features. The progress rate is about 35%.
 
 &nbsp;
 ## 💡 - **ABOUT THIS BATCH** -
-Cursor Changer was created using only Batch for most of its functionality and requires no additional files or components, and This Batch is similar to a *simplified OS*, if you will.  
-At the very least, it is by far larger and more complex than the Batch around the corner. And I (**tamago1908**) **created all of them by myself.**  
-
-Simply put, it would be a single, working batchOS that aims to surpass the quality of all batchOS that have been created to date (like [Debios](https://github.com/debios/debios)😈) It would not be created strictly for the purpose of an OS, but it would come close. Also, unlike other batchOS, this will **run in a single batch** (If I may say so, it would be better to have an internet connection, but not essential.)  
+Cursor Chager is a project that tries to explore what can be done with batch and powershell, and is as OS-like functionally running on a single batch file!
+At the very least, it is by far larger and more complex than the other Batch OS Projects. And I (**tamago1908**) **created all of them by myself.**  
+In other word, Cursor Changer.bat is a combination of Real Cursor Changer and OS!  
 
 and also, This Cursor Changer is a batch that has been in **development since 2021 and is still being developed over three years later**.  
 It is probably one of the longest developing Batch OS in the world. Moreover, development is scheduled to continue in the future.  
@@ -52,10 +51,11 @@ Setting menu looks like This :
 &nbsp;  
 
 ## 🔎	 - **FREATURES** -
-The most important feature is the ability to change the cursor. You can change it to white (windows default) or black. It also has a settings menu that allows you to change the behavior of Cursor Changer, a calculator, various easter eggs, hidden functions, advanced behavior using powershell, and much more. And best of all, all of these features are built with only a single BATCH file, no additional files are required!  
-And it have changes the color of the Windows cursor Function (the cursor you are currently moving right now). Not Cmd one. In addition to that, Cursor Changer haves various functions. At first glance, it may be difficult to understand what kind of batch it is, but it has the OS-like functions, and changing the cursor in Windows. In other words, it may be like Cursor Changer OS.  
+Cursor Changer features include changing cursors, updates, calculators, settings, uninstalls, launches, OOBEs, and various other functions and Easter eggs.  
+Although there are only a few features at this time, but this BATCH is still under development, so new new features and patches to come! (at least as long as the developers are motivated)  
+Cursor Changer is written primarily in Batch and Powershell, with Batch being the primary language, and Powershell being used for functions that are difficult to do with Batch alone (like Msgbox, updates, playing music, disabling the maximize button, settings, etcs...)  
+So basically, **Cursor Changer is not a pure batch project!**  
 
-And this BATCH is still under development, with new new features and patches to come! (at least as long as the developers are motivated)  
 and the most recent report (Latest News) is given at least once a month.  
 At least as far as I have searched, almost all Batch OS have stopped updating in the last year.  
 ~~No update and No news for 1 years over? That's pathetic lol.~~  
@@ -92,22 +92,18 @@ You can change the cursor, use the calculator, check for updates, or even find E
 however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
 
 ## 💻 - **SYSTEM REQUIREMENTS** -
-**This batch works only with** ***Windows 10 1511 or later***. **it will not work on earlier versions!** The reason is the special character code coloring and the fact that this batch contains features that do not work in the old powershell.
-However, it may be possible to run it in lower version of windows 10 1511 (like windows 7) with external software that supports ANSII escape sequences, a separate installation of powershell 5.1, etc., but this is not recommended.  
-and if you want run with good performance, you should Prepare good pc.
+### The following requirements must be met in order to run Cursor Changer :
+> @ mean is Windows 10 1511 have this by default)
+- **Windows 10 1511 or later**  
+- **@ Powershell 5.1 or later**  
+- **@ ESC Color Sequence support**  
+- Internet Connection (Optional)  
+- Good CPU (Optional)
 
-At a minimum, you will need a CPU that can run windows 10 1511. (150 or higher In CineBench R15).
-Recommended requirements are 2 cores 4 threads, 2.0 Ghz and higher. (250 or higher in CineBench R15)
+Cursor Changer will not work in environments that do not meet the above conditions.  
+If your computer is running Windows 10 1511 or later, it will work without separate software installation.  
+It may be possible to run Cursor Changer on a PC running Windows 10 1511 or lower by installing an external application separately, but this is not recommended.
 
-Basically, the higher the better but too high performance may worsen the appearance of some animations (because the code executes too fast)
-
-Also, in some environments, batch startup speeds is may be significantly reduced, but this is due to powershell.  
-Since this BATCH performs processing using powershell at startup, if powershell startup is slow, startup will inevitably be slow as well.  
-The solution is to set powershell as an exception in the anti-virus software you are currently using, which will usually solve the problem.  
-Or, *your device is simply too slow.*  
-
-In addition, the UI within Cursor Changer may collapse in rare cases, usually due to improper font widths, etc. Please set the font width that does not collapse and try again.
-If it still collapses, please change the resolution or report it in an issue.  
 
 ## 🚫 - **DISCLAIMER** -
 The author of Cursor Changer.bat (hereinafter referred to as "Batch"), tamago_1908 (hereinafter referred to as "I" or "Developer"), is not responsible for any damages or losses caused or resulting from the execution of this batch.
