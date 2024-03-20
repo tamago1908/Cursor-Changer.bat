@@ -71,6 +71,8 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 
 - *[Debios](https://github.com/debios/debios) (Batch OS)*
 
+- *[Sysshivt Tools](https://github.com/Shivter14/SysShivt-tools) (Batch OS)*
+
 - *[KByteOS](https://github.com/SesatGuy/KBytesOS) (Batch OS)*
 
 - *[Battles of Batch](https://github.com/136MasterNR/Battles-of-Batch) (Batch Project)*
