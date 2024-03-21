@@ -96,8 +96,8 @@ however, that the current version has fewer features and is not perfect. If you 
 
 ## 💻 - **SYSTEM REQUIREMENTS** -
 ### The following requirements must be met in order to run Cursor Changer :
-> @ mean is Windows 10 1511 have this by default)
-- **Windows 10 1511 or later**  
+> @ mean is Windows 10 1803 have this by default)
+- **Windows 10 1803 or later**  
 - **@ Powershell 5.1 or later**  
 - **@ ESC Color Sequence support**  
 - Internet Connection (Optional)  
@@ -105,7 +105,7 @@ however, that the current version has fewer features and is not perfect. If you 
 
 Cursor Changer will not work in environments that do not meet the above conditions.  
 If your computer is running Windows 10 1511 or later, it will work without separate software installation.  
-It may be possible to run Cursor Changer on a PC running Windows 10 1511 or lower by installing an external application separately, but this is not recommended.
+It may be possible to run Cursor Changer on a PC running Windows 10 1803 or lower by installing an external application separately or edit registry key, but this is not recommended.
 
 
 ## 🚫 - **DISCLAIMER** -
