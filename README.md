@@ -1,18 +1,19 @@
-# <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="32px"> ***Cursor Changer.bat***
-<div align="left">
-<a href="https://github.com/tamago1908/Cursor-Changer.bat/files/14654847/Cursor_Changer_logo_placeholder.png.txt?raw=true">
-  <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="280px">
+# <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="32px"> ***Cursor Changer.bat***  
+<div align="center">  
+<a href="https://github.com/tamago1908/Cursor-Changer.bat/files/14654847/Cursor_Changer_logo_placeholder.png.txt?raw=true">  
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="300px">  
+
+***OS-like Scale Functionally + Changining Cursor Function***    
+***Cursor Changer 1.13.bat***  
 </a>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)
+[![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)  
 
-&nbsp;&nbsp;&nbsp;&nbsp; <img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/45b1830c-344f-42e6-afc1-d9be438ebf8b" width="35px"> ***Made by tamago1908*** <img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/45b1830c-344f-42e6-afc1-d9be438ebf8b" width="35px">
+<img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/45b1830c-344f-42e6-afc1-d9be438ebf8b" width="35px"> ***Made by tamago1908*** <img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/45b1830c-344f-42e6-afc1-d9be438ebf8b" width="35px">  
 <!--
 MOST IDIOT README
 BUT
 ITS WORK ON MY MACHINE!
-
-AND I LOVE &nbsp; AF BECAUSE IT'S VERY USEFULL AND EASY!! OFC I KNOW SHOULDN'T USE IT TOO MUCH BUT...
 -->
 </div>
 
