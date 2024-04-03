@@ -23,10 +23,9 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/03/10)**  
-Development of 1.14 is progressing well.  
-So far, the shutdown menu has been improved and bugs in the update feature have been fixed  
-We are also testing some other new features. The progress rate is about 35%.  
+### **Development News (2024/04/03)**  
+I haven't gotten around to updating it at all...  
+Maybe a little more effort is in order, but with the games and characters I've become addicted to lately, I have no choice...  
 
 
 &nbsp;
@@ -105,7 +104,7 @@ however, that the current version has fewer features and is not perfect. If you 
 - Good CPU (Optional)
 
 Cursor Changer will not work in environments that do not meet the above conditions.  
-If your computer is running Windows 10 1511 or later, it will work without separate software installation.  
+If your computer is running Windows 10 1803 or later, it will work without separate software installation.  
 It may be possible to run Cursor Changer on a PC running Windows 10 1803 or lower by installing an external application separately or edit registry key, but this is not recommended.
 
 
