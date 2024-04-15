@@ -23,9 +23,10 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/04/03)**  
-I haven't gotten around to updating it at all...  
-Maybe a little more effort is in order, but with the games and characters I've become addicted to lately, I have no choice...  
+### **Development News (2024/04/16)**  
+Well, I'm currently rewriting main Cursor Changer fuctions, and it will incude GUI.  
+This will make it easier to understand and view. Some bugs have also been fixed.  
+I'm are also planning to implement a custom cursor function, but it will be much more difficult to implement due to various factors.  
 
 
 &nbsp;
