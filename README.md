@@ -67,19 +67,22 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
  
 - *[Tobyfox](https://en.wikipedia.org/wiki/Toby_Fox) (Undertale and Deltarune)*
 
+- *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
+
+- *[KinitoPET](https://store.steampowered.com/app/2075070/KinitoPET/) (Psychological horror game)*
+
 - *[BSOD](https://en.wikipedia.org/wiki/Blue_screen_of_death) (Blue screan of death)*
 
 - *[Windows XP](https://en.wikipedia.org/wiki/Windows_XP) (Operating system)*
 
 - *[Debios](https://github.com/debios/debios) (Batch OS)*
 
-- *[Sysshivt Tools](https://github.com/Shivter14/SysShivt-tools) (Batch OS)*
+- *[Sysshivt Tools (Shivtanium OS)](https://github.com/Shivter14/SysShivt-tools) (Batch OS)*
 
 - *[KByteOS](https://github.com/SesatGuy/KBytesOS) (Batch OS)*
 
 - *[Battles of Batch](https://github.com/136MasterNR/Battles-of-Batch) (Batch Project)*
 
-- *[SAO](https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki) (Japan Anime, Sword Art Online)*
 
 &nbsp;  
 ## ❓ - **HOW TO USE THIS BAT** -
