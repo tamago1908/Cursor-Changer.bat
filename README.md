@@ -104,7 +104,8 @@ however, that the current version has fewer features and is not perfect. If you 
 > @ mean is Windows 10 1803 have this by default)
 - **Windows 10 1803 or later**  
 - **@ Powershell 5.1 or later**  
-- **@ ESC Color Sequence support**  
+- **@ ESC Color Sequence support**
+- **@ UTF-8 Support** (Recommend : MS Gothic)  
 - Internet Connection (Optional)  
 - Good CPU (Optional)
 
