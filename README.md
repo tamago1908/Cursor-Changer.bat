@@ -23,12 +23,14 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/05/20)**  
-Nothing. Absolutely Nothing...  
-...  
-Guys play "KinitoPET" Now. it broke my mind and heart.  
-I LOVE KINITOPET SO MUCH AHHHHHH!! Troy_en is genius!!!!!!!!!!  
-**RAHHHHHHHHHHHH!!!!!!**  
+### **Development News (2024/06/18)**  
+In the meantime, development of Cursor Changer 1.14 is progressing gradually.  
+However, progress is quite slow.  
+Most of the week is not used for development, and time passes with only a few changes to the code every now and then.  
+However, it does not mean that I'm not making progress at all.  
+In fact, a new Version Info UI and some new features have been added. There are also a lot of minor fixes and improvements, and the overall level of completion is improving.  
+There are still three or four features that need to be implemented, but apart from those, the progress is quite good.  
+I could probably release it within two months if I were serious about developing it, but that is not likely to happen.  
 
 
 &nbsp;
