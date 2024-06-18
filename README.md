@@ -24,7 +24,7 @@ well.
 
 # 📰 - **Latest News** -
 ### **Development News (2024/06/18)**  
-In the meantime, development of Cursor Changer 1.14 is progressing gradually.  
+development of Cursor Changer 1.14 is progressing gradually.  
 However, progress is quite slow.  
 Most of the week is not used for development, and time passes with only a few changes to the code every now and then.  
 However, it does not mean that I'm not making progress at all.  
