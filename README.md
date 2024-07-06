@@ -24,8 +24,8 @@ well.
 
 # 📰 - **Latest News** -
 ### **Development News (2024/07/06)**  
-There is no progress :(
-someone help me *sob*
+There is no progress :(  
+someone help me *sob*  
 
 
 &nbsp;
