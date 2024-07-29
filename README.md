@@ -23,9 +23,9 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/07/06)**  
-There is no progress :(  
-someone help me *sob*  
+### **Development News (2024/07/29)**  
+Me right now :  
+![AHHHHHHH](https://github.com/user-attachments/assets/b6017c92-5b76-4787-9e59-8dbf4eaa8af7)  
 
 
 &nbsp;
