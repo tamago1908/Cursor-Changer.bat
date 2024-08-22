@@ -23,42 +23,15 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/08/01)**  
-I’ve made significant progress in development after a long time. The development of Cursor Changer 1.14 has advanced considerably, with **many minor fixes and improvements**. Although I haven't yet tackled the development of crucial features or UI modifications, it’s shaping up quite well otherwise.  
-In terms of completion, I’d say it’s about **60% done**.  
-To demonstrate that I am actively working on version 1.14, the best way is to show some images. So, I’m sharing the improvements and their images here.  
-> (Please note that the content is still under development and may change.)  
+### **Development News (2024/08/22)**  
+The development of the 1.14 update is 95% complete, and I plan to release it within a few weeks.  
+This is because I decided to cancel some of the improvements that were initially planned and focus on polishing what I have now for release. Specifically, I decided to cancel improvements like the uninstallation menu and the Application Manager.  
+If I didn't cancel these, it would take several more months before the release could happen.  
 
-- **New Application Manager**  
-<img src="https://github.com/user-attachments/assets/f9061d8f-da55-4cdc-9dc4-ebda1520e847?raw=true" alt="1 14 dev new appmgr" width="400px">  
+Now, regarding the progress, as I mentioned earlier, the cancellation of some improvements has brought the project close to completion.  
+The remaining tasks involve finishing the partially implemented features, developing a menu to replace the canceled Application Manager, and making some minor adjustments. Once these are done, I can release the update.  
 
-The Application Manager is planned to be implemented in version 1.14. This Application Manager will include **several programs in addition to allowing users to add their own batches**. It can accommodate up to 9 pages, with 32-40 applications in total. (This may change with future updates.)  
-The images shown above are placeholders and currently have no functionality, but I expect to complete them (hopefully).  
-&nbsp;  
-
-- **Improvements to PowerShell-related Processes**  
-![1 14 music downloading pwsh](https://github.com/user-attachments/assets/f03d217d-6ee5-4dc8-849a-7b1168191749)  
-Cursor Changer has a feature that allows the execution of PowerShell scripts called `batbootpowershell`. This is used for update functions and disabling the maximize button, among other things.  
-In version 1.14, this has been renamed to `Powersheller` and the scripts have been improved.  
-For example, OOBEMusic, which runs during OOBE music playback, has been enhanced to **display download progress in real-time**. Additionally, the update function has been improved to work flawlessly (whereas version 1.13 had some bugs).  
-&nbsp;  
-
-- **New Error Handler**  
-In version 1.13, Cursor Changer only had a **limited error handler** that ran the entire program as a subroutine.  
-In version 1.14, I’ve changed it so that Cursor Changer runs as a separate process, allowing for a **complete error handler** that can display a BSOD for all errors. Along with this, the BSOD has also been improved to display more information, and the `:(` has been improved.  
-
-> Here's the new BSOD screen :  
-<img src="https://github.com/user-attachments/assets/90c12d03-f32a-4aee-8301-412a63ce0dd3?raw=true" alt="1 14 oh no my script is crashed (sob)" width="500px">  
-
-&nbsp;  
-- **Various Minor Changes**  
-Version 1.14 includes a lot of changes and improvements across various aspects. All the details will be listed in the official release of 1.14. Even at this stage, it’s looking much better, with significantly improved quality compared to version 1.13.  
-Another important change, which has already been moved in the above image, is that Cursor Changer now displays titles in the following format for all scenes.  
-`Cursor Changer | (current scene)`  
-This makes it easier to understand!  
-
-
-The release date for version 1.14 is still unknown, but I hope to release it within this year.  
+It shouldn't take much longer, so I expect to have it ready for release by the end of this month.  
 
 
 &nbsp;
