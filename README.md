@@ -23,15 +23,10 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/08/22)**  
-The development of the 1.14 update is 95% complete, and I plan to release it within a few weeks.  
-This is because I decided to cancel some of the improvements that were initially planned and focus on polishing what I have now for release. Specifically, I decided to cancel improvements like the uninstallation menu and the Application Manager.  
-If I didn't cancel these, it would take several more months before the release could happen.  
+### **Development News (2024/09/01)**  
+The development of the 1.14 update is 99.98% Complete!  
+There are only a few things to do. So if I do what I need to do, I can release it within 3 days!!  
 
-Now, regarding the progress, as I mentioned earlier, the cancellation of some improvements has brought the project close to completion.  
-The remaining tasks involve finishing the partially implemented features, developing a menu to replace the canceled Application Manager, and making some minor adjustments. Once these are done, I can release the update.  
-
-It shouldn't take much longer, so I expect to have it ready for release by the end of this month.  
 
 
 &nbsp;
