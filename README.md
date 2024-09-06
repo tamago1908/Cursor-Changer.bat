@@ -4,7 +4,7 @@
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="300px">  
 
 ***OS-like Scale Functionally + Changining Cursor Function***    
-***Cursor Changer 1.13.bat***  
+***Cursor Changer 1.14.bat***  
 </a>
 
 [![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)  
@@ -23,10 +23,9 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/09/01)**  
-The development of the 1.14 update is 99.98% Complete!  
-There are only a few things to do. So if I do what I need to do, I can release it within 3 days!!  
-
+### **Update Released! News (2024/09/06)**  
+**Cursor Changer 1.14 has been released!** This update includes numerous improvements and additions!  
+For a detailed change log, please see the Change log.  
 
 
 &nbsp;
@@ -45,12 +44,14 @@ If you need any other backstory or detailed explanations, please visit the [Wiki
 &nbsp;  
 Main manu looks like This :  
 <p>
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/6a6e1ae1-8dba-47ff-a953-c41ddbe6a77a" width="430px">
+<img src="https://github.com/user-attachments/assets/65f13314-4a4a-4262-b2ac-1805a7e806b1" width="430px">
 <br clear="left">
+
 Setting menu looks like This :
 </p>
-<img src="https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/05e33245-a193-466f-9192-217b57df45ff" width="430px" >  
+<img src="https://github.com/user-attachments/assets/0bad5910-f911-4437-8003-b31317dc0b1e" width="430px" >  
 &nbsp;  
+
 
 ## 🔎	 - **FEATURES** -
 Cursor Changer features include changing cursors, updates, calculators, settings, uninstalls, launches, OOBEs, and various other functions and Easter eggs.  
@@ -128,11 +129,78 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 > Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
 
 ## 📝 - **Chenge logs** -
+>  **Stable latest : [1.14](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14) (build 83)**  
 >  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**  
->  **Stable latest : [1.13](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.13) (build 64)**
 ___
 
-### - 1.13 build 64 (Major Update, ULTRA SUPER BIG)  🔥
+
+### - 1.14 build 83 (Major Update, ALL MY EASTEREGGS ARE BELONG TO YOU) 🔥  
+#### Added :  
+- **New Error handler!**  
+  - (This allows it to handle all unexpected errors!)  
+- **Mein menu is significantly Improved!**  
+  - (Underline and Back ground has been added!)  
+  - (And You can toggle it in setting menu! `Underline` and `MeinmenuBg`)  
+- **New App Menu!**  
+  - **Also 2048 Game is added!**  
+- `Shutdown` and `Reboot` Commands added!  
+  - (You can use it in main menu!)
+- **UTF-8 Supports!**
+  - (Also, this causes Cursor Changer to check for UTF-8 support at startup! if your computer does not support UTF-8, it will not boot!)  
+- Few Eastereggs are added!  
+  - (Scary Welcome screen, main menu messages, and more...😈)  
+- GUI has been added to the message when settings are corrupted  
+- Download progress is now displayed during OOBE Music playback  
+- OOBE now has a place to enter the your name  
+  - (Cursor Changer now uses what you entered in OOBE when referring to your username)  
+- Several types of Linux-ish boot animation logs have been added  
+- **And more...**  
+
+#### Chenged :  
+- **Almost all titles changed to `Cursor Changer | (Current scene)` format!**  
+- **Windows minimum requirements changed from 1511 to 1803**  
+  - (1.14 now uses the more advanced VT100, so anything below 1803 that does not support them is no longer supported...)  
+- **All `{}` in Cursor Changer changed to `""`!**  
+  - (Now it no longer crashes when You type a blank (` `)!)  
+- **The Main Cursor Changer portion of the code has been completely rewritten and redesigned based on the new GUI code!**  
+  - (Cursor Changer functionality was almost broken in 1.13, but should work almost completely in 1.14. If you are concerned, do not use this feature!)  
+  - (Also, currently you can't use custom cursor feature)  
+- **Version information section changed to new GUI code, and appearance has beed Improved!**  
+- **Exit menu section changed to new GUI code!**  
+- **All vbs codes are removed from within Cursor Changer and replaced with powershell!**  
+  - (This means that Cursor Changer 1.14 no longer contains vbs code completely! ***Not even one***!)  
+- **BSOD Screen has been significantly improved, looks better, and now displays three pieces of information!**  
+  - (Cursor Changer version, Windows build, and ErrorLevel!)  
+- **ASCII art appearance improved with UTF-8 support!**  
+  - (Some easter eggs, BSOD `:)` and exit menu are also improved by this!)  
+  - (However, I ***do not recommend*** using fonts other than *MS Gothic*, as some fonts may cause problems.)  
+- First animation of OOBE has been slightly improved!  
+- Updater now changes the number of lines in the console to match the length of the changelog when displaying the changelog!  
+- `Mobas_loader` changed to `SAB_Manager`  
+- `Batbootpowershell` changed to `Powersheller`  
+- `inspectentirecommandlist` command changed to `help`  
+  - (You can use it in main menu)  
+- **And more...**  
+
+#### fixed :
+- Numerous typos are fixed!
+- Boot animation related bugs are fixed!  
+- Several developer features have been fixed  
+- Some inappropriate and unused code has been removed  
+- Some bug in White theme under some circumstances has been Fixed  
+- So many bugs are fixed!  
+- **And more...**  
+
+> This update brings the file size to **296KB**. It also took **7 months** to develop it.  
+> Well, the reason for that is that I did not work on the development properly, but, well, I had no choice.  
+> In the meantime, enjoy this huge update. Whether there is enough content to enjoy or not is another matter.  
+> Also, as stated in the changelog, the **use of fonts other than MS Gothic is not recommended**.  
+I am trying to get it to display in a different font, but **it may still cause unexpected display problems**.  
+> If you find a bug or a glitch, please report it in an issue.  
+___
+
+
+### - 1.13 build 64 (Major Update, ULTRA SUPER BIG)
 
 #### From 1.12 Stable
 #### Added :  
@@ -206,40 +274,6 @@ ___
 > s5_simpleboot=true  
 linuxboot can be used with simpleboot, but will not all others.  
 > Also, with linuxboot enabled, a message may appear when using some functions. so I'm looking for a fix.  
-___
-
-### - 1.13β5 build 57 
-#### Added :  
-- **OOBE (Set up) Feature!**  
-- **New BSOD (Error Handling) Feature!**  
-  - **And Recovory Menu and Console**
-- **Feature to check for updates at startup!**
-  - **(not yet completed, So it's not working right now)**  
-- *A warning message is now displayed in the function for debugging*
-- *YOU SHOULDN'T TRYING TO EDIT THIS BATCH... DISCLAIMER ADDED.*
-- *And More...*
-#### Chenged :
-- **New Password GUI at AllCommand List**
-- *Dogcheck related processing has been significantly changed*
-- *Improvement of powershell processing part at startup*
-- *Chance of Fun Animation changed from 1 in 10 to 1 in 50* (more rare)
-- *Some Debug Feature*
-- *Some Lavel Names*
-- *And More...*
-#### fixed :
-- **More Faster Boot!**
-- *Slow theme change on boot* (More faster Apply)
-- *batch no longer exits when denied administrative privileges*
-- *Update Changer is Now Can Show Longer Chenge logs*
-- *Mistranslate*
-- *Some Bugs*
-
-> The size of BATCH is now about 220KB and the number of lines has exceeded 5000... Most of the increase is due to OOBE.  
-> Also, the changelog for this update is long and will likely be missed by the update checker as of 1.13 β4.  
-
-> Known issues :  
-> In very rare cases, a message saying that the configuration file does not exist even though it does, and when regenerated, the configuration file is generated on the desktop.  
-> Some features are incomplete and not perfect. Probably Complete at 1.13β6
 ___
 
 
