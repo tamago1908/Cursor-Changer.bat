@@ -166,7 +166,8 @@ ___
   - (Cursor Changer functionality was almost broken in 1.13, but should work almost completely in 1.14. If you are concerned, do not use this feature!)  
   - (Also, currently you can't use custom cursor feature)  
 - **Version information section changed to new GUI code, and appearance has beed Improved!**  
-- **Exit menu section changed to new GUI code!**  
+- **Exit menu section changed to new GUI code!**
+- **Welcome screen is improved!**
 - **All vbs codes are removed from within Cursor Changer and replaced with powershell!**  
   - (This means that Cursor Changer 1.14 no longer contains vbs code completely! ***Not even one***!)  
 - **BSOD Screen has been significantly improved, looks better, and now displays three pieces of information!**  
