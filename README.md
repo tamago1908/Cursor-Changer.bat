@@ -137,7 +137,7 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 ___
 
 
-### - 1.14a build 90 (Minor Updae, FIX FIX FIX!!!) 🔥  
+### - 1.14a build 90 (Minor Update, FIX FIX FIX!!!) 🔥  
 #### Added :  
 - **Boottime Feature!**
   - You can check the time it took to boot up with the `boottime` command. Or, if you have Linuxboot enabled, it will be displayed as a Log
