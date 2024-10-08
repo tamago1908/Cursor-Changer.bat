@@ -4,7 +4,7 @@
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="300px">  
 
 ***OS-like Scale Functionally + Changining Cursor Function***    
-***Cursor Changer 1.14.bat***  
+***Cursor Changer 1.14a.bat***  
 </a>
 
 [![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)  
@@ -23,8 +23,8 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Update Released! News (2024/09/06)**  
-**Cursor Changer 1.14 has been released!** This update includes numerous improvements and additions!  
+### **Update Released! (2024/10/09)**  
+**Cursor Changer 1.14a has been released!** This update includes some improvements and fixes!  
 For a detailed change log, please see the Change log.  
 
 
@@ -132,12 +132,47 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 > Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
 
 ## 📝 - **Chenge logs** -
->  **Stable latest : [1.14](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14) (build 83)**  
+>  **Stable latest : [1.14a](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.1) (build 90)**  
 >  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**  
 ___
 
 
-### - 1.14 build 83 (Major Update, ALL MY EASTEREGGS ARE BELONG TO YOU) 🔥  
+### - 1.14a build 90 (Minor Updae, FIX FIX FIX!!!) 🔥  
+#### Added :  
+- **Boottime Feature!**
+  - You can check the time it took to boot up with the `boottime` command. Or, if you have Linuxboot enabled, it will be displayed as a Log
+- **New Checkmem Command!**  
+  - You can check the memory consumption of a variable by typing `Checkmem` in the main menu (but it is not very accurate)
+- **New Easteregg messages!**  
+
+#### Changed :  
+- **All `goto`s now have `:`!**  
+  - For example, `goto mainmenu` is now `goto :mainmenu`
+- **Recovery menu GUI code has been improved to shorter lines!**  
+- **No longer requires reboot after cursor change!**  
+  - Accordingly, the setting item for `Confirm reboot when Changed` has been replaced with an item for `Boot as Cursor Changer`!
+- The version interpretation part of the update function has been improved!  
+  - (It will probably work right. I hope so.)
+- Some OOBE Animations are improved!
+  - (The gray gradient that was also present in the mainmenu now appears at the same time the `Welcome to Cursor Changer` fades in!)
+- Some OOBE Parts are improved!  
+- Windows version check has been improved!  
+
+#### Fixed : 
+- Title has been fixed to become `Cursor Changer` upon reboot!  
+- Setting menu UI has been fixed (Finally!)  
+- Some code syntax fixes  
+- Some unused code has been removed  
+- Some bugs fixed  
+
+> This update increased the size from 296KB to **298KB**. Thanks to the improved update functionality, I was able to reduce the increase from what it should have been.  
+> Maybe the next update will bring it over 300KB.  
+> Please note that the update function is incomplete in versions prior to 1.14, so there is a possibility of bugs when updating. In that case, please update manually.  
+> If you find a bug or a glitch, please report it in an issue.  
+___
+
+
+### - 1.14 build 83 (Major Update, ALL MY EASTEREGGS ARE BELONG TO YOU)  
 #### Added :  
 - **New Error handler!**  
   - (This allows it to handle all unexpected errors!)  
@@ -249,35 +284,6 @@ ___
 - Significant changes in processing around startup process and processing order
 - Multiple "processing..." messages displayed when changing settings
 - some bugs 
-___
-
-
-### - 1.13β6 build 60
-#### Added :  
-- **Check Update at boot Feature!**  
-- **New three Boot Animation!**
-  - (it's still undone, so it's hided.)
-- *batch now check powershell is available or not*  
-#### Chenged :
-- **More better win ver Check**
-- *fastboot is now gone. rip*
-- *some translation*
-- *2023 to 2024*
-#### fixed :
-- **Optimized boot process! (more more faster boot)**
-- *Some inappropriate parts*
-- *Remove useless comments and codes (a little bit)*
-- *Fixed some OOBE parts*
-- *Mistranslate*
-- *Some Bugs*
-
-> The three new boot animations are still incomplete and therefore hidden and unavailable at setting menu.  
-> can toggle it by entering one of the following texts directly in the configuration file like this :  
-> s5_linuxboot=true  
-> s5_rawboot=true  
-> s5_simpleboot=true  
-linuxboot can be used with simpleboot, but will not all others.  
-> Also, with linuxboot enabled, a message may appear when using some functions. so I'm looking for a fix.  
 ___
 
 
