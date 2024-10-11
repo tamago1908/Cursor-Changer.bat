@@ -135,7 +135,7 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 >  **Stable latest : [1.14a](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.1) (build 90)**  
 >  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**
 >   
->  (Build numbers mean something like milestones, and since I started using build numbers in 1.11a, it is doubtful that I can call them completely accurate build numbers...)
+>  (Build numbers mean something like milestones)
 ___
 
 
