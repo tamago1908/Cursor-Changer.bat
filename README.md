@@ -4,7 +4,7 @@
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="300px">  
 
 ***OS-like Scale Functionally + Changining Cursor Function***    
-***Cursor Changer 1.14a.bat***  
+***Cursor Changer 1.14b.bat***  
 </a>
 
 [![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)  
@@ -23,8 +23,9 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Update Released! (2024/10/09)**  
-**Cursor Changer 1.14a has been released!** This update includes some improvements and fixes!  
+### **Update Released! (2024/10/15)**  
+**Cursor Changer 1.14b has been released!**  
+This update includes small fix!  
 For a detailed change log, please see the Change log.  
 
 
@@ -132,14 +133,24 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 > Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
 
 ## 📝 - **Chenge logs** -
->  **Stable latest : [1.14a](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.1) (build 90)**  
+>  **Stable latest : [1.14b](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.2) (build 91)**  
 >  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**
 >   
 >  (Build numbers mean something like milestones)
 ___
 
+### - 1.14b build 91 (Minor Update, UPDATE FIX!!!) 🔥  
 
-### - 1.14a build 90 (Minor Update, FIX FIX FIX!!!) 🔥  
+#### Fixed : 
+- **Update function!**
+  - (A small bug in the update feature has been fixed!!!)
+
+> This update is very small and only a few changes have been made. However, I think it is a fairly important update.  
+> If you find a bug or a glitch, please report it in an issue.  
+___
+
+
+### - 1.14a build 90 (Minor Update, FIX FIX FIX!!!)  
 #### Added :  
 - **Boottime Feature!**
   - You can check the time it took to boot up with the `boottime` command. Or, if you have Linuxboot enabled, it will be displayed as a Log
@@ -238,54 +249,6 @@ ___
 > Also, as stated in the changelog, the **use of fonts other than MS Gothic is not recommended**.  
 I am trying to get it to display in a different font, but **it may still cause unexpected display problems**.  
 > If you find a bug or a glitch, please report it in an issue.  
-___
-
-
-### - 1.13 build 64 (Major Update, ULTRA SUPER BIG)
-
-#### From 1.12 Stable
-#### Added :  
-- **OOBE feature!**
-- **BSOD Screen (Error Tracker)!**
-- **New Exit Menu!**
-- **New Version Check Menu!**
-- **Update Check Feature!**
-- **Check Update When Boot feature!**
-- Mainmenu Messages
-- ShutDown Screen
-- New Three Boot Animation (You can toggle it at setting menu)
-- Batch now check powershell is available or not
-- And more...
-#### Chenged :
-- **Boot animation has been improved!**
-- Significant changes in processing around startup process and processing order
-- Now you can chenge the path of setting file is located (you need edit this batch)
-- Improvement of some debug feature
-- dogcheck related code is almost chenged
-- fastboot has been replaced by checkupdate
-- Many things
-#### fixed :
-- **English Translation!**
-- Some Bad things
-- Numerous other bug fixes
-- And More...
-
-> This update almost doubled the size of the file, from 133KB in 1.12 to 250KB. Most of this is due to OOBE.  
-> But it took us about 6 months to release a stable board, so I guess it's reasonable...  
-> and in a way it was doomed, since it took us 6 months to release 1.12 as well...  
-> If you find a bug or a glitch, please report it in an issue.  
-
-#### From 1.13β6
-#### Added :
-- **Now you can toggle New three Boot Animation at in setting menu!**
-#### Chenged :
-- More More More Better Boot code (little bit more faster boot)
-- New BSOD Screen (Windows 10 likey)
-#### fixed :
-- **Issue with Windows 11 Cenary build not correctly identifying the version**
-- Significant changes in processing around startup process and processing order
-- Multiple "processing..." messages displayed when changing settings
-- some bugs 
 ___
 
 
