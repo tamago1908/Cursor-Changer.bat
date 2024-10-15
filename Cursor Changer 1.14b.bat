@@ -59,9 +59,9 @@ rem Shutdown this batch : call :exit 0 or 1 (0 is nothing, 1 is will show "Shutt
 
 
 rem environment setting, It is not recommended to change.
-rem VER v1.14a
-set batver=1.14a
-set batbuild=Build 90
+rem VER v1.14b
+set batver=1.14b
+set batbuild=Build 91
 set batverdev=stable
 set Mainmenueaster=false
 set firststartbat=no
@@ -496,6 +496,7 @@ function Updater {
         # Function to classify and compare version elements
         function Compare-VersionElement {
             param($a, $b)
+
             $isANumber = $a -as [int]
             $isBNumber = $b -as [int]
 
@@ -512,22 +513,20 @@ function Updater {
             }
         }
 
-        # Check if the version is beta
+        # Function to check if version is beta
         function Is-Beta($versionArray) { return ($versionArray[-1] -match "^[a-z][0-9]*$") }
 
         $isFileBeta = Is-Beta($fileverArray)
         $isBatBeta = Is-Beta($batverArray)
 
+        # Compare version arrays
         for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
             $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
             $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
             $comparisonResult = Compare-VersionElement $fileElement $batElement
 
-            if (-not $isFileBeta -and $isBatBeta) { $comparisonResult = 1 }
-            elseif ($isFileBeta -and -not $isBatBeta) { $comparisonResult = -1 }
-
             if ($comparisonResult -gt 0) {
-                if (-not $isFileBeta) { return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion" }
+                return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
             } elseif ($comparisonResult -lt 0) { return "die" }
             if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) { return "null" }
         }
@@ -536,7 +535,7 @@ function Updater {
 
 
 function Fullupdater {
-    Write-Host "Checking update..."
+    Write-Host "Checking update...`n"
     # check the update of Cursor Changer with github api, and Update it.
     $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
     try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
@@ -554,6 +553,7 @@ function Fullupdater {
         # Function to classify and compare version elements
         function Compare-VersionElement {
             param($a, $b)
+
             $isANumber = $a -as [int]
             $isBNumber = $b -as [int]
 
@@ -570,7 +570,7 @@ function Fullupdater {
             }
         }
 
-        # Check if version is beta
+        # Function to check if version is beta
         function Is-Beta($versionArray) { return ($versionArray[-1] -match "^[a-z][0-9]*$") }
 
         $isFileBeta = Is-Beta($fileverArray)
@@ -582,44 +582,48 @@ function Fullupdater {
             $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
             $comparisonResult = Compare-VersionElement $fileElement $batElement
 
-            if (-not $isFileBeta -and $isBatBeta) { $comparisonResult = 1 }
-            elseif ($isFileBeta -and -not $isBatBeta) { $comparisonResult = -1 }
-
             if ($comparisonResult -gt 0) {
-                Write-Host "An update is available. The current version is `"$($batVersion)`". The updated version is `"$($fileVersion)`"."
+                # The file version is newer
+                Write-Host "An update is available. The current version is `"$($batVersion)`". The updated version is `"$($fileVersion)`".`n"
                 Start-Sleep 1
                 Changelog
                 Start-Sleep 2
 
-                if ($isFileBeta) { Write-Host "$clrgra[TIP] This update is a beta version, so it may have bugs or issues.$c" }
+                if ($isFileBeta) {Write-Host "[TIP] This update is a beta version, so it may have bugs or issues.`n" -ForeGroundColor DarkGray}
 
                 $answer = Read-Host "Do you want to update? (y or n)"
                 if ($answer -eq "y") {
-                    $downloadFile = Join-Path (Join-Path $env:USERPROFILE "Downloads") $file.name
+                    $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
+                    $downloadFile = Join-Path $downloadFolder $file.name
                     Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
-                    Move-Item $downloadFile (Join-Path (Split-Path $batName) "Cursor.Changer.$fileVersion.bat") -Force
+                    $newBatName = "Cursor.Changer.$fileVersion.bat"
+                    Move-Item $downloadFile (Join-Path (Split-Path $batName) "$newBatName") -Force
                     Remove-Item "Cursor.Changer.$batVersion.bat" -Force
-                    Write-Host "The update is complete."
+                    Write-Host "The update is complete.`n"
                     Start-Sleep 2
+                  Write-Host "Rebooting..."
+                    PowerShell -WindowStyle Hidden -Command Exit
+                    Start-process "Cursor.Changer.$fileVersion.bat"
                     Killwhole
                 } else {
-                    Write-Host "The update was canceled."
+                    Write-Host "The update was canceled.`n"
                     Start-Sleep 2
                     return
                 }
             } elseif ($comparisonResult -lt 0) {
-                Write-Host "[ERROR] You have a newer version (`"$($batVersion)`") than the update file (`"$($fileVersion)`"). Perhaps you changed the version manually... >:(" -ForegroundColor Red
+                Write-Host "[ERROR] You have a newer version ($($batVersion)) than the update file ($($fileVersion))!`nPerhaps you changed the version manually... >:(`n" -ForegroundColor Red
                 Start-Sleep 2
                 return
             }
         }
 
         if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
-            Write-Host "You already have the latest version (`"$($batVersion)`"), so you don't need to update."
+            Write-Host "You already have the latest version ($($batVersion)), so you don't need to update.`n"
             Start-Sleep 2
         }
     }
 }
+
 
 
 function Doupdate {
@@ -635,8 +639,11 @@ function Doupdate {
     $newBatName = "Cursor.Changer.$fileVersion.bat"
     Move-Item $downloadFile (Join-Path (Split-Path $batName) ("$newBatName")) -Force
     Remove-Item "Cursor.Changer.$batVersion.bat" -Force
-    Write-Host "The update is complete."
+    Write-Host "The update is complete.`n"
     Start-Sleep 2
+    Write-Host "Rebooting..."
+    PowerShell -WindowStyle Hidden -Command Exit
+    Start-process "Cursor.Changer.$fileVersion.bat"
     Killwhole
 }
 
@@ -733,10 +740,10 @@ try {
     exit
 }
 
-$pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid; $pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid; $pid3 = (Get-WmiObject win32_process -filter "processid=$pid2").parentprocessid
+$pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid; $pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
 while ($true) {
     Start-Sleep -Seconds 1
-    if (-not (Get-Process -pid $pid3 -ErrorAction SilentlyContinue)) {
+    if (-not (Get-Process -pid $pid2 -ErrorAction SilentlyContinue)) {
         [ConsoleApp.Program]::StopAudio()
         exit
     }
@@ -749,13 +756,12 @@ Function Killwhole {
     Start-Sleep 1
     $pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid
     $pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
-    $pid3 = (Get-WmiObject win32_process -filter "processid=$pid2").parentprocessid
-    taskkill /pid $pid1 /pid $pid2 /pid $pid3 /pid $pid > $null 2>&1
+    taskkill /pid $pid1 /pid $pid2 /pid $pid > $null 2>&1
 }
 
 Function Changelog {
-    $h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 25};$w.BufferSize=$s;
-    try{if($env:wmodetoggle -eq "false"){Write-Host "Change Log :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "Change Log :" -foregroundcolor black }else{Write-Host "Change Log :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};write-host "";rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
+    $h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 22};$w.BufferSize=$s;
+    try{if($env:wmodetoggle -eq "false"){Write-Host "Change Log :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "Change Log :" -foregroundcolor black }else{Write-Host "Change Log :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
 }
 
 
@@ -5087,6 +5093,7 @@ echo Starting Update Process...
 set Powersheller=Fullupdater& call :Powersheller
 pause
 cd %batchmainpath%
+mode con: cols=75 lines=25
 exit /b
 
 
