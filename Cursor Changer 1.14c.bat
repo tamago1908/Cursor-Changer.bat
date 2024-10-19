@@ -59,8 +59,8 @@ rem Shutdown this batch : call :exit 0 or 1 (0 is nothing, 1 is will show "Shutt
 
 
 rem environment setting, It is not recommended to change.
-rem VER v1.14b
-set batver=1.14b
+rem VER v1.14c
+set batver=1.14c
 set batbuild=Build 91
 set batverdev=stable
 set Mainmenueaster=false
