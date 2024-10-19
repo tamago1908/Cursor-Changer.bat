@@ -3256,20 +3256,23 @@ rem initialize variable
 if "%wmodetoggle%"=="true" (
     if not defined dummy (set thmclr2=[107m[30m)
     set thml=26& set thml2=25
-) else (if not defined dummy (set thmclr2=[0m))
-if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=61,-9,12)
+    set thmldrewb=255
+) else (if not defined dummy (set thmclr2=[0m) & set thmldrewb=12)
+if "%wmodetoggle%"=="true" (set thmlfor=194,9,243&set thmldred=155) else (set thmlfor=69,-9,12&set thmldred=155)
 rem Drew bg. thml means theme line.
 for /l %%i in (!thmlfor!) do (
     rem I think there is a simpler way to do this without having to bother with the calculations, but... well, it's working anyway.
     if "%wmodetoggle%"=="true" (set /a thml2-=1& set /a thml-=1) else (set /a thml=19+%%i/10& set /a thml2=thml-1)
-    if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set thmldrew=%%i)
+    if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set /a thmldrew=%%i-6)
     rem                                  ↑      and      ↑ Difference is must be 4. 170 is (100/) + 61+12. maybe.
-    if "%1"=="1" (if !thmldrew! lss 12 (set thmldrew=12))
-    set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m
+    if !thmldrew! lss 12 (set thmldrew=12) 
+    if not "%wmodetoggle%"=="true" (set /a thmldred=thmldred-21) else (set /a thmldred=thmldred+11)
+    if !thmldred! lss 12 (set thmldred=18) else if !thmldred! gtr 220 (set /a thmldred=230)
+    if not "%1"=="1" (set thmclr=[48;2;!thmldred!;!thmldrew!;!thmldrewb!m) else (set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m)
     for /l %%a in (1,1,3) do (set /p nothing=[!thml!d!thmclr!                         !thmclr2!<nul)
     echo [!thml2!d
 )
-rem delete variables
+rem delete variablesCC
 set thml=& set thml2=& set thmclr=& set thmldrew=& set thmlfor=
 if not "%1"=="1" (setlocal disabledelayedexpansion & set /p nothing=[?25h<nul)
 if not defined dummy (set /p nothing=[0;0H<nul)
