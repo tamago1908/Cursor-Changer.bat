@@ -4,7 +4,7 @@
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="300px">  
 
 ***OS-like Scale Functionally + Changining Cursor Function***    
-***Cursor Changer 1.14b.bat***  
+***Cursor Changer.bat***  
 </a>
 
 [![](https://badgen.net/badge/icon/windows?icon=windows&label)](https://github.com/tamago1908/Cursor-Changer.bat) [![](https://badgen.net/github/release/tamago1908/Cursor-Changer.bat)](https://github.com/tamago1908/Cursor-Changer.bat/releases)  
@@ -23,9 +23,9 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Update Released! (2024/10/15)**  
-**Cursor Changer 1.14b has been released!**  
-This update includes small fix!  
+### **Update Released! (2024/10/19)**  
+**Cursor Changer 1.14c has been released!**  
+This update includes Halloween Background!  
 For a detailed change log, please see the Change log.  
 
 
@@ -133,13 +133,26 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 > Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
 
 ## 📝 - **Chenge logs** -
->  **Stable latest : [1.14b](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.2) (build 91)**  
+>  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**  
 >  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**
 >   
 >  (Build numbers mean something like milestones)
 ___
 
-### - 1.14b build 91 (Minor Update, UPDATE FIX!!!) 🔥  
+### - 1.14c build 91 (Minor Update, HALLOWEEN!!!) 🔥  
+
+#### Changed : 
+- **The background of the mainmenu is now Halloween style!**  
+
+> Dark Pumpkin theme &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; White Ghosty theme
+<img src="https://github.com/user-attachments/assets/971b531e-6db2-4d5b-ba35-8d4f76929044?raw=true" alt="SPOOKY THEME" width="300px">  
+<img src="https://github.com/user-attachments/assets/ea67cfc5-7a9a-4747-bbba-9e7825d35d52?raw=true" alt="SPOOKY BUT COLD THEME" width="300px">  
+
+> [IT IS THE SPOOKY MONTH!!!](https://www.youtube.com/watch?v=vxYgjkZ4L_0)  
+> If you find a bug or a glitch, please report it in an issue.  
+___
+
+### - 1.14b build 91 (Minor Update, UPDATE FIX!!!)  
 
 #### Fixed : 
 - **Update function!**
@@ -148,7 +161,6 @@ ___
 > This update is very small and only a few changes have been made. However, I think it is a fairly important update.  
 > If you find a bug or a glitch, please report it in an issue.  
 ___
-
 
 ### - 1.14a build 90 (Minor Update, FIX FIX FIX!!!)  
 #### Added :  
@@ -181,73 +193,6 @@ ___
 > This update increased the size from 296KB to **298KB**. Thanks to the improved update functionality, I was able to reduce the increase from what it should have been.  
 > Maybe the next update will bring it over 300KB.  
 > Please note that the update function is incomplete in versions prior to 1.14, so there is a possibility of bugs when updating. In that case, please update manually.  
-> If you find a bug or a glitch, please report it in an issue.  
-___
-
-
-### - 1.14 build 83 (Major Update, ALL MY EASTEREGGS ARE BELONG TO YOU)  
-#### Added :  
-- **New Error handler!**  
-  - (This allows it to handle all unexpected errors!)  
-- **Mein menu is significantly Improved!**  
-  - (Underline and Back ground has been added!)  
-  - (And You can toggle it in setting menu! `Underline` and `MeinmenuBg`)  
-- **New App Menu!**  
-  - **Also 2048 Game is added!**  
-- `Shutdown` and `Reboot` Commands added!  
-  - (You can use it in main menu!)
-- **UTF-8 Supports!**
-  - (Also, this causes Cursor Changer to check for UTF-8 support at startup! if your computer does not support UTF-8, it will not boot!)  
-- Few Eastereggs are added!  
-  - (Scary Welcome screen, main menu messages, and more...😈)  
-- GUI has been added to the message when settings are corrupted  
-- Download progress is now displayed during OOBE Music playback  
-- OOBE now has a place to enter the your name  
-  - (Cursor Changer now uses what you entered in OOBE when referring to your username)  
-- Several types of Linux-ish boot animation logs have been added  
-- **And more...**  
-
-#### Chenged :  
-- **Almost all titles changed to `Cursor Changer | (Current scene)` format!**  
-- **Windows minimum requirements changed from 1511 to 1803**  
-  - (1.14 now uses the more advanced VT100, so anything below 1803 that does not support them is no longer supported...)  
-- **All `{}` in Cursor Changer changed to `""`!**  
-  - (Now it no longer crashes when You type a blank (` `)!)  
-- **The Main Cursor Changer portion of the code has been completely rewritten and redesigned based on the new GUI code!**  
-  - (Cursor Changer functionality was almost broken in 1.13, but should work almost completely in 1.14. If you are concerned, do not use this feature!)  
-  - (Also, currently you can't use custom cursor feature)  
-- **Version information section changed to new GUI code, and appearance has beed Improved!**  
-- **Exit menu section changed to new GUI code!**
-- **Welcome screen is improved!**
-- **All vbs codes are removed from within Cursor Changer and replaced with powershell!**  
-  - (This means that Cursor Changer 1.14 no longer contains vbs code completely! ***Not even one***!)  
-- **BSOD Screen has been significantly improved, looks better, and now displays three pieces of information!**  
-  - (Cursor Changer version, Windows build, and ErrorLevel!)  
-- **ASCII art appearance improved with UTF-8 support!**  
-  - (Some easter eggs, BSOD `:)` and exit menu are also improved by this!)  
-  - (However, I ***do not recommend*** using fonts other than *MS Gothic*, as some fonts may cause problems.)  
-- First animation of OOBE has been slightly improved!  
-- Updater now changes the number of lines in the console to match the length of the changelog when displaying the changelog!  
-- `Mobas_loader` changed to `SAB_Manager`  
-- `Batbootpowershell` changed to `Powersheller`  
-- `inspectentirecommandlist` command changed to `help`  
-  - (You can use it in main menu)  
-- **And more...**  
-
-#### fixed :
-- Numerous typos are fixed!
-- Boot animation related bugs are fixed!  
-- Several developer features have been fixed  
-- Some inappropriate and unused code has been removed  
-- Some bug in White theme under some circumstances has been Fixed  
-- So many bugs are fixed!  
-- **And more...**  
-
-> This update brings the file size to **296KB**. It also took **7 months** to develop it.  
-> Well, the reason for that is that I did not work on the development properly, but, well, I had no choice.  
-> In the meantime, enjoy this huge update. Whether there is enough content to enjoy or not is another matter.  
-> Also, as stated in the changelog, the **use of fonts other than MS Gothic is not recommended**.  
-I am trying to get it to display in a different font, but **it may still cause unexpected display problems**.  
 > If you find a bug or a glitch, please report it in an issue.  
 ___
 
