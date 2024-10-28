@@ -23,11 +23,17 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Update Released! (2024/10/19)**  
-**Cursor Changer 1.14c has been released!**  
-This update includes Halloween Background!  
-For a detailed change log, please see the Change log.  
-
+### **Development News (2024/10/28)**  
+...  
+NOBODY DON'T CARE ABOUT THIS BATCH  
+AND I'M WASTING MY TIMES TO THIS BATCH  
+SOMEONE HELP ME :(  
+WAHHHHHHH *sobbing*  
+...
+...
+...
+Oh by the way 1.15β1 is 75% done  
+Maybe I can release it within 1 week
 
 &nbsp;
 ## 💡 - **ABOUT THIS BATCH** -
