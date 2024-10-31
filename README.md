@@ -136,8 +136,14 @@ The user (the user of the Batch) may report to the developer any bugs or problem
 
 This disclaimer is basically in accordance with the Apache License 2.0 and does not imply any license modification.  
 This disclaimer and license applies whether expressly or impliedly, only when you install and run the batch, or You will be deemed to have understood the disclaimer when you run the OOBE and recognize the message that says please refer to this disclaimer both. The merits of the decision will only be determined in this regard.  
-> Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...  
+> Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
 
+## 🌟 - **Special thanks** -  
+**- People who have actually tried this batch -**  
+**- Server.bat discord community -**  
+**- Bat-Man discord community -**  
+&nbsp;  
+**Thanks so much for giving me feedback!**  
 
 ## 📝 - **Chenge logs** -
 >  **Beta latest : [1.15β1](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.1) (build 100)**  
