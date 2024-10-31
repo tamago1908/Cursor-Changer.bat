@@ -23,17 +23,10 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/10/28)**  
-...  
-NOBODY DON'T CARE ABOUT THIS BATCH  
-AND I'M WASTING MY TIMES TO THIS BATCH  
-SOMEONE HELP ME :(  
-WAHHHHHHH *sobbing*  
-...
-...
-...
-Oh by the way 1.15β1 is 75% done  
-Maybe I can release it within 1 week
+### **Update Released! (2024/10/31)**  
+Cursor Changer 1.15β1 (1.15.b1) Update Released!  
+This update includes several UI improvements!  
+Please check change log to see full change log.  
 
 &nbsp;
 ## 💡 - **ABOUT THIS BATCH** -
@@ -139,13 +132,43 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 > Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
 
 ## 📝 - **Chenge logs** -
+>  **Beta latest : [1.15β1](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15) (build 100)**  
 >  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**  
->  **Beta latest : [1.13β6](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.13.6) (build 60) OUTDATED**
 >   
 >  (Build numbers mean something like milestones)
 ___
 
-### - 1.14c build 91 (Minor Update, HALLOWEEN!!!) 🔥  
+### - 1.15β1 build 100 (Beta Update, BUILD 100!!!) 🔥  
+
+#### Added : 
+- **Error Handler has been Improved!**  
+  - (Error Handler no longer uses Powershell)  
+- **New Update available UI!**  
+  - (UI displayed when updates are available when the Check Update at boot setting is set to true)  
+- **New Uninstall UI!**  
+- labellist command  
+  - (You can use it in mainmenu)  
+- Uninstall argument  
+- New easter egg messages  
+  - (RAINBOWWWWW)
+- Halloween theme is gone by default... :(
+  - (But don't worry! Enter `halloween` in the main menu and it will be active until you reboot!)  
+
+#### Changed : 
+- **Powersheller code is now much shorter! (-23%)**  
+- **OOBE code is now much shorter! (-25%)**  
+  - (Also no more flickering)  
+- Small UI elements  
+
+#### Fixed : 
+- Small bugs  
+
+> With this update, the Build number has finally reached 100.  
+> Also, the size of the Cursor Changer is now over 300KB, so I feel like I've reached a big milestone.  
+> If you find a bug or a glitch, please report it in an issue.   
+___
+
+### - 1.14c build 91 (Minor Update, HALLOWEEN!!!)  
 
 #### Changed : 
 - **The background of the mainmenu is now Halloween style!**  
@@ -165,40 +188,6 @@ ___
   - (A small bug in the update feature has been fixed!!!)
 
 > This update is very small and only a few changes have been made. However, I think it is a fairly important update.  
-> If you find a bug or a glitch, please report it in an issue.  
-___
-
-### - 1.14a build 90 (Minor Update, FIX FIX FIX!!!)  
-#### Added :  
-- **Boottime Feature!**
-  - You can check the time it took to boot up with the `boottime` command. Or, if you have Linuxboot enabled, it will be displayed as a Log
-- **New Checkmem Command!**  
-  - You can check the memory consumption of a variable by typing `Checkmem` in the main menu (but it is not very accurate)
-- **New Easteregg messages!**  
-
-#### Changed :  
-- **All `goto`s now have `:`!**  
-  - For example, `goto mainmenu` is now `goto :mainmenu`
-- **Recovery menu GUI code has been improved to shorter lines!**  
-- **No longer requires reboot after cursor change!**  
-  - Accordingly, the setting item for `Confirm reboot when Changed` has been replaced with an item for `Boot as Cursor Changer`!
-- The version interpretation part of the update function has been improved!  
-  - (It will probably work right. I hope so.)
-- Some OOBE Animations are improved!
-  - (The gray gradient that was also present in the mainmenu now appears at the same time the `Welcome to Cursor Changer` fades in!)
-- Some OOBE Parts are improved!  
-- Windows version check has been improved!  
-
-#### Fixed : 
-- Title has been fixed to become `Cursor Changer` upon reboot!  
-- Setting menu UI has been fixed (Finally!)  
-- Some code syntax fixes  
-- Some unused code has been removed  
-- Some bugs fixed  
-
-> This update increased the size from 296KB to **298KB**. Thanks to the improved update functionality, I was able to reduce the increase from what it should have been.  
-> Maybe the next update will bring it over 300KB.  
-> Please note that the update function is incomplete in versions prior to 1.14, so there is a possibility of bugs when updating. In that case, please update manually.  
 > If you find a bug or a glitch, please report it in an issue.  
 ___
 
