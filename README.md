@@ -132,7 +132,7 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 > Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.15β1](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15) (build 100)**  
+>  **Beta latest : [1.15β1](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.1) (build 100)**  
 >  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**  
 >   
 >  (Build numbers mean something like milestones)
