@@ -29,7 +29,7 @@ This update includes several UI improvements!
 Please check change log to see full change log.  
 
 &nbsp;
-## 💡 - **ABOUT THIS BATCH** -
+## 💡 - **About this batch** -
 Cursor Chager is a project that tries to explore what can be done with batch and powershell, and is as OS-like functionally running on a single batch file!
 At the very least, it is by far larger and more complex than the other Batch OS Projects. And I (**tamago1908**) **created all of them by myself.**  
 In other word, Cursor Changer.bat is a combination of Real Cursor Changer and OS!  
@@ -40,7 +40,10 @@ It is probably one of the longest developing Batch OS in the world. Moreover, de
 If you need any other backstory or detailed explanations, please visit the [Wiki](https://github.com/tamago1908/Cursor-Changer.bat/wiki).
 
 >  Incidentally, it is in no way related to the Real [Cursor Changer](https://github.com/L413/Cursor-Changer), and the name match is coincidental. However, I feel there are some similarities in concept...  
-  
+
+<details>  
+<summary>Click here to see Cursor Changer pictures</summary>  
+
 &nbsp;  
 Main manu looks like This :  
 <p>
@@ -51,9 +54,10 @@ Setting menu looks like This :
 </p>
 <img src="https://github.com/user-attachments/assets/0bad5910-f911-4437-8003-b31317dc0b1e" width="430px" >  
 &nbsp;  
+</details>  
 
 
-## 🔎	 - **FEATURES** -
+## 🔎	 - **Features** -
 Cursor Changer features include changing cursors, updates, calculators, settings, uninstalls, launches, OOBEs, and various other functions and Easter eggs.  
 Although there are only a few features at this time, but this BATCH is still under development, so new new features and patches to come! (at least as long as the developers are motivated)  
 Cursor Changer is written primarily in Batch and Powershell, with Batch being the primary language, and Powershell being used for functions that are difficult to do with Batch alone (like Msgbox, updates, playing music, disabling the maximize button, settings, etcs...)  
@@ -68,6 +72,8 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 ~~No update and No news for 1 years over? That's pathetic lol.~~  
 
 ### ***In creating this BATCH, I were inspired by the following.***
+<details>  
+<summary>Click here to see all</summary>  
  
 - *[Tobyfox](https://en.wikipedia.org/wiki/Toby_Fox) (Undertale and Deltarune)*
 
@@ -87,9 +93,10 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 
 - *[Battles of Batch](https://github.com/136MasterNR/Battles-of-Batch) (Batch Project)*
 
+</details>  
 
 &nbsp;  
-## ❓ - **HOW TO USE THIS BAT** -
+## ❓ - **How to use this batch** -
 To use Cursor Changer, you must first set it up. Here is the procedure.  
 
 1 : Download the latest version from **"Release"** on Github. The following image shows a concrete example.  
@@ -103,7 +110,7 @@ To use Cursor Changer, you must first set it up. Here is the procedure.
 You can change the cursor, use the calculator, check for updates, or even find Easter eggs.
 however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
 
-## 💻 - **SYSTEM REQUIREMENTS** -
+## 💻 - **System Requirements** -
 ### The following requirements must be met in order to run Cursor Changer :
 > @ mean is Windows 10 1803 have this by default)
 - **Windows 10 1803 or later**  
@@ -118,7 +125,7 @@ If your computer is running Windows 10 1803 or later, it will work without separ
 It may be possible to run Cursor Changer on a PC running Windows 10 1803 or lower by installing an external application separately or edit registry key, but this is not recommended.
 
 
-## 🚫 - **DISCLAIMER** -
+## 🚫 - **Disclaimer** -   
 The author of Cursor Changer.bat (hereinafter referred to as "Batch"), tamago_1908 (hereinafter referred to as "I" or "Developer"), is not responsible for any damages or losses caused or resulting from the execution of this batch.
 In other words, all responsibility for the execution of this BATCH belongs to the person who executes it.
 All disclaimers, notices, and copyrights are governed by the Apache License 2.0.
@@ -129,7 +136,8 @@ The user (the user of the Batch) may report to the developer any bugs or problem
 
 This disclaimer is basically in accordance with the Apache License 2.0 and does not imply any license modification.  
 This disclaimer and license applies whether expressly or impliedly, only when you install and run the batch, or You will be deemed to have understood the disclaimer when you run the OOBE and recognize the message that says please refer to this disclaimer both. The merits of the decision will only be determined in this regard.  
-> Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...
+> Did you read this Disclaimer? if you so, click [here](https://www.youtube.com/watch?v=rxSoUkwP65M)...  
+
 
 ## 📝 - **Chenge logs** -
 >  **Beta latest : [1.15β1](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.1) (build 100)**  
