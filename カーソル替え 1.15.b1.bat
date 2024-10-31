@@ -5,7 +5,7 @@ if "%errorlevel%"=="1" (mode con: cols=75 lines=25& set boottime1=%time%)
 if "%batbootargumentbad%"=="false" (title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| €”õ’†...) else if not "%1"=="BatBootErrorHandlerArgument1908" (title ƒJ[ƒ\ƒ‹‘Ö‚¦)
 if not defined dummy (set /p nothing=[?25h<nul)
 
-rem Cursor Changer by tamago_1908
+rem ƒJ[ƒ\ƒ‹‘Ö‚¦ by tamago_1908
 rem English version.
 
 rem https://github.com/tamago1908/cursor-changer.bat 
@@ -48,15 +48,14 @@ rem   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 rem   See the License for the specific language governing permissions and
 rem   limitations under the License.
 
-
+rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚ğ‰ü—Ç‚·‚é
 
 rem Œv‰æ     : rem customƒe[ƒ}‹@”\ (ˆêƒJƒ‰[) ‚ğÀ‘•‚·‚é (1.15?)
 rem ã ‹ï‘Ì“I‚É‚ÍColor_Applyer‚ğÀ‘•‚µ‚ÄAæ‚Éfor•ª‚Å‹ó”’‚ğ—˜—p‚µ‚Ä•¶šF‚È‚Ç‚ğw’èAŒã‚É•`Ê‚³‚ê‚éGUI‚âƒnƒCƒ‰ƒCƒg‚Í]—ˆ‚Ì•û–@‚ÅÅ“K‰»‚·‚éB
 rem ‚à‚¤­‚µŒ«‚¢•û–@‚Åİ’èƒtƒ@ƒCƒ‹‚È‚Ç‚Ì‰ü•Ï‚ğŒŸ’m‚·‚é  (1.15?)
 rem "Uninstall"‚ğˆø”‚Å—˜—p‚µ‚ÄƒAƒ“ƒCƒ“ƒXƒg[ƒ‰[‚Å‹N“®‚Å‚«‚é‚æ‚¤‚É‚·‚éB‚±‚ê‚ÌÀ‘•‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‰[‚ÌƒI[ƒo[ƒz[ƒ‹‚ÉÀ‘•‚·‚éB
-rem Œ»İÀ‘•‚³‚ê‚Ä‚¢‚éyoutubeŠÖ˜A‚Ìˆ—‚ğ‚·‚×‚Äíœ‚µ‚ÄAdogcheck‚Æstartup rickroll‚ğpowershell‚Ì‰¹ŠyÄ¶‚É’u‚«Š·‚¦‚éB (1.15?)
-rem ã‚É”º‚¢A‚æ‚èƒJƒeƒSƒiƒ‰ƒCƒY‚³‚ê‚½İ’èGUI‚ğÀ‘•‚·‚éB (1.15?)
-rem ƒAƒbƒvƒf[ƒg—˜—p‰Â”\‚Ì‰ü—ÇAƒƒOƒCƒ“ƒƒjƒ…[‚ÌÀ‘• (1.15?)
+rem Œ»İÀ‘•‚³‚ê‚Ä‚¢‚éyoutubeŠÖ˜A‚Ìˆ—‚ğ‚·‚×‚ÄŠù’è‚Ìƒuƒ‰ƒEƒU‚ÅŠJ‚­‚æ‚¤‚É•ÏX‚·‚éBŒ»İ‚Íchrome‚ÅŒÅ’è‚³‚ê‚Ä‚¢‚é‚½‚ß (1.15?)
+rem İ’è‚Ì•”•ª‚ÌUIƒR[ƒh‚ğ‰ü—Ç‚·‚éBŒ»İ‚Ì‚Íç’·‚·‚¬‚é (1.15?)
 rem setting‚ğ“K—p‚·‚é•”•ª‚ğ‰ü—Ç‚·‚é (1.15?)
 rem version check‚ÌƒoƒCƒpƒX‚Ìd•û‚ğ•Ï‚¦‚éB‚»‚ê‚É”º‚¢‚»‚ê‚çü•Ó‚Ìˆ—‚à•Ï‚¦‚é (1.15?)
 rem ã‚ª‚Å‚«‚ê‚ÎApowershell‘O‚Éwinver check‚ğ”z’u‚Å‚«‚é‰Â”\«‚ª‚ ‚é
@@ -65,10 +64,10 @@ rem ã‚ª‚Å‚«‚ê‚ÎApowershell‘O‚Éwinver check‚ğ”z’u‚Å‚«‚é‰Â”\«‚ª‚ ‚é
 
 rem Make sure to fill in the build number and version! Also, don't forget to put it in the archive!
 rem environment setting, It is not recommended to change.
-rem VER v1.14b
-set batver=1.14b
-set batbuild=Build 91
-set batverdev=stable
+rem VER v1.15.b1
+set batver=1.15.b1
+set batbuild=Build 100
+set batverdev=beta
 set hazimeeaster=false
 set firststartbat=no
 set bootbatnow=yes
@@ -90,10 +89,10 @@ rem O===================================O
 cd /d %batchmainpath%
 
 
-rem detect user argument and echo first boot message
+rem detect user argument
 if "%1"=="BatBootErrorHandlerArgument1908" (goto :batbootVerifyerrorhandler)
 :batbootVerifyerrorhandler
-echo %0 | find "%homedrive%" >nul
+echo %0 | find "%~dp0%~n0%~x0" >nul
 if "%errorlevel%"=="0" if "%1"=="BatBootErrorHandlerArgument1908" (set batbootargumentbad=true) else (set batbootargumentbad=)
 if "%errorlevel%"=="1" (set batbootargumentbad=false)
 if "%batbootargumentbad%"=="true" (call :BSOD_Errors 5)
@@ -133,7 +132,6 @@ find "wmode=true" %Settingsfile% > nul
 if "!errorlevel!"=="0" (color f0 & set wmodetoggle=true) else (set wmodetoggle=false)
 ) else (set wmodetoggle=false)
 
-
 rem check linuxboot
 >nul 2>&1 find "s5_rawboot=true" %Settingsfile%
 if not "!errorlevel!"=="0" (
@@ -150,7 +148,7 @@ if not "!errorlevel!"=="0" (
 )
 
 rem check simpleboot
-if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" (echo [%linuxishclr%info%linuxishclr2%] Linux-ish Boot Loader is just now started.)
+if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" (echo [%linuxishclr%info%linuxishclr2%] Linux•—‚Ìƒu[ƒgƒ[ƒ_[‚ªŠJn‚µ‚Ü‚µ‚½)
 >nul 2>&1 find "rawboot=false" %Settingsfile%
 if "!errorlevel!"=="0" (
     >nul 2>&1 find "s5_simpleboot=true" %Settingsfile%
@@ -175,7 +173,7 @@ if "!errorlevel!"=="0" (
     )
 )
 setlocal disabledelayedexpansion
-if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" ((echo [%linuxishclr%info%linuxishclr2%] Bootanimation Checked...))
+if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" ((echo [%linuxishclr%info%linuxishclr2%] Boot animation‚ÌŠm”F‚ªŠ®—¹‚µ‚Ü‚µ‚½))
 
 
 
@@ -201,34 +199,26 @@ if "%bootbatnow%"=="yes" (cls & echo ‚µ‚Î‚ç‚­‚¨‘Ò‚¿‚­‚¾‚³‚¢... 2/2)
 )
 )
 )
-if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" ((echo [%linuxishclr%info%linuxishclr2%] Boot Message IS NO MORE WORKING...))
+if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" ((echo [%linuxishclr%info%linuxishclr2%] Boot massage‚Í€‚ñ‚¾B))
 
 
 
 :batbootVerifyerrorhandlersafe
-rem Processing User Arguments
-setlocal enabledelayedexpansion
-set "arguments="
-for %%i in (%*) do (
-    set "arguments=!arguments! %%i"
-)
-if not "%~1"=="" (set "arguments=%arguments:~1%")
-setlocal disabledelayedexpansion
 rem Start Error Handler
-if not "%1"=="BatBootErrorHandlerArgument1908" (powershell -command "try {$process = Start-Process \"$env:%~dp0%~n0%~x0\" -ArgumentList \"BatBootErrorHandlerArgument1908 ${env:arguments}\" -NoNewWindow -Wait -PassThru; exit $process.ExitCode} catch {exit 1}")
-if not "%1"=="BatBootErrorHandlerArgument1908" (if "%errorlevel%"=="1" (call :BSOD_Errors 6) else (call :BSOD_Errors 0 %errorlevel%)
+if not "%1"=="BatBootErrorHandlerArgument1908" (cd "%~dp0" & start /b /wait /realtime cmd.exe /c "%~n0%~x0" BatBootErrorHandlerArgument1908 %* || call :BSOD_Errors 6)
+if not "%1"=="BatBootErrorHandlerArgument1908" (call :BSOD_Errors 0 %errorlevel%
     pause >nul
     echo ‰R‚İ‚½‚¢‚¾‚ëB€‚ñ‚Å‚é‚ñ‚¾‚ºA‚±‚ê‚ÅB
     exit
 )
 set batbootargumentbad=
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Error_Handler is Working! :D)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Error_Handler‚ª“®‚¢‚½ :D)
 
 
 :Arguments_Loader
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Arguments_Loader is Started...)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Arguments_Loader‚ªŠJn‚µ‚Ü‚µ‚½)
 if "%~1"=="" goto :Arguments_Loaderend
-if not "%~1"=="BatBootErrorHandlerArgument1908" (title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| Cursor Changer argment checking...)
+if not "%~1"=="BatBootErrorHandlerArgument1908" (title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ˆø”‚ğŠm”F’†...)
 setlocal enabledelayedexpansion
 set i=0
 for %%a in (%*) do (
@@ -258,6 +248,7 @@ for /l %%i in (1,1,%n%) do (
     if "!current!"=="enablesimpleboot" (echo simpleboot‚ğ—LŒø‚É‚µ‚Ü‚µ‚½B& set simpleboot=true& set argmentserror=false)
     if "!current!"=="devmode" (call :developermenu& set argmentserror=false)
     if "!current!"=="recovery" (echo recovery menu‚ğ—LŒø‚É‚µ‚Ü‚µ‚½B& set argmentserror=false& goto :Cursor_Changer_REmenu)
+    if "!current!"=="uninstall" (setlocal disabledelayedexpansion & set Uninstall_Shutdown=true& goto :Uninstall)
     if "!current!"=="help" (title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ˆø”‚Ìƒwƒ‹ƒv& call :batstarthelp& set argmentserror=false)
     if "!current!"=="bypsvck" (echo bypsvck‚ğ—LŒø‚É‚µ‚Ü‚µ‚½B& set bypasswinvercheck=true& set argmentserror=false)
     if "!current!"=="bypsadm" (echo bypsadm‚ğ—LŒø‚É‚µ‚Ü‚µ‚½B& set adminbypass=true& set adminbypass=false& set argmentserror=false)
@@ -273,18 +264,15 @@ if %n% geq 0 (
     )
 )
 :Arguments_Loaderend
-set n=
-set argmentserror=
-set Arguments_Loaderbreaked=
-set arguments=
+set argmentserror=& set Arguments_Loaderbreaked=& set arguments=& set n=& set i=
 setlocal disabledelayedexpansion
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Arguments_Loader is done.)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Arguments_Loader ‚ªŠ®—¹‚µ‚Ü‚µ‚½)
 
 call :batbootErrorHandlerCall
 call :BSOD_Errors 1 %errorlevel%
 
 :batbootErrorHandlerCall
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Error_Handler_Call is Started.)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Error_Handler_Call ‚ªŠJn‚µ‚Ü‚µ‚½)
 
 
 
@@ -292,7 +280,7 @@ if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Error_Handler_C
 rem checking windows version
 setlocal enabledelayedexpansion
 if "%1"=="BatBootErrorHandlerArgument1908" if not "%1"=="dynamic" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Checking Windows Version...)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Windows‚Ìƒo[ƒWƒ‡ƒ“‚ğŠm”F‚µ‚Ä‚¢‚Ü‚·...)
 )
 rem check windows 10 1803 or higher
 for /f "tokens=6 delims=. " %%i in ('ver') do set version=%%i
@@ -357,10 +345,10 @@ if %selected%== echo what? "Y" or "N".& pause & goto :batbootcheckwinverbadwarn
 
 :batbootcheckwinversafe
 setlocal disabledelayedexpansion
-if "%batbootargumentbad%"=="false" (title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| Cursor Changer Preparing...) else if not "%1"=="BatBootErrorHandlerArgument1908" if "%1"=="dynamic" (exit /b 0)
+if "%batbootargumentbad%"=="false" (title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒJ[ƒ\ƒ‹‘Ö‚¦ €”õ’†...) else if not "%1"=="BatBootErrorHandlerArgument1908" if "%1"=="dynamic" (exit /b 0)
 set batbootcheckwinversafe=& set version=& set version2=
 if "%1"=="dynamic" (exit /b)
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] WinverCheck is done.)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Windows‚Ìƒo[ƒWƒ‡ƒ“‚ÌŠm”F‚ªŠ®—¹‚µ‚Ü‚µ‚½)
 
 
 rem ƒJ[ƒ\ƒ‹‘Ö‚¦ˆ—‚ğÀs
@@ -374,13 +362,13 @@ if "%errorlevel%"=="0" (set checkupdatetoggle=true) else (set checkupdatetoggle=
 if "%disableexit%"=="false" (goto :Powersheller_end)
 
 :Powersheller
-if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Powersheller is started...)
+cd %~dp0 & set Powersheller=
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Powersheller ‚ªŠJn‚µ‚Ü‚µ‚½...)
 set Powersheller_passed=false
 if not "%Powersheller%"=="OOBEMusic" (
-    if "batverdev"=="beta" (
     set "batverforpowersheller=%batver:ƒÀ=.b%"
-) else (set "batverforpowersheller=%batver%")
 )
+if not "%1"=="BatBootErrorHandlerArgument1908" (set Powersheller=%1)
 
 rem startid~powershell ‚Ü‚Å‚ÌƒR[ƒh‚Í‚¸‚ç‚µ‚Ä‚Í‚¢‚¯‚È‚¢@‚»‚êˆÈ‘O‚©‚»‚êˆÈŒã‚È‚çok
 :: StartID1908
@@ -392,82 +380,50 @@ if "%Powersheller%"=="OOBEMusic" (start /min powershell.exe  -noexit -NoProfile 
 if "%checkupdatetoggle%"=="true" (for /f "delims=" %%a in ('powershell -NoProfile "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*') do set Updateinfo=%%a&goto :Powersheller_end) else (powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto :Powersheller_end)
 
 
-# Define the function to disable the maximize button
 function Disablemax {
-#Calling user32.dll methods for Windows and Menus
+# Å‘å‰»ƒ{ƒ^ƒ“‚ğ–³Œø‰»‚·‚éˆ—
 $code = @'
 using System;
 using System.Runtime.InteropServices;
 
-namespace CloseButtonToggle {
-
-// Function Declaration
-
- internal static class WinAPI {
-   [DllImport("kernel32.dll")]
-   internal static extern IntPtr GetConsoleWindow();
-
-   [DllImport("user32.dll")]
-   [return: MarshalAs(UnmanagedType.Bool)]
-   internal static extern bool DeleteMenu(IntPtr hMenu,
-                          uint uPosition, uint uFlags);
-
-   [DllImport("user32.dll")]
-   [return: MarshalAs(UnmanagedType.Bool)]
-   internal static extern bool EnableMenuItem(IntPtr hMenu,
-                          uint uIDEnableItem, uint uEnable);
-
-   [DllImport("user32.dll")]
-   [return: MarshalAs(UnmanagedType.Bool)]
-   internal static extern bool DrawMenuBar(IntPtr hWnd);
-
-   [DllImport("user32.dll")]
-   internal static extern IntPtr GetSystemMenu(IntPtr hWnd,
-              [MarshalAs(UnmanagedType.Bool)]bool bRevert);
-
-   [DllImport("user32.dll")]
-   internal static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-   [DllImport("user32.dll")]
-   internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-// End of Declaration
-
-// Set required arguments
-   const int GWL_STYLE = -16;
-   const int WS_MAXIMIZEBOX = 0x00010000;
-
-   const uint SC_MAXIMIZE = 0xF030; 
-   const uint MF_BYCOMMAND = 0;
-
-// Main Processing
-internal static void ChangeCurrentState(bool state) {
-     IntPtr hWnd = GetConsoleWindow();
-     int style = GetWindowLong(hWnd, GWL_STYLE);
-     if (state) {
-       style |= WS_MAXIMIZEBOX; // enable maximize button
-     } else {
-       style &= ~WS_MAXIMIZEBOX; // disable mixmize button
-     }
-     SetWindowLong(hWnd, GWL_STYLE, style);
-     DrawMenuBar(hWnd);
-   }
- }
-//  Confirmation of change
- public static class Status {
-   public static void Disable() {
-     WinAPI.ChangeCurrentState(false); // Change to 'true' if you want to turn it enable
-   }
- }
-} 
+namespace MaximizeButtonToggle {
+    // ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹‚ğ‘€ì‚·‚é‚½‚ß‚ÉWindows API‚ğ—˜—p
+    internal static class WinAPI {
+        [DllImport("kernel32.dll")] 
+        internal static extern IntPtr GetConsoleWindow();  // ƒRƒ“ƒ\[ƒ‹ƒEƒBƒ“ƒhƒE‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+        [DllImport("user32.dll")] 
+        internal static extern bool DrawMenuBar(IntPtr hWnd);  // ƒEƒBƒ“ƒhƒE‚ÌXV
+        [DllImport("user32.dll")] 
+        internal static extern int GetWindowLong(IntPtr hWnd, int nIndex);  // ƒEƒBƒ“ƒhƒE‚Ì‘®«‚ğæ“¾
+        [DllImport("user32.dll")] 
+        internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);  // ƒEƒBƒ“ƒhƒE‚Ì‘®«‚ğİ’è
+        // ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹‘®«‚Ì’è”
+        const int GWL_STYLE = -16, WS_MAXIMIZEBOX = 0x00010000;
+        // 'state' ƒpƒ‰ƒ[ƒ^‚ÉŠî‚Ã‚¢‚ÄÅ‘å‰»ƒ{ƒ^ƒ“‚ğ—LŒø‚Ü‚½‚Í–³Œø‚É‚·‚é
+        internal static void ChangeMaximizeState(bool state) {
+            IntPtr hWnd = GetConsoleWindow();  // Œ»İ‚ÌƒRƒ“ƒ\[ƒ‹ƒEƒBƒ“ƒhƒE ƒnƒ“ƒhƒ‹‚ğæ“¾
+            // ƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹‚ğXV‚µ‚ÄÅ‘å‰»ƒ{ƒ^ƒ“‚ğ—LŒø‚Ü‚½‚Í–³Œø‚É‚·‚éB
+            SetWindowLong(hWnd, GWL_STYLE, state ? GetWindowLong(hWnd, GWL_STYLE) | WS_MAXIMIZEBOX : GetWindowLong(hWnd, GWL_STYLE) & ~WS_MAXIMIZEBOX);
+            DrawMenuBar(hWnd);  // •ÏX‚ğ”½‰f‚·‚é‚½‚ß‚ÉƒEƒBƒ“ƒhƒE‚ğÄ•`‰æ
+        }
+    }
+    // Public method to disable the maximize button
+    public static class ButtonStatus { 
+        public static void DisableMaximize() {
+            WinAPI.ChangeMaximizeState(false); // Å‘å‰»ƒ{ƒ^ƒ“‚ğ–³Œø‚É‚·‚éB—LŒø‚É‚µ‚½‚¢ê‡‚Ítrue‚É•ÏX
+        } 
+    }
+}
 '@
-
+# C#ƒR[ƒh‚ğƒRƒ“ƒpƒCƒ‹‚µ‚ÄÅ‘å‰»ƒ{ƒ^ƒ“‚ğ–³Œø‚É‚·‚éB
 Add-Type $code
-[CloseButtonToggle.Status]::Disable()
+[MaximizeButtonToggle.ButtonStatus]::DisableMaximize()
 }
 
 
+
 function RefreshCursor {
+# ƒJ[ƒ\ƒ‹‚Ìİ’è‚ğXV
 Add-Type @"
 using System;
 using System.Runtime.InteropServices;
@@ -476,191 +432,166 @@ public class User32 {
     public static extern bool SystemParametersInfo(int uAction, int uParam, IntPtr lpvParam, int fuWinIni);
 }
 "@
-
-# SPI_SETCURSORS = 0x0057 (Refresh Cursor, using winapi)
-$SPI_SETCURSORS = 0x0057
-$SPIF_SENDCHANGE = 0x02
-
-# ƒJ[ƒ\ƒ‹İ’è‚ğÄ“K—p
-[User32]::SystemParametersInfo($SPI_SETCURSORS, 0, [IntPtr]::Zero, $SPIF_SENDCHANGE) | Out-Null
+# 0x0057 = Win API‚ğg‚Á‚ÄƒJ[ƒ\ƒ‹‚ğXVB0x02 = •ÏX‚ğ‘—Mi“K—pj
+# ƒJ[ƒ\ƒ‹‚ÌÄ“K—p
+[User32]::SystemParametersInfo(0x0057, 0, [IntPtr]::Zero, 0x02) | Out-Null
 }
 
 
 
 function Updater {
-    # Check for updates of Cursor Changer with GitHub API, But won't do update. Just check.
-    $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-    try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-    }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] github‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚µ‚Ü‚µ‚½B‚±‚ê‚ªˆÓ–¡‚·‚é‚Ì‚Í—v‚·‚é‚ÉAˆêŠÔˆÈ“à‚É‘å—Ê‚ÉƒAƒbƒvƒf[ƒg‚ğŠm”F‚µ‰ß‚¬A‚Æ‚¢‚¤‚±‚Æ‚Å‚·BˆêŠÔ‚Ù‚ÇŠÔ‚ğ’u‚¢‚½‚Ì‚¿AÄ“xƒAƒbƒvƒf[ƒg‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" -foregroundcolor red}else{Write-Host "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚·‚é‚©Agithub‚ÌƒT[ƒo[‚ª—‚¿‚Ä‚¢‚È‚¢‚©‚ğŠm”F‚µ‚½‚Ì‚¿AÄ“x‚µ‚Ä‚­‚¾‚³‚¢B`nƒGƒ‰[ƒƒO : $_" -foregroundcolor red};break}
+# GitHub API‚ÅƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌXV‚ğŠm”FBŠm”F‚·‚é‚¾‚¯B
+$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
+try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] Github‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚µ‚½‚æ‚¤‚Å‚·BƒAƒbƒvƒf[ƒg‚ğ•p”É‚ÉŠm”F‚µ‰ß‚¬‚½‚¹‚¢‚©‚à‚µ‚ê‚Ü‚¹‚ñBˆêŠÔ‚Ù‚Ç‘Ò‚Á‚Ä‚©‚çÄ“x‚¨‚µ‚­‚¾‚³‚¢B" -foregroundcolor red}else{Write-Host "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BÄ“x‚·‚©AƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B `nƒGƒ‰[“à—e : $_" -foregroundcolor red};break}
 
 
-    $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-    $batVersion = "$env:batverforpowersheller"
-    $batName = Get-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ *.bat"
+$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = "$env:batverforpowersheller"
+if ("$fileVersion" -eq "$batVersion") { return "null" }
 
-    if ("$fileVersion" -eq "$batVersion") { return "null" }
+if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
+    $fileverArray = $fileVersion -split "\."
+    $batverArray = $batVersion -split "\."
 
-    if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
-        $fileverArray = $fileVersion -split "\."
-        $batverArray = $batVersion -split "\."
-
-        # Function to classify and compare version elements
-        function Compare-VersionElement {
-            param($a, $b)
-
-            $isANumber = $a -as [int]
-            $isBNumber = $b -as [int]
-
-            if ($isANumber -and $isBNumber) {
-                return [math]::Sign($isANumber - $isBNumber)
-            } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
-                return [math]::Sign([string]::Compare($a, $b))
-            } elseif ($a -match "^[a-z]+$" -and $isBNumber) {
-                return 1
-            } elseif ($isANumber -and $b -match "^[a-z]+$") {
-                return -1
-            } else {
-                return [string]::Compare($a, $b)
-            }
-        }
-
-        # Function to check if version is beta
-        function Is-Beta($versionArray) { return ($versionArray[-1] -match "^[a-z][0-9]*$") }
-
-        $isFileBeta = Is-Beta($fileverArray)
-        $isBatBeta = Is-Beta($batverArray)
-
-        # Compare version arrays
-        for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
-            $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
-            $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
-            $comparisonResult = Compare-VersionElement $fileElement $batElement
-
-            if ($comparisonResult -gt 0) {
-                return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
-            } elseif ($comparisonResult -lt 0) { return "die" }
-            if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) { return "null" }
-        }
+    # Compare version elements
+    function Compare-VersionElement($a, $b) {
+        if (($a -as [int]) -and ($b -as [int])) {
+            return [math]::Sign($a - $b)
+        } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
+            return [string]::Compare($a, $b)
+        } elseif ($a -match "^[a-z]+$") { return 1 }
+        elseif ($b -match "^[a-z]+$") { return -1 }
+        return [string]::Compare($a, $b)
     }
+
+    # Check if version is beta
+    function Is-Beta($versionArray) { return $versionArray[-1] -match "^[a-z][0-9]*$" }
+
+    $isFileBeta = Is-Beta $fileverArray
+    $isBatBeta = Is-Beta $batverArray
+
+    # Compare version arrays
+    for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
+        $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
+        $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
+        $comparisonResult = Compare-VersionElement $fileElement $batElement
+
+        if ($comparisonResult -gt 0) {
+            return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
+        } elseif ($comparisonResult -lt 0) { return "die" }
+        if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) { return "null" }
+    }
+  }
 }
+
 
 
 function Fullupdater {
-    Write-Host "ƒAƒbƒvƒf[ƒg‚ğŠm”F’†...`n"
-    # check the update of Cursor Changer with github api, and Update it.
-    $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-    try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-    }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
+Write-Host "ƒAƒbƒvƒf[ƒg‚ğŠm”F’†...`n"
+# GitHub API‚ÅƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌXV‚ğŠm”F‚·‚éB
+$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
+try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] Github‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚µ‚½‚æ‚¤‚Å‚·BƒAƒbƒvƒf[ƒg‚ğ•p”É‚ÉŠm”F‚µ‰ß‚¬‚½‚¹‚¢‚©‚à‚µ‚ê‚Ü‚¹‚ñBˆêŠÔ‚Ù‚Ç‘Ò‚Á‚Ä‚©‚çÄ“x‚¨‚µ‚­‚¾‚³‚¢B" -foregroundcolor red}else{Write-Host "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BÄ“x‚·‚©AƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B `nƒGƒ‰[“à—e : $_" -foregroundcolor red};break}
 
 
-    $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-    $batVersion = "$env:batverforpowersheller"
-    $batName = Get-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ *.bat"
+$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = "$env:batverforpowersheller"
+if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
+    $fileverArray = $fileVersion -split "\."
+    $batverArray = $batVersion -split "\."
 
-    if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
-        $fileverArray = $fileVersion -split "\."
-        $batverArray = $batVersion -split "\."
+    # Compare version elements
+    function Compare-VersionElement($a, $b) {
+        $isANumber = $a -as [int]
+        $isBNumber = $b -as [int]
 
-        # Function to classify and compare version elements
-        function Compare-VersionElement {
-            param($a, $b)
+        if ($isANumber -and $isBNumber) {
+            return [math]::Sign($isANumber - $isBNumber)
+        } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
+            return [string]::Compare($a, $b)
+        } elseif ($a -match "^[a-z]+$") { return 1 }
+        elseif ($b -match "^[a-z]+$") { return -1 }
+        return [string]::Compare($a, $b)
+    }
 
-            $isANumber = $a -as [int]
-            $isBNumber = $b -as [int]
+    # Check if version is beta
+    function Is-Beta($versionArray) { return $versionArray[-1] -match "^[a-z][0-9]*$" }
 
-            if ($isANumber -and $isBNumber) {
-                return [math]::Sign($isANumber - $isBNumber)
-            } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
-                return [math]::Sign([string]::Compare($a, $b))
-            } elseif ($a -match "^[a-z]+$" -and $isBNumber) {
-                return 1
-            } elseif ($isANumber -and $b -match "^[a-z]+$") {
-                return -1
-            } else {
-                return [string]::Compare($a, $b)
-            }
-        }
+    $isFileBeta = Is-Beta $fileverArray
+    $isBatBeta = Is-Beta $batverArray
 
-        # Function to check if version is beta
-        function Is-Beta($versionArray) { return ($versionArray[-1] -match "^[a-z][0-9]*$") }
+    # Compare version arrays
+    for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
+        $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
+        $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
+        $comparisonResult = Compare-VersionElement $fileElement $batElement
 
-        $isFileBeta = Is-Beta($fileverArray)
-        $isBatBeta = Is-Beta($batverArray)
+        if ($comparisonResult -gt 0) {
+            # Update available
+            Write-Host "ƒAƒbƒvƒf[ƒg‚ª—˜—p‰Â”\‚Å‚·BŒ»İ‚Ìƒo[ƒWƒ‡ƒ“‚Í `"$($batVersion)`"‚ÅAƒAƒbƒvƒf[ƒgŒã‚Ìƒo[ƒWƒ‡ƒ“‚Í `"$($fileVersion)`"‚Å‚·B`n"
+            Start-Sleep 1; Changelog; Start-Sleep 2
 
-        # Compare version arrays
-        for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
-            $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
-            $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
-            $comparisonResult = Compare-VersionElement $fileElement $batElement
-
-            if ($comparisonResult -gt 0) {
-                Write-Host "ƒAƒbƒvƒf[ƒg‚ª—˜—p‰Â”\‚Å‚·BŒ»İ‚Ìƒo[ƒWƒ‡ƒ“‚ÍA `"$($batVersion)`"‚ÅAƒAƒbƒvƒf[ƒg‚³‚ê‚½ƒo[ƒWƒ‡ƒ“‚Í `"$($fileVersion)`"‚Å‚·B`n"
-                Start-Sleep 1
-                Changelog
-                Start-Sleep 2
-
-                if ($isFileBeta) { Write-Host "[TIP] ‚±‚ÌƒAƒbƒvƒf[ƒg‚Íƒx[ƒ^”Å‚Å‚·B‚È‚Ì‚ÅAˆê•”•sˆÀ’è‚È•”•ª‚ª‚ ‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B`n" -ForeGroundColor DarkGray}
-
-                $answer = Read-Host "ƒAƒbƒvƒf[ƒg‚µ‚Ü‚·‚©H®AƒAƒbƒvƒf[ƒg‚ğƒCƒ“ƒXƒg[ƒ‹‚·‚é‚Æ‹­§“I‚É‰pŒê”Å‚Ö‚Æ•ÏX‚³‚ê‚Ü‚·B (y or n)"
+            if ($isFileBeta) { Write-Host "[TIP] ‚±‚ÌƒAƒbƒvƒf[ƒg‚Íƒx[ƒ^”Å‚È‚Ì‚ÅA‰½‚ç‚©‚Ì–â‘è‚ª”­¶‚·‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B`n" -ForegroundColor DarkGray }
+                $answer = Read-Host "ƒAƒbƒvƒf[ƒg‚µ‚Ü‚·‚©H ®AƒAƒbƒvƒf[ƒg‚µ‚½ê‡‚Í‰pŒê”Å‚Ö‚Æ‹­§“I‚É•ÏX‚³‚ê‚Ü‚·B(y ‚Ü‚½‚Í n)"
                 if ($answer -eq "y") {
-                    $downloadFile = Join-Path (Join-Path $env:USERPROFILE "Downloads") $file.name
-                    Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
-                    Move-Item $downloadFile (Join-Path (Split-Path $batName) "Cursor.Changer.$fileVersion.bat") -Force
-                    Remove-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ $batVersion.bat" -Force
-                    Write-Host "ƒAƒbƒvƒf[ƒg‚ÍŠ®—¹‚µ‚Ü‚µ‚½B`n"
-                    Start-Sleep 2
-                    Write-Host "Ä‹N“®’†..."
-                    PowerShell -WindowStyle Hidden -Command Exit
-                    Start-process "ƒJ[ƒ\ƒ‹‘Ö‚¦ $fileVersion.bat"
-                    Killwhole
-                } else {
-                    Write-Host "ƒAƒbƒvƒf[ƒg‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½B`n"
-                    Start-Sleep 2
-                    return
-                }
-            } elseif ($comparisonResult -lt 0) {
-                Write-Host "[ERROR] ‚ ‚È‚½‚Ìƒo[ƒWƒ‡ƒ“ ($($batVersion)) ‚ÍAƒAƒbƒvƒf[ƒgƒtƒ@ƒCƒ‹‚æ‚è‚àæs ($($fileVersion)) ‚µ‚Ä‚¢‚Ü‚·I(‹°‚ç‚­A‚ ‚È‚½‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒo[ƒWƒ‡ƒ“‚ğŒÌˆÓ‚É•Ï‚¦‚½‚Ì‚Å‚µ‚å‚¤...)`n" -ForegroundColor Red
+                $downloadFile = Join-Path (Join-Path $env:USERPROFILE "Downloads") $file.name
+                Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
+                Move-Item $downloadFile (Join-Path (Split-Path (Get-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ *.bat")) "Cursor.Changer.$fileVersion.bat") -Force
+                Remove-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ $batVersion.bat" -Force
+                Write-Host "ƒAƒbƒvƒf[ƒg‚ªŠ®—¹‚µ‚Ü‚µ‚½B`n"
+                Start-Sleep 2; Write-Host "Ä‹N“®’†..."
+                PowerShell -WindowStyle Hidden -Command Exit
+                Start-Process "Cursor.Changer.$fileVersion.bat"
+                Killwhole
+            } else {
+                Write-Host "ƒAƒbƒvƒf[ƒg‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½B`n"
                 Start-Sleep 2
                 return
             }
-        }
-
-        if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
-            Write-Host "‚·‚Å‚ÉÅVƒo[ƒWƒ‡ƒ“‚Å‚·I (`"$($batVersion)`") ƒAƒbƒvƒf[ƒg‚Í•K—v‚ ‚è‚Ü‚¹‚ñB`n"
+        } elseif ($comparisonResult -lt 0) {
+            Write-Host "[ERROR] Œ»İ‚ÌƒJ[ƒ\ƒ‹‘Ö‚¦ ($($batVersion)) ‚ÍÅV‚ÌƒJ[ƒ\ƒ‹‘Ö‚¦ ($($fileVersion)) ‚æ‚è‚àV‚µ‚¢‚æ‚¤‚Å‚·I`n‚à‚µ‚âAƒo[ƒWƒ‡ƒ“‚ğˆÓ}“I‚É•ÏX‚µ‚Ü‚µ‚½‚©H >:(`n" -ForegroundColor Red
             Start-Sleep 2
+            return
         }
     }
+
+    if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
+        Write-Host "‚·‚Å‚ÉÅVƒo[ƒWƒ‡ƒ“‚Ì‚æ‚¤‚Å‚·I ($($batVersion)) ƒAƒbƒvƒf[ƒg‚Ì•K—v‚Í‚ ‚è‚Ü‚¹‚ñB`n"
+        Start-Sleep 2
+    }
+  }
 }
 
 
+
 function Doupdate {
-    $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-    try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-    }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] github‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚µ‚Ü‚µ‚½B‚±‚ê‚ªˆÓ–¡‚·‚é‚Ì‚Í—v‚·‚é‚ÉAˆêŠÔˆÈ“à‚É‘å—Ê‚ÉƒAƒbƒvƒf[ƒg‚ğŠm”F‚µ‰ß‚¬A‚Æ‚¢‚¤‚±‚Æ‚Å‚·BˆêŠÔ‚Ù‚ÇŠÔ‚ğ’u‚¢‚½‚Ì‚¿AÄ“xƒAƒbƒvƒf[ƒg‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" -foregroundcolor red}else{Write-Host "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚·‚é‚©Agithub‚ÌƒT[ƒo[‚ª—‚¿‚Ä‚¢‚È‚¢‚©‚ğŠm”F‚µ‚½‚Ì‚¿AÄ“x‚µ‚Ä‚­‚¾‚³‚¢B`nƒGƒ‰[ƒƒO : $_" -foregroundcolor red};break}
-    $fileVersion = $file.name -replace "Cursor.Changer\.|\.bat", ""
-    $batVersion = "$env:batverforpowersheller"
-    $batName = Get-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ *.bat"
-    $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
-    $downloadFile = Join-Path $downloadFolder $file.name
-    Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
-    $newBatName = "ƒJ[ƒ\ƒ‹‘Ö‚¦ $fileVersion.bat"
-    Move-Item $downloadFile (Join-Path (Split-Path $batName) ("$newBatName")) -Force
-    Remove-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ $fileVersion.bat" -Force
-    Write-Host "ƒAƒbƒvƒf[ƒg‚ÍŠ®—¹‚µ‚Ü‚µ‚½B`n"
-    Start-Sleep 2
-    Write-Host "Ä‹N“®’†..."
-    PowerShell -WindowStyle Hidden -Command Exit
-    Start-process "Cursor.Changer.$fileVersion.bat"
-    Killwhole
+# github ‚©‚çÅV‚ÌƒR[ƒh‚ğæ“¾‚µA’¼Ú’u‚«Š·‚¦‚éB
+$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
+try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] Github‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚µ‚½‚æ‚¤‚Å‚·BƒAƒbƒvƒf[ƒg‚ğ•p”É‚ÉŠm”F‚µ‰ß‚¬‚½‚¹‚¢‚©‚à‚µ‚ê‚Ü‚¹‚ñBˆêŠÔ‚Ù‚Ç‘Ò‚Á‚Ä‚©‚çÄ“x‚¨‚µ‚­‚¾‚³‚¢B" -foregroundcolor red}else{Write-Host "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BÄ“x‚·‚©AƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B `nƒGƒ‰[“à—e : $_" -foregroundcolor red};break}
+
+$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = "$env:batverforpowersheller"
+$batName = Get-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ *.bat"
+$downloadFolder = Join-Path $env:USERPROFILE "Downloads"
+$downloadFile = Join-Path $downloadFolder $file.name
+Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
+$newBatName = "Cursor.Changer.$fileVersion.bat"
+Move-Item $downloadFile (Join-Path (Split-Path $batName) ("$newBatName")) -Force
+Remove-Item "ƒJ[ƒ\ƒ‹‘Ö‚¦ $batVersion.bat" -Force
+Write-Host "ƒAƒbƒvƒf[ƒg‚ÍŠ®—¹‚µ‚Ü‚µ‚½B`n"
+Start-Sleep 2
+Write-Host "Ä‹N“®’†..."
+PowerShell -WindowStyle Hidden -Command Exit
+Start-process "Cursor.Changer.$fileVersion.bat"
+Killwhole
 }
 
 
 
 function OOBEMusic {
-# Create a new WebClient instance
 $webClient = New-Object System.Net.WebClient
-
-# Prepare a memory stream to hold the downloaded data
 $memoryStream = New-Object System.IO.MemoryStream
 
 # Helper function to download data with progress reporting
@@ -669,34 +600,25 @@ function DownloadDataWithProgress($url, $memoryStream) {
         $response = $webClient.OpenRead($url)
         $totalBytes = [int]$webClient.ResponseHeaders["Content-Length"]
         $buffer = New-Object byte[] 8192
-        $bytesRead = 0
         $totalRead = 0
-
         while (($bytesRead = $response.Read($buffer, 0, $buffer.Length)) -gt 0) {
             $memoryStream.Write($buffer, 0, $bytesRead)
             $totalRead += $bytesRead
-            $progress = [math]::Round(($totalRead / $totalBytes) * 100)
             [Console]::SetCursorPosition(0, [Console]::CursorTop)
-            Write-Host "‰¹Šy‚ğƒ_ƒEƒ“ƒ[ƒh’†... $progress% " -NoNewline
+            Write-Host "‰¹Šy‚ğƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚¢‚Ü‚·... $([math]::Round(($totalRead / $totalBytes) * 100))% " -NoNewline
         }
-
-        $memoryStream.Position = 0
-        $response.Close()
-        Write-Host "`nƒ_ƒEƒ“ƒ[ƒh¬Œ÷I    ‚½‚Ô‚ñ....."
+        $memoryStream.Position = 0; $response.Close(); Write-Host "`nƒ_ƒEƒ“ƒ[ƒh‚ªŠ®—¹‚µ‚Ü‚µ‚½I"
     } catch {
+        # Error handling for download failures
         $errorMsg = if ($_.Exception.Response.StatusCode.Value__ -eq 403) {
-            "[ERROR] github‚ÌAPIƒŒ[ƒgƒŠƒ~ƒbƒg‚É“’B‚µ‚Ü‚µ‚½I‚±‚ê‚ªˆÓ–¡‚·‚é‚Ì‚Í—v‚·‚é‚É‚ ‚È‚½‚Í‰¹Šy‚ğÄ¶‚µ‰ß‚¬‚½‚Æ‚¢‚¤‚±‚Æ‚Å‚·B‰¹Šy‚È‚µ‚Å‘±s‚·‚é‚©AˆêŠÔ‚Ù‚ÇŒã‚É‚à‚¤ˆê“x‚â‚è’¼‚µ‚Ä‚­‚¾‚³‚¢B"
-        } else {
-            "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚·‚é‚©Agithub‚ÌƒT[ƒo[‚ª—‚¿‚Ä‚¢‚È‚¢‚©‚ğŠm”F‚µ‚½‚Ì‚¿AÄ“x‚µ‚Ä‚­‚¾‚³‚¢B`nƒGƒ‰[ƒƒO : $_"
-        }
+            "[ERROR] Github‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚µ‚Ü‚µ‚½BˆêŠÔ’ö‘Ò‚Á‚Ä‚©‚çÄ“x‚¨‚µ‚­‚¾‚³‚¢B"
+        } else { "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BÄ“x‚·‚©AƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B `nƒGƒ‰[“à—e : $_" }
         Write-Host $errorMsg -ForegroundColor Red
-        Write-Host "‰½‚©ƒL[‚ğ‰Ÿ‚µ‚ÄI—¹..."
-        $host.UI.RawUI.ReadKey() | Out-Null
-        exit
+        Write-Host "‰½‚©ƒL[‚ğ‰Ÿ‚µ‚ÄI—¹..."; $host.UI.RawUI.ReadKey() | Out-Null; exit
     }
 }
 
-# Download data with progress reporting
+# Download the audio file
 DownloadDataWithProgress "https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Windows_XP_OOBE_for_Cursor_Changer.wav" $memoryStream
 
 # Define the type for playing audio
@@ -704,72 +626,52 @@ Add-Type -TypeDefinition @"
 using System;
 using System.IO;
 using System.Media;
-
-namespace ConsoleApp
-{
-    public class Program
-    {
-        public static SoundPlayer player;
-        
-        public static void PlayAudioFromBytes(byte[] data)
-        {
-            if (data == null || data.Length == 0)
-            {
-                throw new ArgumentException("Buffer cannot be null or empty.", "data");
-            }
-            using (MemoryStream stream = new MemoryStream(data))
-            {
-                player = new SoundPlayer(stream);
-                player.PlayLooping(); 
-            }
-        }
-
-        public static void StopAudio()
-        {
-            if (player != null)
-            {
-                player.Stop();
-            }
+public class AudioPlayer {
+    public static SoundPlayer player;
+    public static void PlayAudioFromBytes(byte[] data) {
+        if (data == null || data.Length == 0) throw new ArgumentException("ƒoƒbƒtƒ@ (ƒ_ƒEƒ“ƒ[ƒhƒf[ƒ^) ‚ÍNULL‚Ü‚½‚Í‹ó‚Å‚ ‚Á‚Ä‚Í‚È‚è‚Ü‚¹‚ñB", "data");
+        using (MemoryStream stream = new MemoryStream(data)) {
+            player = new SoundPlayer(stream); player.PlayLooping();
         }
     }
+    public static void StopAudio() { if (player != null) player.Stop(); }
 }
 "@
 
 # Play the downloaded audio
 try {
-    [ConsoleApp.Program]::PlayAudioFromBytes($memoryStream.ToArray())
-    cls
-    Write-Host "‰¹Šy‚ğÄ¶‚µ‚Ä‚¢‚Ü‚·B`n‰¹Šy‚ğ~‚ß‚½‚¢ê‡A‚±‚ÌpowershellƒEƒBƒ“ƒhƒE‚ğI—¹‚µ‚Ä‚­‚¾‚³‚¢B"
+    [AudioPlayer]::PlayAudioFromBytes($memoryStream.ToArray())
+    cls; Write-Host "‰¹Šy‚ğÄ¶’†... ‚±‚ÌƒEƒBƒ“ƒhƒE‚Í–³‹‚µ‚Ä‚­‚¾‚³‚¢B‰¹Šy‚ğ~‚ß‚½‚¢ê‡‚Í‚±‚ÌPowershellƒEƒBƒ“ƒhƒE‚ğI—¹‚µ‚Ä‰º‚³‚¢B"
 } catch {
-    Write-Host "[ERROR] ‰¹Šy‚ÌÄ¶‚É¸”s‚µ‚Ü‚µ‚½Bƒtƒ@ƒCƒ‹‚ª³‚µ‚¢‚©A‹ó‚Å‚È‚¢‚©‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" -ForegroundColor Red
-    Write-Host "‰½‚©ƒL[‚ğ‰Ÿ‚µ‚ÄI—¹..."
-    $host.UI.RawUI.ReadKey() | Out-Null
-    exit
+    Write-Host "[ERROR] ‰¹º‚ÌÄ¶‚É¸”s‚µ‚Ü‚µ‚½B ƒtƒ@ƒCƒ‹‚ª³‚µ‚¢Œ`®‚Å‚ ‚é‚±‚Æ‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B" -ForegroundColor Red
+    Write-Host "‰½‚©ƒL[‚ğ‰Ÿ‚µ‚ÄI—¹..."; $host.UI.RawUI.ReadKey() | Out-Null; exit
 }
 
-# Monitor cmd.exe process
 $pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid; $pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
 while ($true) {
     Start-Sleep -Seconds 1
     if (-not (Get-Process -pid $pid2 -ErrorAction SilentlyContinue)) {
-        [ConsoleApp.Program]::StopAudio()
+        [AudioPlayer]::StopAudio()
         exit
     }
   }
 }
 
 
+
 Function Killwhole {
-    Write-Host "`nƒVƒƒƒbƒgƒ_ƒEƒ“’†..."
-    Start-Sleep 1
-    $pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid
-    $pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
-    taskkill /pid $pid1 /pid $pid2 /pid $pid > $null 2>&1
+# Cmd‚ÌPID‚ğæ“¾‚µ‚ÄE‚·B
+Write-Host "`nƒVƒƒƒbƒgƒ_ƒEƒ“’†..."
+Start-Sleep 1
+$pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid
+$pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
+taskkill /pid $pid1 /pid $pid2 /pid $pid > $null 2>&1
 }
 
 Function Changelog {
-    $h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 22};$w.BufferSize=$s;
-    try{if($env:wmodetoggle -eq "false"){Write-Host "ƒ`ƒFƒ“ƒWƒƒO :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "Change Log :" -foregroundcolor black }else{Write-Host "Change Log :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m;1m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] github‚ÌAPIƒŒ[ƒgƒŠƒ~ƒbƒg‚É“’B‚µ‚Ü‚µ‚½I‚±‚ê‚ªˆÓ–¡‚·‚é‚Ì‚Í—v‚·‚é‚É‚ ‚È‚½‚Í‰¹Šy‚ğÄ¶‚µ‰ß‚¬‚½‚Æ‚¢‚¤‚±‚Æ‚Å‚·B‰¹Šy‚È‚µ‚Å‘±s‚·‚é‚©AˆêŠÔ‚Ù‚ÇŒã‚É‚à‚¤ˆê“x‚â‚è’¼‚µ‚Ä‚­‚¾‚³‚¢B" -foregroundcolor red}else{Write-Host "[ERROR] ‰½‚ç‚©‚ÌƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BƒCƒ“ƒ^[ƒlƒbƒgÚ‘±‚ğŠm”F‚·‚é‚©Agithub‚ÌƒT[ƒo[‚ª—‚¿‚Ä‚¢‚È‚¢‚©‚ğŠm”F‚µ‚½‚Ì‚¿AÄ“x‚µ‚Ä‚­‚¾‚³‚¢B`nƒGƒ‰[ƒƒO : $_" -foregroundcolor red};break}
+# Github‚©‚çÅV‚ÌChangelog‚ğæ“¾‚µA‚»‚ê‚ğ®‚¦‚Ä•\¦‚·‚éB
+$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 22};$w.BufferSize=$s;
+try{if($env:wmodetoggle -eq "false"){Write-Host "•ÏX—š—ğ :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "•ÏX—š—ğ :" -foregroundcolor black }else{Write-Host "•ÏX—š—ğ :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
 }
 
 
@@ -796,32 +698,30 @@ ENDLOCAL
  exit /b
 )
 
+
 rem –{ˆ—
 :Powersheller_end
 set startline=& set endline=& set Powersheller_passed=& set batverforpowersheller=
-if "%bootbatnow%"=="no" (set Powersheller=& exit /b)
+cd %batchmainpath%
 if "%Powersheller%"=="OOBEMusic" (set Powersheller=& exit /b)
-set Powersheller=
+if "%bootbatnow%"=="no" if not "%Powersheller%"=="Updater" (set Powersheller=& exit /b)
 
-rem get updater variable
-if "%checkupdatetoggle%"=="true" (goto :Powersheller_get_updater_variable) else (goto :Powersheller_get_updater_variable_end)
-
-:Powersheller_get_updater_variable
-rem powershell‚Ì–ß‚è’l‚ğbatch‚Ì•Ï”‚É•ÏŠ·
-setlocal enabledelayedexpansion
+rem •Ï”‚Ì’l‚ğæ“¾
+if not "%checkupdatetoggle%"=="true" (goto :Powersheller_get_updater_variable_end)
+rem Powershell‚Ì–ß‚è’l‚ğBatch‚Ì•Ï”‚É•ÏŠ·
 if "%updateinfo%"=="null" (goto :Powersheller_get_updater_variable_end)
 if "%updateinfo%"=="die" (set Punish=true& goto :Powersheller_get_updater_variable_end)
+setlocal enabledelayedexpansion
 for /f "tokens=1-4 delims=," %%a in ("%updateinfo%") do (
-  for /f "tokens=1-2 delims==" %%x in ("%%a") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%b") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%c") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%d") do set "%%x=%%y"
+    for /f "tokens=1-2 delims==" %%x in ("%%a") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%b") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%c") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%d") do set "%%x=%%y"
 )
 setlocal disabledelayedexpansion
 set updatemyversion=%batver:ƒÀ=.b%
 
+
 :Powersheller_get_updater_variable_end
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powersheller is Ended...)
-set updateinfo=
-set checkupdatetoggle=
-cd /d %batchmainpath%
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powersheller ‚ÍŠ®—¹‚µ‚Ü‚µ‚½...)
+set updateinfo=& set checkupdatetoggle=
 
 rem ‚¢‚ç‚È‚¢î•ñ‚Ì—…—ñ
 
@@ -885,7 +785,7 @@ rem ‚»‚Ì‹@”\’Ç‰Á‚Í–³ŠúŒÀ‚É‰„Šú‚É‚È‚Á‚½B
 rem ƒo[ƒWƒ‡ƒ“1.9 ¡‰ñ‚ÌƒAƒbƒvƒf[ƒg‚ÍAƒJ[ƒ\ƒ‹‘Ö‚¦İ’è‚Ì\•¶‚ğ•ÏX‚µAfalse‚©true‚©‚ğ•ÏX‚·‚é‚¾‚¯‚É‚µ‚½B‚±‚ê‚É‚æ‚è‰½‚ªƒIƒ“‚Å‰½‚ªƒIƒt‚©‚ª‚í‚©‚è‚â‚·‚­‚È‚Á‚½B
 rem ‚Ü‚½A¡‰ñ‚ÌƒAƒbƒvƒf[ƒg‚É‚æ‚Á‚ÄA%FirstSTFsfile%‚É‚àdogcheck‚ª’Ç‰Á‚³‚ê‚½‚Ì‚ÅA‚Ü‚Ÿİ’èƒtƒ@ƒCƒ‹‚ğ“r’†‚Åíœ‚µ‚½‚è‚È‚ñ‚Ä‚±‚Æ‚ª‚µ‚É‚­‚­‚È‚Á‚½B
 
-rem ƒo[ƒWƒ‡ƒ“1.10 ¡‰ñ‚ÌƒAƒbƒvƒf[ƒg‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦jãÅ‚àBIG‚ÈƒAƒbƒvƒf[ƒg‚¾B‚Ü‚¸Aİ’èƒƒjƒ…[‚ÆÅ‰‚Ìƒƒjƒ…[‚ÉUI‚ª’Ç‰Á‚³‚êAƒƒjƒ…[‚Ì®—‚ªs‚í‚êAƒzƒƒCƒgƒ‚[ƒh‚ÆAlldef‚ªˆÚ“®‚µ‚½BAlldef‚É‚Í©ŒÈÁ‹‹@”\‚ª’Ç‰Á‚³‚êAƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚ªŒ±“I‹@”\‚Æ‚µ‚ÄV‚½‚ÉÀ‘•‚³‚ê‚½B‚»‚µ‚Ä‰‰ñ‹N“®ƒƒbƒZ[ƒW‚ª•ÏX‚³‚êAŒy‚­ƒAƒjƒ[ƒVƒ‡ƒ“‚·‚é‚æ‚¤‚É‚È‚èAƒƒbƒZ[ƒW‚à•ÏX‚³‚ê‚½B‚»‚µ‚ÄAƒJ[ƒ\ƒ‹‘Ö‚¦‚Ì‰Šú‚Ìƒo[ƒWƒ‡ƒ“‚©‚ç‚ ‚Á‚½ƒJ[ƒ\ƒ‹‚ğ•Ï‚¦‚éƒƒjƒ…[‚ª‚È‚ñ‚Æ“‡‚³‚êA”’F‚Æ•F‚ğ©“®“I‚É”F¯‚µ‚ÄA‘I‘ğ‚µ‚È‚­‚Ä‚à©“®“I‚É•ÏX‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½B‚»‚µ‚Ä‚¿‚å‚Á‚Æ‚µ‚½‰B‚µ—v‘f‚à’Ç‰Á‚³‚ê‚½B‚Ü‚½Aİ’è‚à©“®“I‚É‹L“ü‚³‚ê‚é‚æ‚¤‚É‚È‚èAƒoƒO‚âŒëš’Eš‚à’¼‚³‚ê‚½B‚»‚êˆÈŠO‚É‚à‚½‚­‚³‚ñ‚Ì•”•ª‚ª•ÏX‚³‚êA‚à‚Í‚â•Ê•¨‚É‚È‚Á‚½B
+rem ƒo[ƒWƒ‡ƒ“1.10 ¡‰ñ‚ÌƒAƒbƒvƒf[ƒg‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦jãÅ‚àBIG‚ÈƒAƒbƒvƒf[ƒg‚¾B‚Ü‚¸Aİ’èƒƒjƒ…[‚ÆÅ‰‚Ìƒƒjƒ…[‚ÉUI‚ª’Ç‰Á‚³‚êAƒƒjƒ…[‚Ì®—‚ªs‚í‚êAƒzƒƒCƒgƒ‚[ƒh‚Æalldef‚ªˆÚ“®‚µ‚½Balldef‚É‚Í©ŒÈÁ‹‹@”\‚ª’Ç‰Á‚³‚êAƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚ªŒ±“I‹@”\‚Æ‚µ‚ÄV‚½‚ÉÀ‘•‚³‚ê‚½B‚»‚µ‚Ä‰‰ñ‹N“®ƒƒbƒZ[ƒW‚ª•ÏX‚³‚êAŒy‚­ƒAƒjƒ[ƒVƒ‡ƒ“‚·‚é‚æ‚¤‚É‚È‚èAƒƒbƒZ[ƒW‚à•ÏX‚³‚ê‚½B‚»‚µ‚ÄAƒJ[ƒ\ƒ‹‘Ö‚¦‚Ì‰Šú‚Ìƒo[ƒWƒ‡ƒ“‚©‚ç‚ ‚Á‚½ƒJ[ƒ\ƒ‹‚ğ•Ï‚¦‚éƒƒjƒ…[‚ª‚È‚ñ‚Æ“‡‚³‚êA”’F‚Æ•F‚ğ©“®“I‚É”F¯‚µ‚ÄA‘I‘ğ‚µ‚È‚­‚Ä‚à©“®“I‚É•ÏX‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½B‚»‚µ‚Ä‚¿‚å‚Á‚Æ‚µ‚½‰B‚µ—v‘f‚à’Ç‰Á‚³‚ê‚½B‚Ü‚½Aİ’è‚à©“®“I‚É‹L“ü‚³‚ê‚é‚æ‚¤‚É‚È‚èAƒoƒO‚âŒëš’Eš‚à’¼‚³‚ê‚½B‚»‚êˆÈŠO‚É‚à‚½‚­‚³‚ñ‚Ì•”•ª‚ª•ÏX‚³‚êA‚à‚Í‚â•Ê•¨‚É‚È‚Á‚½B
 rem ƒo[ƒWƒ‡ƒ“1.10a ‚¿‚å‚Á‚Æ‚µ‚½C³‚ÆA‹N“®‚Éˆ—’†‚Æ‹N“®’†‚Æ‚¢‚¤ƒƒbƒZ[ƒW‚ª•\¦‚³‚ê‚é‚æ‚¤‚É‚È‚èA‚í‚©‚è‚â‚·‚­‚È‚Á‚½B
 
 rem ƒo[ƒWƒ‡ƒ“1.11 ¡‰ñ‚ÌƒAƒbƒvƒf[ƒg‚ÍAå‚Éİ’è‚Æ‹N“®ŠÖŒW‚Ì“à•”\‘¢‚ª‘å•‚É•Ï‚í‚èAŠÈ’P‚ÉŒ¾‚¤‚Æ¡‚Ü‚Å‚ÍA"‚Æ‚è‚ ‚¦‚¸‘S•”æ‚é"\‘¢‚©‚çA"‚Ù‚µ‚¢‚Æ‚«‚Éæ‚é"\‘¢‚É‚È‚Á‚½‚¨‚©‚°‚ÅA‘S‘Ì“I‚ÈƒŒƒXƒ|ƒ“ƒX‚ªŒüã‚µ‚½B‚»‚ê‚ÆA‚¿‚å‚Á‚Æ‚µ‚½•ÏX‚ª‰Á‚¦‚ç‚ê‚½B(‚¿‚È‚İ‚ÉA‚±‚Ì‹@”\‚ÌÀ‘•‚É‚Í‚Æ‚Ä‚à‹ê˜J‚µ‚½B)
@@ -992,13 +892,15 @@ rem ‰pŒê‘Î‰@‚µ‚©‚µŒ»À“I‚Å‚Í‚È‚¢
 rem ã‚Ì‚ğÀ‘•‚·‚é‚É‚ ‚½‚Á‚ÄAˆê”ÔÀ‘•‚µ‚â‚·‚¢‚Ì‚Í•Ï”‚ğ—p‚¢‚ÄA‚à‚µ•Ï”lang‚ªjp‚Å‚ ‚é‚È‚ç‚ÎAŠÖ”jp1,2,3,4,5,6,7,8...‚É“K“–‚È•¶š‚ğ‘}“ü‚³‚¹‚é‚Æ‚©‚¾‚ë‚¤‚©B
 rem ‚µ‚©‚µ‚»‚ê‚ğs‚¨‚¤‚Æ‚·‚é‚Æ¡‚±‚Ìƒoƒbƒ`ˆ—‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚é‘S•¶š‚ğ•Ï”‚Ì–¼‘O‚É‚µ‚È‚¯‚ê‚Î‚¢‚¯‚¸AÀ‘•‚·‚é‚Æ‚µ‚Ä‚àv1.10ˆÈ~‚ÌÀ‘•‚É‚È‚è‚»‚¤‚¾B”....‚Ü‚ŸŠæ’£‚é
 
+
 rem ############################################################################################################################
+
 
 :CursorChangerOOBE
 if not "%bootbatnow%"=="true" (
 if "%linuxboot%"=="true" (
-echo.&echo [%linuxishclr%info%linuxishclr2%] Initial Process ended!&echo.
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] SAB_Manager Calling...&echo.)
+echo.&echo [%linuxishclr%info%linuxishclr2%] ‰Šúˆ—‚ªŠ®—¹‚µ‚Ü‚µ‚½I&echo.
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] SAB_Manager ŒÄ‚Ño‚µ’†&echo.)
 )
 )
 rem Detects whether this is the first start
@@ -1009,6 +911,8 @@ if exist %FirstSTFsfile% goto :settingloads
 if not defined dummy (echo [38;2;5;5;5myou know what i HATE? that's [3mbepis[0m[38;2;5;5;5m.)
 if not defined dummy (echo [38;2;5;5;5mTHE TASTE, the smell, the texture... hey.... your [3mdrooling[0m[38;2;5;5;5m......)
 ping -n 1 -w 500 localhost >nul
+setlocal enabledelayedexpansion
+title ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ö‚æ‚¤‚±‚»
 cls
 
 
@@ -1024,7 +928,7 @@ echo %show%
 rem call background_menu to drew bg
 call :Background_menu 1
 if "%count%" == "200" (ping -n 2 -w 500 localhost >nul& set count=& goto :CursorChangerOOBE_Animation2) else (
-    ping -n 0 -w 500 localhost >nul
+    for /l %%. in (0,1,5000) do rem
 )
 goto :CursorChangerOOBE_Animation
 
@@ -1042,7 +946,8 @@ if "%count%" == "120" (
     set count=200& set count2=120& set clresc=204;204;204
     goto :CursorChangerOOBE_Animation3
 ) else (
-    ping -n 1 -w 500 localhost >nul & goto :CursorChangerOOBE_Animation2
+    for /l %%. in (0,1,5000) do rem
+    goto :CursorChangerOOBE_Animation2
 )
 
 :CursorChangerOOBE_Animation3
@@ -1059,7 +964,8 @@ call :Background_menu 1
 if !count2! leq 12 (
     if !count! leq 20 (ping -n 1 -w 500 localhost >nul& set count=& set count2=0& set clresc=200;200;200& set clrmove=22& goto :CursorChangerOOBE_Animation4)
 ) else (
-    ping -n 0 -w 500 localhost >nul & goto :CursorChangerOOBE_Animation3
+    for /l %%. in (0,1,5000) do rem
+    goto :CursorChangerOOBE_Animation3
 )
 
 :CursorChangerOOBE_Animation4
@@ -1070,7 +976,8 @@ set /a clrmove-=1
 if %clrmove% equ 1 (
     goto :CursorChangerOOBE_Animation5
 ) else (
-    ping -n 0 -w 500 localhost >nul & goto :CursorChangerOOBE_Animation4
+    for /l %%. in (0,1,2500) do rem
+    goto :CursorChangerOOBE_Animation4
 )
 
 :CursorChangerOOBE_Animation5
@@ -1082,18 +989,56 @@ echo %show%
 ping -n 2 -w 500 localhost >nul
 set show=& set show2=& set clresc=& set clrmove=& set count2=& set count=
 setlocal disabledelayedexpansion
+goto :CursorChangerOOBEdev
+
+
+:Header_Drawer
+rem Drawing Header of OOBE
+rem Set the color of Header
+if "%2"=="true" (set /p nothing=[107m[30m<nul& for /l %%i in (0,1,5) do (set /p nothing=[%%i;0H[0K<nul)) else if "%2"=="false" (set /p nothing=%clr2%<nul& for /l %%i in (0,1,5) do (set /p nothing=[%%i;0H[0K<nul)) else if "%oobetheme%"=="white" (set /p nothing=[107m[30m<nul) else (set /p nothing=%clr2%<nul)
+rem Clear Texts
+if not defined dummy (for /l %%i in (5,1,21) do (set /p nothing=[%%i;0H[0K<nul))
+if not defined dummy (set /p nothing=[0;0H<nul)
+echo.& echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv& echo ====================================O
+if "%1"=="1" (set /p nothing=ƒZƒbƒgƒAƒbƒv‚Ìi’» : 1/5 ^(’ˆÓ–€‚ÌŠm”F^)<nul& title ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒZƒbƒgƒAƒbƒv ^| i’» : 1/5
+) else if "%1"=="2" (set /p nothing=ƒZƒbƒgƒAƒbƒv‚Ìi’» : 2/5 ^(î•ñ‚ÌŠm”F^)<nul& title ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒZƒbƒgƒAƒbƒv  ^| i’» : 2/5
+) else if "%1"=="3" (set /p nothing=ƒZƒbƒgƒAƒbƒv‚Ìi’» : 3/5 ^(ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è^)<nul& title ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒZƒbƒgƒAƒbƒv  ^| i’» : 3/5
+) else if "%1"=="4" (set /p nothing=ƒZƒbƒgƒAƒbƒv‚Ìi’» : 4/5 ^(İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY^)<nul& title ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒZƒbƒgƒAƒbƒv  ^| i’» : 4/5
+) else if "%1"=="5" (set /p nothing=ƒZƒbƒgƒAƒbƒv‚Ìi’» : 5/5 ^(ƒZƒbƒgƒAƒbƒvŠ®—¹^)<nul& title ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒZƒbƒgƒAƒbƒv  ^| i’» : 5/5)
+if not "%1"=="0" (if not defined dummy (set /p nothing=[0K<nul) & echo.)
+exit /b
+
+:Underbar_Drawer
+rem Drawing Underbar of OOBE
+rem I didn't know ESC[0K is so useful
+if not defined dummy (set /p nothing=[22;0H<nul)
+if "%1"=="0" (set /p nothing=%clr2%%clrwhi%[0K%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="1" (set /p nothing=%clrwhi%[0K     Y=‘±s     S=ƒXƒLƒbƒv     B=‘Şo     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="2" (set /p nothing=%clr2%%clrwhi%[0K     Y=ƒXƒLƒbƒv     N,B=ƒXƒLƒbƒv‚µ‚È‚¢     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="3" (set /p nothing=%clr2%%clrwhi%[0K     Y=‘±s     N=‚¢‚¢‚¦     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="4" (set /p nothing=%clr2%%clrwhi%[0K     Y=‚Í‚¢     N=‚¢‚¢‚¦     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="5" (set /p nothing=%clr2%%clrwhi%[0K     Y=‘±s     [22;78H1/3%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="6" (set /p nothing=%clr2%%clrwhi%[0K     Y=‘±s     [22;78H2/3%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="7" (set /p nothing=%clr2%%clrwhi%[0K     Y=‘±s     [22;78H3/3%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="8" (set /p nothing=%clr2%%clrwhi%[0K     A,1=¶‚ÉˆÚ“®     D,2=‰E‚ÉˆÚ“®     B=‘Şo     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="9" (set /p nothing=%clr2%%clrwhi%[0K     A,1=¶‚ÉˆÚ“®     D,2=‰E‚ÉˆÚ“®     Y,E=Œˆ’è     B=‘Şo     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="10" (set /p nothing=%clr2%%clrwhi%[0K     Y,E=Œˆ’è     B,N=‘Şo     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="11" (set /p nothing=%clr2%%clrwhi%[0K     W,S ‚Ü‚½‚Í 1~5=ˆÚ“®     Y=Ø‚è‘Ö‚¦     N,B=”jŠü     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="12" (set /p nothing=%clr2%%clrwhi%[0K     Y,E=‘Şo     %moveline%%clrwhi%<nul& exit /b)
+exit /b
+
+:OOBE_EndLine
+if not defined dummy (set /p nothing=[22;0H<nul& exit /b)
 
 
 :CursorChangerOOBEdev
 rem Now, it's the beginning of a fucking trashy long goofy ahh idiot code.
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
 if not defined dummy (set clr=[3m[97m&set clrhigh=[7m&set clrhighend=[0m&set clrwhi=[48;5;250m[30m&set clr2=[0m&set clrgra=[90m)
-if not defined dummy (set moveline=[22;0H) else (set moveline=[22;0H)
+if not defined dummy (set moveline=[22;0H)
 if not defined dummy (set /p nothing=[?25l<nul)
 mode con: cols=80 lines=22
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
+call :Underbar_Drawer 1 & call :Header_Drawer 0
 echo.
 echo     %clr% ƒZƒbƒgƒAƒbƒv‚Ö‚æ‚¤‚±‚»B%clr2%
 echo.
@@ -1102,27 +1047,20 @@ echo     ‚±‚ÌƒZƒbƒgƒAƒbƒv‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦‚ğ‚¨g‚¢‚Ì
 echo     ƒRƒ“ƒsƒ…[ƒ^[‚ÅÀs‚Å‚«‚éó‘Ô‚É‚·‚é‚½‚ß‚ÌƒZƒbƒgƒAƒbƒv‚Å‚·B
 echo.
 echo.
-echo          ^E     ¡‚·‚®ƒZƒbƒgƒAƒbƒv‚·‚éê‡‚ÍAEƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+echo        ^E   ¡‚·‚®ƒZƒbƒgƒAƒbƒv‚·‚éê‡‚ÍAYƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
 echo.
-echo          ^E     ƒZƒbƒgƒAƒbƒv‚ğƒXƒLƒbƒv‚µ‚Ä¡‚·‚®—˜—p‚·‚éê‡‚ÍA
-echo                 SƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B(İ’è‚Í‚·‚×‚ÄŠù’è’l‚Éİ’è‚³‚ê‚Ü‚·B)
+echo        ^E   ƒZƒbƒgƒAƒbƒv‚ğƒXƒLƒbƒv‚µ‚Ä¡‚·‚®—˜—p‚·‚éê‡‚ÍA
+echo             SƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B(İ’è‚Í‚·‚×‚ÄŠù’è’l‚Éİ’è‚³‚ê‚Ü‚·B)
 echo.
-echo          ^E     ƒZƒbƒgƒAƒbƒv‚ğ‚¹‚¸‚ÉI—¹‚·‚éê‡‚ÍABƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clrwhi%     E=‘±s     S=ƒXƒLƒbƒv     B=‘Şo                                           %moveline%%clrwhi% <nul& choice /c ESB /n >nul
-if %ErrorLevel%==1 goto :OOBEmain
+echo        ^E   ƒZƒbƒgƒAƒbƒv‚ğ‚¹‚¸‚ÉI—¹‚·‚éê‡‚ÍABƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
+call :OOBE_EndLine
+choice /c YSB /n >nul
+if %ErrorLevel%==1 call :OOBEmainblank & goto :OOBEmain
 if %ErrorLevel%==2 goto :OOBESkip
 if %ErrorLevel%==3 call :OOBEmainshutdown& timeout /t 1 /nobreak >nul&call :exit 
 
 :OOBESkip
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
+call :Underbar_Drawer 2 & call :Header_Drawer 0
 echo.
 echo.
 echo          ƒZƒbƒgƒAƒbƒv‚ğƒXƒLƒbƒv
@@ -1136,15 +1074,11 @@ echo          ‚»‚ê‚Å‚à‚æ‚ë‚µ‚¢‚Å‚·‚©H
 echo.
 echo          (Y=‚Í‚¢BƒZƒbƒgƒAƒbƒv‚Æ‚©–Ê“|‚­‚³‚¢B)
 echo          (N=‚¢‚¢‚¦BƒZƒbƒgƒAƒbƒv‚µ‚½‚¢‚Å‚·I)
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=ƒXƒLƒbƒv     N,B=ƒXƒLƒbƒv‚µ‚È‚¢                                          %moveline%%clrwhi% <nul& choice /c YNB /n >nul
+call :OOBE_EndLine
+choice /c YNB /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEsetting1toggle=false&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=true&set OOBEsetting5toggle=true&set YourName=%Username%& goto :OOBEmain8
-if %ErrorLevel%==2 color 07&cls&goto :CursorChangerOOBEdev
-if %ErrorLevel%==3 color 07&cls&goto :CursorChangerOOBEdev
+if %ErrorLevel%==2 goto :CursorChangerOOBEdev
+if %ErrorLevel%==3 goto :CursorChangerOOBEdev
 
 :OOBEmain
 curl -silent http://www.msftconnecttest.com/connecttest.txt | find "Microsoft Connect Test" >nul
@@ -1153,11 +1087,7 @@ curl -silent http://www.msftncsi.com/ncsi.txt | find "Microsoft NCSI" >nul
 if "%errorlevel%"=="1" (call :OOBEmainblank & timeout /t 1 /nobreak >nul & goto :OOBEmain2)
 ping -n 1 google.com >nul
 if "%errorlevel%"=="1" (call :OOBEmainblank & timeout /t 1 /nobreak >nul & goto :OOBEmain2)
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
+call :Underbar_Drawer 3 & call :Header_Drawer 0 
 echo.
 echo.
 echo          Windows XP‚ÌOOBE BGM‚ğ•·‚«‚È‚ª‚çƒZƒbƒgƒAƒbƒv‚µ‚Ü‚·‚©H
@@ -1167,115 +1097,41 @@ echo          •·‚«‚½‚­‚È‚¢‚È‚çANƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢B
 echo.
 echo.
 echo          %clrgra%(Y‚ğ‰Ÿ‚·‚Æ–ñ15MB’ö“x‚Ìƒ_ƒEƒ“ƒ[ƒh‚ª”­¶‚µ‚Ü‚·B)%clr2%
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul& choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 goto :OOBEmainmusic
 if %ErrorLevel%==2 call :OOBEmainblank&timeout /t 1 /nobreak >nul&goto :OOBEmain2
 
 
 :OOBEmainmusic
-call :OOBEmainmusicmessage
-set Powersheller=OOBEMusic&call :Powersheller
-goto :OOBEmainmusicmessage2
-
-:OOBEmainmusicmessage
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
 echo          ‰¹Šy‚Ìƒ_ƒ“ƒ[ƒh‚ğ€”õ‚µ‚Ä‚¢‚Ü‚·...‚µ‚Î‚ç‚­‚¨‘Ò‚¿‚­‚¾‚³‚¢B
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
-exit /b
+call :OOBE_EndLine
+call :Powersheller OOBEMusic
+goto :OOBEmainmusicmessage2
 
 :OOBEmainblank
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
+call :OOBE_EndLine
 exit /b
 
 
 :OOBEmainshutdown
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
 echo          ƒVƒƒƒbƒgƒ_ƒEƒ“’†...
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
+call :OOBE_EndLine
 exit /b
 
 
 :OOBEmainmusicmessage2
 set batchpath=
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
 echo          Š®—¹B
@@ -1291,10 +1147,7 @@ echo          Github‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚µ‚Ä‚¢‚È‚¢‚©‚Ç‚¤‚©
 echo          Powershell‚ª—˜—p‰Â”\‚©‚Ç‚¤‚©
 echo.
 echo          (5•bŒã‚ÉƒZƒbƒgƒAƒbƒv‚ğ‘±s‚µ‚Ü‚·)
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
+call :OOBE_EndLine
 timeout /t 5 /nobreak >nul
 call :OOBEmainblank
 timeout /t 1 /nobreak >nul
@@ -1302,12 +1155,7 @@ goto :OOBEmain2
 
 
 :OOBEmain2
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 1/5 (’ˆÓ–€‚ÌŠm”F)
+call :Underbar_Drawer 5 & call :Header_Drawer 1
 echo.
 echo.
 echo          ƒJ[ƒ\ƒ‹‘Ö‚¦‚Í“ñ‚Â‚Ìƒtƒ@ƒCƒ‹‚ğ¶¬‚µ‚Ü‚·B
@@ -1325,17 +1173,12 @@ echo          ‚Å‚·‚©‚çA‚±‚ê‚ç‚Ìƒtƒ@ƒCƒ‹‚ğâ‘Î‚Éíœ‚µ‚È‚¢‚Å‚­‚¾‚³‚¢Bâ‘Î‚ÉB
 echo.
 echo          (Y ƒL[‚Å‘±s)
 echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s                                                                  1/3%moveline%%clrwhi% <nul&choice /c Y /n >nul
+choice /c Y /n >nul
 if %ErrorLevel%==1 goto :OOBEmain3
 
 
 :OOBEmain3
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 1/5 (’ˆÓ–€‚ÌŠm”F)
+call :Underbar_Drawer 6 & call :Header_Drawer 1
 echo.
 echo.
 echo          ‚±‚ÌƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌŠJ”­Ò‚Å‚ ‚étamago_1908‚ÍA
@@ -1353,17 +1196,12 @@ echo          ‚Æ“¯‚¶ˆÓ–¡‚ğ‚¿‚Ü‚·B•K—v‚É‰‚¶‚ÄŠm”F‚µ‚Ä‚­‚¾‚³‚¢B
 echo.
 echo          (Y ƒL[‚Å‘±s)
 echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s                                                                  2/3%moveline%%clrwhi% <nul&choice /c Y /n >nul
+choice /c Y /n >nul
 if %ErrorLevel%==1 goto :OOBEmain4
 
 
 :OOBEmain4
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 1/5 (’ˆÓ–€‚ÌŠm”F)
+call :Underbar_Drawer 7 & call :Header_Drawer 1
 echo.
 echo.
 echo          ‚±‚ÌƒJ[ƒ\ƒ‹‘Ö‚¦‚Íwindows 10 1803ˆÈ~‚Å‚Ì“®ì‚ğ„§‚µ‚Ä‚¢‚Ü‚·B
@@ -1378,20 +1216,13 @@ echo          ‹°‚ë‚µ‚­‘¬‚¢CPU‚â‚Ì‚ë‚Á‚¿‚¢CPU‚Å‚ÍAƒAƒjƒ[ƒVƒ‡ƒ“
 echo          ‚âˆ—‚É‰e‹¿‚ğ‹y‚Ú‚·‰Â”\«‚ª‚ ‚è‚Ü‚·B
 echo.
 echo          (Y ƒL[‚Å‘±s)
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s                                                                  3/3%moveline%%clrwhi% <nul&choice /c Y /n >nul
+call :OOBE_EndLine
+choice /c Y /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul
 
 
 :OOBEmain5
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 2/5 (î•ñ‚ÌŠm”F)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
 echo          Œ»İAƒJ[ƒ\ƒ‹‘Ö‚¦‚Í“ú–{Œê”Å‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚Ü‚·B
@@ -1400,27 +1231,14 @@ echo.
 echo.
 echo          (Y=‚Í‚¢B³‚µ‚¢BŒ¾‚¤‚Ü‚Å‚à‚È‚¢B)
 echo          (N=‚¢‚¢‚¦B‚É‚Ù‚ñ‚²‚ª‚í‚©‚è‚Ü‚¹‚ñ)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain5_1
 if %ErrorLevel%==2 goto :OOBEmain5ifno
 
 
 :OOBEmain5ifno
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 2/5 (î•ñ‚ÌŠm”F)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
 echo          \‚µ–ó‚ ‚è‚Ü‚¹‚ñ‚ªAŒ»İƒJ[ƒ\ƒ‹‘Ö‚¦‚Í‰pŒê‚Æ“ú–{Œê
@@ -1433,23 +1251,14 @@ echo.
 echo.
 echo          (Y=‚Í‚¢BƒZƒbƒgƒAƒbƒv‚ğ‘±‚¯‚Ü‚·B)
 echo          (N=‚¢‚¢‚¦B‚â‚Á‚Ï‚èƒZƒbƒgƒAƒbƒv‚ğ‚â‚ß‚Ü‚·B)
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain5_1
-if %ErrorLevel%==2 call :OOBEmainshutdown & timeout /t 1 /nobreak >nul&call :exit 
+if %ErrorLevel%==2 call :OOBEmainshutdown & timeout /t 1 /nobreak >nul&call :exit 0
 
 
 :OOBEmain5_1
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 2/5 (î•ñ‚ÌŠm”F)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
 echo          ƒJ[ƒ\ƒ‹‘Ö‚¦‚ª‚ ‚È‚½‚Ì–‚ğ‰½‚ÆŒÄ‚ñ‚Å—~‚µ‚¢‚©‚ğ“ü—Í‚Å‚«‚Ü‚·B
@@ -1459,58 +1268,31 @@ echo.
 echo.
 echo          (Y=‚Í‚¢A•ÏX‚µ‚Ü‚·B)
 echo          (N=‚¢‚¢‚¦A‚»‚Ì‚Ü‚Ü‚ÅB)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‚Í‚¢     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain5_2
 if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain6
 
 
 :OOBEmain5_2
 set YourName=
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 2/5 (î•ñ‚ÌŠm”F)
+call :Underbar_Drawer 0 & call :Header_Drawer 2
 echo.
 echo.
 echo          ‚Å‚ÍAˆÈ‰º‚É‚È‚ñ‚ÆŒÄ‚Î‚ê‚½‚¢‚©‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B
 echo.
 echo.
 echo          “ü—Í—“ :
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-if not defined dummy (
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul&set /p YourName=%clr2%[10;18H
-)
+call :OOBE_EndLine
+if not defined dummy (set /p YourName=%clr2%[10;18H[?25h& set /p nothing=[?25l<nul)
 if %ErrorLevel%==2 goto :OOBEmain5_2c
 
 
 :OOBEmain5_2c
 if not defined Yourname goto :OOBEmain5_2c_error
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 2/5 (î•ñ‚ÌŠm”F)
+call :OOBEmain5_2c_Easteregg
+if "%errorlevel%"=="1" (goto :OOBEmain5_2) else if "%errorlevel%"=="2" (cls & mode con: cols=75 lines=25 & title ƒJ[ƒ\ƒ‹‘Ö‚¦& goto :CursorChangerOOBE)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
 echo          "%YourName%"‚Æ“ü—Í‚µ‚Ü‚µ‚½B
@@ -1519,27 +1301,14 @@ echo.
 echo.
 echo          (Y=‚Í‚¢I)
 echo          (N=‚¢‚¢‚¦)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‚Í‚¢     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain6
 if %ErrorLevel%==2 goto :OOBEmain5_2
 
 
 :OOBEmain5_2c_error
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 2/5 (î•ñ‚ÌŠm”F)
+call :Underbar_Drawer 0 & call :Header_Drawer 2
 echo.
 echo.
 echo          ‚ ‚È‚½‚Ì–¼‘O‚É‚Í•K‚¸‰½‚©‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B
@@ -1547,28 +1316,38 @@ echo          –¼‘O‚È‚µ‚Å‘±s‚·‚é‚±‚Æ‚Í‚Å‚«‚Ü‚¹‚ñI
 echo.
 echo.
 echo          (‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘±s...)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul&pause >nul
+call :OOBE_EndLine
+pause >nul
 goto :OOBEmain5_2
 
 
+:OOBEmain5_2c_Easteregg
+if "%YourName%"=="tamago_1908" (set "OOBEmain5_2c_Easteregg_TextTemp=‚»‚ê–l‚Ì–¼‘OIIIII ^>:("
+) else if "%YourName%"=="Kinito" (set "OOBEmain5_2c_Easteregg_TextTemp=–l‚Ìe—FB"
+) else if "%YourName%"=="Boykisser" (set "OOBEmain5_2c_Easteregg_TextTemp=ƒPƒ‚ƒmIH"
+) else if "%YourName%"=="Sigma" (set "OOBEmain5_2c_Easteregg_TextTemp=‚¾‚ßB"
+) else if "%YourName%"=="Cake" (set "OOBEmain5_2c_Easteregg_TextTemp=ƒP[ƒL‚Í‰R‚¾"
+) else if "%YourName%"=="Hello_World" (set "OOBEmain5_2c_Easteregg_TextTemp='Hello_World' is not recognized as an internal or external command,[8;10Hoperable program or batch file."
+) else if "%YourName%"=="Shivter" (set "OOBEmain5_2c_Easteregg_TextTemp=‚â‚ß‚Ä‚­‚ê"
+) else if "%YourName%"=="sambubo" (set "OOBEmain5_2c_Easteregg_TextTemp=‚«‚Á‚Æâ‚µ‚¢‚ñ‚¾‚ËB‚í‚©‚Á‚Ä‚é‚æ"
+) else if "%YourName%"=="AAAAAA" (set "OOBEmain5_2c_Easteregg_TextTemp=‚»‚ñ‚È‚É–¼‘O‚ğŒˆ‚ß‚é‚Ì‚ª–Ê“|H"
+) else if "%YourName%"=="Sans" (set "OOBEmain5_2c_Easteregg_TextTemp=‚¾‚ß‚¾‚ºB"
+) else if "%YourName%"=="egg" (exit /b 2) else (exit /b 0)
+call :Underbar_Drawer 0 & call :Header_Drawer 2
+echo.
+echo.
+echo          %OOBEmain5_2c_Easteregg_TextTemp%
+echo.
+echo.
+echo          (‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘±s...)
+call :OOBE_EndLine
+pause >nul
+set OOBEmain5_2c_Easteregg_TextTemp=
+exit /b 1
+
 
 :OOBEmain6
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 3/5 (ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è)
+call :Underbar_Drawer 4 & call :Header_Drawer 3
 echo.
 echo.
 echo          ƒJ[ƒ\ƒ‹‘Ö‚¦‚Í©—R‚Éƒ_[ƒNƒe[ƒ}‚©Aƒ‰ƒCƒgƒe[ƒ}
@@ -1580,25 +1359,15 @@ echo.
 echo.
 echo          (Y=‚Í‚¢Bƒe[ƒ}‚ğ‘I‘ğ‚µ‚½‚¢‚Å‚·)
 echo          (N=‚¢‚¢‚¦Bƒe[ƒ}‚È‚ñ‚¼’m‚é‚©I)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme1
 if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&goto :OOBEmain7
 
 
 :OOBEmain6theme1
 if "%OOBEundiscard%"=="true" (call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 3/5 (ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è)
+call :Underbar_Drawer 8 & call :Header_Drawer 3
 echo.
 echo.
 echo          O============O    O============O
@@ -1610,29 +1379,20 @@ echo    ^E   ‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñBA,D‚Ü‚½‚Í1,2‚Å‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B
 echo.
 echo          (A,D‚Ü‚½‚Í1,2‚Å‘I‘ğ‚µAY‚Ü‚½‚ÍE‚ÅŒˆ’è‚µ‚Ü‚·B)
 echo          (B ƒL[‚Åƒe[ƒ}‚Ì‘I‘ğ‚ğ”jŠü‚µ‚Ü‚·B)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     A,1=¶‚É“®‚©‚·     D,2=‰E‚É“®‚©‚·     B=‘Şo                               %moveline%%clrwhi% <nul&choice /c AD12B /n >nul
+call :OOBE_EndLine
+choice /c AD12YB /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme2
 if %ErrorLevel%==3 goto :OOBEmain6theme2
 if %ErrorLevel%==4 goto :OOBEmain6theme3
-if %ErrorLevel%==5 call :OOBEmain6themeifback&goto :OOBEmain6theme1
+if %ErrorLevel%==5 goto :OOBEmain6theme2
+if %ErrorLevel%==6 call :OOBEmain6themeifback&goto :OOBEmain6theme1
 
 
 :OOBEmain6theme2
 if "%OOBEundiscard%"=="true" (call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
 if defined clrhigh (set clrhigh=[7m&set clrhighend=[0m)
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 3/5 (ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è)
+call :Underbar_Drawer 9 & call :Header_Drawer 3 false
 echo.
 echo.
 echo          O============O    O============O
@@ -1646,11 +1406,8 @@ echo     ^E   Šî–{“I‚É‚Í‚±‚ê‚ª„§‚³‚ê‚Ä‚¢‚éB
 echo.
 echo          (A,D‚Ü‚½‚Í1,2‚Å‘I‘ğ‚µAY‚Ü‚½‚ÍE‚ÅŒˆ’è‚µ‚Ü‚·B)
 echo          (B ƒL[‚Åƒe[ƒ}‚Ì‘I‘ğ‚ğ”jŠü‚µ‚Ü‚·B)
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     A,1=¶‚É“®‚©‚·     D,2=‰E‚É“®‚©‚·     Y,E=Œˆ’è     B=‘Şo                  %moveline%%clrwhi% <nul&choice /c AD12BYE /n >nul
+call :OOBE_EndLine
+choice /c AD12BYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme3
 if %ErrorLevel%==3 goto :OOBEmain6theme2
@@ -1661,14 +1418,9 @@ if %ErrorLevel%==7 goto :OOBEmain6theme2confirm
 
 
 :OOBEmain6theme3
-if "%OOBEundiscard%"=="true" (call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
+if "%OOBEundiscard%"=="true" (call :Header_Drawer 3 false & call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
 if defined clrhigh (set clrhigh=[100m[97m&set clrhighend=[0m[107m[30m)
-color f0
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 3/5 (ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è)
+call :Underbar_Drawer 9 & call :Header_Drawer 3 true
 echo.
 echo.
 echo          O============O    O============O
@@ -1683,26 +1435,19 @@ echo     ^E   ‚æ‚è–¾‚é‚­Œ©‚½‚¢l‚É‚¨‚·‚·‚ß
 echo.
 echo          (A,D‚Ü‚½‚Í1,2‚Å‘I‘ğ‚µAY‚Ü‚½‚ÍE‚ÅŒˆ’è‚µ‚Ü‚·B)
 echo          (B ƒL[‚Åƒe[ƒ}‚Ì‘I‘ğ‚ğ”jŠü‚µ‚Ü‚·B)
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     A,1=¶‚É“®‚©‚·     D,2=‰E‚É“®‚©‚·     Y,E=‘±s     B=‘Şo                  %moveline%%clrwhi% <nul&choice /c AD12BYE /n >nul
+call :OOBE_EndLine
+choice /c AD12BYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme3
 if %ErrorLevel%==3 goto :OOBEmain6theme2
 if %ErrorLevel%==4 goto :OOBEmain6theme3
-if %ErrorLevel%==5 call :OOBEmain6themeifback&goto :OOBEmain6theme3
+if %ErrorLevel%==5 call :OOBEmain6themeifback true&goto :OOBEmain6theme3
 if %ErrorLevel%==6 goto :OOBEmain6theme3confirm
 if %ErrorLevel%==7 goto :OOBEmain6theme3confirm
 
 
 :OOBEmain6theme2confirm
-color 07
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 3/5 (ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è)
+call :Underbar_Drawer 10 & call :Header_Drawer 3 false
 echo.
 echo.
 echo          O============O    O============O
@@ -1715,12 +1460,8 @@ echo.
 echo.
 echo          (Y=‚Í‚¢I‚±‚Ìƒe[ƒ}‚ª‹C‚É“ü‚è‚Ü‚µ‚½)
 echo          (N=‚ñ‚È‚í‚¯‚ ‚é‚©‚¢ƒ{ƒP)
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y,E=‘±s     B,N=I—¹                                                      %moveline%%clrwhi% <nul&choice /c BNYE /n >nul
+call :OOBE_EndLine
+choice /c BNYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme2
 if %ErrorLevel%==3 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&goto :OOBEmain7
@@ -1729,12 +1470,7 @@ if %ErrorLevel%==4 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobethem
 
 
 :OOBEmain6theme3confirm
-color f0
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 3/5 (ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è)
+call :Underbar_Drawer 10 & call :Header_Drawer 3 true
 echo.
 echo.
 echo          O============O    O============O
@@ -1747,12 +1483,8 @@ echo.
 echo.
 echo          (Y=‚Í‚¢I‚±‚Ìƒe[ƒ}‚ª‹C‚É“ü‚è‚Ü‚µ‚½)
 echo          (N=‚ñ‚È‚í‚¯‚ ‚é‚©‚¢ƒ{ƒP)
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y,E=‘±s     B,N=I—¹                                                      %moveline%%clrwhi% <nul&choice /c BNYE /n >nul
+call :OOBE_EndLine
+choice /c BNYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme3
 if %ErrorLevel%==2 goto :OOBEmain6theme3
 if %ErrorLevel%==3 set oobetheme=white&call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain7
@@ -1760,12 +1492,7 @@ if %ErrorLevel%==4 set oobetheme=white&call :OOBEmainblank & timeout /t 1 /nobre
 
 
 :OOBEmain6themeifback
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 3/5 (ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒe[ƒ}‚Ìİ’è)
+call :Underbar_Drawer 4 & if "%1"=="true" (call :Header_Drawer 3 true) else (call :Header_Drawer 3 false)
 echo.
 echo.
 echo          –{“–‚Éƒe[ƒ}‚Ì‘I‘ğ‚ğ”jŠü‚µ‚Ü‚·‚©H
@@ -1774,26 +1501,14 @@ echo.
 echo.
 echo          (Y=‚Í‚¢B”jŠü‚µ‚Ü‚·B)
 echo          (N=‚¢‚¢‚¦Bƒe[ƒ}‚ğ‘I‘ğ‚µ‚Ü‚·)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‚Í‚¢     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 set OOBEundiscard=true&exit /b
 if %ErrorLevel%==2 exit /b
 
+
 :OOBEmain7
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 4 & call :Header_Drawer 4
 echo.
 echo.
 echo          ƒJ[ƒ\ƒ‹‘Ö‚¦‚Íİ’è‚ğƒJƒXƒ^ƒ}ƒCƒY‚Å‚«‚Ü‚·B
@@ -1804,24 +1519,14 @@ echo.
 echo.
 echo          (Y=‚Í‚¢I)
 echo          (N=‚¢‚¢‚¦B‚ß‚ñ‚Ç‚­‚³‚¢‚¾‚¯‚Å‚·B)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‘±s     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain7CustomizeSettings
 if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain8
 
+
 :OOBEmain7CustomizeSettingsdiscard
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 4 & call :Header_Drawer 4
 echo.
 echo.
 echo          –{“–‚Éİ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY‚ğ”jŠü‚µ‚Ü‚·‚©H
@@ -1830,16 +1535,8 @@ echo          (”jŠü‚µ‚½ê‡A‚·‚×‚Ä‚Ìİ’è‚ÍŠù’è’l‚Éİ’è‚³‚ê‚Ü‚·)
 echo.
 echo          (Y=‚Í‚¢I”jŠü‚µ‚Ü‚·II)
 echo          (N=‚¢‚¢‚¦IƒJƒXƒ^ƒ}ƒCƒY‚µ‚½‚¢‚Å‚·I)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=‚Í‚¢     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set OOBEsetting1toggle=true&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=true&set OOBEsetting5toggle=true&goto :OOBEmain8
 if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 
@@ -1847,12 +1544,7 @@ if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 set OOBEsetting1toggle=false&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=false&set OOBEsetting5toggle=false
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY
@@ -1870,7 +1562,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S ‚à‚µ‚­‚Í 1~5=“®‚©‚·     Y=Ø‚è‘Ö‚¦     N,B=”jŠü                        %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings1
 if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 if %ErrorLevel%==3 goto :OOBEmain7CustomizeSettings1
@@ -1884,16 +1576,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings1
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting1toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting1toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY
@@ -1911,7 +1598,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S ‚à‚µ‚­‚Í 1~5=“®‚©‚·     Y=Ø‚è‘Ö‚¦     N,B=”jŠü                        %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings1
@@ -1927,16 +1614,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings2
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting2toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting2toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY
@@ -1954,7 +1636,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S ‚à‚µ‚­‚Í 1~5=“®‚©‚·     Y=Ø‚è‘Ö‚¦     N,B=”jŠü                        %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings1
@@ -1970,16 +1652,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings3
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting3toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting3toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY
@@ -1997,7 +1674,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S ‚à‚µ‚­‚Í 1~5=“®‚©‚·     Y=Ø‚è‘Ö‚¦     N,B=”jŠü                        %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings2
@@ -2013,16 +1690,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings4
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting4toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting4toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY
@@ -2040,7 +1712,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S ‚à‚µ‚­‚Í 1~5=“®‚©‚·     Y=Ø‚è‘Ö‚¦     N,B=”jŠü                        %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings3
@@ -2056,16 +1728,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings5
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting5toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting5toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY
@@ -2083,7 +1750,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S ‚à‚µ‚­‚Í 1~5=“®‚©‚·     Y=Ø‚è‘Ö‚¦     N,B=”jŠü                        %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings4
@@ -2099,12 +1766,7 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettingsOK
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY
@@ -2122,7 +1784,7 @@ echo                       I%OOBEsettingclr%  OK  %OOBEsettingclr2%I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S ‚à‚µ‚­‚Í 1~5=“®‚©‚·     Y=Ø‚è‘Ö‚¦     N,B=”jŠü                        %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings5
@@ -2197,12 +1859,7 @@ if "%1"=="5" (
 exit /b
 
 :OOBEmain7CustomizeSettingsOKconfirm
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 4/5 (İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY)
+call :Underbar_Drawer 4 & call :Header_Drawer 4
 echo.
 echo.
 echo          İ’è‚ÌƒJƒXƒ^ƒ}ƒCƒY :
@@ -2220,7 +1877,7 @@ echo          (Y=‚Í‚¢)
 echo          (N=‚¢‚¢‚¦B‚â‚Á‚Ï‚è•ÏX‚µ‚½‚¢‚Å‚·B)
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     Y=‚Í‚¢     N=‚¢‚¢‚¦                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+choice /c YN /n >nul
 if %ErrorLevel%==1 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain8
 if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 
@@ -2233,7 +1890,7 @@ if not exist %Settingsfile% (
 
     if defined YourName (
         echo YourName=%YourName% >> %Settingsfile%
-    ) else if not defined (echo YourName=%USERNAME% >> %Settingsfile%)
+    ) else if not defined YourName (echo YourName=%USERNAME% >> %Settingsfile%)
 
     if "%OOBEsetting1toggle%"=="false" (
         echo BootAsCC=false >> %Settingsfile%
@@ -2284,11 +1941,7 @@ type nul > %FirstSTFsfile%
 echo nodogcheckforfastboot >> %FirstSTFsfile%
 )
 )
-cls
-echo.
-echo   ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv
-echo ====================================O
-echo ƒZƒbƒgƒAƒbƒvi’» : 5/5 (ƒZƒbƒgƒAƒbƒvŠ®—¹)
+call :Underbar_Drawer 12 & call :Header_Drawer 5
 echo.
 echo.
 echo          ƒZƒbƒgƒAƒbƒv‚ÍŠ®—¹‚µ‚Ü‚µ‚½B
@@ -2300,19 +1953,15 @@ echo          ƒJ[ƒ\ƒ‹‘Ö‚¦‚Í‚Ü‚¾ŠJ”­“r’†‚ÅA–¢Š®¬‚Å‚·B
 echo          ‚»‚ê‚¾‚¯‚Í—‰ğ‚µ‚Ä‚­‚¾‚³‚¢B
 echo.
 echo          (Y ‚Ü‚½‚Í E ƒL[‚Åƒƒjƒ…[‚ÉˆÚ“®)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y,E=‘Şo                                                                   %moveline%%clrwhi% <nul&choice /c YE /n >nul
-if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&call :OOBEinitialization &set bootbatnow=yes&goto :batstart
-if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&call :OOBEinitialization &set bootbatnow=yes&goto :batstart
+call :OOBE_EndLine
+choice /c YE /n >nul
+if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul & call :OOBEinitialization & set bootbatnow=yes& goto :batstart
+if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul & call :OOBEinitialization & set bootbatnow=yes& goto :batstart
 
 :OOBEinitialization
-if "%oobetheme%"=="white" (color f0) else (color 07) & cls
-if not defined dummy (set /p nothing=[?25h<nul)
+mode con: cols=75 lines=25
+if "%oobetheme%"=="white" (color f0) else (color 07)
+if not defined dummy (set /p nothing=[0;0H[?25h<nul)
 set clrgra=& set clrhigh=& set clrhighend=& set clrwhi=& set moveline=
 set oobetheme=
 set OOBEsetting1toggle=& set OOBEsetting2toggle=& set OOBEsetting3toggle=& set OOBEsetting4toggle=& set OOBEsetting5toggle=
@@ -2321,7 +1970,6 @@ set OOBEsetting1clr2=& set OOBEsetting2clr2=& set OOBEsetting3clr2=& set OOBEset
 set OOBEsettingclr=& set OOBEsettingclr2=
 set clr1=& set clresc=& set clrmove=& set clr2=&set clr=
 2>nul taskkill /im powershell.exe >nul
-mode con: cols=75 lines=25
 exit /b
 
 
@@ -2329,11 +1977,12 @@ exit /b
 :Cursor_Changer_REmenu
 cls
 mode con: cols=75 lines=25
-color 07
-rem recovery menu for Cursor Changer, and recovery console
+rem recovery menu for ƒJ[ƒ\ƒ‹‘Ö‚¦, and recovery console
 call :batbootcheckwinver dynamic
 if "%errorlevel%"=="1" (goto :batbootcheckwinverbad)
-if defined bootbatnow (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 set bootbatnow=no& set rmsel=0
 echo ƒŠƒJƒoƒŠ[ƒƒjƒ…[‚ğ“Ç‚İ‚ñ‚Å‚¢‚Ü‚·B ‚µ‚Î‚ç‚­‚¨‘Ò‚¿‚­‚¾‚³‚¢...& timeout /t 1 /nobreak >nul
@@ -2426,12 +2075,10 @@ set rmsel=2& goto :Cursor_Changer_REmenu_main
 
 :Cursor_Changer_REConsole
 cls
+mode con: cols=75 lines=25
 set selected=
 set FromREConsole=true
-mode con: cols=75 lines=25
-color 07
 set bootbatnow=no
-if not defined dummy (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
 if not defined dummy (set /p nothing=[?25h<nul)
 echo ƒŠƒJƒoƒŠ[ƒRƒ“ƒ\[ƒ‹‚ğ“Ç‚İ‚ñ‚Å‚¢‚Ü‚·...
 timeout /t 2 /nobreak >nul
@@ -2468,7 +2115,7 @@ set selected=
 SET /P selected=Cns ^>
 if "%selected%"=="help" (goto :allcommands)
 if "%selected%"=="exit" (set FromREConsole=& set rmsel=3& exit /b)
-if "%selected%"=="alldefnow1" (goto :AllDefult1)
+if "%selected%"=="uninstallnow1" (goto :Uninstall1)
 if "%selected%"=="playdefboot" (set hatenakeikoku=0&cls&goto :firstboot)
 if "%selected%"=="debugyesnow" (goto :kurogo)
 if "%selected%"=="fulldebug" (goto :fulldebug)
@@ -2478,7 +2125,7 @@ call :Wipealldeta
 echo Š®—¹B‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘±s...
 pause >nul
 )
-if "%selected%"=="alldefdeletebat" (set hatenakeikoku=0&echo delete bat, confirm to type something...&pause&goto :alldefdeletefinish5)
+if "%selected%"=="uninstalldeletebat" (set hatenakeikoku=0&echo delete bat, confirm to type something...&pause&goto :uninstalldeletefinish5)
 if "%selected%"=="windowsfiltertest" (goto :batbootcheckwinverbad)
 if "%selected%"=="funanimationdeb" (goto :batbootanimationfun)
 if "%selected%"=="openie" (goto :openiedev)
@@ -2509,7 +2156,7 @@ rem Detects settings related to prompts for administrative privileges,
 :batstart
 if "%linuxboot%"=="false" (mode con: cols=75 lines=25)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   & set ??????=‚±‚±‚Å‰½‚ğ‚µ‚Ä‚¢‚é‚ñ‚¾H ‚±‚±‚É‚¢‚é‚ñ‚¾‚ëH%username%.
 if "%settingbypass%"=="true" (goto :hazimemenuskipboot)
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] admin checked.) else (cls)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] ŠÇ—ÒŒ ŒÀ‚ªŠm”F‚³‚ê‚Ü‚µ‚½) else (cls)
 rem ŠÇ—ÒŒ ŒÀİ’è‚ÌŒŸ’m
 find "admin=true" %Settingsfile% > nul
 if "%adminbypass%"=="true" (goto :gotadmin)
@@ -2528,10 +2175,10 @@ if '%errorlevel%' NEQ '0' (
     goto :UACPrompt
 ) else ( goto :gotAdmin )
 :UACPrompt
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Requesting Administrative privileges...)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] ŠÇ—ÒŒ ŒÀ‚ğ—v‹’†...)
 powershell -NoProfile -Command "Start-Process '%~dp0%~n0%~x0' -Verb RunAs" >nul && PowerShell -WindowStyle Hidden -Command Exit && call :exit 0
 echo.
-if "%linuxboot%"=="true" (echo [%linuxishclred%ERROR%linuxishclr2%] Request for administrative privileges denied. & echo.) else (
+if "%linuxboot%"=="true" (echo [%linuxishclred%ERROR%linuxishclr2%] ŠÇ—ÒŒ ŒÀ‚Ì—v‹‚ª‹‘”Û‚³‚ê‚Ü‚µ‚½ & echo.) else (
 echo ŠÇ—ÒŒ ŒÀ‚Ì—v‹‚ª‹‘”Û‚³‚ê‚Ü‚µ‚½B
 echo ^(ƒqƒ“ƒg: ŠÇ—ÒŒ ŒÀ‚Ì—v‹‚Íİ’è‚Å–³Œø‚É‚Å‚«‚Ü‚·B^)
 )
@@ -2544,12 +2191,12 @@ goto :hazime
 
 
 :hazime
-if "%alldefentered%"=="true" (
-set alldefno2clr=
-set alldefno2clr2=
-set alldefclr=
-set alldefclr2=
-set alldefentered=
+if "%uninstallentered%"=="true" (
+set uninstallno2clr=
+set uninstallno2clr2=
+set uninstallclr=
+set uninstallclr2=
+set uninstallentered=
 )
 if "%settingbypass%"=="true" (goto :hazimemenuskipboot)
 rem İ’è‚Æ‚»‚Ì‘¼‚Ìƒ[ƒh
@@ -2584,8 +2231,8 @@ echo nodogcheckforfastboot >> %FirstSTFsfile%
 
 
 rem uh oh
-set Die=%random%& set Die2=%random%
-if "%Die%"=="%Die2%" (title & color 04
+call :RandomDecisioner 32768
+if "%errorlevel%"=="1" (title & color 04
     if not defined dummy (echo [0;0H)
     for /l %%i in (0,1,1000) do (set /p nothing= ‚·‚®‚É‚¯‚¹ <nul)
 timeout 2 /nobreak >nul & call :exit)
@@ -2599,7 +2246,7 @@ find "BootAsCC=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting1onoff=—LŒø
 if %ErrorLevel%==1 goto :setting1load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" if not "%bootbatnow%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting1 Loaded as "true")
+if "%linuxboot%"=="true" if not "%bootbatnow%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting1 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 1
 goto :setting2load
 )
@@ -2611,7 +2258,7 @@ find "admin=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting2onoff=—LŒø
 if %ErrorLevel%==1 goto :setting2load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting2 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting2 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 2
 goto :setting3load
 ) 
@@ -2622,7 +2269,7 @@ find "CheckUpdate=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting3onoff=—LŒø
 if %ErrorLevel%==1 goto :setting3load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting3 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting3 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 3
 goto :setting4load
 ) 
@@ -2633,7 +2280,7 @@ find "hatenakeikoku=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting4onoff=—LŒø
 if %ErrorLevel%==1 goto :setting4load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting4 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting4 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 4
 goto :setting5load
 ) 
@@ -2644,7 +2291,7 @@ find "bootanimation=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting5onoff=—LŒø
 if %ErrorLevel%==1 goto :setting5load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 5
 goto :setting5_s1load
 ) 
@@ -2656,7 +2303,7 @@ find "s5_linuxboot=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting5_s1onoff=—LŒø
 if %ErrorLevel%==1 goto :setting5_s1load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 5
 goto :setting5_s2load
 ) 
@@ -2667,7 +2314,7 @@ find "s5_simpleboot=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting5_s2onoff=—LŒø
 if %ErrorLevel%==1 goto :setting5_s2load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 5
 goto :setting5_s3load
 ) 
@@ -2678,7 +2325,7 @@ find "s5_rawboot=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting5_s3onoff=—LŒø
 if %ErrorLevel%==1 goto :setting5_s3load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 5
 goto :setting6load
 ) 
@@ -2689,7 +2336,7 @@ find "HazimeBg=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting6onoff=—LŒø
 if %ErrorLevel%==1 goto :setting6load2
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting6 Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Setting6 ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 6
 goto :wmodeload
 ) 
@@ -2701,7 +2348,7 @@ find "wmode=true" %Settingsfile% > nul
 if "%ErrorLevel%"=="0" (set wmodeonoff=ƒ_[ƒNƒe[ƒ}‚É•ÏX  &set wmodetoggle=true)
 if "%ErrorLevel%"=="1" (goto :wmodeload2)
 if "%bootbatnow%"=="yes" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded as "true")
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Wmode ‚Í "true" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 6
 goto :loads
 ) 
@@ -2711,61 +2358,61 @@ goto :whatloadgoto
 rem İ’è‚ÌŒ‡‘¹‚ğŒŸØ
 :setting1load2
 find "BootAsCC=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting1onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting1 Loaded as "false")) else if %ErrorLevel%==1 set setting1onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting1 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting1onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting1 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting1onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting1 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 1)
 if "%bootbatnow%"=="yes" (goto :setting2load) else (goto :whatloadgoto)
 
 :setting2load2
 find "admin=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting2onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting2 Loaded as "false")) else if %ErrorLevel%==1 set setting2onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting2 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting2onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting2 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting2onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting2 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 2)
 if "%bootbatnow%"=="yes" (goto :setting3load) else (goto :whatloadgoto)
 
 :setting3load2
 find "CheckUpdate=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting3onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting3 Loaded as "false")) else if %ErrorLevel%==1 set setting3onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting3 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting3onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting3 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting3onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting3 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 3)
 if "%bootbatnow%"=="yes" (goto :setting4load) else (goto :whatloadgoto)
 
 :setting4load2
 find "hatenakeikoku=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting4onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting4 Loaded as "false")) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting4 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting4onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting4 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting4onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting4 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 4)
 if "%bootbatnow%"=="yes" (goto :setting5load) else (goto :whatloadgoto)
 
 :setting5load2
 find "bootanimation=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting5onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5 Loaded as "false")) else if %ErrorLevel%==1 set setting5onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting5onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting5onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 5)
 if "%bootbatnow%"=="yes" (goto :setting5_s1load) else (goto :whatloadgoto)
 
 :setting5_s1load2
 find "s5_linuxboot=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting5_s1onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 Loaded as "false")) else if %ErrorLevel%==1 set setting5_s1onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5_1 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting5_s1onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_1 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting5_s1onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5_1 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 5)
 if "%bootbatnow%"=="yes" (goto :setting5_s2load) else (goto :whatloadgoto)
 
 :setting5_s2load2
 find "s5_simpleboot=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting5_s2onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 Loaded as "false")) else if %ErrorLevel%==1 set setting5_s2onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5_2 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting5_s2onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_2 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting5_s2onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5_2 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 5)
 if "%bootbatnow%"=="yes" (goto :setting5_s3load) else (goto :whatloadgoto)
 
 :setting5_s3load2
 find "s5_rawboot=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting5_s3onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 Loaded as "false")) else if %ErrorLevel%==1 set setting5_s3onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5_3 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting5_s3onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting5_3 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting5_s3onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting5_3 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 5)
 if "%bootbatnow%"=="yes" (goto :setting6load) else (goto :whatloadgoto)
 
 :setting6load2
 find "HazimeBg=false" %Settingsfile% > nul
-if %ErrorLevel%==0 (set setting6onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting6 Loaded as "false")) else if %ErrorLevel%==1 set setting6onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting6 is corrupted. Loaded as "null")
+if %ErrorLevel%==0 (set setting6onoff=–³Œø& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting6 ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if %ErrorLevel%==1 set setting6onoff=null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting6 ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 if "%bootbatnow%"=="yes" (call :SAB_Manager 6)
 if "%bootbatnow%"=="yes" (goto :wmodeload) else (goto :whatloadgoto)
 
 :wmodeload2
 find "wmode=false" %Settingsfile% > nul
-if "%ErrorLevel%"=="0" (set wmodeonoff=ƒzƒƒCƒgƒe[ƒ}‚É•ÏX& set wmodetoggle=false& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded as "false")) else if "%ErrorLevel%"=="1" (set wmodeonoff=  null  ƒe[ƒ}‚É•ÏX&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Wmode is corrupted. Loaded as "null"))
+if "%ErrorLevel%"=="0" (set wmodeonoff=ƒzƒƒCƒgƒe[ƒ}‚É•ÏX& set wmodetoggle=false& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded ‚Í "false" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)) else if "%ErrorLevel%"=="1" (set wmodeonoff=  null  ƒe[ƒ}‚É•ÏX&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Wmode ‚Í”j‘¹‚µ‚Ä‚¢‚Ü‚·B"null" ‚Æ‚µ‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½))
 if "%bootbatnow%"=="yes" (call :SAB_Manager 6)
 if "%bootbatnow%"=="yes" (goto :loads) else (goto :whatloadgoto)
 
@@ -2774,11 +2421,12 @@ rem load your name
 for /f "tokens=2 delims==" %%a in ('type %Settingsfile% ^| findstr /r "YourName=."') do (
     set YourName=%%a
 )
+set "YourName=%YourName: =%"
 if defined YourName (
-    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo.& echo [%linuxishclr%Info%linuxishclr2%] Hello %YourName%!)
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo.& echo [%linuxishclr%Info%linuxishclr2%] ‚±‚ñ‚É‚¿‚ÍA%YourName%I)
 ) else if not defined YourName (
-    set YourName=%USERNAME%
-    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo.& echo [%linuxishclred%ERROR%linuxishclr2%] Your Name is does not exist. Who are you?)
+    set "YourName=%USERNAME%"
+    if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo.& echo [%linuxishclred%ERROR%linuxishclr2%] Your Name ‚Í‘¶İ‚µ‚Ü‚¹‚ñB‹M—l’N‚¾I)
 )
 call :SAB_Manager 7
 
@@ -2793,7 +2441,7 @@ set FirstCursorisEdited=true
 )
 setlocal disabledelayedexpansion
 if "%bootbatnow%"=="no" (echo ˆ—’†...) else (
-if "%linuxboot%"=="true" (echo.&echo [%linuxishclr%info%linuxishclr2%] %FirstSTFsfile% is Loaded.)
+if "%linuxboot%"=="true" (echo.&echo [%linuxishclr%info%linuxishclr2%] %FirstSTFsfile% ‚Í“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 8
 goto :cursorcolorload
 )
@@ -2805,8 +2453,8 @@ reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "" | find "Windows •" >n
 if "%ErrorLevel%"=="0" (set cursorcolor=”’)
 if "%ErrorLevel%"=="1" (set cursorcolor=”’)
 if "%bootbatnow%"=="no" (echo ˆ—’†...) else (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Cursor Color is Loaded.)
-call :SAB_Manager 10
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Cursor Color ‚Í“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
+call :SAB_Manager 9
 goto :hazimecursorcolor2
 )
 if "%whatloadgoto%"=="hazime" (goto :hazimemenu)
@@ -2815,7 +2463,7 @@ if "%whatloadgoto%"=="hazime" (goto :hazimemenu)
 reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "" | find "Windows •W€" >nul
 if "%ErrorLevel%"=="0" (set cursorcolor=•)
 if "%bootbatnow%"=="no" (echo ˆ—’†...) else (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Menu stuff All Loaded.)
+if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] ƒƒjƒ…[ŠÖ˜A‚Í‚·‚×‚Ä“Ç‚İ‚Ü‚ê‚Ü‚µ‚½)
 call :SAB_Manager 10
 goto :SAB_Manager_initializeVaribale
 )
@@ -2825,7 +2473,7 @@ goto :hazimemenu
 
 
 :SAB_Manager
-if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] SAB_Manager Running...)
+if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] SAB_Manager Às’†...)
 rem ƒu[ƒgƒAƒjƒ[ƒVƒ‡ƒ“B
 rem ‰º‚Í“Ç‚İ‚İ‚ÌƒeƒLƒXƒg•ªŠòB
 if "%bootbatnow%"=="no" (cls & title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è ˆ—’†... & echo ˆ—’†... & goto :whatload) else (title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ‹N“®’†...)
@@ -2836,7 +2484,7 @@ if not defined dummy if not "%linuxboot%"=="true" (set /p nothing=[?25l<nul)
 if defined linuxboot if "%linuxboot%"=="true" (exit /b)
 
 rem “Ç‚İ‚İƒo[‚ÌUI (˜g) •`Ê
-if not defined SAB_Manager_Drewed (set SAB_Manager_Drewed=true& set batloadprgsDrewrn=12) else if defined SAB_Manager_Drewed (goto :SAB_Manager_Main_Bar)
+if not defined SAB_Manager_Drewed (set SAB_Manager_Drewed=true& set batloadprgsDrewrn=12& set batloadprgsDrew=0) else if defined SAB_Manager_Drewed (goto :SAB_Manager_Main_Bar)
 set /p nothing=%back_to_the_loadline%%loadscrnprgsclr2%<nul
 echo %back_to_the_firstline%
 echo O=========================================================================O
@@ -2909,17 +2557,12 @@ if "%firststartbat%"=="yes" (goto :batbootanimationbypassfun)
 if "%setting5onoff%"=="–³Œø" (goto :checksum)
 rem ƒu[ƒgƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶B64•ª‚Ì1‚ÌŠm—¦‚Ü‚½‚Í512•ª‚Ì1‚ÌŠm—¦‚Å•Êƒo[ƒWƒ‡ƒ“‚ªÄ¶‚³‚ê‚éBramdom‚Ìd—l(H)‚É‚æ‚Á‚Ä“ñ‰ñ˜A‘±‚Årandom‚ğ‚µ‚È‚¢‚Æ‚¢‚¯‚È‚¢B
 if not defined dummy (set /p nothing=[?25l<nul)
-set /a bootegg=%random%*65/32767
-set /a bootegg2=%random%*65/32767
-if "%bootegg%"=="%bootegg2%" (goto :batbootanimationfun)
-set /a bootegg=%random%*257/32767
-set /a bootegg2=%random%*257/32767
-if "%bootegg%"=="%bootegg2%" (call :BSOD_Errors THERE_IS_NO_PROBLEMS)
-set /a bootegg=%random%*513/32767
-set /a bootegg2=%random%*513/32767
-if "%bootegg%"=="%bootegg2%" (goto :batbootanimationscary)
-set bootegg=
-set bootegg2=
+call :RandomDecisioner 64
+if "%errorlevel%"=="1" (goto :batbootanimationfun)
+call :RandomDecisioner 256
+if "%errorlevel%"=="1" (call :BSOD_Errors THERE_IS_NO_PROBLEMS)
+call :RandomDecisioner 512
+if "%errorlevel%"=="1" (goto :batbootanimationscary)
 :batbootanimationbypassfun
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ‚æ‚¤‚±‚»
 if "%wmodetoggle%"=="true" (set welcomelineclr=[38;2;135;135;135m& set welcomelineclr2=[0m[107m[30m& set welcomelineclr3=[30m) else (set welcomelineclr=[38;2;120;120;120m& set welcomelineclr2=[0m& set welcomelineclr3=[39m)
@@ -3065,13 +2708,14 @@ call :exit 0
 
 
 :checksum
+cls
 if "%wmodetoggle%"=="true" (color f0) else (color 07)
 if not defined dummy (set /p nothing=[?25h<nul)
 if %allsettingerror% gtr 0 if %allsettingerror% lss 10 (set "allsettingerrorshow= %allsettingerror%") else (set "allsettingerrorshow=  %allsettingerror%")
 if %allsettingerror% gtr 0 (
     if not defined dummy (set clrgra=[90m&set clr2=[0m)
     if "%wmodetoggle%"=="false" (set clrgra=[90m&set clr2=[0m)
-    if "%wmodetoggle%"=="true" (set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+    if "%wmodetoggle%"=="true" (set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 )
 if %allsettingerror% gtr 0 (
     title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è‚Ì”j‘¹
@@ -3142,6 +2786,8 @@ if "%bootbatnow%"=="yes" (set bootbatnow=no& goto :batbootanimation)
 :hazimemenuskipboot
 cls
 mode con: cols=75 lines=25
+if not defined dummy (set clr2=[0m& set ccmmul=[4m)
+if "%wmodetoggle%"=="true" (set clr2=[0m[107m[30m& set ccmmul=) else (set ccmmul=)
 if "%runningfromfulldebug%"=="true" (set runningfromfulldebug=& exit /b)
 if "%FromREConsole%"=="true" (cls & goto :Cursor_Changer_REConsolemain)
 if "%hazimeeaster%"=="true" (set hazimebuild=%batbuild%)
@@ -3203,17 +2849,20 @@ rem ƒfƒoƒbƒO—pƒRƒ}ƒ“ƒh‚ÌQÆ
 if "%selected%"=="help" (goto :allcommands)
 
 rem ƒfƒoƒbƒO—p
+if "%selected%"=="halloween" (set setting7_1onoff=true& goto :hazime)
+
 if "%selected%"=="crashtest" (exit /b)
 if "%selected%"=="checkmem" (call :checkmem& goto :hazimemenu)
 if "%selected%"=="boottime" (echo.& echo ‹N“®ŠÔ : %BootTime% •b& echo.& pause & goto :hazimemenu)
-if "%selected%"=="alldefnow1" (goto :AllDefult1)
+if "%selected%"=="uninstallnow1" (goto :Uninstall1)
 if "%selected%"=="playdefboot" (cls&goto :CursorChangerOOBE_Animation)
 if "%selected%"=="debugyesnow" (goto :kurogo)
 if "%selected%"=="reload" (cls&set bootbatnow=yes&goto :batstart)
 if "%selected%"=="fulldebug" (goto :fulldebug)
+if "%selected%"=="labellist" (call :AllLabelList& goto :hazime)
 if "%selected%"=="getadmin" (goto :batstartadm)
 if "%selected%"=="bypassfirstboot" (set firststartbat=no&call :Wipealldeta)
-if "%selected%"=="alldefdeletebat" (echo delete bat, confirm to type something...&pause&goto :alldefdeletefinish5)
+if "%selected%"=="uninstalldeletebat" (echo delete bat, confirm to type something...&pause&goto :uninstalldeletefinish5)
 if "%selected%"=="windowsfiltertest" (goto :batbootcheckwinverbad)
 if "%selected%"=="funanimationdeb" (goto :batbootanimationfun)
 if "%selected%"=="openie" (goto :openiedev)
@@ -3306,18 +2955,7 @@ Call :hazimeMessagesTimecheck & set tcmrand=&set tcmrand2=
 if not "%errorlevel%"=="1" (
 if "%FirstCursorisEdited%"=="true" (echo [22aŠÈ’P‚É  ‚©‚«‚©‚¦‚ç‚ê‚½  ‚Å‚µ‚åH&echo.)
 ) else (set hazimemenuMessageshowed=true)
-if "%Updateavailable%"=="true" (
-    title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| XV‚ª—˜—p‰Â”\ ^(Œ±“I^)
-  setlocal enabledelayedexpansion
-    if "%batbeta%"=="True" (set batbetamessage=^(ƒqƒ“ƒg : ‚±‚Ìƒo[ƒWƒ‡ƒ“‚Íƒx[ƒ^”Å‚Å‚·BƒoƒO‚â–â‘è‚ª‚ ‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B ^))
-  echo ƒAƒbƒvƒf[ƒg‚ª—˜—p‰Â”\‚Å‚·I ^(%updatemyversion% to %updateversion%^)
-  echo ƒAƒbƒvƒf[ƒg‚µ‚Ü‚·‚©H^(ƒAƒbƒvƒf[ƒg‚·‚é‚Æ‰pŒê”Å‚Ö‹­§“I‚É•ÏX‚³‚ê‚Ü‚·^) !batbetamessage!
-  set batbetamessage=
-  SET /P updateselected=^(Y ‚Ü‚½‚Í N^) :
-  if "!updateselected!"=="y" (set updateselected=&set updateavailable=&echo.&echo ƒAƒbƒvƒf[ƒg’†...‚µ‚Î‚ç‚­‚¨‘Ò‚¿‚­‚¾‚³‚¢B&cd %~dp0&set Powersheller=Doupdate&call :Powersheller&cd %batchmainpath%&echo ƒAƒbƒvƒf[ƒg‚É¬Œ÷‚µ‚Ü‚µ‚½B&pause&exit)
-if "!updateselected!"=="n" (set updateselected=&set updateavailable=&echo.&echo ƒAƒbƒvƒf[ƒg‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½B‹N“®‚ÉƒAƒbƒvƒf[ƒg‚ğŠm”F‚·‚é‹@”\‚Íİ’è‚©‚ç–³Œø‚É‚Å‚«‚Ü‚·B&pause&set checkupdatetoggle=false&cls&exit /b 1)
-setlocal disabledelayedexpansion
-)
+if "%Updateavailable%"=="true" (call :UpdateAvailable& exit /b 1)
 exit /b 0
 
 :hazimeMessagesTimecheck
@@ -3326,19 +2964,15 @@ if "%timecheckmessageshowed%"=="true" (set hazimemenuMessageshowed=& exit /b 0) 
 if "%date:~0,4%"=="1999" (echo [25aƒE[ƒp[ƒ‹[ƒp[‚Í‚Ç‚±H& echo.& exit /b 1)
 if "%date:~5%"=="01/01" (echo [22a–¾‚¯‚Ü‚µ‚Ä‚¨‚ß‚Å‚Æ‚¤‚²‚´‚¢‚Ü‚·B& echo.& exit /b 1)
 if "%date:~5%"=="04/01" (echo [15aƒJ[ƒ\ƒ‹‘Ö‚¦‚ğ—˜—p‚µ‚½‚¯‚ê‚Î5000’›‰~•¥‚¢‚ÈI& echo.& exit /b 1)
-if "%date:~5%"=="10/31" (echo [27aƒnƒbƒs[ƒnƒƒEƒBƒ“I& echo.& exit /b 1)
+if "%date:~5%"=="10/01" (echo [30a‚¨‚Î‚¯‚¾‚¼[I& echo.& exit /b 1)
+if "%date:~5%"=="10/31" (echo [28aƒnƒbƒs[ƒnƒƒEƒBƒ“I& echo.& exit /b 1)
 if "%date:~5%"=="12/25" (echo [28aƒƒŠ[ƒNƒŠƒXƒ}ƒXI& echo.& exit /b 1)
 if "%date:~5%"=="12/31" (echo [13a‚¢‚ë‚¢‚ë‚ ‚Á‚½‚¯‚Ç  ‚¶‚Ô‚ñ‚Í  ‚â‚Á‚Ï‚è  ‚¶‚Ô‚ñ‚¾B& echo.& exit /b 1)
-set tcmrand=0& set tcmrand2=0
-set /a tcmrand=%random%*33/32767& set /a tcmrand2=%random%*33/32767
-setlocal enabledelayedexpansion
-rem you're bit lucky if you see this.
-if "!tcmrand!"=="!tcmrand2!" (
-set tcmrand=0
-set /a tcmrand=%random%*11/32767& set /a tcmrand=%random%*11/32767
-if "!tcmrand!"=="0" (echo [29a‚·‚×‚Ä‚ª–³ˆÓ–¡‚¾&echo.& exit /b 1) else if "!tcmrand!"=="1" (echo [14a’N‚ª‚±‚ÌƒƒbƒZ[ƒW‚ğÀÛ‚É“Ç‚ñ‚Å‚¢‚é‚ñ‚¾‚ë‚¤H& echo.& exit /b 1) else if "!tcmrand!"=="2" (echo [22a’N‚à‚±‚Ìƒoƒbƒ`‚ğ‹C‚É‚µ‚Ä‚¢‚È‚¢B& echo.& exit /b 1) else if "!tcmrand!"=="3" (echo [22a–l‚ğƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚µ‚È‚¢‚Å& echo.& exit /b 1) else if "!tcmrand!"=="4" (echo [31aƒP[ƒL‚Í‰R‚¾& echo.& exit /b 1) else if "!tcmrand!"=="5" (echo [28a‚ ‚È‚½‚Í–{“–‚É%YourName%H& echo.& exit /b 1) else if "!tcmrand!"=="6" (echo [15aŒN’B‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ÍA‘S‚Ä„‚ª‚¢‚½‚¾‚¢‚½B& echo.& exit /b 1) else if "!tcmrand!"=="7" (echo [30aHello world :D& echo.& exit /b 1) else if "!tcmrand!"=="8" (echo [27aDebios‚ğ‚µ‚Ä‚İ‚æ‚¤& echo.& exit /b 1) else if "!tcmrand!"=="9" (echo [24aShivtanium OS‚ğ‚µ‚Ä‚İ‚æ‚¤& echo.& exit /b 1) else if "!tcmrand!"=="10" (goto :hazimemenuMessagesTimecheckEASTEREGG)
-)
-setlocal disabledelayedexpansion
+rem you're bit lucky if you see this. 
+call :RandomDecisioner 24
+if "%errorlevel%"=="1" (set tcmrand=0& set /a tcmrand=%random%*12/32767& set /a tcmrand=%random%*12/32767)
+if defined tcmrand (if "%tcmrand%"=="0" (echo [29a‚·‚×‚Ä‚ª–³ˆÓ–¡‚¾&echo.& exit /b 1) else if "%tcmrand%"=="1" (echo [14a’N‚ª‚±‚ÌƒƒbƒZ[ƒW‚ğÀÛ‚É“Ç‚ñ‚Å‚¢‚é‚ñ‚¾‚ë‚¤H& echo.& exit /b 1) else if "%tcmrand%"=="2" (echo [22a’N‚à‚±‚Ìƒoƒbƒ`‚ğ‹C‚É‚µ‚Ä‚¢‚È‚¢B& echo.& exit /b 1) else if "%tcmrand%"=="3" (echo [22a–l‚ğƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚µ‚È‚¢‚Å& echo.& exit /b 1) else if "%tcmrand%"=="4" (echo [31aƒP[ƒL‚Í‰R‚¾& echo.& exit /b 1) else if "%tcmrand%"=="5" (echo [28a‚ ‚È‚½‚Í–{“–‚É%YourName%H& echo.& exit /b 1) else if "%tcmrand%"=="6" (echo [15aŒN’B‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ÍA‘S‚Ä„‚ª‚¢‚½‚¾‚¢‚½B& echo.& exit /b 1) else if "%tcmrand%"=="7" (echo [30aHello world :D& echo.& exit /b 1) else if "%tcmrand%"=="8" (echo [27aDebios‚ğ‚µ‚Ä‚İ‚æ‚¤& echo.& exit /b 1) else if "%tcmrand%"=="9" (echo [24aShivtanium OS‚ğ‚µ‚Ä‚İ‚æ‚¤& echo.& exit /b 1) else if "%tcmrand%"=="10" (set /p nothing=[24a<nul& call :RainbowDrawer ‚È‚ñ‚Ä‘f“G‚È“ú‚È‚ñ‚¾II :D& echo.& echo.& exit /b 1) else if "%tcmrand%"=="10" (goto :hazimemenuMessagesTimecheckEASTEREGG))
+set tcmrand=
 exit /b 0
 
 :hazimemenuMessagesTimecheckEASTEREGG
@@ -3370,29 +3004,36 @@ goto :hazimemenu
 
 :background_menu
 rem Honestly, I have no idea HOW this is working.
-if "%setting7onoff%"=="–³Œø" (exit /b)
+if "%setting7onoff%"=="false" (exit /b)
 if not defined dummy (set /p nothing=[?25l<nul)
 setlocal enabledelayedexpansion
 rem argument 1 is for OOBE. give 0~200 (every 10) value.
 rem initialize variable
 if "%wmodetoggle%"=="true" (
     if not defined dummy (set thmclr2=[107m[30m)
-    set thml=26& set thml2=25
-) else (if not defined dummy (set thmclr2=[0m))
-if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=61,-9,12)
+    set thml=26& set thml2=25& set thmldrewb=255
+) else (if not defined dummy (set thmclr2=[0m) & set thmldrewb=12)
+if not "%setting7_1onoff%"=="true" (if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=61,-9,12)) else (
+if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=69,-9,12)) & set thmldred=155
+
 rem Drew bg. thml means theme line.
 for /l %%i in (!thmlfor!) do (
-    rem I think there is a simpler way to do this without having to bother with the calculations, but... well, it's working anyway.
     if "%wmodetoggle%"=="true" (set /a thml2-=1& set /a thml-=1) else (set /a thml=19+%%i/10& set /a thml2=thml-1)
-    if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set thmldrew=%%i)
-    rem                                  ª      and      ª Difference is must be 4. 170 is (100/) + 61+12. maybe.
-    if "%1"=="1" (if !thmldrew! lss 12 (set thmldrew=12))
-    set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m
+    if "%setting7_1onoff%"=="true" (
+        rem halloween theme
+        if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set /a thmldrew=%%i-6)
+        if !thmldrew! lss 12 (set thmldrew=12) 
+        if not "%wmodetoggle%"=="true" (set /a thmldred=thmldred-21) else (set /a thmldred=thmldred+11)
+        if !thmldred! lss 12 (set thmldred=18) else if !thmldred! gtr 220 (set /a thmldred=230)
+        rem normal theme
+    ) else (if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170 & if !thmldrew! lss 12 (set thmldrew=12)) else (set thmldrew=%%i))
+    if not "%setting7_1onoff%"=="true" (set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m) else (set thmclr=[48;2;!thmldred!;!thmldrew!;!thmldrewb!m)
     for /l %%a in (1,1,3) do (set /p nothing=[!thml!d!thmclr!                         !thmclr2!<nul)
     echo [!thml2!d
 )
+
 rem delete variables
-set thml=& set thml2=& set thmclr=& set thmldrew=& set thmlfor=
+set thml=& set thml2=& set thmclr=& set thmldrew=& set thmldrewb=& set thmldred=& set thmlfor=
 if not "%1"=="1" (setlocal disabledelayedexpansion & set /p nothing=[?25h<nul)
 if not defined dummy (set /p nothing=[0;0H<nul)
 exit /b
@@ -3420,6 +3061,37 @@ setlocal disabledelayedexpansion
 exit /b
 
 
+:RandomDecisioner
+if "%1"=="" (echo ‚¨‘O‚Ì‹ê˜J‚ğ‚¸‚Á‚ÆŒ©‚Ä‚¢‚½‚¼B–{“–‚É‚æ‚­Šæ’£‚Á‚Ä‚È‚©‚Á‚½‚ÈH& exit /b 666)
+set value1=0& set value2=0
+set /a value1=%random%*(%1+1)/32767& set /a value2=%random%*(%1+1)/32767
+if %value1% equ %value2% (set value1=& set value2=& exit /b 1) else (set value1=& set value2=& exit /b 0)
+
+
+:RainbowDrawer
+set "text=%*" & setlocal enabledelayedexpansion
+if "%~1"=="" (echo ˆø”‚Í‚Ç‚±IH& pause & exit /b 1)
+if "%wmodetoggle%"=="true" (set rbclr=[107m[30m) else (set rbclr=[0m)
+rem Calculate string length
+set "length=0" & if not defined rbphase set "rbphase=0" & if not defined rbdark set "rbdark=0"
+for /l %%i in (0,1,128) do (set "char=!text:~%%i,1!" & if not "!char!"=="" (set /a length+=1))
+
+rem Process string
+for /l %%i in (0,1,%length%) do (set "char=!text:~%%i,1!" & if not "!char!"=="" (set /p =[?25l<nul) else (set /p =[?25h<nul)
+    set /a ratio=%%i*360/%length%+^(rbphase*360/100^) & if !ratio! geq 360 (set /a ratio-=360) & rem <- Initialize RGB values
+    set /a r=0, g=0, b=0& set /a section=!ratio!/60
+    if !section! equ 0 (set /a r=255, g=!ratio!*255/60 & rem <- RGB color calculation
+    ) else if !section! equ 1 (set /a r=255-^(!ratio!-60^)*255/60, g=255) else if !section! equ 2 (set /a g=255, b=^(!ratio!-120^)*255/60
+    ) else if !section! equ 3 (set /a g=255-^(!ratio!-180^)*255/60, b=255) else if !section! equ 4 (set /a r=^(!ratio!-240^)*255/60, b=255
+    ) else (set /a r=255, b=255-^(!ratio!-300^)*255/60)
+    if defined rbdark (for %%a in (r,g,b) do (set /a "value=!%%a!-rbdark" & if !value! lss 12 (set "%%a=12") else (set "%%a=!value!")))
+    set /p nothing=[38;2;!r!;!g!;!b!m!char!%rbclr%<nul& rem ^ Ensure RGB values are within bounds and apply dark adjustment, And show
+)
+setlocal disabledelayedexpansion
+set text=& set length=& set rbphase=& set i=& set char=& set ratio=& set r=& set g=& set b=& set section=& set value=& set rbclr=& exit /b
+
+
+
 :exitmenu
 rem Preparing of Menu and Variables
 rem Smart Processing!!!! DO NOT CARE ABOUT SO MANY OF IF STATEMENTS. PLS
@@ -3428,15 +3100,15 @@ title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| I—¹
 set exitmenucurrent=0& call :exitmenu_exit
 if not defined dummy (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[0m[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[107m[38;2;140;140;140m&set clrcyan=[46m&set clr2=[0m[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 
 :exitmenu_main
 rem Main Exit Menu
 if "%exitmenuexit%"=="true" (set exitmenucurrent=& call :exitmenu_exit & goto :hazime)
-if not defined exitmenuboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul & call :hazimemenudrew & echo %clr2% & set exitmenuboot=true)
+if not defined exitmenuboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :hazimemenudrew & echo %clr2% & set exitmenuboot=true)
 call :exitmenu_Core_Drew
-if not defined dummuy (set ccmmul=[4m)
+if not defined dummy (set ccmmul=[4m)
 if not defined dummy (
 echo.
 echo.
@@ -3561,6 +3233,89 @@ call :exit 0
 :exitmenuexit
 set clrcyan=& set clrgra=& set clred=& set clrgrn=& set clryel=& set clrmag=& exit /b
 
+
+
+:UpdateAvailable
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clryel=[93m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clryel=[93m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clryel=[93m&set clrwhi=[30m&set clr2=[90m[107m[30m)
+set UAsel=0
+:UpdateAvailable_main
+rem Draw Update Available UI
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒAƒbƒvƒf[ƒg‚ª—˜—p‰Â”\‚Å‚·I
+if not defined dummy (set /p nothing=[?25l%clr2%<nul)
+if not defined UAboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :hazimemenudrew & echo %clr2% & set UAboot=true)
+if "%UAexit%"=="true" (goto :UpdateAvailable_exit)
+if not "%UAsel%"=="3" (set UAselPre=%UAsel%)
+if not defined dummy (
+echo [5;16H O=========================================O 
+echo [6;16H I                                         I 
+echo [7;16H I       ƒAƒbƒvƒf[ƒg‚ª—˜—p‰Â”\‚Å‚·I      I 
+echo [8;16H I                                         I 
+echo [9;16H I[9;35H%clryel%-----^>%clr2%[9;59HI 
+echo [10;16H I           %clrgra%^(Œ»İ^)     ^(XVŒã^)%clr2%           I 
+echo [11;16H I                                         I 
+echo [12;16H I          ƒAƒbƒvƒf[ƒg‚µ‚Ü‚·‚©H         I 
+echo [13;16H I[13;59HI 
+echo [14;16H I                                         I 
+echo [15;16H I    O=============O    O============O    I 
+echo [16;16H I    I%UAcb1%     ‚Í‚¢    %clr2%I    I%UAcb2%   ‚¢‚¢‚¦   %clr2%I    I 
+echo [17;16H I    O=============O    O============O    I 
+echo [18;16H I            O================O           I 
+echo [19;16H I            I%UAcb3% •ÏX—š—ğ‚ğŒ©‚é %clr2%I           I 
+echo [20;16H I            O================O           I 
+echo [21;16H I                                         I 
+echo [22;16H O=========================================O 
+echo [24;17H %clrgra%1~3‚©W,A,S,D‚ÅˆÚ“®AY‚©E‚Å‘I‘ğAB‚©N‚ÅI—¹
+call :UpdateAvailable_VersionDraw
+)
+choice /c 123WASDYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==10 (set UAexit=true) else if %Errorlevel%==11 (set UAexit=true)
+if %ErrorLevel%==1 (set UAsel=1)
+if %ErrorLevel%==2 (set UAsel=2)
+if %ErrorLevel%==3 (set UAsel=3)
+if %UAsel%==0 (set UAsel=1& set UAcb1=%clr%& goto :UpdateAvailable_main)
+if %ErrorLevel%==4 (if %UAsel%==3 (if "%UAselPre%"=="1" (set UAsel=1) else if "%UAselPre%"=="2" (set UAsel=2)))
+if %ErrorLevel%==5 (if not %UAsel%==3 (set UAsel=1))
+if %ErrorLevel%==6 (if not %UAsel%==3 (set UAsel=3))
+if %ErrorLevel%==7 (if not %UAsel%==3 (set UAsel=2))
+if %ErrorLevel%==8 (call :UpdateAvailable_Core)
+if %ErrorLevel%==9 (call :UpdateAvailable_Core)
+set UAcb1=& set UAcb2=& set UAcb3=& set UAcb%UAsel%=%clr%& goto :UpdateAvailable_main
+
+:UpdateAvailable_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UAsel%==1 (cls & echo XV’†...& call :Powersheller Doupdate)
+if %UAsel%==2 (set UAexit=true& exit /b)
+if %UAsel%==3 (cls & echo •ÏX—š—ğ‚ğ“Ç‚İ‚ñ‚Å‚¢‚Ü‚·...& echo. & call :Powersheller Changelog& pause & set UAboot=& mode con: cols=75 lines=25 & exit /b)
+
+:UpdateAvailable_VersionDraw
+rem Detect version
+set /p nothing=%clr2%<nul
+if "%batbeta%"=="true" (set /p nothing=[13;19H %clrgra%ƒx[ƒ^”Å‚È‚Ì‚Å•sˆÀ’è‚È‰Â”\«‚ª‚ ‚è‚Ü‚·%clr2%<nul)
+if not defined updatemyversion (set /p nothing=[9;30H%clrwhi%Null%clr2%<nul)
+if not defined updateversion (set /p nothing=[9;42H%clrwhi%Null%clr2%<nul& exit /b)
+rem Calculete version length
+setlocal enabledelayedexpansion
+for /l %%i in (0,1,10) do (set "char=!updatemyversion:~%%i,1!" & if not "!char!"=="" (set /a length+=1))
+setlocal disabledelayedexpansion
+rem Show version text
+set /a showlen=34-length
+if not defined dummy (set /p nothing=[9;%showlen%H%clrwhi%%updatemyversion%%clr2%<nul)
+if not defined dummy (set /p nothing=[9;42H%clrwhi%%updateversion%%clr2%<nul)
+set length=& set showlen=
+exit /b
+
+:UpdateAvailable_exit
+rem initialize of variable
+set UAexit=& set UAboot=& set UAsel=& set UAPre=& set UAcb1=& set UAcb2=& set UAcb3=& set clrgra=& set clryel=
+set checkupdatetoggle=false
+if not defined dummy (set /p nothing=[?25h<nul)
+exit /b
 
 
 
@@ -3911,8 +3666,8 @@ if %ErrorLevel%==6 goto :settingcategory1intsetting4
 if %ErrorLevel%==7 goto :settingcategory1intsetting5
 if %ErrorLevel%==8 goto :settingcategory1int
 if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 goto :AllDefult
-if %ErrorLevel%==11 goto :AllDefult
+if %ErrorLevel%==10 goto :Uninstall
+if %ErrorLevel%==11 goto :Uninstall
 
 :settingcategory2int
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
@@ -5003,7 +4758,7 @@ echo •W€‚Å‚Íƒ_[ƒNƒe[ƒ}‚Å‚·B
 pause
 goto :settingcategory2intsetting3
  
-:alldefhelp
+:uninstallhelp
 cls
 echo ‚±‚ê‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Å‚·B‚±‚Ìƒƒjƒ…[‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ğs‚¢‚Ü‚·B
 echo ‚±‚Ìƒƒjƒ…[‚É‚Íİ’èƒtƒ@ƒCƒ‹iİ’è‚ª‹L˜^‚³‚ê‚Ä‚¢‚éƒeƒLƒXƒgƒtƒ@ƒCƒ‹j‚ÌƒpƒX‚ğ•\¦‚·‚é‹@”\Aİ’è‚ğ‰Šú‰»(ƒfƒtƒHƒ‹ƒg‚É)‚·‚é‹@”\‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·B
@@ -5023,7 +4778,7 @@ if "%batverdev%"=="stable" (set batverdevshow=Stable)
 if not defined dummy (set /p nothing=[?25l<nul)
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 
 :batver_main
 rem Main Bat Version Menu
@@ -5098,13 +4853,11 @@ if not defined dummy (set /p nothing=[?25h<nul)
 exit /b
 
 :batverupdate
-cd %~dp0
 cls
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒAƒbƒvƒf[ƒ^[
 echo ƒAƒbƒvƒf[ƒg ƒvƒƒZƒX‚ğŠJn‚µ‚Ä‚¢‚Ü‚·...
-set Powersheller=Fullupdater& call :Powersheller
+call :Powersheller Fullupdater
 pause
-cd %batchmainpath%
 mode con: cols=75 lines=25
 exit /b
 
@@ -5115,7 +4868,7 @@ rem initialize variable
 mode con: cols=67 lines=20
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 set Appmenucurrent=0
 
@@ -5406,7 +5159,7 @@ rem initialize variable
 mode con: cols=75 lines=20
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 set cursorchangecurrent=0
 
@@ -5751,10 +5504,10 @@ set cursorchangeexit=& exit /b
 
 
 rem dogcheckB%Settingsfile%‚ª‘¶İ‚·‚é‚©‚ğŒŸØ
-:AllDefult
+:Uninstall
 cd /d %batchmainpath%
-if "%settinghelptoggle%"=="true" (goto :alldefhelp)
-if exist %Settingsfile% goto :AllDefulttest
+if "%settinghelptoggle%"=="true" (goto :uninstallhelp)
+if exist %Settingsfile% goto :Uninstalltest
 if not exist %Settingsfile% goto :Dogcheck
 
 :Dogcheck
@@ -5830,303 +5583,370 @@ taskkill /im chrome.exe
 call :exit 0
 
 
-rem alldef
-:AllDefulttest
+rem uninstall
+:Uninstalltest
 cd /d %batchmainpath% 
 find "nodogcheckfor1234567890qwertyuiop" %Settingsfile%
 cls
-if %ErrorLevel%==0 goto :AllDefult1
+if %ErrorLevel%==0 call :UninstallMenu & goto :settingcategory1intsetting5
 if %ErrorLevel%==1 goto :Dogcheck
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[
-:AllDefult1
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ (Œ±“I)
-Cls
-echo ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Ìd•û‚ğ‘I‘ğ b‚Å–ß‚ê‚Ü‚·B
-echo ‘I‘ğ‚µ‚½‚¢”š‚ğ‰Ÿ‚·‚©A‚Ü‚½‚Íw‚ÅãAs‚Å‰º‚Ì€–Ú‚ÉˆÚ“®‚µA”CˆÓ‚Ì•”•ª‚ğ‘I‘ğŒãAy‚Ü‚½‚ÍeƒL[‚ğ“ü—Í‚µ‚ÄŒˆ’è‚µ‚Ü‚·B
-echo.
-echo 1 ‚±‚Ìbatƒtƒ@ƒCƒ‹‚ÉŠÖ‚·‚é‚·‚×‚Ä‚Ìƒf[ƒ^‚ğíœ‚µAƒJ[ƒ\ƒ‹‚à”’F‚É–ß‚·
-echo.
-echo 2 ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚ÄA‚·‚×‚Äíœ‚·‚é
-echo.
-echo 3 İ’è‚ğ‰Šú‰»‚·‚é
-echo.
-echo 4 İ’è‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğ•\¦‚·‚é
-echo.
-echo Œ»İ‚Í‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB
-choice /c 1234wsb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect1
-if %ErrorLevel%==6 goto :alldefselect1
-if %ErrorLevel%==7 goto :settingcategory1intsetting5
-
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
-:alldefselect1
-Cls
-echo ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Ìd•û‚ğ‘I‘ğ b‚Å–ß‚ê‚Ü‚·B
-echo ‘I‘ğ‚µ‚½‚¢”š‚ğ‰Ÿ‚·‚©A‚Ü‚½‚Íw‚ÅãAs‚Å‰º‚Ì€–Ú‚ÉˆÚ“®‚µA”CˆÓ‚Ì•”•ª‚ğ‘I‘ğŒãAy‚Ü‚½‚ÍeƒL[‚ğ“ü—Í‚µ‚ÄŒˆ’è‚µ‚Ü‚·B
-echo.
-echo %clr%1 ‚±‚Ìbatƒtƒ@ƒCƒ‹‚ÉŠÖ‚·‚é‚·‚×‚Ä‚Ìƒf[ƒ^‚ğíœ‚µAƒJ[ƒ\ƒ‹‚à”’F‚É–ß‚·%clr2%
-echo.
-echo 2 ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚ÄA‚·‚×‚Äíœ‚·‚é
-echo.
-echo 3 İ’è‚ğ‰Šú‰»‚·‚é
-echo.
-echo 4 İ’è‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğ•\¦‚·‚é
-echo.
-echo Œ»İ‚Í1‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚·BŒˆ’è‚·‚éê‡‚Íy‚Ü‚½‚ÍeƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect1
-if %ErrorLevel%==6 goto :alldefselect2
-if %ErrorLevel%==7 set alldefselect=1&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=1&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
+goto :settingcategory1intsetting5
 
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
-:alldefselect2
-Cls
-echo ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Ìd•û‚ğ‘I‘ğ b‚Å–ß‚ê‚Ü‚·B
-echo ‘I‘ğ‚µ‚½‚¢”š‚ğ‰Ÿ‚·‚©A‚Ü‚½‚Íw‚ÅãAs‚Å‰º‚Ì€–Ú‚ÉˆÚ“®‚µA”CˆÓ‚Ì•”•ª‚ğ‘I‘ğŒãAy‚Ü‚½‚ÍeƒL[‚ğ“ü—Í‚µ‚ÄŒˆ’è‚µ‚Ü‚·B
-echo.
-echo 1 ‚±‚Ìbatƒtƒ@ƒCƒ‹‚ÉŠÖ‚·‚é‚·‚×‚Ä‚Ìƒf[ƒ^‚ğíœ‚µAƒJ[ƒ\ƒ‹‚à”’F‚É–ß‚·
-echo.
-echo %clr%2 ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚ÄA‚·‚×‚Äíœ‚·‚é %clr2%
-echo.
-echo 3 İ’è‚ğ‰Šú‰»‚·‚é
-echo.
-echo 4 İ’è‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğ•\¦‚·‚é
-echo.
-echo Œ»İ‚Í2‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚·BŒˆ’è‚·‚éê‡‚Íy‚Ü‚½‚ÍeƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect1
-if %ErrorLevel%==6 goto :alldefselect3
-if %ErrorLevel%==7 set alldefselect=2&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=2&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
-
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
-:alldefselect3
-Cls
-echo ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Ìd•û‚ğ‘I‘ğ b‚Å–ß‚ê‚Ü‚·B
-echo ‘I‘ğ‚µ‚½‚¢”š‚ğ‰Ÿ‚·‚©A‚Ü‚½‚Íw‚ÅãAs‚Å‰º‚Ì€–Ú‚ÉˆÚ“®‚µA”CˆÓ‚Ì•”•ª‚ğ‘I‘ğŒãAy‚Ü‚½‚ÍeƒL[‚ğ“ü—Í‚µ‚ÄŒˆ’è‚µ‚Ü‚·B
-echo.
-echo 1 ‚±‚Ìbatƒtƒ@ƒCƒ‹‚ÉŠÖ‚·‚é‚·‚×‚Ä‚Ìƒf[ƒ^‚ğíœ‚µAƒJ[ƒ\ƒ‹‚à”’F‚É–ß‚·
-echo.
-echo 2 ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚ÄA‚·‚×‚Äíœ‚·‚é
-echo.
-echo %clr%3 İ’è‚ğ‰Šú‰»‚·‚é%clr2%
-echo.
-echo 4 İ’è‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğ•\¦‚·‚é
-echo.
-echo Œ»İ‚Í3‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚·BŒˆ’è‚·‚éê‡‚Íy‚Ü‚½‚ÍeƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect2
-if %ErrorLevel%==6 goto :alldefselect4
-if %ErrorLevel%==7 set alldefselect=3&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=3&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
-
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì•ªŠò
-:alldefselect4
-Cls
-echo ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Ìd•û‚ğ‘I‘ğ b‚Å–ß‚ê‚Ü‚·B
-echo ‘I‘ğ‚µ‚½‚¢”š‚ğ‰Ÿ‚·‚©A‚Ü‚½‚Íw‚ÅãAs‚Å‰º‚Ì€–Ú‚ÉˆÚ“®‚µA”CˆÓ‚Ì•”•ª‚ğ‘I‘ğŒãAy‚Ü‚½‚ÍeƒL[‚ğ“ü—Í‚µ‚ÄŒˆ’è‚µ‚Ü‚·B
-echo.
-echo 1 ‚±‚Ìbatƒtƒ@ƒCƒ‹‚ÉŠÖ‚·‚é‚·‚×‚Ä‚Ìƒf[ƒ^‚ğíœ‚µAƒJ[ƒ\ƒ‹‚à”’F‚É–ß‚·
-echo.
-echo 2 ƒJ[ƒ\ƒ‹‚Í‚»‚Ì‚Ü‚Ü‚É‚µ‚ÄA‚·‚×‚Äíœ‚·‚é
-echo.
-echo 3 İ’è‚ğ‰Šú‰»‚·‚é
-echo.
-echo %clr%4 İ’è‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğ•\¦‚·‚é%clr2%
-echo.
-echo Œ»İ‚Í4‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚·BŒˆ’è‚·‚éê‡‚Íy‚Ü‚½‚ÍeƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect3
-if %ErrorLevel%==6 goto :alldefselect4
-if %ErrorLevel%==7 set alldefselect=4&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=4&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
-
-
-rem İ’è‚Ì‰Šú‰»‚ğ‚·‚éÛ‚ÌŒxƒƒbƒZ[ƒW
-:alldefsettingonly
+:UninstallMenu
 cls
-:alldefsettingonlyokey
-echo ‚±‚Ìƒƒjƒ…[‚Å‚Íİ’è‚ğ‰Šú‰»‚µ‚Ü‚·B‚µ‚½‚ª‚Á‚ÄA‚ ‚È‚½‚ª¡‚Ü‚Å‚Éİ’è‚µ‚½‚à‚Ì‚Í‚·‚×‚Ä‰Šúİ’è‚É–ß‚è‚Ü‚·BiƒJ[ƒ\ƒ‹‘Ö‚¦‚ğ‰‚ß‚Ä‹N“®‚µ‚½‚Æ‚«‚Ìİ’è‚É–ß‚éj‚æ‚ë‚µ‚¢‚Å‚·‚©H(Y=Yes / N=No)
-choice /c yn /n /m ""
-if %ErrorLevel%==1 goto :alldefsettingonlyokey2
-if %ErrorLevel%==2 goto :alldefsettingno
-:alldefsettingonlyokey2
-echo –{“–‚Éíœ‚·‚é‚Ì‚Å‚·‚ËH(Y=Yes / N=No)
-choice /c yn /n /m ""
-if %ErrorLevel%==1 goto :alldefsettingyes
-if %ErrorLevel%==2 goto :alldefsettingno
-goto :alldefsettingonly
+mode con: cols=75 lines=22
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clrwhi=[30m&set clr2=[90m[107m[30m)
+set UMsel=0
+:UninstallMenu_main
+rem Draw Update Available UI
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[
+if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
+if "%UMexit%"=="true" (goto :UninstallMenu_exit)
+echo.
+echo                          ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[
+echo                       O=============================O
+call :UninstallMenu_Textdraw
+echo                   O======================================O
+echo                   I%UMcb1%    ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹    %clr2%I
+echo                   O======================================O
+echo                   I%UMcb2%     ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒtƒ@ƒCƒ‹‚ÌŠÇ—     %clr2%I
+echo                   O======================================O
+echo                   I%UMcb3%   ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚©‚ç‘Şo   %clr2%I
+echo                   O======================================O
+echo.
+echo        %clrgra%W,S ‚Ü‚½‚Í 1~3 ‚Å ˆÚ“®A Y ‚Ü‚½‚Í E ‚Å‘I‘ğA B ‚Ü‚½‚Í N ‚Å‘Şo%clr2%
+choice /c 123WSYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==8 (set UMexit=true) else if %Errorlevel%==9 (set UMexit=true)
+if %ErrorLevel%==1 (set UMsel=1)
+if %ErrorLevel%==2 (set UMsel=2)
+if %ErrorLevel%==3 (set UMsel=3)
+if %UMsel%==0 (set UMsel=1& set UMcb1=%clr%& goto :UninstallMenu_main)
+if %ErrorLevel%==4 (if %UMsel%==1 (set UMsel=1) else if %UMsel%==2 (set UMsel=1) else (set UMsel=2))
+if %ErrorLevel%==5 (if %UMsel%==1 (set UMsel=2) else if %UMsel%==2 (set UMsel=3) else (set UMsel=3))
+if %ErrorLevel%==6 (call :UninstallMenu_Core)
+if %ErrorLevel%==7 (call :UninstallMenu_Core)
+set UMcb1=& set UMcb2=& set UMcb3=& set UMcb%UMsel%=%clr%& goto :UninstallMenu_main
 
-:alldefsettingyes
-echo İ’èƒtƒ@ƒCƒ‹‚ğ‰Šú‰»‚µ‚Ü‚·B‚¢‚Ü‚Ü‚Å‚Ìİ’è‚Í‚·‚×‚Äíœ‚³‚ê‚Ü‚·B
-echo ƒLƒƒƒ“ƒZƒ‹‚·‚éê‡‚ÍA‚±‚Ì“_‚Åƒoƒbƒ`ˆ—‚ğI—¹‚µ‚Ä‚­‚¾‚³‚¢B
+:UninstallMenu_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UMsel%==1 (call :UninstallMenu_Uninstall & cls & exit /b)
+if %UMsel%==2 (call :UninstallMenu_Management & cls & exit /b)
+if %UMsel%==3 (set UMexit=true& exit /b)
+
+:UninstallMenu_exit
+rem initialize of variable
+set UMexit=& set UMsel=& set UMcb1=& set UMcb2=& set UMcb3=& set clrgra=
+if not defined dummy (set /p nothing=[?25h<nul)
+cls
+mode con: cols=75 lines=25
+if "%Uninstall_Shutdown%"=="true" (set Uninstall_Shutdown=& call :exit 1) else (exit /b)
+
+:UninstallMenu_Textdraw
+rem Drew texts
+for /l %%i in (6,1,12) do (set /p nothing=[%%i;0H[0K<nul)
+if not defined dummy (set /p nothing=[6;0H<nul)
+if "%UMsel%"=="0" (
+echo                     %clrwhi%ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ö‚æ‚¤‚±‚»B%clr2%
+echo.
+echo        ‚±‚Ìƒƒjƒ…[‚Å‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ŠÖ˜A‚Ì‹@”\‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚·B
+echo                      g—p‚µ‚½‚¢‹@”\‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B
+echo.
+echo             %clrgra%Œ»İ‚Í‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB‰½‚©‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B%clr2%
+) else if "%UMsel%"=="1" (
+echo                         %clrwhi%ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹%clr2%
+echo.
+echo  ‚±‚Ì‹@”\‚Å‚Í‚±‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹ ^(ƒJ[ƒ\ƒ‹‘Ö‚¦^) ‚ğƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Å‚«‚Ü‚·B
+echo                ‚¢‚­‚Â‚©‚ÌƒIƒvƒVƒ‡ƒ“‚à‚±‚Ì‹@”\‚Å—˜—p‰Â”\‚Å‚·B
+) else if "%UMsel%"=="2" (
+echo                         %clrwhi%ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒtƒ@ƒCƒ‹‚ÌŠÇ—%clr2%
+echo.
+echo           ‚±‚Ì‹@”\‚Å‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìİ’èƒtƒ@ƒCƒ‹‚È‚Ç‚ğŠÇ—‚Å‚«‚Ü‚·B
+echo              —á‚Æ‚µ‚Ä%Settingsfile%‚âA%FirstSTFsfile%‚Å‚·B
+) else if "%UMsel%"=="3" (
+echo                      %clrwhi%ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚©‚ç‘Şo%clr2%
+echo.
+echo             ‰½‚à‚¹‚¸‚ÉƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚©‚ç‘Şo‚µ‚Ü‚·B
+)
+if not defined dummy (set /p nothing=[13;0H<nul)
+exit /b
+
+:UninstallMenu_Management
+cls
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒtƒ@ƒCƒ‹‚ÌŠÇ—
+echo ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒtƒ@ƒCƒ‹‚ÌŠÇ—
+echo.
+echo ‚±‚Ì‹@”\‚Å‚ÍAƒJ[ƒ\ƒ‹‘Ö‚¦‚Ìƒtƒ@ƒCƒ‹‚ğ‰{——‚µ‚½‚èŠJ‚­‚±‚Æ‚ª‚Å‚«‚Ü‚·B
+echo ˆÈ‰º‚Ì‹@”\‚©‚ç‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B
+echo.
+echo 1 : %Settingsfile%‚ğƒƒ‚’ ‚ÅŠJ‚­
+echo 2 : %FirstSTFsfile%‚ğƒƒ‚’ ‚ÅŠJ‚­
+echo 3 : ƒtƒ@ƒCƒ‹‚ğ‚ª’u‚©‚ê‚Ä‚¢‚éêŠ‚ğƒGƒNƒXƒvƒ[ƒ‰[‚ÅŠJ‚­
+echo 4 : İ’èƒtƒ@ƒCƒ‹‚ğ‰Šú‰»‚·‚é
+echo 5 : ‚±‚Ì‹@”\‚©‚ç‘Şo‚·‚é
+echo.
+set /p selected=“ü—Í :
+if "%selected%"=="1" (call :UninstallMenu_Management_OpenSetting_inNotepad)
+if "%selected%"=="2" (call :UninstallMenu_Management_OpenFSTFSF_inNotepad)
+if "%selected%"=="3" (call :UninstallMenu_Management_OpenSetting)
+if "%selected%"=="4" (call :UninstallMenu_Management_InitializeSetting)
+if "%selected%"=="5" (exit /b)
+if "%selected%"=="b" (exit /b)
+if "%selected%"=="n" (exit /b)
+goto :UninstallMenu_Management
+
+:UninstallMenu_Management_OpenSetting_inNotepad
+cls
+echo İ’èƒtƒ@ƒCƒ‹‚ğŠJ‚¢‚Ä‚¢‚Ü‚·...
+start notepad.exe %Settingsfile%
+timeout /t 1 /nobreak >nul
+exit /b
+
+:UninstallMenu_Management_OpenFSTFSF_inNotepad
+cls
+echo FistSTFs ƒtƒ@ƒCƒ‹‚ğŠJ‚¢‚Ä‚¢‚Ü‚·...
+start notepad.exe %FirstSTFsfile%
+timeout /t 1 /nobreak >nul
+exit /b
+
+:UninstallMenu_Management_OpenSetting
+cls
+echo ƒtƒ@ƒCƒ‹‚ª’u‚©‚ê‚Ä‚¢‚éƒpƒX‚ğŠJ‚¢‚Ä‚¢‚Ü‚·...
+start explorer %batchmainpath%
+timeout /t 2 /nobreak >nul
+exit /b
+
+
+:UninstallMenu_Management_InitializeSetting
+cls
+echo ‚±‚Ì‹@”\‚Å‚Íİ’è‚ğ‰Šú‰»‚µ‚Ü‚·B (İ’è‚Ì’l‚ğƒfƒtƒHƒ‹ƒg‚Ì’l‚É–ß‚·)
+echo ‚ ‚È‚½‚ª¡‚Ü‚Åİ’è‚µ‚½•¨‚Í‚·‚×‚Ä‰Šú‰»‚³‚êAŒ³‚Ì’l‚É–ß‚è‚Ü‚·B
+echo –{“–‚É‰Šú‰»‚µ‚Ü‚·‚©H (Y ‚Ü‚½‚Í N)
+choice /c yn /n /m ""
+if %ErrorLevel%==1 goto :UninstallMenu_Management_InitializeSetting_ask
+if %ErrorLevel%==2 goto :UninstallMenu_Management_InitializeSetting_ask_no
+cls
+goto :UninstallMenu_Management_InitializeSetting
+
+:UninstallMenu_Management_InitializeSetting_ask
+echo –{“–‚É‚æ‚ë‚µ‚¢‚Å‚·‚©H (Y ‚Ü‚½‚Í N)
+choice /c yn /n /m ""
+if %ErrorLevel%==1 goto :UninstallMenu_Management_InitializeSetting_ask_yes
+if %ErrorLevel%==2 goto :UninstallMenu_Management_InitializeSetting_ask_no
+cls
+goto :UninstallMenu_Management_InitializeSetting_ask
+
+:UninstallMenu_Management_InitializeSetting_ask_yes
+echo İ’è‚ğ‰Šú‰»‚µ‚Ü‚·B’l‚Í‚·‚×‚ÄƒfƒtƒHƒ‹ƒg‚Ì’l‚É‚È‚è‚Ü‚·B
+echo ƒLƒƒƒ“ƒZƒ‹‚µ‚½‚¢ê‡‚ÍA‚±‚Ì“_‚ÅƒJ[ƒ\ƒ‹‘Ö‚¦‚ğI—¹‚µ‚Ä‚­‚¾‚³‚¢B
 pause
 cls
 call :Wipealldeta
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ...
-echo ‰Šú‰»‚ªŠ®—¹‚µ‚Ü‚µ‚½B•ÏX‚ğ“K—p‚·‚é‚½‚ßAƒJ[ƒ\ƒ‹‘Ö‚¦‚ğÄ‹N“®‚µ‚Ü‚·B‰½‚©ƒL[‚ğ‰Ÿ‚µ‚ÄÄ‹N“®...
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è‚Ì‰Šú‰»‚ªŠ®—¹‚µ‚Ü‚µ‚½
+echo ‰Šú‰»‚ªŠ®—¹‚µ‚Ü‚µ‚½B•ÏX‚ğ”½‰f‚·‚é‚½‚ßAƒJ[ƒ\ƒ‹‘Ö‚¦‚ğÄ‹N“®‚µ‚Ü‚·B‰½‚©ƒL[‚ğ‰Ÿ‚µ‚ÄÄ‹N“®...
 pause >nul
+set UMexit=& set UMsel=& set UMcb1=& set UMcb2=& set UMcb3=& set clrgra=& set Uninstall_Shutdown=
 call :rebootbatch
-:alldefsettingno
+exit /b
+
+:UninstallMenu_Management_InitializeSetting_ask_no
 cls
 echo İ’è‚Í‰Šú‰»‚³‚ê‚Ü‚¹‚ñ‚Å‚µ‚½B
 pause
-:alldefsettingno2
-cls
-echo ‚±‚Ì‚Ü‚ÜƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚És‚­‚©A‚à‚µ‚­‚Íƒz[ƒ€‚É–ß‚é‚©B
-echo ‚Ç‚Á‚¿‚É‚µ‚Ü‚·‚©H(İ’è‚É–ß‚é=1 / ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[=2)
-choice /c 12 /n /m ""
-if %ErrorLevel%==1 goto :settingcategory1intsetting5
-if %ErrorLevel%==2 goto :alldefselect3
-goto :alldefsettingno2
-
-:alldefshowsettingpass
-cls
-echo İ’èƒtƒ@ƒCƒ‹‚ª’u‚©‚ê‚Ä‚¢‚éƒpƒX‚ğ•\¦‚µ‚Ü‚·B
-start explorer %batchmainpath%
-timeout /t 3 /nobreak >nul
-echo ŠÂ‹«‚É‚à‚æ‚è‚Ü‚·‚ªA‚½‚¢‚Ä‚¢‚Ìê‡A‰º‚Ì‚Ù‚¤‚Ü‚½‚Íã‚Ì‚Ù‚¤‚É%Settingsfile%‚ª‚ ‚é‚Æv‚¢‚Ü‚·B
-pause
-cls
-:alldefshowsettingpass2
-echo ‚±‚Ì‚Ü‚ÜƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚És‚­‚©A‚à‚µ‚­‚Íƒz[ƒ€‚É–ß‚é‚©B
-echo ‚Ç‚Á‚¿‚É‚µ‚Ü‚·‚©H(İ’è‚É–ß‚é=1 / ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[=2)
-choice /c 12 /n /m ""
-if %ErrorLevel%==1 goto :settingcategory1intsetting5
-if %ErrorLevel%==2 goto :alldefselect4
-goto :alldefshowsettingpass2
-
-:alldefselectokey
-if %alldefselect%==3 goto :alldefsettingonly
-if %alldefselect%==4 goto :alldefshowsettingpass
-cls
-color 9f
-set alldefentered=true
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^|‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
-echo ‚±‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚ÍA‚±‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ª•ÏX‚µ‚½ƒŒƒWƒXƒgƒŠA‰‰ñ‹L˜^—p‚Ìƒtƒ@ƒCƒ‹‚ğ‚·‚×‚ÄŒ³‚Ìó‘Ô‚É–ß‚µAƒJ[ƒ\ƒ‹‘Ö‚¦©‘Ì‚ğíœ‚·‚é•¨‚Å‚·B
-pause
-cls
-echo ‚Â‚Ü‚èA‚±‚Ì‹@”\‚ğg—p‚·‚é‚Æƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ª‰Šú‚Ì”’FA‚»‚µ‚Ä‚±‚Ìƒoƒbƒ`ƒtƒ@ƒCƒ‹‚àŠ®‘S‚Éíœ‚·‚é‚±‚Æ‚É‚È‚èAÄ“xg—p‚·‚é‚½‚ß‚É‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦‚ğÄ“xƒCƒ“ƒXƒg[ƒ‹‚µ‚È‚¯‚ê‚Î‚¢‚¯‚È‚­‚È‚è‚Ü‚·I
-echo (OS‚ª‰Šú‰»‚³‚ê‚é‚í‚¯‚Å‚Í‚È‚¢)
-pause
-cls
-echo ‚Ü‚½AƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ğÀs‚µ‚½‚±‚Æ‚É‹Nˆö‚·‚é‰½‚ç‚©‚ÌáŠQA‚Ü‚½‚Í•s—˜‰v‚ğ”í‚Á‚½ê‡‚ÌÓ”C‚Íì¬Ò‚Ìtamago1908‚ÍˆêØ•‰‚¢‚Ü‚¹‚ñI
-echo.
-pause
-:AllDefultOkey
-SET /P selected=‚æ‚ë‚µ‚¢‚Å‚·‚©H(Y=Yes / N=No / B=Back)
-if "%selected%"=="y" (goto :yes2)
-if "%selected%"=="yes" (goto :yes2)
-if "%selected%"=="n" (goto :no2)
-if "%selected%"=="no" (goto :no2)
-if "%selected%"=="back" (color 07&goto :hazime)
-if "%selected%"=="b" (color 07&goto :hazime)
-if "%selected%"=="debugyesnow" (goto :yes2go)
-echo ?
-echo.
-pause
-echo ‚·‚İ‚Ü‚¹‚ñB‚à‚¤ˆê“xŒ¾‚Á‚Ä‚¢‚½‚¾‚¯‚Ü‚¹‚ñ‚©H
-echo.
-pause
-cls
-goto :AllDefultOkey
-
-:no2
-cls
-color 0B
-echo [40m[3m[96m‚ğ–ß‚»‚¤
-timeout /t 3 /nobreak >nul
-find "wmode=false" %Settingsfile% > nul
-if %ErrorLevel%==0 color 07
-if %ErrorLevel%==1 goto :wmodeonoffkenti
-:wmodeonoffkentialldefno2
-find "wmode=true" %Settingsfile% > nul
-if %ErrorLevel%==0 color f0
-goto :hazime
-
-:yes2
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ÌÅIŠm”F
-set selected=
-SET /P selected=–{“–‚É‚¢‚¢‚Å‚·‚ËH(Y=Yes / N=No / B=Back)
-if "%selected%"=="y" (set alldefclr=[31m&set alldefclr2=[97m&goto :yes2final)
-if "%selected%"=="yes" (setalldefclr=[31m&set alldefclr2=[97m&goto :yes2final)
-if "%selected%"=="n" (goto :no2)
-if "%selected%"=="no" (goto :no2)
-if "%selected%"=="back" (color 07&goto :hazime)
-if "%selected%"=="b" (color 07&goto :hazime)
-if "%selected%"=="debugyesnow" (goto :yes2go)
-echo.
-echo ?
-pause
-echo.
-echo ‚·‚İ‚Ü‚¹‚ñB‚à‚¤ˆê“xŒ¾‚Á‚Ä‚¢‚½‚¾‚¯‚Ü‚¹‚ñ‚©H
-pause
-cls
-goto :yes2
+exit /b
 
 
-:yes2final
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ÌÅIŠm”F ƒV[ƒYƒ“‚Q
-set selected=
-echo.
-echo 
-SET /P selected=%alldefclr%‚±‚¤‚©‚¢@‚µ‚Ü‚¹‚ñ‚ËH(‚à‚Ç‚¹‚Ü‚¹‚ñ‚æI)%alldefclr2%(Y=Yes / N=No / B=Back)
-if "%selected%"=="y" (goto :yes2go)
-if "%selected%"=="yes" (goto :yes2go)
-if "%selected%"=="n" (goto :no2)
-if "%selected%"=="no" (goto :no2)
-if "%selected%"=="back" (color 07&goto :hazime)
-if "%selected%"=="b" (color 07&goto :hazime)
-if "%selected%"=="debugyesnow" (goto :yes2go)
-echo.
-echo ?
-pause
-echo.
-echo ‚·‚İ‚Ü‚¹‚ñB‚à‚¤ˆê“xŒ¾‚Á‚Ä‚¢‚½‚¾‚¯‚Ü‚¹‚ñ‚©H
-pause
+:UninstallMenu_Uninstall
 cls
-goto :yes2final
+mode con: cols=72 lines=21
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clrwhi=[30m&set clr2=[90m[107m[30m)
+set UMUsel=0
+:UninstallMenu_Uninstall_main
+rem Draw Update Available UI
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹
+if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
+if "%UMUexit%"=="true" (goto :UninstallMenu_Uninstall_exit)
+if defined UMUcb2 if "%wmodetoggle%"=="true" (set clrgra=[107m[48;2;180;180;180m) else (set clrgra=[90m)
+echo.
+echo                        ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹
+echo.
+echo.          O==================================================O
+echo           I                                                  I
+echo           I          ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‰[        I
+echo           I                                                  I
+if not defined dummy (echo           I[50CI)
+if not defined dummy (echo           I[50CI)
+echo           I                                                  I
+echo           I   O==========================================O   I
+echo           I   I%UMUcb1%           ’Êí‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹         %clr2%I   I
+echo           I   O==========================================O   I
+echo           I   I%UMUcb2%%clrgra%  ƒAƒCƒ“ƒCƒ“ƒXƒg[ƒ‹•ƒJ[ƒ\ƒ‹‚ğ•œŒ³‚·‚é  %clr2%I   I
+echo           I   O==========================================O   I
+echo           I                                                  I
+echo           O==================================================O
+echo.
+if not defined dummy (set clrgra=[90m) & if "%wmodetoggle%"=="false" (set clrgra=[90m) & if "%wmodetoggle%"=="true" (set clrgra=[107m[38;2;140;140;140m)
+echo        %clrgra%W,S ‚Ü‚½‚Í 1~3 ‚Å ˆÚ“®A Y ‚Ü‚½‚Í E ‚Å‘I‘ğA B ‚Ü‚½‚Í N ‚Å‘Şo%clr2%
+echo.
+call :UninstallMenu_Uninstall_Textdraw
+choice /c 12WSYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==7 (set UMUexit=true) else if %Errorlevel%==8 (set UMUexit=true)
+if %ErrorLevel%==1 (set UMUsel=1)
+if %ErrorLevel%==2 (set UMUsel=2)
+if %UMUsel%==0 (set UMUsel=1& set UMUcb1=%clr%& goto :UninstallMenu_Uninstall_main)
+if %ErrorLevel%==3 (if %UMUsel%==2 (set UMUsel=1))
+if %ErrorLevel%==4 (if %UMUsel%==1 (set UMUsel=2))
+if %ErrorLevel%==5 (call :UninstallMenu_Uninstall_Core)
+if %ErrorLevel%==6 (call :UninstallMenu_Uninstall_Core)
+set UMUcb1=& set UMUcb2=& set UMUcb%UMUsel%=%clr%& goto :UninstallMenu_Uninstall_main
 
-:yes2go
-rem ˆø‚«‰º‚ª‚ê‚È‚¢B—ˆ‚é...ƒbI
+:UninstallMenu_Uninstall_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UMUsel%==1 (call :UninstallMenu_Uninstall_Confirm 1 & cls & exit /b)
+if %UMUsel%==2 (call :UninstallMenu_Uninstall_Confirm 2 & cls & exit /b)
+
+:UninstallMenu_Uninstall_exit
+rem initialize of variable
+set UMUexit=& set UMUsel=& set UMUcb1=& set UMUcb2=
+mode con: cols=75 lines=22
+exit /b
+
+:UninstallMenu_Uninstall_Textdraw
+for /l %%i in (8,1,9) do (set /p nothing=[%%i;12H                                                  <nul)
+if %UMUsel%==0 (set /p nothing=[8;12H‚Ç‚Ì‚æ‚¤‚ÉƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚·‚é‚©‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢[9;23HB ‚Ü‚½‚Í N ‚ÅƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚·B<nul)
+if %UMUsel%==1 (set /p nothing=[8;20HƒJ[ƒ\ƒ‹‘Ö‚¦‚ğƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·B[9;23Hİ’èƒtƒ@ƒCƒ‹“™‚Æ©g‚ğÁ‚µ‚Ü‚·B<nul)
+if %UMUsel%==2 (set /p nothing=[8;22HƒJ[ƒ\ƒ‹‘Ö‚¦‚ğƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚µA[9;20HƒoƒbƒNƒAƒbƒv‚©‚çƒJ[ƒ\ƒ‹‚ğ•œŒ³‚µ‚Ü‚·B<nul)
+if not defined dummy (set /p nothing=[22;0H<nul)
+exit /b
+
+:UninstallMenu_Uninstall_THISISWIP!!!!!
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ‚±‚Ì‹@”\‚ÍÀ‘•‚³‚ê‚Ä‚¢‚Ü‚¹‚ñI
+echo.
+echo                        ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
+echo.
+echo          O=====================================================O     
+echo          I                                                     I
+echo          I            ‚±‚Ì‹@”\‚ÍŒ»İ—˜—p‚Å‚«‚Ü‚¹‚ñI           I
+echo          I                                                     I
+echo          I        ‚±‚Ì‹@”\‚ÍŒ»“_‚Å‚ÍÀ‘•‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB     I
+echo          I           ‘¼‚ÌƒIƒvƒVƒ‡ƒ“‚ğ—˜—p‚µ‚Ä‚­‚¾‚³‚¢B        I
+echo          I                                                     I
+echo          I              %clrgra%(‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘Şo...)%clr2%              I
+echo          I                                                     I
+echo          O=====================================================O
+echo.
+pause >nul
+exit /b
+
+
+:UninstallMenu_Uninstall_Confirm
 cls
-color 9f
-echo Às‚µ‚Ü‚·B–ß‚éê‡‚Íƒoƒbƒ`ƒtƒ@ƒCƒ‹‚ğ’â~‚µ‚Ä‚­‚¾‚³‚¢B
-pause
+mode con: cols=72 lines=21
+if "%1"=="2" (goto :UninstallMenu_Uninstall_THISISWIP!!!!!) else (set Uninstall_way=%1)
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clred=[91m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clred=[91m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clrwhi=[30m&set clred=[91m&set clr2=[90m[107m[30m)
+set UOCsel=0
+:UninstallMenu_Uninstall_Confirm_main
+rem Draw Update Available UI
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ÌŠm”F
+if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
+if "%UOCexit%"=="true" (goto :UninstallMenu_Uninstall_Confirm_exit)
+if not "%UOCsel%"=="0" if not "%UOCsel%"=="1" (set UOCcb2=[48;2;214;174;174m[30m)
+echo.
+echo                        ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
+echo.
+echo         O======================================================O     
+echo         I                                                      I
+echo         I                 ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ÌŠm”F               I
+echo         I                                                      I
+call :UninstallMenu_Uninstall_Confirm_DrawText
+echo         I                                                      I
+echo         I             O========O           %clred%O======O%clr2%            I
+echo         I             I%UOCcb1% ‚¢‚¢‚¦ %clr2%I           %clred%I%clr2%%UOCcb2% ‚Í‚¢ %clr2%%clred%I%clr2%            I
+echo         I             O========O           %clred%O======O%clr2%            I
+echo         I                                                      I
+echo         O======================================================O
+echo.
+echo        %clrgra%W,S ‚Ü‚½‚Í 1~3 ‚Å ˆÚ“®A Y ‚Ü‚½‚Í E ‚Å‘I‘ğA B ‚Ü‚½‚Í N ‚Å‘Şo%clr2%
+choice /c 12ADYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==7 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true)) else if %Errorlevel%==8 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true))
+if %ErrorLevel%==1 (set UOCsel=1)
+if %ErrorLevel%==2 (set UOCsel=2)
+if %UOCsel%==0 (set UOCsel=1& set UOCcb1=%clr%& goto :UninstallMenu_Uninstall_Confirm_main)
+if %ErrorLevel%==3 (if %UOCsel%==1 (set UOCsel=1) else if %UOCsel%==2 (set UOCsel=1) else (set UOCsel=1))
+if %ErrorLevel%==4 (if %UOCsel%==1 (set UOCsel=2) else if %UOCsel%==2 (set UOCsel=2) else (set UOCsel=2))
+if %ErrorLevel%==5 (call :UninstallMenu_Uninstall_Confirm_Core)
+if %ErrorLevel%==6 (call :UninstallMenu_Uninstall_Confirm_Core)
+if not "%UOCsel%"=="2true" (set UOCcb1=& set UOCcb2=& set UOCcb%UOCsel%=%clr%) & goto :UninstallMenu_Uninstall_Confirm_main
+
+:UninstallMenu_Uninstall_Confirm_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UOCsel%==1 (set UOCexit=true)
+if %UOCsel%==2 (set UOCsel=3) else if %UOCsel%==3 (goto :UninstallExecution)
+exit /b
+
+:UninstallMenu_Uninstall_Confirm_exit
+rem initialize of variable
+set UOCexit=& set UOCsel=& set UOCcb1=& set UOCcb2=& set clred=& set Uninstall_way=
+mode con: cols=75 lines=22
+exit /b
+
+:UninstallMenu_Uninstall_Confirm_DrawText
+if not "%UOCsel%"=="3" ( 
+echo         I     –{“–‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚ğƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·‚©H   I
+echo         I    ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚µ‚½ê‡AÄ“xƒJ[ƒ\ƒ‹‘Ö‚¦‚ğ—˜—p  I
+echo         I        ‚·‚é‚É‚ÍÄƒCƒ“ƒXƒg[ƒ‹‚ª•K—v‚É‚È‚è‚Ü‚·B      I
+exit /b
+) else if "%UOCsel%"=="3" (
+echo         I                 %clrwhi%–{“–‚É‚æ‚ë‚µ‚¢‚Å‚·‚©H%clr2%               I
+echo         I                                                      I
+echo         I                                                      I
+exit /b
+)
+
+
+:UninstallExecution
+cls
+echo.
+echo                        ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
+echo.
+echo          O======================================================O     
+echo          I                                                      I
+echo          I   %clrgra%‰½‚©ƒL[‚ğ‰Ÿ‚µ‚ÄƒAƒ“ƒCƒ“ƒXƒg[ƒ‹...%clr2%                I
+echo          I                                                      I
+echo          I                                                      I
+echo          I                                                      I
+echo          O======================================================O
+pause >nul
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹’†... [8;13H%clrgra%^(ƒJ[ƒ\ƒ‹‘Ö‚¦‚ğ•Â‚¶‚È‚¢‚Å‚­‚¾‚³‚¢I^)%clr2%<nul)
+timeout /t 1 /nobreak >nul
 
 rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì—áŠOˆ— ‰‰ñƒJ[ƒ\ƒ‹‚ª‚È‚¢ê‡‚ÌB‚¾‚¯‚Çç’·‚¾‚©‚ç‰ü‘P‚µ‚½‚¢B
 rem —áŠOˆ—‚ğ‚à‚¤‚¿‚å‚Á‚Æ‘‚â‚µ‚½‚¢B—á‚¦‚ÎA’†g‚ğ‰ü‘¢‚µ‚È‚¢ŒÀ‚èâ‘Î‚É‚ ‚è‚¦‚È‚¢ó‘Ô‚É‚È‚Á‚½ê‡‚ÉAgoto‚µ‚Ä•Ï”‚Å•ªŠò‚µ‚ÄƒƒbƒZ[ƒW‚ğ•ÏX‚·‚é‚İ‚½‚¢‚É‚µ‚ÄB
 cd /d %batchmainpath%
-if not exist %FirstSTFsfile% if exist %Settingsfile% set erroralldefwhatdelete=%FirstSTFsfile%& call :BSOD_Errors 3
-if exist %FirstSTFsfile% if not exist %Settingsfile% set erroralldefwhatdelete=%Settingsfile%& call :BSOD_Errors 3
-if not exist %FirstSTFsfile% if not exist %Settingsfile% set "erroralldefwhatdelete=%FirstSTFsfile%‚ÆA%Settingsfile%A‚»‚Ì—¼•û"& call :BSOD_Errors 3
-goto :alldefnow
+if not exist %FirstSTFsfile% if exist %Settingsfile% set erroruninstallwhatdelete=%FirstSTFsfile%& call :BSOD_Errors 3
+if exist %FirstSTFsfile% if not exist %Settingsfile% set erroruninstallwhatdelete=%Settingsfile%& call :BSOD_Errors 3
+if not exist %FirstSTFsfile% if not exist %Settingsfile% set "erroruninstallwhatdelete=%FirstSTFsfile%‚ÆA%Settingsfile%A‚»‚Ì—¼•û"& call :BSOD_Errors 3
+goto :uninstallnow
+
 
 :BSOD_Errors
 if not defined dummy (set bsod_errors_clrforsad=[44m[7m&set bsod_errors_clrforsad2=[0m[44m[97m)
@@ -6188,7 +6008,7 @@ powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [Syst
 :BSOD_Errors3message3message
 cls
 color 04
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"...‚Ü‚ŸAÀÛ‚É‚Í%erroralldefwhatdelete%‚ğ‚ ‚È‚½‚ªíœ‚µ‚½‚Ì‚ªŒ´ˆö‚Å‚µ‚å‚¤‚ª... (‚à‚µ‚»‚¤‚È‚ç ‚Í‚¢ ‚ğA‚»‚¤‚Å‚È‚¢‚È‚ç ‚¢‚¢‚¦ ‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢)\", '', [System.Windows.Forms.MessageBoxButtons]::'Yesno', 'Question');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"...‚Ü‚ŸAÀÛ‚É‚Í%erroruninstallwhatdelete%‚ğ‚ ‚È‚½‚ªíœ‚µ‚½‚Ì‚ªŒ´ˆö‚Å‚µ‚å‚¤‚ª... (‚à‚µ‚»‚¤‚È‚ç ‚Í‚¢ ‚ğA‚»‚¤‚Å‚È‚¢‚È‚ç ‚¢‚¢‚¦ ‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢)\", '', [System.Windows.Forms.MessageBoxButtons]::'Yesno', 'Question');exit $result;"
 if "%errorlevel%"=="6" (goto :BSOD_Errors3message3messageok)
 if "%errorlevel%"=="7" (goto :BSOD_Errors3message3messageno)
 goto :BSOD_Errors3message3message
@@ -6211,7 +6031,7 @@ powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [Syst
 goto :BSOD_ErrorsRorR
 
 :BSOD_Errors6message
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"d‘å‚ÈƒGƒ‰[‚ªErrorHandler‚Å”­¶‚µ‚Ü‚µ‚½I\", 'CRITICAL ERROR', 'OK', 'Warning');Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ƒGƒ‰[‚ÌŠT—v : ErrorHandler‚Åd‘å‚ÈƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½I ƒGƒ‰[ID : 6\", 'ƒGƒ‰[', 'OK', 'None')";Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚±‚ÌƒGƒ‰[‚Í—lX‚È——R‚Å”­¶‚·‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B—á‚¦‚ÎA³‚µ‚­‚È‚¢ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ì–¼‘OACtrl+C‚Ìg—pA•s“KØ‚È•û–@‚Å‚Ì‹N“®“™‚Å‚·B\", 'ƒGƒ‰[', 'OK', 'None')";Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"Cursor Changer‚ğÄƒCƒ“ƒXƒg[ƒ‹‚µ‚½‚èApowershell‚â‚±‚Ìbatch‚Ì–¼‘O‚ğŠm”F‚µ‚½‚èAƒfƒXƒNƒgƒbƒv‚É‚¨‚¢‚Ä‚©‚çbatch‚ğ‹N“®‚·‚é‚È‚Ç‚ğ‚µ‚Ä‚­‚¾‚³‚¢B\", '‚Ç‚¤‚·‚ê‚Î‚¢‚¢H', 'OK', 'None')";Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚»‚ê‚Å‚àƒGƒ‰[‚ªŒp‘±‚·‚éê‡AGithub‚Ìissue‚É‚Ä•ñ‚µ‚Ä‚­‚¾‚³‚¢B\", 'ƒGƒ‰[', 'OK', 'None')"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"d‘å‚ÈƒGƒ‰[‚ªErrorHandler‚Å”­¶‚µ‚Ü‚µ‚½I\", 'CRITICAL ERROR', 'OK', 'Warning');Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ƒGƒ‰[‚ÌŠT—v : ErrorHandler‚Åd‘å‚ÈƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½I ƒGƒ‰[ID : 6\", 'ƒGƒ‰[', 'OK', 'None')";Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚±‚ÌƒGƒ‰[‚Í—lX‚È——R‚Å”­¶‚·‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B—á‚¦‚ÎA³‚µ‚­‚È‚¢ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ì–¼‘OACtrl+C‚Ìg—pA•s“KØ‚È•û–@‚Å‚Ì‹N“®“™‚Å‚·B\", 'ƒGƒ‰[', 'OK', 'None')";Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"ƒJ[ƒ\ƒ‹‘Ö‚¦‚ğÄƒCƒ“ƒXƒg[ƒ‹‚µ‚½‚èApowershell‚â‚±‚Ìbatch‚Ì–¼‘O‚ğŠm”F‚µ‚½‚èAƒfƒXƒNƒgƒbƒv‚É‚¨‚¢‚Ä‚©‚çbatch‚ğ‹N“®‚·‚é‚È‚Ç‚ğ‚µ‚Ä‚­‚¾‚³‚¢B\", '‚Ç‚¤‚·‚ê‚Î‚¢‚¢H', 'OK', 'None')";Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"‚»‚ê‚Å‚àƒGƒ‰[‚ªŒp‘±‚·‚éê‡AGithub‚Ìissue‚É‚Ä•ñ‚µ‚Ä‚­‚¾‚³‚¢B\", 'ƒGƒ‰[', 'OK', 'None')"
 goto :BSOD_ErrorsRorR
 
 
@@ -6234,12 +6054,10 @@ pause
 
 
 :bsod_errors_RANDOMFACEHAHA
-set /a bootegg=%random%*17/32767
-set /a bootegg2=%random%*17/32767
-if "%bootegg%"=="%bootegg2%" (goto :bsod_errors_RANDOMFACEHAHA2)
-set /a bootegg=%random%*129/32767
-set /a bootegg2=%random%*129/32767
-if "%bootegg%"=="%bootegg2%" (goto :bsod_errors_RANDOMFACEHAHA3)
+call :RandomDecisioner 16
+if "%errorlevel%"=="1" (goto :bsod_errors_RANDOMFACEHAHA2)
+call :RandomDecisioner 128
+if "%errorlevel%"=="1" (goto :bsod_errors_RANDOMFACEHAHA3)
 rem :)
 if not defined dummy (echo [17a%bsod_errors_clrforsad%  %bsod_errors_clrforsad2%& echo [09a%bsod_errors_clrforsad%  %bsod_errors_clrforsad2%[4a%bsod_errors_clrforsad%  %bsod_errors_clrforsad2%& echo [15a%bsod_errors_clrforsad%  %bsod_errors_clrforsad2%& echo [09a%bsod_errors_clrforsad%  %bsod_errors_clrforsad2%[4a%bsod_errors_clrforsad%  %bsod_errors_clrforsad2%& echo [17a%bsod_errors_clrforsad%  %bsod_errors_clrforsad2%)
 exit /b
@@ -6296,7 +6114,7 @@ call :exit 1
 
 
 :BSOD_Errors_NOERRORS
-rem Your Cursor Changer is running perfectly fine :)
+rem Your ƒJ[ƒ\ƒ‹‘Ö‚¦ is running perfectly fine :)
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒuƒ‹[ƒXƒNƒŠ[ƒ“‚ÆƒGƒ‰[  ‚Ç‚±‚És‚Á‚½H
 echo.
 echo.
@@ -6324,19 +6142,21 @@ exit /b
 
 
 rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì‘I‘ğ‚Ì”»•Ê
-:alldefnow
-cls
-color 07
-if %alldefselect%==1 goto :alldefnowchangeit
-if %alldefselect%==2 goto :alldefnowsettingdel
+:uninstallnow
+if "%Uninstall_way%"=="1" (goto :uninstallnowsettingdel)
+if "%Uninstall_way%"=="2" (goto :uninstallnowchangeit)
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H Error! unexpected argument value. ^(%1^)<nul)
+pause >nul
+call :exit 1
 
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ƒƒjƒ…[‚Ì‘I‘ğ‚É‰‚¶‚Ä‚Ì•ªŠò
-:alldefnowsettingdel
+rem Branching according to uninstall menu selection
+:uninstallnowsettingdel
 del %FirstSTFsfile%
 del %Settingsfile%
-goto :alldefnowfinish
+goto :uninstallnowfinish
 
-:alldefnowchangeit
+:uninstallnowchangeit
 del %FirstSTFsfile%
 del %Settingsfile%
 rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚Ì‚½‚ß‚ÌƒJ[ƒ\ƒ‹‚Ì‰Šú‰»B”’‚É–ß‚·
@@ -6362,22 +6182,23 @@ reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v SizeNWSE /t REG_EXPAND_SZ /
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v SizeWE /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_ew.cur >nul
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v UpArrow /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_up.cur >nul
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v Wait /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_busy.ani >nul
-:alldefnowfinish
-rem ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹Š®—¹Œã‚ÌƒƒbƒZ[ƒW
-cls
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ‚³‚æ‚¤‚È‚çI 
-echo ‚·‚×‚Ä‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚µ‚Ü‚µ‚½B
-pause
-echo ‚±‚ê‚Å‚¨•Ê‚ê‚Å‚·‚ËB‚³‚æ‚¤‚È‚çB
-pause
-rem ©g‚ÌƒpƒX‚ğæ“¾‚µ‚ÄA©•ª©g‚ğíœ
+:uninstallnowfinish
+rem Message after uninstallation is complete
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ‚³‚æ‚¤‚È‚ç
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹Š®—¹I[8;13H %clrgra%^(‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘±s...^)%clr2%<nul)
+pause >nul
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H ‚³‚æ‚¤‚È‚çA %YourName%![8;13H %clrgra%^(‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘±s...^)%clr2%<nul)
+pause >nul
+rem Get own path, delete own
 del "%~dp0%~n0%~x0" & exit
 
 
 
 :DEATHEASTEREGG
 rem :(
-set "Hazimebuild=[0;22HMy version shouldn't be like this."
+set "Hazimebuild=[0;26H‚È‚ñ‚Å‚±‚ñ‚È‚±‚Æ‚µ‚½‚ÌH"
 exit /B
 
 
@@ -6415,6 +6236,17 @@ for /l %%i in (1,1,1000) do (
 echo.& echo HELLO WORLD!!! (‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä–ß‚é...)
 exit /b
 
+
+:AllLabelList
+cls
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ‘Sƒ‰ƒxƒ‹ƒŠƒXƒg
+echo ‘Sƒ‰ƒxƒ‹ƒŠƒXƒg :
+set count=0
+powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=1000;$w.BufferSize=$s;}"
+for /f "tokens=1 delims=:" %%a in ('findstr /r "^:[a-zA-Z0-9_]*" "%~dp0%~n0%~x0"') do (echo :%%a& set /a count+=1)
+echo.& echo ƒ‰ƒxƒ‹‚Ì” : %count%& pause
+set count=
+exit /b
 
 
 :batstarthelp
@@ -6484,11 +6316,11 @@ rem so many set uhhh
 rem STOP SPAMMING SET AUHAUAHAUAHAUHAUAHAHAHAUAHUAHUUAUHHUHUHUHUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh&SET IHHHHGISJGIE
 if not defined dummy (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrcyan=[96m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[38;2;140;140;140m&set clrcyan=[96m&set clr2=[0m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 cls
 echo [Loading Command list...]
-powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=63;$w.BufferSize=$s;}"
+powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=65;$w.BufferSize=$s;}"
 cls
 echo %clr%::%clr2%                      [Entire list of menu commands]      %clrgra%6colors test%clr2%
 echo                  (You can use all of them in the main menu.)
@@ -6502,6 +6334,7 @@ echo           %clrcyan%-%clr2% fulldebug         %clrgra%(enter variable manage
 echo           %clrcyan%-%clr2% getadmin          %clrgra%(trying get admin permission.)%clr2%
 echo           %clrcyan%-%clr2% checkmem          %clrgra%(show memory usage. not accurate.)%clr2%
 echo           %clrcyan%-%clr2% boottime          %clrgra%(show boot time.)%clr2%
+echo           %clrcyan%-%clr2% labellist         %clrgra%(show all labels in this batch.)%clr2%
 echo           %clrcyan%-%clr2% bypassfirstboot   %clrgra%(bypassing first boot constraints.)%clr2%
 echo           %clrcyan%-%clr2% setenter          %clrgra%(wets the enter count in main menu.)%clr2%
 echo           %clrcyan%-%clr2% playdefboot       %clrgra%(playing first start animation.)%clr2%
@@ -6509,7 +6342,7 @@ echo           %clrcyan%-%clr2% crashtest         %clrgra%(will happen Intention
 echo           %clrcyan%-%clr2% reload            %clrgra%(reloading settings.) %clr2%
 echo           %clrcyan%-%clr2% openie            %clrgra%(trying open internet explorer.)%clr2%
 echo           %clrcyan%-%clr2% counttestdeb      %clrgra%(enter the count test mode.)%clr2%
-echo           %clrcyan%-%clr2% alldefnow1        %clrgra%(forced to enter alldefault.)%clr2%
+echo           %clrcyan%-%clr2% uninstallnow1        %clrgra%(forced to enter uninstallault.)%clr2%
 echo           %clrcyan%-%clr2% funanimationdeb   %clrgra%(play rare boot animation.)%clr2%
 echo           %clrcyan%-%clr2% windowsfiltertest %clrgra%(play bad win ver Warning.)%clr2%
 echo           %clrcyan%-%clr2% reboot            %clrgra%(reboot this batch.)%clr2%
@@ -6517,7 +6350,7 @@ echo           %clrcyan%-%clr2% shutdown          %clrgra%(shutdown this bach.)%
 echo.
 echo            ^<%clrgrn%Easter egg purposes commands%clr2%^>
 echo.
-echo           %clrcyan%-%clr2% egg1             %clrgra%(play error message in alldef.)%clr2%
+echo           %clrcyan%-%clr2% egg1             %clrgra%(play error message in uninstall.)%clr2%
 echo           %clrcyan%-%clr2% egg2             %clrgra%(play dogcheck error, inspired toby fox.)%clr2%
 echo           %clrcyan%-%clr2% wwssdadaba       %clrgra%(secret message and show build number.)%clr2%
 echo           %clrcyan%-%clr2% tamago1908       %clrgra%(show goofy message.)%clr2%
@@ -6534,13 +6367,14 @@ echo           %clrcyan%-%clr2% fucu    %clrgra%(it will say fuck you too.)%clr2
 echo           %clrcyan%-%clr2% fucyou  %clrgra%(it will say fuck you too.)%clr2%
 echo.
 echo            ^<%clrmag%Miscellaneous Commands%clr2%^>
-echo.
 :acbatargmentsonly
+echo.
 echo                     %clred%[%clr2%Bat argument commands%clred%]%clr2%
 echo.
 echo            %clrcyan%-%clr2% help              %clrgra%(show available arguments.)%clr2%
 echo            %clrcyan%-%clr2% enablesimpleboot  %clrgra%(boot up with Simple txt.)%clr2%
 echo            %clrcyan%-%clr2% recovery          %clrgra%(boot up with recovery menu.)%clr2%
+echo            %clrcyan%-%clr2% uninstall         %clrgra%(boot up with Uninstaller.)%clr2%
 echo            %clrcyan%-%clr2% bypsbootpwsh      %clrgra%(bypass the powershell when boot.)%clr2%
 echo            %clrcyan%-%clr2% bypsloadsg        %clrgra%(bypass the loading of settings.)%clr2%
 echo            %clrcyan%-%clr2% bypsvck           %clrgra%(bypass the windows version check.)%clr2%
@@ -6563,7 +6397,7 @@ set clred=
 set clrgrn=
 set clryel=
 set clrmag=
-if "%batargmentonly%"=="true" (set batargmentonly= &cls&exit /b)
+if "%batargmentonly%"=="true" (set batargmentonly=& if exist %Settingsfile% (if not "%linuxboot%"=="true" (cls &echo ‚µ‚Î‚ç‚­‚¨‘Ò‚¿‚­‚¾‚³‚¢... 2/2& exit /b) else (exit /b)) else (echo ƒZƒbƒgƒAƒbƒv‚ğ€”õ’†... 2/2& exit /b))
 goto :hazimemenu
 
 
@@ -6708,7 +6542,7 @@ if "%1"=="1" (start "ƒJ[ƒ\ƒ‹‘Ö‚¦" ^"%~dp0%~n0%~x0^" recovery& call :exit 0) els
 :exit
 if "%1"=="1" (echo ƒVƒƒƒbƒgƒ_ƒEƒ“’†...)
 if "%1"=="2" (goto :batshutdown)
-powershell -command "$pid1 = Get-WmiObject win32_process -filter processid=$pid | ForEach-Object{$_.parentprocessid;}";$pid2 = "Get-WmiObject win32_process -filter processid=$pid1 | ForEach-Object{$_.parentprocessid;}";$pid3 = "Get-WmiObject win32_process -filter processid=$pid2 | ForEach-Object{$_.parentprocessid;};exit $pid3"
+powershell -command "$pid1 = Get-WmiObject win32_process -filter processid=$pid | ForEach-Object{$_.parentprocessid;}";$pid2 = "Get-WmiObject win32_process -filter processid=$pid1 | ForEach-Object{$_.parentprocessid;}";exit $pid2"
 >nul 2>&1 taskkill /pid %errorlevel% >nul
 exit
 :reboot

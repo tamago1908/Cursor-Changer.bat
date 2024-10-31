@@ -59,10 +59,10 @@ rem Shutdown this batch : call :exit 0 or 1 (0 is nothing, 1 is will show "Shutt
 
 
 rem environment setting, It is not recommended to change.
-rem VER v1.14c
-set batver=1.14c
-set batbuild=Build 91
-set batverdev=stable
+rem VER v1.15β1
+set batver=1.15β1
+set batbuild=Build 100
+set batverdev=beta
 set Mainmenueaster=false
 set firststartbat=no
 set bootbatnow=yes
@@ -86,10 +86,10 @@ cd /d %batchmainpath%
 
 
 
-rem detect user argument and echo first boot message
+rem detect user argument
 if "%1"=="BatBootErrorHandlerArgument1908" (goto :batbootVerifyerrorhandler)
 :batbootVerifyerrorhandler
-echo %0 | find "%homedrive%" >nul
+echo %0 | find "%~dp0%~n0%~x0" >nul
 if "%errorlevel%"=="0" if "%1"=="BatBootErrorHandlerArgument1908" (set batbootargumentbad=true) else (set batbootargumentbad=)
 if "%errorlevel%"=="1" (set batbootargumentbad=false)
 if "%batbootargumentbad%"=="true" (call :BSOD_Errors 5)
@@ -128,7 +128,6 @@ if exist %Settingsfile% (
     find "wmode=true" %Settingsfile% > nul 
     if "!errorlevel!"=="0" (color f0 & set wmodetoggle=true) else (set wmodetoggle=false)
 ) else (set wmodetoggle=false)
-
 
 rem check linuxboot
 >nul 2>&1 find "s5_rawboot=true" %Settingsfile%
@@ -202,17 +201,9 @@ if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" ((echo [%linuxishclr
 
 
 :batbootVerifyerrorhandlersafe
-rem Processing User Arguments
-setlocal enabledelayedexpansion
-set "arguments="
-for %%i in (%*) do (
-    set "arguments=!arguments! %%i"
-)
-if not "%~1"=="" (set "arguments=%arguments:~1%")
-setlocal disabledelayedexpansion
 rem Start Error Handler
-if not "%1"=="BatBootErrorHandlerArgument1908" (powershell -command "try {$process = Start-Process \"$env:%~dp0%~n0%~x0\" -ArgumentList \"BatBootErrorHandlerArgument1908 ${env:arguments}\" -NoNewWindow -Wait -PassThru; exit $process.ExitCode} catch {exit 1}")
-if not "%1"=="BatBootErrorHandlerArgument1908" (if "%errorlevel%"=="1" (call :BSOD_Errors 6 %errorlevel%) else (call :BSOD_Errors 0 %errorlevel%)
+if not "%1"=="BatBootErrorHandlerArgument1908" (cd "%~dp0" & start /b /wait /realtime cmd.exe /c "%~n0%~x0" BatBootErrorHandlerArgument1908 %* || call :BSOD_Errors 6)
+if not "%1"=="BatBootErrorHandlerArgument1908" (call :BSOD_Errors 0 %errorlevel%
     pause >nul
     echo ERROR HANDLER IS COMPLETELY MESSED UP. WHAT DID YOU DO!!!
     exit
@@ -248,6 +239,7 @@ for /l %%i in (1,1,%n%) do (
     if "!current!"=="enablesimpleboot" (echo simpleboot is enabled.& set simpleboot=true& set argmentserror=false)
     if "!current!"=="devmode" (call :developermenu& set argmentserror=false)
     if "!current!"=="recovery" (echo recovery menu is enabled.& set argmentserror=false& goto :Cursor_Changer_REmenu)
+    if "!current!"=="uninstall" (setlocal disabledelayedexpansion & set Uninstall_Shutdown=true& goto :Uninstall)
     if "!current!"=="help" (call :batstarthelp& set argmentserror=false)
     if "!current!"=="bypsvck" (echo winver check is bypassed.& set bypasswinvercheck=true& set argmentserror=false)
     if "!current!"=="bypsadm" (echo getadmin is bypassed.& set adminbypass=true& set adminbypass=false& set argmentserror=false)
@@ -264,10 +256,7 @@ if %n% geq 0 (
 )
   
 :Arguments_Loaderend
-set n=
-set argmentserror=
-set Arguments_Loaderbreaked=
-set arguments=
+set argmentserror=& set Arguments_Loaderbreaked=& set arguments=& set n=& set i=
 setlocal disabledelayedexpansion
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Arguments_Loader is done.)
 
@@ -363,13 +352,13 @@ if "%errorlevel%"=="0" (set checkupdatetoggle=true) else (set checkupdatetoggle=
 if "%disableexit%"=="false" (goto :Powersheller_end)
 
 :Powersheller
+cd %~dp0 & set Powersheller=
 if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Powersheller is started...)
 set Powersheller_passed=false
 if not "%Powersheller%"=="OOBEMusic" (
-    if "batverdev"=="beta" (
     set "batverforpowersheller=%batver:β=.b%"
-) else (set "batverforpowersheller=%batver%")
 )
+if not "%1"=="BatBootErrorHandlerArgument1908" (set Powersheller=%1)
 
 rem code from startid~powershell must not be displaced code before or after that is ok If it's before or after that, it's ok
 :: StartID1908
@@ -380,83 +369,50 @@ set /a startline=startline+5& set /a endline=endline-3
 if "%Powersheller%"=="OOBEMusic" (start /min powershell.exe  -noexit -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto :Powersheller_end)
 if "%checkupdatetoggle%"=="true" (for /f "delims=" %%a in ('powershell -NoProfile "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*') do set Updateinfo=%%a&goto :Powersheller_end) else (powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto :Powersheller_end)
 
-
-# Define the function to disable the maximize button
 function Disablemax {
-#Calling user32.dll methods for Windows and Menus
+# Function to disable the maximize button
 $code = @'
 using System;
 using System.Runtime.InteropServices;
 
-namespace CloseButtonToggle {
-
-// Function Declaration
-
- internal static class WinAPI {
-   [DllImport("kernel32.dll")]
-   internal static extern IntPtr GetConsoleWindow();
-
-   [DllImport("user32.dll")]
-   [return: MarshalAs(UnmanagedType.Bool)]
-   internal static extern bool DeleteMenu(IntPtr hMenu,
-                          uint uPosition, uint uFlags);
-
-   [DllImport("user32.dll")]
-   [return: MarshalAs(UnmanagedType.Bool)]
-   internal static extern bool EnableMenuItem(IntPtr hMenu,
-                          uint uIDEnableItem, uint uEnable);
-
-   [DllImport("user32.dll")]
-   [return: MarshalAs(UnmanagedType.Bool)]
-   internal static extern bool DrawMenuBar(IntPtr hWnd);
-
-   [DllImport("user32.dll")]
-   internal static extern IntPtr GetSystemMenu(IntPtr hWnd,
-              [MarshalAs(UnmanagedType.Bool)]bool bRevert);
-
-   [DllImport("user32.dll")]
-   internal static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-   [DllImport("user32.dll")]
-   internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-// End of Declaration
-
-// Set required arguments
-   const int GWL_STYLE = -16;
-   const int WS_MAXIMIZEBOX = 0x00010000;
-
-   const uint SC_MAXIMIZE = 0xF030; 
-   const uint MF_BYCOMMAND = 0;
-
-// Main Processing
-internal static void ChangeCurrentState(bool state) {
-     IntPtr hWnd = GetConsoleWindow();
-     int style = GetWindowLong(hWnd, GWL_STYLE);
-     if (state) {
-       style |= WS_MAXIMIZEBOX; // enable maximize button
-     } else {
-       style &= ~WS_MAXIMIZEBOX; // disable mixmize button
-     }
-     SetWindowLong(hWnd, GWL_STYLE, style);
-     DrawMenuBar(hWnd);
-   }
- }
-//  Confirmation of change
- public static class Status {
-   public static void Disable() {
-     WinAPI.ChangeCurrentState(false); // Change to 'true' if you want to turn it enable
-   }
- }
-} 
+namespace MaximizeButtonToggle {
+    // Interacting with Windows API to manipulate window styles
+    internal static class WinAPI {
+        [DllImport("kernel32.dll")] 
+        internal static extern IntPtr GetConsoleWindow();  // Get the console window handle
+        [DllImport("user32.dll")] 
+        internal static extern bool DrawMenuBar(IntPtr hWnd);  // Refresh the window menu
+        [DllImport("user32.dll")] 
+        internal static extern int GetWindowLong(IntPtr hWnd, int nIndex);  // Get window attributes
+        [DllImport("user32.dll")] 
+        internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);  // Set window attributes
+        // Constants for window style attributes
+        const int GWL_STYLE = -16, WS_MAXIMIZEBOX = 0x00010000;
+        // Method to enable or disable the maximize button based on the 'state' parameter
+        internal static void ChangeMaximizeState(bool state) {
+            IntPtr hWnd = GetConsoleWindow();  // Get the current console window handle
+            // Enable or disable the maximize button by updating window styles
+            SetWindowLong(hWnd, GWL_STYLE, state ? GetWindowLong(hWnd, GWL_STYLE) | WS_MAXIMIZEBOX : GetWindowLong(hWnd, GWL_STYLE) & ~WS_MAXIMIZEBOX);
+            DrawMenuBar(hWnd);  // Redraw the window to reflect changes
+        }
+    }
+    // Public method to disable the maximize button
+    public static class ButtonStatus { 
+        public static void DisableMaximize() {
+            WinAPI.ChangeMaximizeState(false); // Disable the maximize button, change it to true if you want to enable it
+        } 
+    }
+}
 '@
-
+# Compile the C# code and disable the maximize button
 Add-Type $code
-[CloseButtonToggle.Status]::Disable()
+[MaximizeButtonToggle.ButtonStatus]::DisableMaximize()
 }
 
 
+
 function RefreshCursor {
+# Refresh the Cursor setting.
 Add-Type @"
 using System;
 using System.Runtime.InteropServices;
@@ -465,195 +421,164 @@ public class User32 {
     public static extern bool SystemParametersInfo(int uAction, int uParam, IntPtr lpvParam, int fuWinIni);
 }
 "@
-
-# SPI_SETCURSORS = 0x0057 (Refresh Cursor, using winapi)
-$SPI_SETCURSORS = 0x0057
-$SPIF_SENDCHANGE = 0x02
-
-# Reapply cursor settings
-[User32]::SystemParametersInfo($SPI_SETCURSORS, 0, [IntPtr]::Zero, $SPIF_SENDCHANGE) | Out-Null
+# 0x0057 = Refresh Cursor, using winapi. 0x02 = Send Change (Apply)
+# Reapply cursor
+[User32]::SystemParametersInfo(0x0057, 0, [IntPtr]::Zero, 0x02) | Out-Null
 }
 
 
 
 function Updater {
-    # Check for updates of Cursor Changer with GitHub API, But won't do update. Just check.
-    $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-    try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-    }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
+# Check for updates of Cursor Changer with GitHub API. Just check.
+$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
+try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
 
 
-    $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-    $batVersion = "$env:batverforpowersheller"
-    $batName = Get-Item "Cursor.Changer.*.bat"
+$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = "$env:batverforpowersheller"
+if ("$fileVersion" -eq "$batVersion") { return "null" }
 
-    if ("$fileVersion" -eq "$batVersion") { return "null" }
+if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
+    $fileverArray = $fileVersion -split "\."
+    $batverArray = $batVersion -split "\."
 
-    if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
-        $fileverArray = $fileVersion -split "\."
-        $batverArray = $batVersion -split "\."
-
-        # Function to classify and compare version elements
-        function Compare-VersionElement {
-            param($a, $b)
-
-            $isANumber = $a -as [int]
-            $isBNumber = $b -as [int]
-
-            if ($isANumber -and $isBNumber) {
-                return [math]::Sign($isANumber - $isBNumber)
-            } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
-                return [math]::Sign([string]::Compare($a, $b))
-            } elseif ($a -match "^[a-z]+$" -and $isBNumber) {
-                return 1
-            } elseif ($isANumber -and $b -match "^[a-z]+$") {
-                return -1
-            } else {
-                return [string]::Compare($a, $b)
-            }
-        }
-
-        # Function to check if version is beta
-        function Is-Beta($versionArray) { return ($versionArray[-1] -match "^[a-z][0-9]*$") }
-
-        $isFileBeta = Is-Beta($fileverArray)
-        $isBatBeta = Is-Beta($batverArray)
-
-        # Compare version arrays
-        for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
-            $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
-            $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
-            $comparisonResult = Compare-VersionElement $fileElement $batElement
-
-            if ($comparisonResult -gt 0) {
-                return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
-            } elseif ($comparisonResult -lt 0) { return "die" }
-            if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) { return "null" }
-        }
+    # Compare version elements
+    function Compare-VersionElement($a, $b) {
+        if (($a -as [int]) -and ($b -as [int])) {
+            return [math]::Sign($a - $b)
+        } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
+            return [string]::Compare($a, $b)
+        } elseif ($a -match "^[a-z]+$") { return 1 }
+        elseif ($b -match "^[a-z]+$") { return -1 }
+        return [string]::Compare($a, $b)
     }
+
+    # Check if version is beta
+    function Is-Beta($versionArray) { return $versionArray[-1] -match "^[a-z][0-9]*$" }
+
+    $isFileBeta = Is-Beta $fileverArray
+    $isBatBeta = Is-Beta $batverArray
+
+    # Compare version arrays
+    for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
+        $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
+        $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
+        $comparisonResult = Compare-VersionElement $fileElement $batElement
+
+        if ($comparisonResult -gt 0) {
+            return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
+        } elseif ($comparisonResult -lt 0) { return "die" }
+        if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) { return "null" }
+    }
+  }
 }
 
 
+
 function Fullupdater {
-    Write-Host "Checking update...`n"
-    # check the update of Cursor Changer with github api, and Update it.
-    $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-    try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-    }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
+Write-Host "Checking update...`n"
+# Check for updates of Cursor Changer with GitHub API
+$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
+try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
 
+$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = "$env:batverforpowersheller"
+if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
+    $fileverArray = $fileVersion -split "\."
+    $batverArray = $batVersion -split "\."
 
-    $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-    $batVersion = "$env:batverforpowersheller"
-    $batName = Get-Item "Cursor.Changer.*.bat"
+    # Compare version elements
+    function Compare-VersionElement($a, $b) {
+        $isANumber = $a -as [int]
+        $isBNumber = $b -as [int]
 
-    if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
-        $fileverArray = $fileVersion -split "\."
-        $batverArray = $batVersion -split "\."
+        if ($isANumber -and $isBNumber) {
+            return [math]::Sign($isANumber - $isBNumber)
+        } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
+            return [string]::Compare($a, $b)
+        } elseif ($a -match "^[a-z]+$") { return 1 }
+        elseif ($b -match "^[a-z]+$") { return -1 }
+        return [string]::Compare($a, $b)
+    }
 
-        # Function to classify and compare version elements
-        function Compare-VersionElement {
-            param($a, $b)
+    # Check if version is beta
+    function Is-Beta($versionArray) { return $versionArray[-1] -match "^[a-z][0-9]*$" }
 
-            $isANumber = $a -as [int]
-            $isBNumber = $b -as [int]
+    $isFileBeta = Is-Beta $fileverArray
+    $isBatBeta = Is-Beta $batverArray
 
-            if ($isANumber -and $isBNumber) {
-                return [math]::Sign($isANumber - $isBNumber)
-            } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
-                return [math]::Sign([string]::Compare($a, $b))
-            } elseif ($a -match "^[a-z]+$" -and $isBNumber) {
-                return 1
-            } elseif ($isANumber -and $b -match "^[a-z]+$") {
-                return -1
-            } else {
-                return [string]::Compare($a, $b)
-            }
-        }
+    # Compare version arrays
+    for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
+        $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
+        $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
+        $comparisonResult = Compare-VersionElement $fileElement $batElement
 
-        # Function to check if version is beta
-        function Is-Beta($versionArray) { return ($versionArray[-1] -match "^[a-z][0-9]*$") }
+        if ($comparisonResult -gt 0) {
+            # Update available
+            Write-Host "An update is available. The current version is `"$($batVersion)`". The updated version is `"$($fileVersion)`".`n"
+            Start-Sleep 1; Changelog; Start-Sleep 2
 
-        $isFileBeta = Is-Beta($fileverArray)
-        $isBatBeta = Is-Beta($batverArray)
-
-        # Compare version arrays
-        for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
-            $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
-            $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
-            $comparisonResult = Compare-VersionElement $fileElement $batElement
-
-            if ($comparisonResult -gt 0) {
-                # The file version is newer
-                Write-Host "An update is available. The current version is `"$($batVersion)`". The updated version is `"$($fileVersion)`".`n"
-                Start-Sleep 1
-                Changelog
-                Start-Sleep 2
-
-                if ($isFileBeta) {Write-Host "[TIP] This update is a beta version, so it may have bugs or issues.`n" -ForeGroundColor DarkGray}
-
+            if ($isFileBeta) { Write-Host "[TIP] This update is a beta version, so it may have bugs or issues.`n" -ForegroundColor DarkGray }
                 $answer = Read-Host "Do you want to update? (y or n)"
                 if ($answer -eq "y") {
-                    $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
-                    $downloadFile = Join-Path $downloadFolder $file.name
-                    Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
-                    $newBatName = "Cursor.Changer.$fileVersion.bat"
-                    Move-Item $downloadFile (Join-Path (Split-Path $batName) "$newBatName") -Force
-                    Remove-Item "Cursor.Changer.$batVersion.bat" -Force
-                    Write-Host "The update is complete.`n"
-                    Start-Sleep 2
-                  Write-Host "Rebooting..."
-                    PowerShell -WindowStyle Hidden -Command Exit
-                    Start-process "Cursor.Changer.$fileVersion.bat"
-                    Killwhole
-                } else {
-                    Write-Host "The update was canceled.`n"
-                    Start-Sleep 2
-                    return
-                }
-            } elseif ($comparisonResult -lt 0) {
-                Write-Host "[ERROR] You have a newer version ($($batVersion)) than the update file ($($fileVersion))!`nPerhaps you changed the version manually... >:(`n" -ForegroundColor Red
+                $downloadFile = Join-Path (Join-Path $env:USERPROFILE "Downloads") $file.name
+                Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
+                Move-Item $downloadFile (Join-Path (Split-Path (Get-Item "Cursor.Changer.*.bat")) "Cursor.Changer.$fileVersion.bat") -Force
+                Remove-Item "Cursor.Changer.$batVersion.bat" -Force
+                Write-Host "The update is complete.`n"
+                Start-Sleep 2; Write-Host "Rebooting..."
+                PowerShell -WindowStyle Hidden -Command Exit
+                Start-Process "Cursor.Changer.$fileVersion.bat"
+                Killwhole
+            } else {
+                Write-Host "The update was canceled.`n"
                 Start-Sleep 2
                 return
             }
-        }
-
-        if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
-            Write-Host "You already have the latest version ($($batVersion)), so you don't need to update.`n"
+        } elseif ($comparisonResult -lt 0) {
+            Write-Host "[ERROR] You have a newer version ($($batVersion)) than the update file ($($fileVersion))!`nPerhaps you changed the version manually... >:(`n" -ForegroundColor Red
             Start-Sleep 2
+            return
         }
     }
+
+    if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
+        Write-Host "You already have the latest version ($($batVersion)), so you don't need to update.`n"
+        Start-Sleep 2
+    }
+  }
 }
 
 
 
 function Doupdate {
-    $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-    try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-    }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
-    $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-    $batVersion = "$env:batverforpowersheller"
-    $batName = Get-Item "Cursor.Changer.*.bat"
-    $downloadFolder = Join-Path $env:USERPROFILE "Downloads"
-    $downloadFile = Join-Path $downloadFolder $file.name
-    Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
-    $newBatName = "Cursor.Changer.$fileVersion.bat"
-    Move-Item $downloadFile (Join-Path (Split-Path $batName) ("$newBatName")) -Force
-    Remove-Item "Cursor.Changer.$batVersion.bat" -Force
-    Write-Host "The update is complete.`n"
-    Start-Sleep 2
-    Write-Host "Rebooting..."
-    PowerShell -WindowStyle Hidden -Command Exit
-    Start-process "Cursor.Changer.$fileVersion.bat"
-    Killwhole
+# Get latest code from github, and directy replace it.
+$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
+try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
+$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
+$batVersion = "$env:batverforpowersheller"
+$batName = Get-Item "Cursor.Changer.*.bat"
+$downloadFolder = Join-Path $env:USERPROFILE "Downloads"
+$downloadFile = Join-Path $downloadFolder $file.name
+Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
+$newBatName = "Cursor.Changer.$fileVersion.bat"
+Move-Item $downloadFile (Join-Path (Split-Path $batName) ("$newBatName")) -Force
+Remove-Item "Cursor.Changer.$batVersion.bat" -Force
+Write-Host "The update is complete.`n"
+Start-Sleep 2
+Write-Host "Rebooting..."
+PowerShell -WindowStyle Hidden -Command Exit
+Start-process "Cursor.Changer.$fileVersion.bat"
+Killwhole
 }
 
 
 
 function OOBEMusic {
-# Create a new WebClient instance
 $webClient = New-Object System.Net.WebClient
-
-# Prepare a memory stream to hold the downloaded data
 $memoryStream = New-Object System.IO.MemoryStream
 
 # Helper function to download data with progress reporting
@@ -662,34 +587,25 @@ function DownloadDataWithProgress($url, $memoryStream) {
         $response = $webClient.OpenRead($url)
         $totalBytes = [int]$webClient.ResponseHeaders["Content-Length"]
         $buffer = New-Object byte[] 8192
-        $bytesRead = 0
         $totalRead = 0
-
         while (($bytesRead = $response.Read($buffer, 0, $buffer.Length)) -gt 0) {
             $memoryStream.Write($buffer, 0, $bytesRead)
             $totalRead += $bytesRead
-            $progress = [math]::Round(($totalRead / $totalBytes) * 100)
             [Console]::SetCursorPosition(0, [Console]::CursorTop)
-            Write-Host "Downloading music... $progress% " -NoNewline
+            Write-Host "Downloading music... $([math]::Round(($totalRead / $totalBytes) * 100))% " -NoNewline
         }
-
-        $memoryStream.Position = 0
-        $response.Close()
-        Write-Host "`nDownload Complete!"
+        $memoryStream.Position = 0; $response.Close(); Write-Host "`nDownload Complete!"
     } catch {
+        # Error handling for download failures
         $errorMsg = if ($_.Exception.Response.StatusCode.Value__ -eq 403) {
             "[ERROR] GitHub API rate limit exceeded. Please wait an hour and try again."
-        } else {
-            "[ERROR] Oops, something went wrong. Check the internet connection.`nError log: $_"
-        }
+        } else { "[ERROR] Oops, something went wrong. Check the internet connection.`nError log: $_" }
         Write-Host $errorMsg -ForegroundColor Red
-        Write-Host "Hit any key to exit..."
-        $host.UI.RawUI.ReadKey() | Out-Null
-        exit
+        Write-Host "Hit any key to exit..."; $host.UI.RawUI.ReadKey() | Out-Null; exit
     }
 }
 
-# Download data with progress reporting
+# Download the audio file
 DownloadDataWithProgress "https://raw.githubusercontent.com/tamago1908/Cursor-Changer.bat/main/resource/Windows_XP_OOBE_for_Cursor_Changer.wav" $memoryStream
 
 # Define the type for playing audio
@@ -697,71 +613,52 @@ Add-Type -TypeDefinition @"
 using System;
 using System.IO;
 using System.Media;
-
-namespace ConsoleApp
-{
-    public class Program
-    {
-        public static SoundPlayer player;
-        
-        public static void PlayAudioFromBytes(byte[] data)
-        {
-            if (data == null || data.Length == 0)
-            {
-                throw new ArgumentException("Buffer cannot be null or empty.", "data");
-            }
-            using (MemoryStream stream = new MemoryStream(data))
-            {
-                player = new SoundPlayer(stream);
-                player.PlayLooping(); 
-            }
-        }
-
-        public static void StopAudio()
-        {
-            if (player != null)
-            {
-                player.Stop();
-            }
+public class AudioPlayer {
+    public static SoundPlayer player;
+    public static void PlayAudioFromBytes(byte[] data) {
+        if (data == null || data.Length == 0) throw new ArgumentException("Buffer cannot be null or empty.", "data");
+        using (MemoryStream stream = new MemoryStream(data)) {
+            player = new SoundPlayer(stream); player.PlayLooping();
         }
     }
+    public static void StopAudio() { if (player != null) player.Stop(); }
 }
 "@
 
 # Play the downloaded audio
 try {
-    [ConsoleApp.Program]::PlayAudioFromBytes($memoryStream.ToArray())
-    cls
-    Write-Host "Playing music... Don't mind this window. You can stop the music by closing this window."
+    [AudioPlayer]::PlayAudioFromBytes($memoryStream.ToArray())
+    cls; Write-Host "Playing music... Don't mind this window. You can stop the music by closing this window."
 } catch {
-    Write-Host "[ERROR] Failed to play the audio. Ensure the file is in the correct format and not empty." -ForegroundColor Red
-    Write-Host "Hit any key to exit..."
-    $host.UI.RawUI.ReadKey() | Out-Null
-    exit
+    Write-Host "[ERROR] Failed to play the audio. Ensure the file is in the correct format." -ForegroundColor Red
+    Write-Host "Hit any key to exit..."; $host.UI.RawUI.ReadKey() | Out-Null; exit
 }
 
 $pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid; $pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
 while ($true) {
     Start-Sleep -Seconds 1
     if (-not (Get-Process -pid $pid2 -ErrorAction SilentlyContinue)) {
-        [ConsoleApp.Program]::StopAudio()
+        [AudioPlayer]::StopAudio()
         exit
     }
   }
 }
 
 
+
 Function Killwhole {
-    Write-Host "`nShutting down..."
-    Start-Sleep 1
-    $pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid
-    $pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
-    taskkill /pid $pid1 /pid $pid2 /pid $pid > $null 2>&1
+# Get cmd's PID, and Kill them. >:D
+Write-Host "`nShutting down..."
+Start-Sleep 1
+$pid1 = (Get-WmiObject win32_process -filter "processid=$pid").parentprocessid
+$pid2 = (Get-WmiObject win32_process -filter "processid=$pid1").parentprocessid
+taskkill /pid $pid1 /pid $pid2 /pid $pid > $null 2>&1
 }
 
 Function Changelog {
-    $h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 22};$w.BufferSize=$s;
-    try{if($env:wmodetoggle -eq "false"){Write-Host "Change Log :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "Change Log :" -foregroundcolor black }else{Write-Host "Change Log :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
+# Get latest Changelog from Github, and format it, then show it.
+$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 22};$w.BufferSize=$s;
+try{if($env:wmodetoggle -eq "false"){Write-Host "Change Log :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "Change Log :" -foregroundcolor black }else{Write-Host "Change Log :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
 }
 
 
@@ -780,45 +677,36 @@ call :getLineNumber endLine EndID1908 0
 if "%Powersheller_passed%"=="false" (set Powersheller_passed=true& goto :Powershellercodestart) else (goto :Powersheller_end)
 
 :GetLineNumber <resultVar> <uniqueID> [LineOffset]
-SETLOCAL
 for /F "usebackq tokens=1 delims=:" %%L IN (`findstr /N "%~2" "%~f0"`) DO set /a lineNr=%~3 + %%L
-(
-ENDLOCAL
- set "%~1=%LineNr%"
- exit /b
-)
+set "%~1=%LineNr%" & set LineNr=& exit /b
 
 
-rem MAIN PROCESS (FR)
 :Powersheller_end
 set startline=& set endline=& set Powersheller_passed=& set batverforpowersheller=
-if "%bootbatnow%"=="no" (set Powersheller=& exit /b)
+cd %batchmainpath%
 if "%Powersheller%"=="OOBEMusic" (set Powersheller=& exit /b)
-set Powersheller=
-set batverforpowersheller=
+if "%bootbatnow%"=="no" if not "%Powersheller%"=="Updater" (set Powersheller=& exit /b)
 
 rem get updater variable
-if "%checkupdatetoggle%"=="true" (goto :Powersheller_get_updater_variable) else (goto :Powersheller_get_updater_variable_end)
-
-:Powersheller_get_updater_variable
+if not "%checkupdatetoggle%"=="true" (goto :Powersheller_get_updater_variable_end)
 rem conversion powershell return variable to batch variable
-setlocal enabledelayedexpansion
 if "%updateinfo%"=="null" (goto :Powersheller_get_updater_variable_end)
 if "%updateinfo%"=="die" (set Punish=true& goto :Powersheller_get_updater_variable_end)
+setlocal enabledelayedexpansion
 for /f "tokens=1-4 delims=," %%a in ("%updateinfo%") do (
-  for /f "tokens=1-2 delims==" %%x in ("%%a") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%b") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%c") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%d") do set "%%x=%%y"
+    for /f "tokens=1-2 delims==" %%x in ("%%a") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%b") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%c") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%d") do set "%%x=%%y"
 )
 setlocal disabledelayedexpansion
-set updatemyversion=%batver:ﾎｲ=.b%
+set updatemyversion=%batver:β=.b%
+
 
 :Powersheller_get_updater_variable_end
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powersheller is Ended...)
-set updateinfo=
-set checkupdatetoggle=
-cd /d %batchmainpath%
+set updateinfo=& set checkupdatetoggle=
 
 
 rem ############################################################################################################################
+
 
 :CursorChangerOOBE
 if not "%bootbatnow%"=="true" (
@@ -835,11 +723,12 @@ if exist %FirstSTFsfile% goto :settingloads
 if not defined dummy (echo [38;2;5;5;5myou know what i HATE? that's [3mbepis[0m[38;2;5;5;5m.)
 if not defined dummy (echo [38;2;5;5;5mTHE TASTE, the smell, the texture... hey.... your [3mdrooling[0m[38;2;5;5;5m......)
 ping -n 1 -w 500 localhost >nul
+setlocal enabledelayedexpansion
+title Welcome to Cursor Changer
 cls
 
 
 :CursorChangerOOBE_Animation
-setlocal enabledelayedexpansion
 rem Play CursorChangerOOBE_Animations that appear slowly
 if not defined dummy (set /p nothing=[?25l<nul)
 set /a count+=10
@@ -850,7 +739,7 @@ echo %show%
 rem call background_menu to drew bg
 call :Background_menu 1
 if "%count%" == "200" (ping -n 2 -w 500 localhost >nul& set count=& goto :CursorChangerOOBE_Animation2) else (
-    ping -n 0 -w 500 localhost >nul
+    for /l %%. in (0,1,5000) do rem
 )
 goto :CursorChangerOOBE_Animation
 
@@ -868,7 +757,8 @@ if "%count%" == "120" (
     set count=200& set count2=120& set clresc=204;204;204
     goto :CursorChangerOOBE_Animation3
 ) else (
-    ping -n 1 -w 500 localhost >nul & goto :CursorChangerOOBE_Animation2
+    for /l %%. in (0,1,5000) do rem
+    goto :CursorChangerOOBE_Animation2
 )
 
 :CursorChangerOOBE_Animation3
@@ -885,7 +775,8 @@ call :Background_menu 1
 if !count2! leq 12 (
     if !count! leq 20 (ping -n 1 -w 500 localhost >nul& set count=& set count2=0& set clresc=200;200;200& set clrmove=22& goto :CursorChangerOOBE_Animation4)
 ) else (
-    ping -n 0 -w 500 localhost >nul & goto :CursorChangerOOBE_Animation3
+    ping -n 0 -w 500 localhost >nul
+    goto :CursorChangerOOBE_Animation3
 )
 
 :CursorChangerOOBE_Animation4
@@ -897,7 +788,8 @@ set /a clrmove-=1
 if %clrmove% equ 2 (
     goto :CursorChangerOOBE_Animation5
 ) else (
-    ping -n 0 -w 500 localhost >nul & goto :CursorChangerOOBE_Animation4
+    for /l %%. in (0,1,2500) do rem
+    goto :CursorChangerOOBE_Animation4
 )
 
 :CursorChangerOOBE_Animation5
@@ -909,47 +801,78 @@ echo %show%
 ping -n 2 -w 500 localhost >nul
 set show=& set show2=& set clresc=& set clrmove=& set count2=& set count=
 setlocal disabledelayedexpansion
+goto :CursorChangerOOBEdev
 
+
+:Header_Drawer
+rem Drawing Header of OOBE
+rem Set the color of Header
+if "%2"=="true" (set /p nothing=[107m[30m<nul& for /l %%i in (0,1,5) do (set /p nothing=[%%i;0H[0K<nul)) else if "%2"=="false" (set /p nothing=%clr2%<nul& for /l %%i in (0,1,5) do (set /p nothing=[%%i;0H[0K<nul)) else if "%oobetheme%"=="white" (set /p nothing=[107m[30m<nul) else (set /p nothing=%clr2%<nul)
+rem Clear Texts
+if not defined dummy (for /l %%i in (5,1,21) do (set /p nothing=[%%i;0H[0K<nul))
+if not defined dummy (set /p nothing=[0;0H<nul)
+echo.& echo   Cursor Changer %batver% Setup& echo ================================O
+if "%1"=="1" (set /p nothing=Setup progress : 1/5 ^(Check precautions^)<nul& title Cursor Changer %batver% Setup ^| Progress : 1/5
+) else if "%1"=="2" (set /p nothing=Setup progress : 2/5 ^(Confirm information^)<nul& title Cursor Changer %batver% Setup ^| Progress : 2/5
+) else if "%1"=="3" (set /p nothing=Setup progress : 3/5 ^(Set theme of Cursor Changer^)<nul& title Cursor Changer %batver% Setup ^| Progress : 3/5
+) else if "%1"=="4" (set /p nothing=Setup progress : 4/5 ^(Customize of Settings^)<nul& title Cursor Changer %batver% Setup ^| Progress : 4/5
+) else if "%1"=="5" (set /p nothing=Setup progress : 5/5 ^(End of set up^)<nul& title Cursor Changer %batver% Setup ^| Progress : 5/5)
+if not "%1"=="0" (if not defined dummy (set /p nothing=[0K<nul) & echo.)
+exit /b
+
+:Underbar_Drawer
+rem Drawing Underbar of OOBE
+rem I didn't know ESC[0K is so useful
+if not defined dummy (set /p nothing=[22;0H<nul)
+if "%1"=="0" (set /p nothing=%clr2%%clrwhi%[0K%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="1" (set /p nothing=%clrwhi%[0K     Y=Continue     S=Skip     B=Quit     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="2" (set /p nothing=%clr2%%clrwhi%[0K     Y=Skip     N,B=Not Skip     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="3" (set /p nothing=%clr2%%clrwhi%[0K     Y=Continue     N=No     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="4" (set /p nothing=%clr2%%clrwhi%[0K     Y=Yes     N=No     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="5" (set /p nothing=%clr2%%clrwhi%[0K     Y=Continue     [22;78H1/3%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="6" (set /p nothing=%clr2%%clrwhi%[0K     Y=Continue     [22;78H2/3%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="7" (set /p nothing=%clr2%%clrwhi%[0K     Y=Continue     [22;78H3/3%moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="8" (set /p nothing=%clr2%%clrwhi%[0K     A,1=move to Left     D,2=move to right     B=Exit     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="9" (set /p nothing=%clr2%%clrwhi%[0K     A,1=move to Left     D,2=move to right     Y,E=Confirm     B=Exit     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="10" (set /p nothing=%clr2%%clrwhi%[0K     Y,E=Confirm     B,N=Exit     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="11" (set /p nothing=%clr2%%clrwhi%[0K     W,S or 1~5=Move     Y=Toggle     N,B=Discard     %moveline%%clrwhi%<nul& exit /b
+) else if "%1"=="12" (set /p nothing=%clr2%%clrwhi%[0K     Y,E=Exit     %moveline%%clrwhi%<nul& exit /b)
+exit /b
+
+:OOBE_EndLine
+if not defined dummy (set /p nothing=[22;0H<nul& exit /b)
 
 :CursorChangerOOBEdev
 rem Now, it's the beginning of a fucking trashy long goofy ahh idiot code.
+rem Note : After using of Underbar_Drawer, You should use %clr2% and ESC[0;0H. Underbar_Drawer don't reset it.
 title Cursor Changer %batver% Setup
 if not defined dummy (set clr=[3m[97m&set clrhigh=[7m&set clrhighend=[0m&set clrwhi=[48;5;250m[30m&set clr2=[0m&set clrgra=[90m)
-if not defined dummy (set moveline=[22;0H) else (set moveline=[22;0H)
+if not defined dummy (set moveline=[22;0H)
 if not defined dummy (set /p nothing=[?25l<nul)
 mode con: cols=80 lines=22
+call :Underbar_Drawer 1 & call :Header_Drawer 0
 echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+echo      %clr% Welcome to Setup.%clr2%
 echo.
-echo     %clr% Welcome to Setup.%clr2%
-echo.
-echo     Welcome to the initial launch and setup of Cursor Changer.
-echo     This protion of the Setup program prepares Tamago_1908
-echo     Cursor Changer %batver% to run on your computer.
+echo      Welcome to the initial launch and setup of Cursor Changer.
+echo      This protion of the Setup program prepares
+echo      Cursor Changer %batver% to run on your computer.
 echo.
 echo.
-echo          ^・     To setup Cursor Changer now, press E.
+echo        ^・   To setup Cursor Changer now, press Y.
 echo.
-echo          ^・     To skip the setup and use the Cursor Changer,
-echo                 press S. (All settings are set to the default values)
+echo        ^・   To skip the setup and use the Cursor Changer,
+echo             press S. (All settings are set to the default values)
 echo.
-echo          ^・     To quit setup without installing Cursor Changer, press B.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clrwhi%     E=Continue     S=Skip     B=Quit                                           %moveline%%clrwhi% <nul& choice /c ESB /n >nul
-if %ErrorLevel%==1 goto :OOBEmain
+echo        ^・   To quit setup without setup Cursor Changer, press B.
+call :OOBE_EndLine
+choice /c YSB /n >nul
+if %ErrorLevel%==1 call :OOBEmainblank & goto :OOBEmain
 if %ErrorLevel%==2 goto :OOBESkip
 if %ErrorLevel%==3 call :OOBEmainshutdown& timeout /t 1 /nobreak >nul&call :exit 0
 
 :OOBESkip
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+call :Underbar_Drawer 2 & call :Header_Drawer 0
 echo.
 echo.
 echo          Skip the setup
@@ -961,17 +884,11 @@ echo          Is that okay?
 echo.
 echo          (Y=Yes, I feel hassle to setup it.)
 echo          (N=No, I wanna set up Cursor Changer!)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Skip     N,B=Not Skip                                                    %moveline%%clrwhi% <nul& choice /c YNB /n >nul
+call :OOBE_EndLine
+choice /c YNB /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEsetting1toggle=false&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=true&set OOBEsetting5toggle=true&set YourName=%Username%& goto :OOBEmain8
-if %ErrorLevel%==2 color 07&cls&goto :CursorChangerOOBEdev
-if %ErrorLevel%==3 color 07&cls&goto :CursorChangerOOBEdev
+if %ErrorLevel%==2 goto :CursorChangerOOBEdev
+if %ErrorLevel%==3 goto :CursorChangerOOBEdev
 
 :OOBEmain
 curl -silent http://www.msftconnecttest.com/connecttest.txt | find "Microsoft Connect Test" >nul
@@ -980,11 +897,7 @@ curl -silent http://www.msftncsi.com/ncsi.txt | find "Microsoft NCSI" >nul
 if "%errorlevel%"=="1" (call :OOBEmainblank & timeout /t 1 /nobreak >nul & goto :OOBEmain2)
 ping -n 1 google.com >nul
 if "%errorlevel%"=="1" (call :OOBEmainblank & timeout /t 1 /nobreak >nul & goto :OOBEmain2)
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+call :Underbar_Drawer 3 & call :Header_Drawer 0 
 echo.
 echo.
 echo          Do you want to hear the Windows XP OOBE Music?
@@ -994,114 +907,41 @@ echo          if you don't, press N.
 echo.
 echo.
 echo          %clrgra%(Pressing Y will download about 15MB of data.)%clr2%
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue     N=No                                                        %moveline%%clrwhi% <nul& choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 goto :OOBEmainmusic
 if %ErrorLevel%==2 call :OOBEmainblank&timeout /t 1 /nobreak >nul&goto :OOBEmain2
 
 
 :OOBEmainmusic
-call :OOBEmainmusicmessage
-set Powersheller=OOBEMusic&call :Powersheller
-goto :OOBEmainmusicmessage2
-
-:OOBEmainmusicmessage
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
 echo          Preparing download music. Please Wait a while...
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
-exit /b
+call :OOBE_EndLine
+call :Powersheller OOBEMusic
+goto :OOBEmainmusicmessage2
+
 
 :OOBEmainblank
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
+call :OOBE_EndLine
 exit /b
 
 :OOBEmainshutdown
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
 echo          Shutting down...
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
+call :OOBE_EndLine
 exit /b
 
 
 :OOBEmainmusicmessage2
 set batchpath=
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
+call :Underbar_Drawer 0 & call :Header_Drawer 0
 echo.
 echo.
 echo          Done.
@@ -1117,10 +957,7 @@ echo          Make sure you do not have API rate limitation from github
 echo          Make sure powershell is available
 echo.
 echo          (Continue setup after 5 seconds.)
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul
+call :OOBE_EndLine
 timeout /t 5 /nobreak >nul
 call :OOBEmainblank
 timeout /t 1 /nobreak >nul
@@ -1128,12 +965,7 @@ goto :OOBEmain2
 
 
 :OOBEmain2
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 1/5 (Check precautions)
+call :Underbar_Drawer 5 & call :Header_Drawer 1
 echo.
 echo.
 echo          Cursor Changer.bat is will generates two files.
@@ -1151,17 +983,12 @@ echo          SO, DON'T DELETE THESE FILE.
 echo.
 echo          (Y to Continue)
 echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue                                                              1/3%moveline%%clrwhi% <nul&choice /c Y /n >nul
+choice /c Y /n >nul
 if %ErrorLevel%==1 goto :OOBEmain3
 
 
 :OOBEmain3
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 1/5 (Check precautions)
+call :Underbar_Drawer 6 & call :Header_Drawer 1
 echo.
 echo.
 echo          Tamago_1908, the creator of this Cursor Changer.bat,
@@ -1179,17 +1006,12 @@ echo.
 echo          (Y to Continue)
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue                                                              2/3%moveline%%clrwhi% <nul&choice /c Y /n >nul
+choice /c Y /n >nul
 if %ErrorLevel%==1 goto :OOBEmain4
 
 
 :OOBEmain4
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 1/5 (Check precautions)
+call :Underbar_Drawer 7 & call :Header_Drawer 1
 echo.
 echo.
 echo          This batch is intended to run on windows 10 1803 or later. 
@@ -1204,49 +1026,29 @@ echo          Extremely fast or slow speeds may cause some problems
 echo          or deterioration of the animation scenery.
 echo.
 echo          (Y to Continue)
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue                                                              3/3%moveline%%clrwhi% <nul&choice /c Y /n >nul
+call :OOBE_EndLine
+choice /c Y /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul
 
 
 :OOBEmain5
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 2/5 (Confirm information)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
 echo          Currently, the English version of Cursor Changer is installed.
 echo          Is this correct?
 echo.
 echo.
-echo          (Y=Yes, Is this Correct.)
-echo          (N=No, I dont Understand English.)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue     N=No                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+echo          (Y=Yes, That's Correct.)
+echo          (N=No, I don't Understand English.)
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain5_1
 if %ErrorLevel%==2 goto :OOBEmain5ifno
 
 
 :OOBEmain5ifno
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 2/5 (Confirm information)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
 echo          Sorry, Currently Cursor Changer does not support
@@ -1259,23 +1061,14 @@ echo.
 echo.
 echo          (Y=Yes, I want setup Cursor Changer!)
 echo          (N=No, I will quit setup.)
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue     N=No                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain5_1
 if %ErrorLevel%==2 call :OOBEmainshutdown & timeout /t 1 /nobreak >nul&call :exit 0
 
 
 :OOBEmain5_1
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 2/5 (Confirm information)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
 echo          You can enter what you want Cursor Changer to call you.
@@ -1283,89 +1076,49 @@ echo          By default, it will call you "%USERNAME%".
 echo          Do you want to change it?
 echo.
 echo.
-echo          (Y=Yes, I want change it.)
+echo          (Y=Yes, I want to change it.)
 echo          (N=No, keep it.)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Yes     N=No                                                             %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain5_2
 if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain6
 
 
 :OOBEmain5_2
 set YourName=
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 2/5 (Confirm information)
+call :Underbar_Drawer 0 & call :Header_Drawer 2
 echo.
 echo.
 echo          Now, please enter below what you would like to be called.
 echo.
 echo.
 echo          Input box :
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-if not defined dummy (
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul&set /p YourName=%clr2%[10;21H
-)
+call :OOBE_EndLine
+if not defined dummy (set /p YourName=%clr2%[10;21H[?25h& set /p nothing=[?25l<nul)
 if %ErrorLevel%==2 goto :OOBEmain5_2c
 
 
 :OOBEmain5_2c
 if not defined Yourname goto :OOBEmain5_2c_error
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 2/5 (Confirm information)
+call :OOBEmain5_2c_Easteregg
+if "%errorlevel%"=="1" (goto :OOBEmain5_2) else if "%errorlevel%"=="2" (cls & mode con: cols=75 lines=25 & title Cursor Changer& goto :CursorChangerOOBE)
+call :Underbar_Drawer 4 & call :Header_Drawer 2
 echo.
 echo.
-echo          You Entered "%YourName%".
+echo          You entered "%YourName%".
 echo          Are you sure?
 echo.
 echo.
 echo          (Y=Yes!)
 echo          (N=No.)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Yes     N=No                                                             %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain6
 if %ErrorLevel%==2 goto :OOBEmain5_2
 
 
 :OOBEmain5_2c_error
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 2/5 (Confirm information)
+call :Underbar_Drawer 0 & call :Header_Drawer 2
 echo.
 echo.
 echo          Please enter something in input box.
@@ -1373,29 +1126,39 @@ echo          You cannot continue without a name!
 echo.
 echo.
 echo          (Hit Any key to Continue...)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%                                                                                %moveline%%clrwhi% <nul&pause >nul
+call :OOBE_EndLine
+pause >nul
 goto :OOBEmain5_2
 
+
+:OOBEmain5_2c_Easteregg
+if "%YourName%"=="tamago_1908" (set "OOBEmain5_2c_Easteregg_TextTemp=Hey, That's my name!!!!!!!! ^>:("
+) else if "%YourName%"=="Kinito" (set "OOBEmain5_2c_Easteregg_TextTemp=I know you."
+) else if "%YourName%"=="Boykisser" (set "OOBEmain5_2c_Easteregg_TextTemp=A furry!?"
+) else if "%YourName%"=="Sigma" (set "OOBEmain5_2c_Easteregg_TextTemp=NO."
+) else if "%YourName%"=="Cake" (set "OOBEmain5_2c_Easteregg_TextTemp=Cake is a lie."
+) else if "%YourName%"=="Hello_World" (set "OOBEmain5_2c_Easteregg_TextTemp='Hello_World' is not recognized as an internal or external command,[8;10Hoperable program or batch file."
+) else if "%YourName%"=="Shivter" (set "OOBEmain5_2c_Easteregg_TextTemp=My God. Your holy name is too much for me to bear. [8;10HPlease, Give me another name."
+) else if "%YourName%"=="sambubo" (set "OOBEmain5_2c_Easteregg_TextTemp=I KNOW YOU HERE SAMBUBO"
+) else if "%YourName%"=="AAAAAA" (set "OOBEmain5_2c_Easteregg_TextTemp=Not very creative... I won't allow it."
+) else if "%YourName%"=="Sans" (set "OOBEmain5_2c_Easteregg_TextTemp=Nope."
+) else if "%YourName%"=="egg" (exit /b 2) else (exit /b 0)
+call :Underbar_Drawer 0 & call :Header_Drawer 2
+echo.
+echo.
+echo          %OOBEmain5_2c_Easteregg_TextTemp%
+echo.
+echo.
+echo          (Hit any key to Continue...)
+call :OOBE_EndLine
+pause >nul
+set OOBEmain5_2c_Easteregg_TextTemp=
+exit /b 1
 
 
 
 :OOBEmain6
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 3/5 (Set theme of Cursor Changer)
+call :Underbar_Drawer 4 & call :Header_Drawer 3
 echo.
 echo.
 echo          Cursor Changer is able to choose
@@ -1405,27 +1168,17 @@ echo.
 echo          (If not selected, the default dark theme will be used.)
 echo.
 echo.
-echo          (Y=Yes, I want Choose the theme!)
-echo          (N=No, I Dont want to.)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue     N=No                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+echo          (Y=Yes, I want to Choose the theme!)
+echo          (N=No, I don't want to.)
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme1
 if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&goto :OOBEmain7
 
 
 :OOBEmain6theme1
 if "%OOBEundiscard%"=="true" (call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 3/5 (Set theme of Cursor Changer)
+call :Underbar_Drawer 8 & call :Header_Drawer 3
 echo.
 echo.
 echo          O============O    O=============O
@@ -1437,29 +1190,20 @@ echo    ^・   Nothing Selected. A,D or 1,2 to chooce the theme.
 echo.
 echo          (A,D or 1,2 to move, Y or E to confirm.)
 echo          (B to stop choosing the theme.)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     A,1=move to Left     D,2=move to right     B=Exit                          %moveline%%clrwhi% <nul&choice /c AD12B /n >nul
+call :OOBE_EndLine
+choice /c AD12YB /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme2
 if %ErrorLevel%==3 goto :OOBEmain6theme2
 if %ErrorLevel%==4 goto :OOBEmain6theme3
-if %ErrorLevel%==5 call :OOBEmain6themeifback&goto :OOBEmain6theme1
+if %ErrorLevel%==5 goto :OOBEmain6theme2
+if %ErrorLevel%==6 call :OOBEmain6themeifback&goto :OOBEmain6theme1
 
 
 :OOBEmain6theme2
 if "%OOBEundiscard%"=="true" (call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
 if defined clrhigh (set clrhigh=[7m&set clrhighend=[0m)
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 3/5 (Set theme of Cursor Changer)
+call :Underbar_Drawer 9 & call :Header_Drawer 3 false
 echo.
 echo.
 echo          O============O    O=============O
@@ -1473,11 +1217,8 @@ echo     ^・   This is usually recommended.
 echo.
 echo          (A,D or 1,2 to move, Y or E to confirm.)
 echo          (B to stop choosing the theme.)
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     A,1=move to Left     D,2=move to right     Y,E=Confirm     B=Exit          %moveline%%clrwhi% <nul&choice /c AD12BYE /n >nul
+call :OOBE_EndLine
+choice /c AD12BYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme3
 if %ErrorLevel%==3 goto :OOBEmain6theme2
@@ -1488,14 +1229,9 @@ if %ErrorLevel%==7 goto :OOBEmain6theme2confirm
 
 
 :OOBEmain6theme3
-if "%OOBEundiscard%"=="true" (call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
+if "%OOBEundiscard%"=="true" (call :Header_Drawer 3 false & call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&set OOBEundiscard=&goto :OOBEmain7)
 if defined clrhigh (set clrhigh=[100m[97m&set clrhighend=[0m[107m[30m)
-color f0
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 3/5 (Set theme of Cursor Changer)
+call :Underbar_Drawer 9 & call :Header_Drawer 3 true
 echo.
 echo.
 echo          O============O    O=============O
@@ -1506,30 +1242,23 @@ echo.
 echo     ^・   This theme has a special atmosphere.
 echo     ^・   It displays more brightly than the dark theme.
 echo     ^・   Some functions of Cursor Changer may not
-echo     ^・   befully compatible with this theme.
+echo          befully compatible with this theme.
 echo.
 echo          (A,D or 1,2 to move, Y or E to confirm.)
 echo          (B to stop choosing the theme.)
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     A,1=move to Left     D,2=move to right     Y,E=Confirm     B=Exit          %moveline%%clrwhi% <nul&choice /c AD12BYE /n >nul
+call :OOBE_EndLine
+choice /c AD12BYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme3
 if %ErrorLevel%==3 goto :OOBEmain6theme2
 if %ErrorLevel%==4 goto :OOBEmain6theme3
-if %ErrorLevel%==5 call :OOBEmain6themeifback&goto :OOBEmain6theme3
+if %ErrorLevel%==5 call :OOBEmain6themeifback true&goto :OOBEmain6theme3
 if %ErrorLevel%==6 goto :OOBEmain6theme3confirm
 if %ErrorLevel%==7 goto :OOBEmain6theme3confirm
 
 
 :OOBEmain6theme2confirm
-color 07
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 3/5 (Set theme of Cursor Changer)
+call :Underbar_Drawer 10 & call :Header_Drawer 3 false
 echo.
 echo.
 echo          O============O    O=============O
@@ -1542,12 +1271,8 @@ echo.
 echo.
 echo          (Y=Yes! I like this theme.)
 echo          (N=Nuh uh)
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y,E=Confirm     B,N=Exit                                                   %moveline%%clrwhi% <nul&choice /c BNYE /n >nul
+call :OOBE_EndLine
+choice /c BNYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme2
 if %ErrorLevel%==2 goto :OOBEmain6theme2
 if %ErrorLevel%==3 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobetheme=dark&goto :OOBEmain7
@@ -1556,12 +1281,7 @@ if %ErrorLevel%==4 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set oobethem
 
 
 :OOBEmain6theme3confirm
-color f0
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 3/5 (Set theme of Cursor Changer)
+call :Underbar_Drawer 10 & call :Header_Drawer 3 true
 echo.
 echo.
 echo          O============O    O=============O
@@ -1574,12 +1294,8 @@ echo.
 echo.
 echo          (Y=Yes! I like this theme.)
 echo          (N=Nuh uh)
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y,E=Confirm     B,N=Exit                                                   %moveline%%clrwhi% <nul&choice /c BNYE /n >nul
+call :OOBE_EndLine
+choice /c BNYE /n >nul
 if %ErrorLevel%==1 goto :OOBEmain6theme3
 if %ErrorLevel%==2 goto :OOBEmain6theme3
 if %ErrorLevel%==3 set oobetheme=white&call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain7
@@ -1587,40 +1303,22 @@ if %ErrorLevel%==4 set oobetheme=white&call :OOBEmainblank & timeout /t 1 /nobre
 
 
 :OOBEmain6themeifback
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 3/5 (Set theme of Cursor Changer)
+call :Underbar_Drawer 4 & if "%1"=="true" (call :Header_Drawer 3 true) else (call :Header_Drawer 3 false)
 echo.
 echo.
 echo          Do you want Discard theme selection and proceed?
 echo          (If you discard, the default dark theme will be selected.)
 echo.
 echo.
-echo          (Y= Yes, I want discard it.)
-echo          (N= No, I want Choose the theme!)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Yes     N=No                                                             %moveline%%clrwhi% <nul&choice /c YN /n >nul
+echo          (Y= Yes, I want to discard it.)
+echo          (N= No, I want to Choose the theme!)
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 set OOBEundiscard=true&exit /b
 if %ErrorLevel%==2 exit /b
 
 :OOBEmain7
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 4 & call :Header_Drawer 4
 echo.
 echo.
 echo          Cursor Changer is able to customize settings.
@@ -1629,26 +1327,16 @@ echo.
 echo          (if you don't, The settings will set to default values.)
 echo.
 echo.
-echo          (Y=Yes, I Want!)
+echo          (Y=Yes, I want to!)
 echo          (N=No, That's just a pain in the ass.)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Continue     N=No                                                        %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain7CustomizeSettings
 if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain8
 
+
 :OOBEmain7CustomizeSettingsdiscard
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 4 & call :Header_Drawer 4
 echo.
 echo.
 echo          Do you really want to discard customize setting?
@@ -1657,16 +1345,8 @@ echo          (if you discard, the all settings is will be set to defaults.)
 echo.
 echo          (Y=Yes, I want to discard it!)
 echo          (N=No, I want customize settings!)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y=Yes     N=No                                                             %moveline%%clrwhi% <nul&choice /c YN /n >nul
+call :OOBE_EndLine
+choice /c YN /n >nul
 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&set OOBEsetting1toggle=true&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=true&set OOBEsetting5toggle=true&goto :OOBEmain8
 if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 
@@ -1674,12 +1354,7 @@ if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 set OOBEsetting1toggle=false&set OOBEsetting2toggle=false&set OOBEsetting3toggle=false&set OOBEsetting4toggle=false&set OOBEsetting5toggle=false
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   Customize of Settings
@@ -1697,7 +1372,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S or 1~5=Move     Y=Toggle     N,B=Discard                               %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings1
 if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 if %ErrorLevel%==3 goto :OOBEmain7CustomizeSettings1
@@ -1711,16 +1386,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings1
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting1toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting1toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   Customize of Settings
@@ -1738,7 +1408,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S or 1~5=Move     Y=Toggle     N,B=Discard                               %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings1
@@ -1754,16 +1424,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings2
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting2toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting2toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   Customize of Settings
@@ -1781,7 +1446,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S or 1~5=Move     Y=Toggle     N,B=Discard                               %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings1
@@ -1797,16 +1462,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings3
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting3toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting3toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   Customize of Settings
@@ -1824,7 +1484,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S or 1~5=Move     Y=Toggle     N,B=Discard                               %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings2
@@ -1840,16 +1500,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings4
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting4toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting4toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   Customize of Settings
@@ -1867,7 +1522,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S or 1~5=Move     Y=Toggle     N,B=Discard                               %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings3
@@ -1883,16 +1538,11 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettings5
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
 if "%OOBEsetting5toggle%"=="true" (set OOBEsettingclr=[46m) else if "%OOBEsetting5toggle%"=="false" (
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 )
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   Customize of Settings
@@ -1910,7 +1560,7 @@ echo                       I  OK  I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S or 1~5=Move     Y=Toggle     N,B=Discard                               %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings4
@@ -1926,12 +1576,7 @@ if %ErrorLevel%==10 goto :OOBEmain7CustomizeSettingsdiscard
 if %ErrorLevel%==11 goto :OOBEmain7CustomizeSettingsOK
 
 :OOBEmain7CustomizeSettingsOK
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 11 & call :Header_Drawer 4
 echo.
 echo.
 echo          O================================O   Customize of Settings
@@ -1949,7 +1594,7 @@ echo                       I%OOBEsettingclr%  OK  %OOBEsettingclr2%I
 echo                       O======O
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     W,S or 1~5=Move     Y=Toggle     N,B=Discard                               %moveline%%clrwhi% <nul&choice /c WS12345YNB6 /n >nul
+choice /c WS12345YNB6 /n >nul
 if "%oobetheme%"=="white" (set OOBEsettingclr=[100m[97m&set OOBEsettingclr2=[0m[107m[30m)
 if "%oobetheme%"=="dark" (set OOBEsettingclr=[7m&set OOBEsettingclr2=[0m)
 if %ErrorLevel%==1 goto :OOBEmain7CustomizeSettings5
@@ -2024,12 +1669,7 @@ if "%1"=="5" (
 exit /b
 
 :OOBEmain7CustomizeSettingsOKconfirm
-if "%oobetheme%"=="white" (color f0) else (color 07)
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 4/5 (Customize of Settings)
+call :Underbar_Drawer 4 & call :Header_Drawer 4
 echo.
 echo.
 echo          Customize of settings :
@@ -2044,15 +1684,14 @@ echo          If you continue, these settings will be written to the Setting fil
 echo          Are you sure? %clrgra%(setting file is at "%batchmainpath%".) %OOBEsettingclr2%
 echo.
 echo          (Y=Yes, this is fine.)
-echo          (N=No, I want change it.)
+echo          (N=No, I want to change it.)
 echo.
 echo.
-set /p nothing=%clr2%%clrwhi%     Y=Yes     N=No                                                             %moveline%%clrwhi% <nul&choice /c YN /n >nul
+choice /c YN /n >nul
 if %ErrorLevel%==1 if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&goto :OOBEmain8
 if %ErrorLevel%==2 goto :OOBEmain7CustomizeSettings1
 
 :OOBEmain8
-if "%oobetheme%"=="white" (color f0) else (color 07)
 rem setting written, well, wtf is this?? so many goofy ahh if statement. hell no NOT AGAIN!!!!!!!!!!!!
 if not exist %Settingsfile% (
     type nul > %Settingsfile%
@@ -2060,7 +1699,7 @@ if not exist %Settingsfile% (
 
     if defined YourName (
         echo YourName=%YourName% >> %Settingsfile%
-    ) else if not defined (echo YourName=%USERNAME% >> %Settingsfile%)
+    ) else if not defined YourName (echo YourName=%USERNAME% >> %Settingsfile%)
 
     if "%OOBEsetting1toggle%"=="false" (
         echo BootAsCC=false >> %Settingsfile%
@@ -2112,11 +1751,7 @@ type nul > %FirstSTFsfile%
 echo nodogcheckforfastboot >> %FirstSTFsfile%
 )
 )
-cls
-echo.
-echo   Cursor Changer %batver% Setup
-echo ================================O
-echo Setup progress : 5/5 (End of set up)
+call :Underbar_Drawer 12 & call :Header_Drawer 5
 echo.
 echo.
 echo          Setup is complete.
@@ -2128,19 +1763,15 @@ echo          Cursor Changer is still incomplete and unpolished.
 echo          Please understand that.
 echo.
 echo          (Leave setup and goto mainmenu with Y or E)
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-set /p nothing=%clr2%%clrwhi%     Y,E=Exit                                                                   %moveline%%clrwhi% <nul&choice /c YE /n >nul
-if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul&call :OOBEinitialization &set bootbatnow=yes&goto :batstart
-if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul&call :OOBEinitialization &set bootbatnow=yes&goto :batstart
+call :OOBE_EndLine
+choice /c YE /n >nul
+if %ErrorLevel%==1 call :OOBEmainblank & timeout /t 1 /nobreak >nul & call :OOBEinitialization & set bootbatnow=yes& goto :batstart
+if %ErrorLevel%==2 call :OOBEmainblank & timeout /t 1 /nobreak >nul & call :OOBEinitialization & set bootbatnow=yes& goto :batstart
 
 :OOBEinitialization
-if "%oobetheme%"=="white" (color f0) else (color 07) & cls
-if not defined dummy (set /p nothing=[?25h<nul)
+mode con: cols=75 lines=25
+if "%oobetheme%"=="white" (color f0) else (color 07)
+if not defined dummy (set /p nothing=[0;0H[?25h<nul)
 set clrgra=& set clrhigh=& set clrhighend=& set clrwhi=& set moveline=
 set oobetheme=
 set OOBEsetting1toggle=& set OOBEsetting2toggle=& set OOBEsetting3toggle=& set OOBEsetting4toggle=& set OOBEsetting5toggle=
@@ -2149,7 +1780,6 @@ set OOBEsetting1clr2=& set OOBEsetting2clr2=& set OOBEsetting3clr2=& set OOBEset
 set OOBEsettingclr=& set OOBEsettingclr2=
 set clr1=& set clresc=& set clrmove=& set clr2=&set clr=
 2>nul taskkill /im powershell.exe >nul
-mode con: cols=75 lines=25
 exit /b
 
 
@@ -2157,11 +1787,13 @@ exit /b
 :Cursor_Changer_REmenu
 cls
 mode con: cols=75 lines=25
-color 07
+rem GUI type 2
 rem recovery menu for Cursor Changer, and recovery console
 call :batbootcheckwinver dynamic
 if "%errorlevel%"=="1" (goto :batbootcheckwinverbad)
-if defined bootbatnow (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 set bootbatnow=no& set rmsel=0
 echo Preparing Recovery menu, Please wait a while...& timeout /t 1 /nobreak >nul
@@ -2255,12 +1887,10 @@ set rmsel=2& goto :Cursor_Changer_REmenu_main
 
 :Cursor_Changer_REConsole
 cls
+mode con: cols=75 lines=25
 set selected=
 set FromREConsole=true
-mode con: cols=75 lines=25
-color 07
 set bootbatnow=no
-if not defined dummy (set clr=[7m&set clr2=[0m) else (set clr=[7m&set clr2=[0m)
 if not defined dummy (set /p nothing=[?25h<nul)
 echo Preparing Recovery Console, Please wait a while...
 timeout /t 2 /nobreak >nul
@@ -2297,7 +1927,7 @@ set selected=
 SET /P selected=Cns ^>
 if "%selected%"=="help" (goto :allcommands)
 if "%selected%"=="exit" (set FromREConsole=& set rmsel=3& exit /b)
-if "%selected%"=="alldefnow1" (goto :AllDefult1)
+if "%selected%"=="uninstallnow1" (goto :Uninstall1)
 if "%selected%"=="playdefboot" (set typosWarning=0&cls&goto :firstboot)
 if "%selected%"=="debugyesnow" (goto :darkgo)
 if "%selected%"=="fulldebug" (goto :fulldebug)
@@ -2307,7 +1937,7 @@ call :Wipealldeta
 echo done. enter somethings to continue.
 pause >nul
 )
-if "%selected%"=="alldefdeletebat" (set typosWarning=0&echo delete bat, confirm to type something...&pause&goto :alldefdeletefinish5)
+if "%selected%"=="uninstalldeletebat" (set typosWarning=0&echo delete bat, confirm to type something...&pause&goto :uninstalldeletefinish5)
 if "%selected%"=="windowsfiltertest" (goto :batbootcheckwinverbad)
 if "%selected%"=="funanimationdeb" (goto :batbootanimationfun)
 if "%selected%"=="openie" (goto :openiedev)
@@ -2373,12 +2003,12 @@ goto :Mainmenuboot
 
 
 :Mainmenuboot
-if "%alldefentered%"=="true" (
-set alldefno2clr=
-set alldefno2clr2=
-set alldefclr=
-set alldefclr2=
-set alldefentered=
+if "%uninstallentered%"=="true" (
+set uninstallno2clr=
+set uninstallno2clr2=
+set uninstallclr=
+set uninstallclr2=
+set uninstallentered=
 )
 if "%settingbypass%"=="true" (goto :mainmenuskipboot)
 rem There is a difference between a goto :Mainmenuboot and a direct goto :to the menu. The difference is whether you go to the menu via the settings loading section or not.
@@ -2416,8 +2046,8 @@ echo nodogcheckforfastboot >> %FirstSTFsfile%
 
 
 rem uh oh :)
-set Die=%random%& set Die2=%random%
-if "%Die%"=="%Die2%" (title & color 04
+call :RandomDecisioner 32768
+if "%errorlevel%"=="1" (title & color 04
     if not defined dummy (echo [0;0H)
     for /l %%i in (0,1,1000) do (set /p nothing= CLOSE NOW <nul)
 timeout 2 /nobreak >nul & call :exit)
@@ -2540,7 +2170,7 @@ goto :whatloadgoto
 
 :wmodeload
 find "wmode=true" %Settingsfile% > nul
-if "%ErrorLevel%"=="0" (set wmodeonoff=Change To Darkmode  &set wmodetoggle=true)
+if "%ErrorLevel%"=="0" (set wmodeonoff=Change to dark theme &set wmodetoggle=true)
 if "%ErrorLevel%"=="1" (goto :wmodeload2)
 if "%bootbatnow%"=="yes" (
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded as "true")
@@ -2613,7 +2243,7 @@ if "%bootbatnow%"=="yes" (goto :wmodeload) else (goto :whatloadgoto)
 
 :wmodeload2
 find "wmode=false" %Settingsfile% > nul
-if "%ErrorLevel%"=="0" (set wmodeonoff=Change to white mode& set wmodetoggle=false& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded as "false")) else if "%ErrorLevel%"=="1" (set wmodeonoff=Change to null theme&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Wmode is corrupted. Loaded as "null"))
+if "%ErrorLevel%"=="0" (set wmodeonoff=Change to white theme& set wmodetoggle=false& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded as "false")) else if "%ErrorLevel%"=="1" (set wmodeonoff=Change to null theme&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Wmode is corrupted. Loaded as "null"))
 if "%bootbatnow%"=="yes" (call :SAB_Manager 7)
 if "%bootbatnow%"=="yes" (goto :loads) else (goto :whatloadgoto)
 
@@ -2622,12 +2252,13 @@ if "%bootbatnow%"=="yes" (goto :loads) else (goto :whatloadgoto)
 :loads
 rem load your name
 for /f "tokens=2 delims==" %%a in ('type %Settingsfile% ^| findstr /r "YourName=."') do (
-    set YourName=%%a
+    set "YourName=%%a"
 )
+set "YourName=%YourName: =%"
 if defined YourName (
     if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo.& echo [%linuxishclr%Info%linuxishclr2%] Hello %YourName%!)
 ) else if not defined YourName (
-    set YourName=%USERNAME%
+    set "YourName=%USERNAME%"
     if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo.& echo [%linuxishclred%ERROR%linuxishclr2%] Your Name is does not exist. Who are you?)
 )
 call :SAB_Manager 8
@@ -2763,17 +2394,12 @@ if "%firststartbat%"=="yes" (goto :batbootanimationbypassfun)
 if "%setting5onoff%"=="false" (goto :checksum)
 rem Play the boot animation, with a 1 in 64 chance or 1 in 256 chance or a 1 in 512 chance that another version will be played. The random specification(?) requires two consecutive random runs.
 if not defined dummy (set /p nothing=[?25l<nul)
-set /a bootegg=%random%*65/32767
-set /a bootegg2=%random%*65/32767
-if "%bootegg%"=="%bootegg2%" (goto :batbootanimationfun)
-set /a bootegg=%random%*257/32767
-set /a bootegg2=%random%*257/32767
-if "%bootegg%"=="%bootegg2%" (call :BSOD_Errors THERE_IS_NO_PROBLEMS)
-set /a bootegg=%random%*513/32767
-set /a bootegg2=%random%*513/32767
-if "%bootegg%"=="%bootegg2%" (goto :batbootanimationscary)
-set bootegg=
-set bootegg2=
+call :RandomDecisioner 64
+if "%errorlevel%"=="1" (goto :batbootanimationfun)
+call :RandomDecisioner 256
+if "%errorlevel%"=="1" (call :BSOD_Errors THERE_IS_NO_PROBLEMS)
+call :RandomDecisioner 512
+if "%errorlevel%"=="1" (goto :batbootanimationscary)
 :batbootanimationbypassfun
 title Cursor Changer ^| WELCOME
 if "%wmodetoggle%"=="true" (set welcomelineclr=[38;2;135;135;135m& set welcomelineclr2=[0m[107m[30m& set welcomelineclr3=[30m) else (set welcomelineclr=[38;2;120;120;120m& set welcomelineclr2=[0m& set welcomelineclr3=[39m)
@@ -2933,13 +2559,14 @@ call :exit 0
 
 rem Check for missing settings
 :checksum
+cls
 if "%wmodetoggle%"=="true" (color f0) else (color 07)
 if not defined dummy (set /p nothing=[?25h<nul)
 if %allsettingerror% gtr 0 if %allsettingerror% lss 10 (set "allsettingerrorshow=   %allsettingerror%") else (set "allsettingerrorshow=  %allsettingerror%")
 if %allsettingerror% gtr 0 (
     if not defined dummy (set clrgra=[90m&set clr2=[0m)
     if "%wmodetoggle%"=="false" (set clrgra=[90m&set clr2=[0m)
-    if "%wmodetoggle%"=="true" (set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+    if "%wmodetoggle%"=="true" (set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 )
 if %allsettingerror% gtr 0 (
     title Cursor Changer ^| Setting Corrupted Error
@@ -3031,9 +2658,9 @@ title Cursor Changer ^| Main Menu
 :Mainmenudrew
 cls
 if "%MenuRedrew%"=="true" (if "%setting6onoff%"=="true " (
-    if "%wmodetoggle%"=="true" (set ccmmul=[107m[4m& set clr2=[0m[107m) else (set clr2=[0m[90m& set ccmmul=[90m[4m)
+    if "%wmodetoggle%"=="true" (set ccmmul=[107m[4m& set clr2=[0m[107m[38;2;140;140;140m) else (set clr2=[0m[90m& set ccmmul=[90m[4m)
     ) else (
-    if "%wmodetoggle%"=="true" (set ccmmul=& set clr2=[0m[107m) else (set clr2=[0m[90m& set ccmmul=))
+    if "%wmodetoggle%"=="true" (set ccmmul=& set clr2=[0m[38;2;140;140;140m) else (set clr2=[0m[90m& set ccmmul=))
 ) else (call :background_menu)
 rem To center the text, insert a number of spaces equal to half of cols minus half the number of characters in the text
 echo                             Cursor Changer %batver%  %Mainmenubuild%
@@ -3082,17 +2709,20 @@ rem Debugging command references (SAO refarence)
 if "%selected%"=="help" (goto :allcommands)
 
 rem For debugging
+if "%selected%"=="halloween" (set setting7_1onoff=true& goto :mainmenu)
+
 if "%selected%"=="crashtest" (exit /b)
 if "%selected%"=="checkmem" (call :checkmem& goto :mainmenu)
 if "%selected%"=="boottime" (echo.& echo Boot time : %BootTime% Seconds& echo.& pause & goto :mainmenu)
-if "%selected%"=="alldefnow1" (goto :AllDefult1)
+if "%selected%"=="uninstallnow1" (goto :Uninstall1)
 if "%selected%"=="playdefboot" (cls&goto :CursorChangerOOBE_Animation)
 if "%selected%"=="debugyesnow" (goto :darkgo)
 if "%selected%"=="reload" (cls&set bootbatnow=yes&goto :batstart)
 if "%selected%"=="fulldebug" (goto :fulldebug)
+if "%selected%"=="labellist" (call :AllLabelList& goto :mainmenu)
 if "%selected%"=="getadmin" (goto :batstartadm)
 if "%selected%"=="bypassfirstboot" (set firststartbat=&call :Wipealldeta)
-if "%selected%"=="alldefdeletebat" (echo delete bat, confirm to type something...&pause&goto :alldefdeletefinish5)
+if "%selected%"=="uninstalldeletebat" (echo delete bat, confirm to type something...&pause&goto :uninstalldeletefinish5)
 if "%selected%"=="windowsfiltertest" (goto :batbootcheckwinverbad)
 if "%selected%"=="funanimationdeb" (goto :batbootanimationfun)
 if "%selected%"=="openie" (goto :openiedev)
@@ -3184,18 +2814,7 @@ Call :MainmenuMessagesTimecheck & set tcmrand=&set tcmrand2=
 if not "%errorlevel%"=="1" (
 if "%FirstCursorisEdited%"=="true" (echo [17aEasy to change the %FirstSTFsfile%, huh?&echo.)
 ) else (set MainmenuMessageshowed=true)
-if "%Updateavailable%"=="true" (
-    title Cursor Changer ^| Update Available! ^(Exprimental^)
-    setlocal enabledelayedexpansion
-    if "%batbeta%"=="True" (set batbetamessage=^(Tip : this version is beta, So it's probably have bugs.^))
-  echo New update is available^^! ^(%updatemyversion% to %updateversion%^)
-  echo do you want to update? !batbetamessage!
-  set batbetamessage=
-  SET /P updateselected=^(Y or N^) :
-  if "!updateselected!"=="y" (set updateselected=&set updateavailable=&echo.&echo updating...&cd %~dp0&set Powersheller=Doupdate&call :Powersheller&cd %batchmainpath%&echo update complete successfully.&pause&call :exit 0)
-if "!updateselected!"=="n" (set updateselected=&set updateavailable=&echo.&echo update is canceled.&echo.&echo If you wish to disable the function to check for updates at startup, you can do so in the settings.&pause&set checkupdatetoggle=false&cls&exit /b 1)
-setlocal disabledelayedexpansion
-)
+if "%Updateavailable%"=="true" (call :UpdateAvailable& exit /b 1)
 exit /b 0
 
 :MainmenuMessagesTimecheck
@@ -3204,19 +2823,15 @@ if "%timecheckmessageshowed%"=="true" (set MainmenuMessageshowed=& exit /b 0) el
 if "%date:~0,4%"=="1999" (echo [27aWhere is the axolotl?& echo.& exit /b 1)
 if "%date:~5%"=="01/01" (echo [30aHappy New Year!& echo.& exit /b 1)
 if "%date:~5%"=="04/01" (echo [21aYour Computer is Destroyed!!!!!!!& echo.& exit /b 1)
+if "%date:~5%"=="10/01" (echo [25aIT IS DA SPOOKY MONTH!!!& echo.& exit /b 1)
 if "%date:~5%"=="10/31" (echo [30aHappy Halloween!& echo.& exit /b 1)
 if "%date:~5%"=="12/25" (echo [30aHappy Holiday!& echo.& exit /b 1)
 if "%date:~5%"=="12/31" (echo [20aDespite everything, it's still you.& echo.& exit /b 1)
-set tcmrand=0& set tcmrand2=0
-set /a tcmrand=%random%*33/32767& set /a tcmrand2=%random%*33/32767
-setlocal enabledelayedexpansion
 rem you're bit lucky if you see this.
-if "!tcmrand!"=="!tcmrand2!" (
-set tcmrand=0
-set /a tcmrand=%random%*11/32767& set /a tcmrand=%random%*11/32767
-if "!tcmrand!"=="0" (echo [26aThis is all meaningless.& echo.& exit /b 1) else if "!tcmrand!"=="1" (echo [19aWho is actually reading this message?& echo.& exit /b 1) else if "!tcmrand!"=="2" (echo [20aNobody don't care about this batch.& echo.& exit /b 1) else if "!tcmrand!"=="3" (echo [25aPlease don't uninstall me& echo.& exit /b 1) else if "!tcmrand!"=="4" (echo [28aThe cake is a lie&echo.&exit /b 1) else if "!tcmrand!"=="5" (echo [28aAre you really %YourName%?& echo.& exit /b 1) else if "!tcmrand!"=="6" (echo [19aAll your batches are belong to me ^>:D& echo.& exit /b 1) else if "!tcmrand!"=="7" (echo [30aHello world :D& echo.& exit /b 1) else if "!tcmrand!"=="8" (echo [30aAlso try Debios& echo.& exit /b 1) else if "!tcmrand!"=="9" (echo [27aAlso try Shivtanium OS& echo.& exit /b 1) else if "!tcmrand!"=="10" (goto :MainmenuMessagesTimecheckEASTEREGG)
-)
-setlocal disabledelayedexpansion
+call :RandomDecisioner 24
+if "%errorlevel%"=="1" (set tcmrand=0& set /a tcmrand=%random%*12/32767& set /a tcmrand=%random%*12/32767)
+if defined tcmrand (if "%tcmrand%"=="0" (echo [26aThis is all meaningless.& echo.& exit /b 1) else if "%tcmrand%"=="1" (echo [19aWho is actually reading this message?& echo.& exit /b 1) else if "%tcmrand%"=="2" (echo [20aNobody don't care about this batch.& echo.& exit /b 1) else if "%tcmrand%"=="3" (echo [25aPlease don't uninstall me& echo.& exit /b 1) else if "%tcmrand%"=="4" (echo [28aThe cake is a lie&echo.&exit /b 1) else if "%tcmrand%"=="5" (echo [28aAre you really %YourName%?& echo.& exit /b 1) else if "%tcmrand%"=="6" (echo [19aAll your batches are belong to me ^>:D& echo.& exit /b 1) else if "%tcmrand%"=="7" (echo [30aHello world :D& echo.& exit /b 1) else if "%tcmrand%"=="8" (echo [30aAlso try Debios& echo.& exit /b 1) else if "%tcmrand%"=="9" (echo [27aAlso try Shivtanium OS& echo.& exit /b 1) else if "%tcmrand%"=="10" (set /p nothing=[21a<nul& call :RainbowDrawer WOW!!! You're so lucky today!!! :D& echo.& echo.& exit /b 1) else if "%tcmrand%"=="11" (goto :MainmenuMessagesTimecheckEASTEREGG))
+set tcmrand=
 exit /b 0
 
 :MainmenuMessagesTimecheckEASTEREGG
@@ -3255,28 +2870,33 @@ rem argument 1 is for OOBE. give 0~200 (every 10) value.
 rem initialize variable
 if "%wmodetoggle%"=="true" (
     if not defined dummy (set thmclr2=[107m[30m)
-    set thml=26& set thml2=25
-    set thmldrewb=255
+    set thml=26& set thml2=25& set thmldrewb=255
 ) else (if not defined dummy (set thmclr2=[0m) & set thmldrewb=12)
-if "%wmodetoggle%"=="true" (set thmlfor=194,9,243&set thmldred=155) else (set thmlfor=69,-9,12&set thmldred=155)
+if not "%setting7_1onoff%"=="true" (if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=61,-9,12)) else (
+if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=69,-9,12)) & set thmldred=155
+
 rem Drew bg. thml means theme line.
 for /l %%i in (!thmlfor!) do (
-    rem I think there is a simpler way to do this without having to bother with the calculations, but... well, it's working anyway.
     if "%wmodetoggle%"=="true" (set /a thml2-=1& set /a thml-=1) else (set /a thml=19+%%i/10& set /a thml2=thml-1)
-    if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set /a thmldrew=%%i-6)
-    rem                                  ↑      and      ↑ Difference is must be 4. 170 is (100/) + 61+12. maybe.
-    if !thmldrew! lss 12 (set thmldrew=12) 
-    if not "%wmodetoggle%"=="true" (set /a thmldred=thmldred-21) else (set /a thmldred=thmldred+11)
-    if !thmldred! lss 12 (set thmldred=18) else if !thmldred! gtr 220 (set /a thmldred=230)
-    if not "%1"=="1" (set thmclr=[48;2;!thmldred!;!thmldrew!;!thmldrewb!m) else (set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m)
+    if "%setting7_1onoff%"=="true" (
+        rem halloween theme
+        if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set /a thmldrew=%%i-6)
+        if !thmldrew! lss 12 (set thmldrew=12) 
+        if not "%wmodetoggle%"=="true" (set /a thmldred=thmldred-21) else (set /a thmldred=thmldred+11)
+        if !thmldred! lss 12 (set thmldred=18) else if !thmldred! gtr 220 (set /a thmldred=230)
+        rem normal theme
+    ) else (if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170 & if !thmldrew! lss 12 (set thmldrew=12)) else (set thmldrew=%%i))
+    if not "%setting7_1onoff%"=="true" (set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m) else (set thmclr=[48;2;!thmldred!;!thmldrew!;!thmldrewb!m)
     for /l %%a in (1,1,3) do (set /p nothing=[!thml!d!thmclr!                         !thmclr2!<nul)
     echo [!thml2!d
 )
-rem delete variablesCC
-set thml=& set thml2=& set thmclr=& set thmldrew=& set thmlfor=
+
+rem delete variables
+set thml=& set thml2=& set thmclr=& set thmldrew=& set thmldrewb=& set thmldred=& set thmlfor=
 if not "%1"=="1" (setlocal disabledelayedexpansion & set /p nothing=[?25h<nul)
 if not defined dummy (set /p nothing=[0;0H<nul)
 exit /b
+
 
 
 :checkmem
@@ -3301,14 +2921,46 @@ setlocal disabledelayedexpansion
 exit /b
 
 
+:RandomDecisioner
+if "%1"=="" (echo YOU FUCKING IDIOT!!!!!!!!!& exit /b 666)
+set value1=0& set value2=0
+set /a value1=%random%*(%1+1)/32767& set /a value2=%random%*(%1+1)/32767
+if %value1% equ %value2% (set value1=& set value2=& exit /b 1) else (set value1=& set value2=& exit /b 0)
+
+
+:RainbowDrawer
+set "text=%*" & setlocal enabledelayedexpansion
+if "%~1"=="" (echo Please pass a string as an argument.& pause & exit /b 1)
+if "%wmodetoggle%"=="true" (set rbclr=[107m[30m) else (set rbclr=[0m)
+rem Calculate string length
+set "length=0" & if not defined rbphase set "rbphase=0" & if not defined rbdark set "rbdark=0"
+for /l %%i in (0,1,128) do (set "char=!text:~%%i,1!" & if not "!char!"=="" (set /a length+=1))
+
+rem Process string
+for /l %%i in (0,1,%length%) do (set "char=!text:~%%i,1!" & if not "!char!"=="" (set /p =[?25l<nul) else (set /p =[?25h<nul)
+    set /a ratio=%%i*360/%length%+^(rbphase*360/100^) & if !ratio! geq 360 (set /a ratio-=360) & rem <- Initialize RGB values
+    set /a r=0, g=0, b=0& set /a section=!ratio!/60
+    if !section! equ 0 (set /a r=255, g=!ratio!*255/60 & rem <- RGB color calculation
+    ) else if !section! equ 1 (set /a r=255-^(!ratio!-60^)*255/60, g=255) else if !section! equ 2 (set /a g=255, b=^(!ratio!-120^)*255/60
+    ) else if !section! equ 3 (set /a g=255-^(!ratio!-180^)*255/60, b=255) else if !section! equ 4 (set /a r=^(!ratio!-240^)*255/60, b=255
+    ) else (set /a r=255, b=255-^(!ratio!-300^)*255/60)
+    if defined rbdark (for %%a in (r,g,b) do (set /a "value=!%%a!-rbdark" & if !value! lss 12 (set "%%a=12") else (set "%%a=!value!")))
+    set /p nothing=[38;2;!r!;!g!;!b!m!char!%rbclr%<nul& rem ^ Ensure RGB values are within bounds and apply dark adjustment, And show
+)
+setlocal disabledelayedexpansion
+set text=& set length=& set rbphase=& set i=& set char=& set ratio=& set r=& set g=& set b=& set section=& set value=& set rbclr=& exit /b
+
+
+
 :exitmenu
+rem GUI type 1
 rem Preparing of Menu and Variables
 rem Smart Processing!!!! DO NOT CARE ABOUT SO MANY OF IF STATEMENTS. PLS
 title Cursor Changer ^| Exit Menu 
 set exitmenucurrent=0& call :exitmenu_exit
 if not defined dummy (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[107m[38;2;140;140;140m&set clrcyan=[46m&set clr2=[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 
 :exitmenu_main
@@ -3317,7 +2969,6 @@ if "%exitmenuexit%"=="true" (set exitmenucurrent=& call :exitmenu_exit & goto :m
 if not defined exitmenuboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :Mainmenudrew & echo %clr2% & set exitmenuboot=true)
 call :exitmenu_Core_Drew
 rem I'm doing this because when I use ANSI ESC sequences in Virtual Studio Code, the parentheses are colored incorrectly and I don't like that
-if not defined dummuy (set ccmmul=[4m)
 if not defined dummy (
 echo.
 echo.
@@ -3440,13 +3091,96 @@ call :exitmenuexit
 call :exit 0
 
 :mainmenu_resetcolor
-if not defined dummy (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
+if not defined dummy (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m& set ccmmul=[4m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[0m[107m&set clrcyan=[46m&set clr2=[0m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[107m[38;2;140;140;140m&set clrcyan=[46m&set clr2=[0m[107m[30m)
 exit /b
 
 :exitmenuexit
 set clrcyan=& set clrgra=& set clred=& set clrgrn=& set clryel=& set clrmag=& exit /b
+
+
+:UpdateAvailable
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clryel=[93m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clryel=[93m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clryel=[93m&set clrwhi=[30m&set clr2=[90m[107m[30m)
+set UAsel=0
+:UpdateAvailable_main
+rem Draw Update Available UI
+title Cursor Changer ^| New Update is Available!
+if not defined dummy (set /p nothing=[?25l%clr2%<nul)
+if not defined UAboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :Mainmenudrew & echo %clr2% & set UAboot=true)
+if "%UAexit%"=="true" (goto :UpdateAvailable_exit)
+if not "%UAsel%"=="3" (set UAselPre=%UAsel%)
+if not defined dummy (
+echo [5;16H O=========================================O 
+echo [6;16H I                                         I 
+echo [7;16H I         New Update is Available!        I 
+echo [8;16H I                                         I 
+echo [9;16H I[9;35H%clryel%-----^>%clr2%[9;59HI 
+echo [10;16H I         %clrgra%^(Current^)    ^(Updated^)%clr2%          I 
+echo [11;16H I                                         I 
+echo [12;16H I         Do you want to Update?          I 
+echo [13;16H I[13;59HI 
+echo [14;16H I                                         I 
+echo [15;16H I    O=============O    O============O    I 
+echo [16;16H I    I%UAcb1%     Yes     %clr2%I    I%UAcb2%     No     %clr2%I    I 
+echo [17;16H I    O=============O    O============O    I 
+echo [18;16H I            O================O           I 
+echo [19;16H I            I%UAcb3% See Change log %clr2%I           I 
+echo [20;16H I            O================O           I 
+echo [21;16H I                                         I 
+echo [22;16H O=========================================O 
+echo [24;10H %clrgra%1~3 or W,A,S,D to Move, Y or E to Select, B or N to Exit.
+call :UpdateAvailable_VersionDraw
+)
+choice /c 123WASDYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==10 (set UAexit=true) else if %Errorlevel%==11 (set UAexit=true)
+if %ErrorLevel%==1 (set UAsel=1)
+if %ErrorLevel%==2 (set UAsel=2)
+if %ErrorLevel%==3 (set UAsel=3)
+if %UAsel%==0 (set UAsel=1& set UAcb1=%clr%& goto :UpdateAvailable_main)
+if %ErrorLevel%==4 (if %UAsel%==3 (if "%UAselPre%"=="1" (set UAsel=1) else if "%UAselPre%"=="2" (set UAsel=2)))
+if %ErrorLevel%==5 (if not %UAsel%==3 (set UAsel=1))
+if %ErrorLevel%==6 (if not %UAsel%==3 (set UAsel=3))
+if %ErrorLevel%==7 (if not %UAsel%==3 (set UAsel=2))
+if %ErrorLevel%==8 (call :UpdateAvailable_Core)
+if %ErrorLevel%==9 (call :UpdateAvailable_Core)
+set UAcb1=& set UAcb2=& set UAcb3=& set UAcb%UAsel%=%clr%& goto :UpdateAvailable_main
+
+:UpdateAvailable_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UAsel%==1 (cls & echo Updating...& call :Powersheller Doupdate)
+if %UAsel%==2 (set UAexit=true& exit /b)
+if %UAsel%==3 (cls & echo Loading Change log...& echo. & call :Powersheller Changelog& pause & set UAboot=& mode con: cols=75 lines=25 & exit /b)
+
+:UpdateAvailable_VersionDraw
+rem Detect version
+set /p nothing=%clr2%<nul
+if "%batbeta%"=="true" (set /p nothing=[13;18H %clrgra%This update is beta, and maybe unstable%clr2%<nul)
+if not defined updatemyversion (set /p nothing=[9;30H%clrwhi%Null%clr2%<nul)
+if not defined updateversion (set /p nothing=[9;42H%clrwhi%Null%clr2%<nul& exit /b)
+rem Calculete version length
+setlocal enabledelayedexpansion
+for /l %%i in (0,1,10) do (set "char=!updatemyversion:~%%i,1!" & if not "!char!"=="" (set /a length+=1))
+setlocal disabledelayedexpansion
+rem Show version text
+set /a showlen=34-length
+if not defined dummy (set /p nothing=[9;%showlen%H%clrwhi%%updatemyversion%%clr2%<nul)
+if not defined dummy (set /p nothing=[9;42H%clrwhi%%updateversion%%clr2%<nul)
+set length=& set showlen=
+exit /b
+
+:UpdateAvailable_exit
+rem initialize of variable
+set UAexit=& set UAboot=& set UAsel=& set UAPre=& set UAcb1=& set UAcb2=& set UAcb3=& set clrgra=& set clryel=
+set checkupdatetoggle=false
+if not defined dummy (set /p nothing=[?25h<nul)
+exit /b
 
 
 
@@ -3797,8 +3531,8 @@ if %ErrorLevel%==6 goto :settingcategory1intsetting4
 if %ErrorLevel%==7 goto :settingcategory1intsetting5
 if %ErrorLevel%==8 goto :settingcategory1int
 if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 goto :AllDefult
-if %ErrorLevel%==11 goto :AllDefult
+if %ErrorLevel%==10 goto :Uninstall
+if %ErrorLevel%==11 goto :Uninstall
 
 :settingcategory2int
 title Cursor Changer ^| Setting Menu
@@ -3816,7 +3550,7 @@ echo I                        I 2 Show Underline at main menu       I  %setting6
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Show Background at main menu      I  %setting7onoff%   I
 echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I 4 %wmodeonoff%                         I
+Echo I%clr%                        %clr2%I 4 %wmodeonoff%                        I
 echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
@@ -3852,7 +3586,7 @@ echo I                        I 2 Show Underline at main menu       I  %setting6
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Show Background at main menu      I  %setting7onoff%   I
 echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I 4 %wmodeonoff%                         I
+Echo I%clr%                        %clr2%I 4 %wmodeonoff%                        I
 echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
@@ -3889,7 +3623,7 @@ echo I                        I %clr%2 Show Underline at main menu%clr2%       I
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Show Background at main menu      I  %setting7onoff%   I
 echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I 4 %wmodeonoff%                         I
+Echo I%clr%                        %clr2%I 4 %wmodeonoff%                        I
 echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
@@ -3926,7 +3660,7 @@ echo I                        I 2 Show Underline at main menu       I  %setting6
 echo I========================I                                     O==========O
 echo I  Category  up or down  I %clr%3 Show Background at main menu%clr2%      I  %setting7onoff%   I
 echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I 4 %wmodeonoff%                         I
+Echo I%clr%                        %clr2%I 4 %wmodeonoff%                        I
 echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
@@ -3963,7 +3697,7 @@ echo I                        I 2 Show Underline at main menu       I  %setting6
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Show Background at main menu      I  %setting7onoff%   I
 echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I %clr%4 %wmodeonoff%%clr2%                         I
+Echo I%clr%                        %clr2%I %clr%4 %wmodeonoff%%clr2%                        I
 echo I%clr% Cursor Changer Visuals %clr2%I                                                I
 echo I%clr%                        %clr2%I                                                I
 echo O========================O==O=====================O==========O============O
@@ -4994,7 +4728,7 @@ echo By default, it is a dark theme.
 pause
 goto :settingcategory2intsetting4
  
-:alldefhelp
+:uninstallhelp
 cls
 echo This is the uninstall menu. This menu uninstalls Cursor Changer.
 echo This menu contains functions to display the path to the Setting file (the text file in which the settings are recorded) and to initialize (set to default) the settings.
@@ -5014,16 +4748,16 @@ if "%batverdev%"=="stable" (set batverdevshow=Stable)
 if not defined dummy (set /p nothing=[?25l<nul)
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 
 :batver_main
+rem GUI type 1
 rem Main Bat Version Menu
 title Cursor Changer ^| Version Info
 if "%batverexit%"=="true" (set batvercurrent=& call :batver_exit & goto :mainmenu)
 if not defined batverboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :Mainmenudrew & echo %clr2% & set batverboot=true)
 rem I'm doing this because when I use ANSI ESC sequences in Virtual Studio Code, the parentheses are colored incorrectly and I don't like that
 call :batver_Core_Drew
-if not defined dummuy (set ccmmul=[4m)
 if not defined dummy (
 echo [6;12H O=================================================O 
 echo [7;12H I             Cursor Changer  Version             I 
@@ -5089,13 +4823,11 @@ if not defined dummy (set /p nothing=[?25h<nul)
 exit /b
 
 :batverupdate
-cd %~dp0
 cls
 title Cursor Changer ^| Updater
 echo Starting Update Process...
-set Powersheller=Fullupdater& call :Powersheller
+call :Powersheller Fullupdater
 pause
-cd %batchmainpath%
 mode con: cols=75 lines=25
 exit /b
 
@@ -5103,11 +4835,12 @@ exit /b
 
 :Appmenu
 cls
+rem GUI type 1
 rem initialize variable
 mode con: cols=67 lines=20
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 set Appmenucurrent=0
 
@@ -5397,7 +5130,7 @@ rem initialize variable
 mode con: cols=75 lines=20
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[0m[107m&set clr2=[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 set cursorchangecurrent=0
 
@@ -5742,10 +5475,10 @@ set cursorchangeexit=& exit /b
 
 
 rem dogcheck. verify if %Settingsfile% exists
-:AllDefult
+:Uninstall
 cd /d %batchmainpath%
-if "%settinghelptoggle%"=="true" (goto :alldefhelp)
-if exist %Settingsfile% goto :AllDefulttest
+if "%settinghelptoggle%"=="true" (goto :uninstallhelp)
+if exist %Settingsfile% goto :Uninstalltest
 if not exist %Settingsfile% goto :Dogcheck
 
 :Dogcheck
@@ -5820,304 +5553,368 @@ taskkill /im chrome.exe
 call :exit 0
 
 
-rem alldef (i mean its uninstall menu)
-:AllDefulttest
+rem uninstall (i mean its uninstall menu)
+:Uninstalltest
 cd /d %batchmainpath% 
-find "nodogcheckfor1234567890qwertyuiop" %Settingsfile%
+find "nodogcheckfor1234567890qwertyuiop" %Settingsfile% >nul
 cls
-if %ErrorLevel%==0 goto :AllDefult1
+if %ErrorLevel%==0 call :UninstallMenu & goto :settingcategory1intsetting5
 if %ErrorLevel%==1 goto :Dogcheck
-rem Uninstall menu
-:AllDefult1
-title Cursor Changer ^| Uninstall Menu (experimental)
-Cls
-echo Choose how to uninstall. b to go back.
-echo Press the number you want to select or use w to go to the top or s to go to the bottom item, select the desired part and then enter the y or e key to confirm.
-echo.
-echo 1 Delete all data related to this bat file and turn cursor back to white
-echo.
-echo 2 Delete everything, leaving the cursor intact
-echo.
-echo 3 Initialize settings
-echo.
-echo 4 Display the file path of the Setting
-echo.
-echo Nothing is currently selected.
-choice /c 1234wsb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect1
-if %ErrorLevel%==6 goto :alldefselect1
-if %ErrorLevel%==7 goto :settingcategory1intsetting5
+goto :settingcategory1intsetting5
 
-rem Uninstall menu branching
-:alldefselect1
-Cls
-echo Choose how to uninstall. b to go back.
-echo Press the number you want to select or use w to go to the top or s to go to the bottom item, select the desired part and then enter the y or e key to confirm.
-echo.
-echo %clr%1 Delete all data related to this bat file and turn cursor back to white%clr2%
-echo.
-echo 2 Delete everything, leaving the cursor intact
-echo.
-echo 3 initialize settings
-echo.
-echo 4 Display the file path of the Setting
-echo.
-echo 1 is currently selected. press y or e key to confirm.
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect1
-if %ErrorLevel%==6 goto :alldefselect2
-if %ErrorLevel%==7 set alldefselect=1&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=1&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
-
-
-rem Uninstall menu branching
-:alldefselect2
-Cls
-echo Choose how to uninstall. b to go back.
-echo Press the number you want to select or use w to go to the top or s to go to the bottom item, select the desired part and then enter the y or e key to confirm.
-echo.
-echo 1 Delete all data related to this bat file and turn cursor back to white
-echo.
-echo %clr%2 Delete everything, leaving the cursor intact%clr2%
-echo.
-echo 3 Initialize settings
-echo.
-echo 4 Display the file path of the Setting
-echo.
-echo 2 is currently selected. press y or e key to confirm.
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect1
-if %ErrorLevel%==6 goto :alldefselect3
-if %ErrorLevel%==7 set alldefselect=2&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=2&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
-
-rem Uninstall menu branching
-:alldefselect3
-Cls
-echo Choose how to uninstall. b to go back.
-echo Press the number you want to select or use w to go to the top or s to go to the bottom item, select the desired part and then enter the y or e key to confirm.
-echo.
-echo 1 Delete all data related to this bat file and turn cursor back to white
-echo.
-echo 2 Delete everything, leaving the cursor intact
-echo.
-echo %clr%3 Initialize settings%clr2%
-echo.
-echo 4 Display the file path of the Setting
-echo.
-echo 3 is currently selected. press y or e key to confirm.
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect2
-if %ErrorLevel%==6 goto :alldefselect4
-if %ErrorLevel%==7 set alldefselect=3&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=3&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
-
-rem Uninstall menu branching
-:alldefselect4
-Cls
-echo Choose how to uninstall. b to go back.
-echo Press the number you want to select or use w to go to the top or s to go to the bottom item, select the desired part and then enter the y or e key to confirm.
-echo.
-echo 1 Delete all data related to this bat file and turn cursor back to white
-echo.
-echo 2 Delete everything, leaving the cursor intact
-echo.
-echo 3 Initialize settings
-echo.
-echo %clr%4 Display the file path of the Setting%clr2%
-echo.
-echo 4 is currently selected. press y or e key to confirm.
-choice /c 1234wseyb /n /m ""
-if %ErrorLevel%==1 goto :alldefselect1
-if %ErrorLevel%==2 goto :alldefselect2
-if %ErrorLevel%==3 goto :alldefselect3
-if %ErrorLevel%==4 goto :alldefselect4
-if %ErrorLevel%==5 goto :alldefselect3
-if %ErrorLevel%==6 goto :alldefselect4
-if %ErrorLevel%==7 set alldefselect=4&goto :alldefselectokey
-if %ErrorLevel%==8 set alldefselect=4&goto :alldefselectokey
-if %ErrorLevel%==9 goto :settingcategory1intsetting5
-
-
-rem Warning message when initializing settings
-:alldefsettingonly
+:UninstallMenu
 cls
-:alldefsettingonlyokey
-echo This menu will initialize your settings. Thus, everything you have ever set will be returned to its default settings. (Return to the settings you had when you first started Cursor Changer.) Are you sure? (Y=Yes / N=No)
-choice /c yn /n /m ""
-if %ErrorLevel%==1 goto :alldefsettingonlyokey2
-if %ErrorLevel%==2 goto :alldefsettingno
-:alldefsettingonlyokey2
-echo Are you sure you want to delete it?(Y=Yes / N=No)
-choice /c yn /n /m ""
-if %ErrorLevel%==1 goto :alldefsettingyes
-if %ErrorLevel%==2 goto :alldefsettingno
-goto :alldefsettingonly
+mode con: cols=75 lines=22
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clrwhi=[30m&set clr2=[90m[107m[30m)
+set UMsel=0
+:UninstallMenu_main
+rem Draw Update Available UI
+title Cursor Changer ^| Uninstall Menu
+if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
+if "%UMexit%"=="true" (goto :UninstallMenu_exit)
+echo.
+echo                                Uninstall Menu
+echo                       O=============================O
+call :UninstallMenu_Textdraw
+echo                   O======================================O
+echo                   I%UMcb1%      Uninstall of Cursor Changer     %clr2%I
+echo                   O======================================O
+echo                   I%UMcb2%  Management of Cursor Changer files  %clr2%I
+echo                   O======================================O
+echo                   I%UMcb3%         Exit Uninstall Menu          %clr2%I
+echo                   O======================================O
+echo.
+echo             %clrgra%W,S or 1~3 to move, Y or E to select, B or N to exit.%clr2%
+choice /c 123WSYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==8 (set UMexit=true) else if %Errorlevel%==9 (set UMexit=true)
+if %ErrorLevel%==1 (set UMsel=1)
+if %ErrorLevel%==2 (set UMsel=2)
+if %ErrorLevel%==3 (set UMsel=3)
+if %UMsel%==0 (set UMsel=1& set UMcb1=%clr%& goto :UninstallMenu_main)
+if %ErrorLevel%==4 (if %UMsel%==1 (set UMsel=1) else if %UMsel%==2 (set UMsel=1) else (set UMsel=2))
+if %ErrorLevel%==5 (if %UMsel%==1 (set UMsel=2) else if %UMsel%==2 (set UMsel=3) else (set UMsel=3))
+if %ErrorLevel%==6 (call :UninstallMenu_Core)
+if %ErrorLevel%==7 (call :UninstallMenu_Core)
+set UMcb1=& set UMcb2=& set UMcb3=& set UMcb%UMsel%=%clr%& goto :UninstallMenu_main
 
-:alldefsettingyes
-echo Initializes the Setting file. All previous settings will be deleted.
-echo If you wish to cancel, exit the batch process at this point.
+:UninstallMenu_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UMsel%==1 (call :UninstallMenu_Uninstall & cls & exit /b)
+if %UMsel%==2 (call :UninstallMenu_Management & cls & exit /b)
+if %UMsel%==3 (set UMexit=true& exit /b)
+
+:UninstallMenu_exit
+rem initialize of variable
+set UMexit=& set UMsel=& set UMcb1=& set UMcb2=& set UMcb3=& set clrgra=
+if not defined dummy (set /p nothing=[?25h<nul)
+cls
+mode con: cols=75 lines=25
+if "%Uninstall_Shutdown%"=="true" (set Uninstall_Shutdown=& call :exit 1) else (exit /b)
+
+:UninstallMenu_Textdraw
+rem Drew texts
+for /l %%i in (6,1,12) do (set /p nothing=[%%i;0H[0K<nul)
+if not defined dummy (set /p nothing=[6;0H<nul)
+if "%UMsel%"=="0" (
+echo                        %clrwhi%Welcome to the Uninstall Menu.%clr2%
+echo.
+echo          In this menu, you can access into some uninstall features.
+echo                   Select the feature that you wish to use.
+echo.
+echo           %clrgra%Currently, Nothing is selected. Please select something.%clr2%
+) else if "%UMsel%"=="1" (
+echo                         %clrwhi%Uninstall of Cursor Changer%clr2%
+echo.
+echo         You can uninstall this batch ^(Cursor Changer^) in this feature.
+echo                Several uninstallation options are also available.
+) else if "%UMsel%"=="2" (
+echo                      %clrwhi%Management of Cursor Changer files%clr2%
+echo.
+echo              You can manage some Cursor Changer necessary files.
+echo              like %Settingsfile%, and %FirstSTFsfile%.
+) else if "%UMsel%"=="3" (
+echo                              %clrwhi%Exit Uninstall Menu%clr2%
+echo.
+echo                Exit the Uninstall Menu without doing anything.
+)
+if not defined dummy (set /p nothing=[13;0H<nul)
+exit /b
+
+:UninstallMenu_Management
+cls
+title Cursor Changer ^| Management Files
+echo Management of Cursor Changer files
+echo.
+echo In this feature, you can check or show Cursor Changer files.
+echo Please select the feature from blow.
+echo.
+echo 1 : Open the %Settingsfile% in notepad
+echo 2 : Open the %FirstSTFsfile% in notepad
+echo 3 : Open in Explorer where the file is located
+echo 4 : Initialize the Setting file
+echo 5 : Exit this feature
+echo.
+set /p selected=Input :
+if "%selected%"=="1" (call :UninstallMenu_Management_OpenSetting_inNotepad)
+if "%selected%"=="2" (call :UninstallMenu_Management_OpenFSTFSF_inNotepad)
+if "%selected%"=="3" (call :UninstallMenu_Management_OpenSetting)
+if "%selected%"=="4" (call :UninstallMenu_Management_InitializeSetting)
+if "%selected%"=="5" (exit /b)
+if "%selected%"=="b" (exit /b)
+if "%selected%"=="n" (exit /b)
+goto :UninstallMenu_Management
+
+:UninstallMenu_Management_OpenSetting_inNotepad
+cls
+echo Setting file will open...
+start notepad.exe %Settingsfile%
+timeout /t 1 /nobreak >nul
+exit /b
+
+:UninstallMenu_Management_OpenFSTFSF_inNotepad
+cls
+echo FistSTFs file will open...
+start notepad.exe %FirstSTFsfile%
+timeout /t 1 /nobreak >nul
+exit /b
+
+:UninstallMenu_Management_OpenSetting
+cls
+echo Cursor Changer files path will open...
+start explorer %batchmainpath%
+timeout /t 2 /nobreak >nul
+exit /b
+
+
+:UninstallMenu_Management_InitializeSetting
+cls
+echo This feature initializes the settings. (All settings will be at their default values).
+echo Anything you have set up so far will disappear.
+echo Do you really want to initialize? (Y or N)
+choice /c yn /n /m ""
+if %ErrorLevel%==1 goto :UninstallMenu_Management_InitializeSetting_ask
+if %ErrorLevel%==2 goto :UninstallMenu_Management_InitializeSetting_ask_no
+cls
+goto :UninstallMenu_Management_InitializeSetting
+
+:UninstallMenu_Management_InitializeSetting_ask
+echo Are you sure? (Y or N)
+choice /c yn /n /m ""
+if %ErrorLevel%==1 goto :UninstallMenu_Management_InitializeSetting_ask_yes
+if %ErrorLevel%==2 goto :UninstallMenu_Management_InitializeSetting_ask_no
+cls
+goto :UninstallMenu_Management_InitializeSetting_ask
+
+:UninstallMenu_Management_InitializeSetting_ask_yes
+echo Initializes the setting file. All previous settings will be deleted.
+echo If you wish to cancel, exit the Cursor Changer at this point.
 pause
 cls
 call :Wipealldeta
-title Cursor Changer ^| ...
-echo Initialization is complete. In order to apply the changes, Cursor Changer will Restart. Press Any Key to Continue...
+title Cursor Changer ^| Setting initialize is complete
+echo Initialization is complete. Restart Cursor Changer to apply changes. press any key to reboot...
 pause >nul
+set UMexit=& set UMsel=& set UMcb1=& set UMcb2=& set UMcb3=& set clrgra=& set Uninstall_Shutdown=
 call :rebootbatch
+exit /b
 
-:alldefsettingno
+:UninstallMenu_Management_InitializeSetting_ask_no
 cls
 echo Settings were not initialized.
 pause
-:alldefsettingno2
-cls
-echo Do you want to keep going to the uninstall menu or go back to the home?
-echo Which do you want to do? (return to settings=1 / uninstall menu=2)
-choice /c 12 /n /m ""
-if %ErrorLevel%==1 goto :settingcategory1intsetting5
-if %ErrorLevel%==2 goto :alldefselect3
-goto :alldefsettingno2
-
-:alldefshowsettingpass
-cls
-echo Displays the path where the Setting file is located.
-start explorer %batchmainpath%
-timeout /t 3 /nobreak >nul
-echo Depending on your environment, you will most likely find %Settingsfile% at the bottom or at the top.
-pause
-cls
-:alldefshowsettingpass2
-echo Do you want to keep going to the uninstall menu or go back to the home?
-echo Which do you want to do? (return to settings=1 / uninstall menu=2)
-choice /c 12 /n /m ""
-if %ErrorLevel%==1 goto :settingcategory1intsetting5
-if %ErrorLevel%==2 goto :alldefselect4
-goto :alldefshowsettingpass2
-
-:alldefselectokey
-if %alldefselect%==3 goto :alldefsettingonly
-if %alldefselect%==4 goto :alldefshowsettingpass
-cls
-color 9f
-set alldefentered=true
-title Cursor Changer ^| Uninstall of Cursor Changer 
-echo This uninstall menu will restore all registry and first-time record files modified by this batch file and remove Cursor Changer itself.
-pause
-cls
-echo In other words, using this feature will cause the mouse cursor to be initial white, and this batch file to be deleted completely, and Cursor Changer will have to be installed again in order to use it again!
-echo (it does not initialize the OS)
-pause
-cls
-echo In addition, the creator, tamago_1908, assumes no responsibility for any damage or disadvantage resulting from the execution of the uninstallation!
-echo.
-pause
-:AllDefultOkey
-SET /P selected=Are you sure?(Y=Yes / N=No / B=Back)
-if "%selected%"=="y" (goto :yes2)
-if "%selected%"=="yes" (goto :yes2)
-if "%selected%"=="n" (goto :no2)
-if "%selected%"=="no" (goto :no2)
-if "%selected%"=="back" (color 07&goto :Mainmenuboot)
-if "%selected%"=="b" (color 07&goto :Mainmenuboot)
-if "%selected%"=="debugyesnow" (goto :yes2go)
-echo ?
-echo.
-pause
-echo Enter the valid choice.
-echo.
-pause
-cls
-goto :AllDefultOkey
-
-:no2
-cls
-color 0B
-echo [40m[3m[96mLet's turn back the clock...
-timeout /t 3 /nobreak >nul
-find "wmode=false" %Settingsfile% > nul
-if %ErrorLevel%==0 color 07
-if %ErrorLevel%==1 goto :wmodeonoffdetect
-:wmodeonoffdetectalldefno2
-find "wmode=true" %Settingsfile% > nul
-if %ErrorLevel%==0 color f0
-goto :Mainmenuboot
-
-:yes2
-rem Final confirmation of uninstallation
-set selected=
-SET /P selected=Really good?(Y=Yes / N=No / B=Back)
-if "%selected%"=="y" (set alldefclr=[31m&set alldefclr2=[97m&goto :yes2final)
-if "%selected%"=="yes" (setalldefclr=[31m&set alldefclr2=[97m&goto :yes2final)
-if "%selected%"=="n" (goto :no2)
-if "%selected%"=="no" (goto :no2)
-if "%selected%"=="back" (color 07&goto :Mainmenuboot)
-if "%selected%"=="b" (color 07&goto :Mainmenuboot)
-if "%selected%"=="debugyesnow" (goto :yes2go)
-echo.
-echo ?
-pause
-echo.
-echo Enter valid choice.
-pause
-cls
-goto :yes2
+exit /b
 
 
-:yes2final
-rem Final confirmation of uninstallation Season 2
-set selected=
-echo.
-echo 
-SET /P selected=%alldefclr%You won't regret it, will you? (if you continue, You can't restore it!)%alldefclr2%(Y=Yes / N=No / B=Back)
-if "%selected%"=="y" (goto :yes2go)
-if "%selected%"=="yes" (goto :yes2go)
-if "%selected%"=="n" (goto :no2)
-if "%selected%"=="no" (goto :no2)
-if "%selected%"=="back" (color 07&goto :Mainmenuboot)
-if "%selected%"=="b" (color 07&goto :Mainmenuboot)
-if "%selected%"=="debugyesnow" (goto :yes2go)
-echo.
-echo ?
-pause
-echo.
-echo Enter valid choice.
-pause
+:UninstallMenu_Uninstall
 cls
-goto :yes2final
+mode con: cols=72 lines=21
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clrwhi=[30m&set clr2=[90m[107m[30m)
+set UMUsel=0
+:UninstallMenu_Uninstall_main
+rem Draw Update Available UI
+title Cursor Changer ^| Uninstall of Cursor Changer
+if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
+if "%UMUexit%"=="true" (goto :UninstallMenu_Uninstall_exit)
+if defined UMUcb2 if "%wmodetoggle%"=="true" (set clrgra=[107m[48;2;180;180;180m) else (set clrgra=[90m)
+echo.
+echo                        Uninstall of Cursor Changer
+echo.
+echo.          O==================================================O
+echo           I                                                  I
+echo           I             Cursor Changer Unistaller            I
+echo           I                                                  I
+if not defined dummy (echo           I[50CI)
+if not defined dummy (echo           I[50CI)
+echo           I                                                  I
+echo           I   O==========================================O   I
+echo           I   I%UMUcb1%       Uninstall this batch normaly       %clr2%I   I
+echo           I   O==========================================O   I
+echo           I   I%UMUcb2%%clrgra% Uninstall and Restore Cursor from backup %clr2%I   I
+echo           I   O==========================================O   I
+echo           I                                                  I
+echo           O==================================================O
+echo.
+if not defined dummy (set clrgra=[90m) & if "%wmodetoggle%"=="false" (set clrgra=[90m) & if "%wmodetoggle%"=="true" (set clrgra=[107m[38;2;140;140;140m)
+echo           %clrgra%W,S or 1~2 to move, Y or E to select, B or N to exit.%clr2%
+echo.
+call :UninstallMenu_Uninstall_Textdraw
+choice /c 12WSYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==7 (set UMUexit=true) else if %Errorlevel%==8 (set UMUexit=true)
+if %ErrorLevel%==1 (set UMUsel=1)
+if %ErrorLevel%==2 (set UMUsel=2)
+if %UMUsel%==0 (set UMUsel=1& set UMUcb1=%clr%& goto :UninstallMenu_Uninstall_main)
+if %ErrorLevel%==3 (if %UMUsel%==2 (set UMUsel=1))
+if %ErrorLevel%==4 (if %UMUsel%==1 (set UMUsel=2))
+if %ErrorLevel%==5 (call :UninstallMenu_Uninstall_Core)
+if %ErrorLevel%==6 (call :UninstallMenu_Uninstall_Core)
+set UMUcb1=& set UMUcb2=& set UMUcb%UMUsel%=%clr%& goto :UninstallMenu_Uninstall_main
 
-:yes2go
-rem I can't back down. They're coming...
+:UninstallMenu_Uninstall_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UMUsel%==1 (call :UninstallMenu_Uninstall_Confirm 1 & cls & exit /b)
+if %UMUsel%==2 (call :UninstallMenu_Uninstall_Confirm 2 & cls & exit /b)
+
+:UninstallMenu_Uninstall_exit
+rem initialize of variable
+set UMUexit=& set UMUsel=& set UMUcb1=& set UMUcb2=
+mode con: cols=75 lines=22
+exit /b
+
+:UninstallMenu_Uninstall_Textdraw
+for /l %%i in (8,1,9) do (set /p nothing=[%%i;12H                                                  <nul)
+if %UMUsel%==0 (set /p nothing=[8;16HPlease select how to uninstall this batch.[9;19HB or N to cancel the uninstallation.<nul)
+if %UMUsel%==1 (set /p nothing=[8;21HYou can uninstall Cursor Changer.[9;18HDelete setting files, and batch itself.<nul)
+if %UMUsel%==2 (set /p nothing=[8;19HUninstall Cursor Changer, and restore[9;21HYour cursor settings from backup.<nul)
+if not defined dummy (set /p nothing=[22;0H<nul)
+exit /b
+
+:UninstallMenu_Uninstall_THISISWIP!!!!!
+title Cursor Changer ^| This Feature is not implemented!
+echo.
+echo                        Uninstall of Cursor Changer
+echo.
+echo          O=====================================================O     
+echo          I                                                     I
+echo          I        This feature is not available at now!        I
+echo          I                                                     I
+echo          I      This feature is currently not implemented.     I
+echo          I             Please select other option.             I
+echo          I                                                     I
+echo          I              %clrgra%(Hit any key to Exit...)%clr2%               I
+echo          I                                                     I
+echo          O=====================================================O
+echo.
+pause >nul
+exit /b
+
+
+:UninstallMenu_Uninstall_Confirm
 cls
-color 9f
-echo Execute. If you want to return, stop the batch file.
-pause
+mode con: cols=72 lines=21
+if "%1"=="2" (goto :UninstallMenu_Uninstall_THISISWIP!!!!!) else (set Uninstall_way=%1)
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clred=[91m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clrwhi=[97m&set clred=[91m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clrwhi=[30m&set clred=[91m&set clr2=[90m[107m[30m)
+set UOCsel=0
+:UninstallMenu_Uninstall_Confirm_main
+rem Draw Update Available UI
+title Cursor Changer ^| Confirmation of Uninstall
+if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
+if "%UOCexit%"=="true" (goto :UninstallMenu_Uninstall_Confirm_exit)
+if not "%UOCsel%"=="0" if not "%UOCsel%"=="1" (set UOCcb2=[48;2;214;174;174m[30m)
+echo.
+echo                        Uninstall of Cursor Changer
+echo.
+echo         O======================================================O     
+echo         I                                                      I
+echo         I               Confirmation of Uninstall              I
+echo         I                                                      I
+call :UninstallMenu_Uninstall_Confirm_DrawText
+echo         I                                                      I
+echo         I        O============O      %clred%O================O%clr2%        I
+echo         I        I%UOCcb1% No, Cancel %clr2%I      %clred%I%clr2%%UOCcb2% Yes, Uninstall %clr2%%clred%I%clr2%        I
+echo         I        O============O      %clred%O================O%clr2%        I
+echo         I                                                      I
+echo         O======================================================O
+echo.
+echo           %clrgra%A,D or 1~2 to move, Y or E to select, B or N to exit.%clr2%
+choice /c 12ADYEBN /n >nul
+rem Processing of each move
+if %Errorlevel%==7 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true)) else if %Errorlevel%==8 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true))
+if %ErrorLevel%==1 (set UOCsel=1)
+if %ErrorLevel%==2 (set UOCsel=2)
+if %UOCsel%==0 (set UOCsel=1& set UOCcb1=%clr%& goto :UninstallMenu_Uninstall_Confirm_main)
+if %ErrorLevel%==3 (if %UOCsel%==1 (set UOCsel=1) else if %UOCsel%==2 (set UOCsel=1) else (set UOCsel=1))
+if %ErrorLevel%==4 (if %UOCsel%==1 (set UOCsel=2) else if %UOCsel%==2 (set UOCsel=2) else (set UOCsel=2))
+if %ErrorLevel%==5 (call :UninstallMenu_Uninstall_Confirm_Core)
+if %ErrorLevel%==6 (call :UninstallMenu_Uninstall_Confirm_Core)
+if not "%UOCsel%"=="2true" (set UOCcb1=& set UOCcb2=& set UOCcb%UOCsel%=%clr%) & goto :UninstallMenu_Uninstall_Confirm_main
+
+:UninstallMenu_Uninstall_Confirm_Core
+rem Processing of Confirm key, like Y and E.
+set /p nothing=%clr2%<nul
+if %UOCsel%==1 (set UOCexit=true)
+if %UOCsel%==2 (set UOCsel=3) else if %UOCsel%==3 (goto :UninstallExecution)
+exit /b
+
+:UninstallMenu_Uninstall_Confirm_exit
+rem initialize of variable
+set UOCexit=& set UOCsel=& set UOCcb1=& set UOCcb2=& set clred=& set Uninstall_way=
+mode con: cols=75 lines=22
+exit /b
+
+:UninstallMenu_Uninstall_Confirm_DrawText
+if not "%UOCsel%"=="3" ( 
+echo         I   Do you really want to uninstall Cursor Changer?    I
+echo         I   If you uninstalled it, you'll need to Reinstall    I
+echo         I  to use this batch again. and it cannot be undone!   I
+exit /b
+) else if "%UOCsel%"=="3" (
+echo         I                 %clrwhi%Are you really sure?%clr2%                 I
+echo         I                                                      I
+echo         I                                                      I
+exit /b
+)
+
+
+:UninstallExecution
+cls
+echo.
+echo                        Uninstall of Cursor Changer
+echo.
+echo          O======================================================O     
+echo          I                                                      I
+echo          I   %clrgra%Hit any key to execute uninstall...%clr2%                I
+echo          I                                                      I
+echo          I                                                      I
+echo          I                                                      I
+echo          O======================================================O
+pause >nul
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H Uninstalling... %clrgra%^(DO NOT close the batch!^)%clr2%<nul)
+timeout /t 1 /nobreak >nul
 
 rem Uninstall menu exception handling FIrstCursor in the absence of FIrstCursor. But it is redundant and I want to improve it.
 rem I want to add more exception handling. For example, if the message is never possible without modifying the contents, it should be able to do a goto, branch on a variable, and change the message.
 cd /d %batchmainpath%
-if not exist %FirstSTFsfile% if exist %Settingsfile% set erroralldefwhatdelete=%FirstSTFsfile%& call :BSOD_Errors 3
-if exist %FirstSTFsfile% if not exist %Settingsfile% set erroralldefwhatdelete=%Settingsfile%& call :BSOD_Errors 3
-if not exist %FirstSTFsfile% if not exist %Settingsfile% set "erroralldefwhatdelete=%FirstSTFsfile% and %Settingsfile%, both" & call :BSOD_Errors 3
-goto :alldefnow
+if not exist %FirstSTFsfile% if exist %Settingsfile% set erroruninstallwhatdelete=%FirstSTFsfile%& call :BSOD_Errors 3
+if exist %FirstSTFsfile% if not exist %Settingsfile% set erroruninstallwhatdelete=%Settingsfile%& call :BSOD_Errors 3
+if not exist %FirstSTFsfile% if not exist %Settingsfile% set "erroruninstallwhatdelete=%FirstSTFsfile% and %Settingsfile%, both" & call :BSOD_Errors 3
+goto :uninstallnow
 
 
 :BSOD_Errors
@@ -6180,7 +5977,7 @@ powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [Syst
 :BSOD_Errors3message3message
 cls
 color 04
-powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"Well, actually it was you who deleted %erroralldefwhatdelete% Right?\", '', [System.Windows.Forms.MessageBoxButtons]::'Yesno', 'Question');exit $result;"
+powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"Well, actually it was you who deleted %erroruninstallwhatdelete% Right?\", '', [System.Windows.Forms.MessageBoxButtons]::'Yesno', 'Question');exit $result;"
 if "%errorlevel%"=="6" (goto :BSOD_Errors3message3messageok)
 if "%errorlevel%"=="7" (goto :BSOD_Errors3message3messageno)
 goto :BSOD_Errors3message3message
@@ -6226,12 +6023,10 @@ pause
 
 
 :bsod_errors_RANDOMFACEHAHA
-set /a bootegg=%random%*17/32767
-set /a bootegg2=%random%*17/32767
-if "%bootegg%"=="%bootegg2%" (goto :bsod_errors_RANDOMFACEHAHA2)
-set /a bootegg=%random%*129/32767
-set /a bootegg2=%random%*129/32767
-if "%bootegg%"=="%bootegg2%" (goto :bsod_errors_RANDOMFACEHAHA3)
+call :RandomDecisioner 16
+if "%errorlevel%"=="1" (goto :bsod_errors_RANDOMFACEHAHA2)
+call :RandomDecisioner 128
+if "%errorlevel%"=="1" (goto :bsod_errors_RANDOMFACEHAHA3)
 rem :)
 if not defined dummy (echo [16a▐█& echo [09a█▌[4a█▌& echo [15a█▌& echo [09a█▌[4a█▌& echo [16a▐█)
 exit /b
@@ -6310,19 +6105,21 @@ exit /b
 
 
 rem Discriminate between uninstall menu selections
-:alldefnow
-cls
-color 07
-if %alldefselect%==1 goto :alldefnowchangeit
-if %alldefselect%==2 goto :alldefnowsettingdel
+:uninstallnow
+if "%Uninstall_way%"=="1" (goto :uninstallnowsettingdel)
+if "%Uninstall_way%"=="2" (goto :uninstallnowchangeit)
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H Error! unexpected argument value. ^(%1^)<nul)
+pause >nul
+call :exit 1
 
 rem Branching according to uninstall menu selection
-:alldefnowsettingdel
+:uninstallnowsettingdel
 del %FirstSTFsfile%
 del %Settingsfile%
-goto :alldefnowfinish
+goto :uninstallnowfinish
 
-:alldefnowchangeit
+:uninstallnowchangeit
 del %FirstSTFsfile%
 del %Settingsfile%
 rem Initialize cursor for uninstallation. Return to white.
@@ -6348,14 +6145,15 @@ reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v SizeNWSE /t REG_EXPAND_SZ /
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v SizeWE /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_ew.cur >nul
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v UpArrow /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_up.cur >nul
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v Wait /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_busy.ani >nul
-:alldefnowfinish
+:uninstallnowfinish
 rem Message after uninstallation is complete
-cls
 title Cursor Changer ^| Good bye!
-echo Everything has been returned to default.
-pause
-echo I guess this is Goodbye... well Goodbye.
-pause
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H Uninstall Complete![8;13H %clrgra%^(Hit any key to continue...^)%clr2%<nul)
+pause >nul
+for /l %%i in (5,1,9) do (set /p nothing=[%%i;11H                                                      <nul)
+if not defined dummy (set /p nothing=[6;13H Goodbye for now, %YourName%![8;13H %clrgra%^(Hit any key to continue...^)%clr2%<nul)
+pause >nul
 rem Get own path, delete own
 del "%~dp0%~n0%~x0" & exit
 
@@ -6403,6 +6201,17 @@ echo.& echo HELLO WORLD!!! (hit any key to exit...)
 pause >nul
 exit /b
 
+
+:AllLabelList
+cls
+title Cursor Changer ^| All label list
+echo All label list :
+set count=0
+powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=1000;$w.BufferSize=$s;}"
+for /f "tokens=1 delims=:" %%a in ('findstr /r "^:[a-zA-Z0-9_]*" "%~dp0%~n0%~x0"') do (echo :%%a& set /a count+=1)
+echo.& echo Number of label : %count%& pause
+set count=
+exit /b
 
 
 :batstarthelp
@@ -6472,11 +6281,11 @@ rem so many set uhhh
 rem STOP SPAMMING SET AUHAUAHAUAHAUHAUAHAHAHAUAHUAHUUAUHHUHUHUHUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHh&SET IHHHHGISJGIE
 if not defined dummy (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrcyan=[96m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[90m&set clrcyan=[96m&set clr2=[0m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m&set clryel=[93m&set clrmag=[95m&set clrgra=[38;2;140;140;140m&set clrcyan=[96m&set clr2=[0m[107m[30m)
 if not defined dummy (set /p nothing=[?25l<nul)
 cls
 echo [Loading Command list...]
-powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=63;$w.BufferSize=$s;}"
+powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=65;$w.BufferSize=$s;}"
 cls
 echo %clr%::%clr2%                      [Entire list of menu commands]      %clrgra%6colors test%clr2%
 echo                  (You can use all of them in the main menu.)
@@ -6490,6 +6299,7 @@ echo           %clrcyan%-%clr2% fulldebug         %clrgra%(enter variable manage
 echo           %clrcyan%-%clr2% getadmin          %clrgra%(trying get admin permission.)%clr2%
 echo           %clrcyan%-%clr2% checkmem          %clrgra%(show memory usage. not accurate.)%clr2%
 echo           %clrcyan%-%clr2% boottime          %clrgra%(show boot time.)%clr2%
+echo           %clrcyan%-%clr2% labellist         %clrgra%(show all labels in this batch.)%clr2%
 echo           %clrcyan%-%clr2% bypassfirstboot   %clrgra%(bypassing first boot constraints.)%clr2%
 echo           %clrcyan%-%clr2% setenter          %clrgra%(wets the enter count in main menu.)%clr2%
 echo           %clrcyan%-%clr2% playdefboot       %clrgra%(playing first start animation.)%clr2%
@@ -6497,7 +6307,7 @@ echo           %clrcyan%-%clr2% crashtest         %clrgra%(will happen Intention
 echo           %clrcyan%-%clr2% reload            %clrgra%(reloading settings.) %clr2%
 echo           %clrcyan%-%clr2% openie            %clrgra%(trying open internet explorer.)%clr2%
 echo           %clrcyan%-%clr2% counttestdeb      %clrgra%(enter the count test mode.)%clr2%
-echo           %clrcyan%-%clr2% alldefnow1        %clrgra%(forced to enter alldefault.)%clr2%
+echo           %clrcyan%-%clr2% uninstallnow1        %clrgra%(forced to enter uninstallault.)%clr2%
 echo           %clrcyan%-%clr2% funanimationdeb   %clrgra%(play rare boot animation.)%clr2%
 echo           %clrcyan%-%clr2% windowsfiltertest %clrgra%(play bad win ver Warning.)%clr2%
 echo           %clrcyan%-%clr2% reboot            %clrgra%(reboot this batch.)%clr2%
@@ -6505,7 +6315,7 @@ echo           %clrcyan%-%clr2% shutdown          %clrgra%(shutdown this bach.)%
 echo.
 echo            ^<%clrgrn%Easter egg purposes commands%clr2%^>
 echo.
-echo           %clrcyan%-%clr2% egg1             %clrgra%(play error message in alldef.)%clr2%
+echo           %clrcyan%-%clr2% egg1             %clrgra%(play error message in uninstall.)%clr2%
 echo           %clrcyan%-%clr2% egg2             %clrgra%(play dogcheck error, inspired toby fox.)%clr2%
 echo           %clrcyan%-%clr2% wwssdadaba       %clrgra%(secret message and show build number.)%clr2%
 echo           %clrcyan%-%clr2% tamago1908       %clrgra%(show goofy message.)%clr2%
@@ -6522,13 +6332,14 @@ echo           %clrcyan%-%clr2% fucu    %clrgra%(it will say fuck you too.)%clr2
 echo           %clrcyan%-%clr2% fucyou  %clrgra%(it will say fuck you too.)%clr2%
 echo.
 echo            ^<%clrmag%Miscellaneous Commands%clr2%^>
-echo.
 :acbatargmentsonly
+echo.
 echo                     %clred%[%clr2%Bat argument commands%clred%]%clr2%
 echo.
 echo            %clrcyan%-%clr2% help              %clrgra%(show available arguments.)%clr2%
 echo            %clrcyan%-%clr2% enablesimpleboot  %clrgra%(boot up with Simple txt.)%clr2%
 echo            %clrcyan%-%clr2% recovery          %clrgra%(boot up with recovery menu.)%clr2%
+echo            %clrcyan%-%clr2% uninstall         %clrgra%(boot up with Uninstaller.)%clr2%
 echo            %clrcyan%-%clr2% bypsbootpwsh      %clrgra%(bypass the powershell when boot.)%clr2%
 echo            %clrcyan%-%clr2% bypsloadsg        %clrgra%(bypass the loading of settings.)%clr2%
 echo            %clrcyan%-%clr2% bypsvck           %clrgra%(bypass the windows version check.)%clr2%
@@ -6551,7 +6362,7 @@ set clred=
 set clrgrn=
 set clryel=
 set clrmag=
-if "%batargmentonly%"=="true" (set batargmentonly= &cls&exit /b)
+if "%batargmentonly%"=="true" (set batargmentonly=& if exist %Settingsfile% (if not "%linuxboot%"=="true" (cls &echo Please wait a while... 2/2& exit /b) else (exit /b)) else (cls &echo Preparing Setup... 2/2& exit /b))
 goto :Mainmenu
 
 
@@ -6695,7 +6506,7 @@ if "%1"=="1" (start "Cursor Changer" ^"%~dp0%~n0%~x0^" recovery& call :exit 0) e
 :exit
 if "%1"=="1" (echo Shutting Down...)
 if "%1"=="2" (goto :batshutdown)
-powershell -command "$pid1 = Get-WmiObject win32_process -filter processid=$pid | ForEach-Object{$_.parentprocessid;}";$pid2 = "Get-WmiObject win32_process -filter processid=$pid1 | ForEach-Object{$_.parentprocessid;}";$pid3 = "Get-WmiObject win32_process -filter processid=$pid2 | ForEach-Object{$_.parentprocessid;};exit $pid3"
+powershell -command "$pid1 = Get-WmiObject win32_process -filter processid=$pid | ForEach-Object{$_.parentprocessid;}";$pid2 = "Get-WmiObject win32_process -filter processid=$pid1 | ForEach-Object{$_.parentprocessid;}";exit $pid2"
 >nul 2>&1 taskkill /pid %errorlevel% >nul
 exit
 :reboot
