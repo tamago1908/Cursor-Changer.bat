@@ -23,10 +23,10 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Update Released! (2024/10/31)**  
-Cursor Changer 1.15β1 (1.15.b1) Update Released!  
-This update includes several UI improvements!  
-Please check change log to see full change log.  
+### **Development News (2024/11/11)**  
+Uhm  
+:(  
+
 
 &nbsp;
 ## 💡 - **About this batch** -
@@ -115,7 +115,7 @@ however, that the current version has fewer features and is not perfect. If you 
 > @ mean is Windows 10 1803 have this by default)
 - **Windows 10 1803 or later**  
 - **@ Powershell 5.1 or later**  
-- **@ ESC Color Sequence support**
+- **@ VT100 Support (Advanced ESC Sequence)**
 - **@ UTF-8 Support** (Recommend : MS Gothic)  
 - Internet Connection (Optional)  
 - Good CPU (Optional)
