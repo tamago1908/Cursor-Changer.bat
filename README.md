@@ -23,10 +23,10 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/11/11)**  
-Uhm  
-:(  
-
+### **Update released! (2024/11/18)**  
+1.15β2 (1.15.b2) has been released!  
+This update includes several functional improvements and additions!  
+See the Change log for detailed changes.  
 
 &nbsp;
 ## 💡 - **About this batch** -
@@ -146,13 +146,59 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 **Thanks so much for giving me feedback!**  
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.15β1](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.1) (build 100)**  
+>  **Beta latest : [1.15β2](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.2) (build 111)**  
 >  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**  
 >   
 >  (Build numbers mean something like milestones)
 ___
 
-### - 1.15β1 build 100 (Beta Update, BUILD 100!!!) 🔥  
+### - 1.15β2 build 111 (Beta Update, NO MORE OLD CODE) 🔥  
+
+#### Added : 
+- **New Start up / Shutdown Sound!**  
+  - (Tadaaa!!)  
+- **New Boot time warning message!**  
+  - (If you takes more than 15 seconds to start up, a warning message will be displayed)  
+
+#### Changed : 
+- **Windows Version check has been improved!**
+  - (It has been moved to be checked at the very beginning of the Cursor Changer code and now uses `leq` instead of `lss` in the `if` statement!) 
+- **The method of bypassing Windows version check has changed!**  
+  - (For detailed instructions, please refer to the Cursor Changer code. Also, the bypsvck argument has been removed)  
+- **`Typoswarning` setting has been replaced by a setting called `Playsound`!**
+  - (This setting toggles whether start up and shutdown sounds are allowed to be played)  
+- **Background now shows `Exit`, `Version info`, and `Update Available` Menu!**
+  - (With it, some UI elements are changed) 
+- **Updater is now uses Update Available UI!**  
+- **The part where changes to the settings are applied has been improved!**  
+  - (it's **-80%** shorter and more efficient!)  
+- Powersheller is sligtly improved  
+- `FullUpdater` function has been deleted from Powershller  
+- Halloween background is slightly improved  
+- Halloween command is sligtly improved  
+  - (Now you can toggle it!)  
+- BSOD has been changed for crashes in older windows environments to be more compatible  
+  - (`BSODErrors_OG`)  
+- Recovery menu UI code has been improved  
+  - (It's more shorter now!)  
+- `Please wait a while...` text changed to `Starting Cursor Changer...`  
+
+#### Fixed : 
+- VT100 syntax has been fixed  
+  - (With it, compatibility with older Windows has been improved)  
+- Some UI code has been fixed to be more efficient  
+- Some English grammar corrected
+  - (For example, `Uninstall of Cursor Changer` is changed to `Uninstall Cursor Changer`) 
+- Other minor bugs fixed  
+
+> This update increases the size of Cursor Changer to approximately **335KB**.
+> This increase is almost entirely accounted for by Start up / Shutdown sounds...  
+> I was able to reduce the increase by shortening some code and compressing the sounds.  
+> If you find a bug or a glitch, please report it in an issue.  
+___
+
+
+### - 1.15β1 build 100 (Beta Update, BUILD 100!!!)  
 
 #### Added : 
 - **Error Handler has been Improved!**  
@@ -192,16 +238,6 @@ ___
 <img src="https://github.com/user-attachments/assets/ea67cfc5-7a9a-4747-bbba-9e7825d35d52?raw=true" alt="SPOOKY BUT COLD THEME" width="300px">  
 
 > [IT IS THE SPOOKY MONTH!!!](https://www.youtube.com/watch?v=vxYgjkZ4L_0)  
-> If you find a bug or a glitch, please report it in an issue.  
-___
-
-### - 1.14b build 91 (Minor Update, UPDATE FIX!!!)  
-
-#### Fixed : 
-- **Update function!**
-  - (A small bug in the update feature has been fixed!!!)
-
-> This update is very small and only a few changes have been made. However, I think it is a fairly important update.  
 > If you find a bug or a glitch, please report it in an issue.  
 ___
 
