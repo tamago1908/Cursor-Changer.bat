@@ -1,11 +1,15 @@
-@echo off
-setlocal
+@echo off & setlocal
 rem Specify size and change codepage to UTF-8
 chcp 65001>nul || (echo Your computer doesn't support UTF-8!& echo.& echo Cursor Changer require UTF-8.& echo Press any key to exit...& pause > nul & exit)
 mode con: | find "75" >nul && mode con: | find "25" >nul
-if "%errorlevel%"=="1" (mode con: cols=75 lines=25& set boottime1=%time%)
+if "%errorlevel%"=="1" (mode con: cols=75 lines=25& set boottime1=%time%& set batbeta=& set updateavailable=& set updatemyversion=& set updateversion=)
 if "%batbootargumentbad%"=="false" (title Cursor Changer ^| Preparing...) else if not "%1"=="BatBootErrorHandlerArgument1908" (title Cursor Changer)
 if not defined dummy (set /p nothing=[?25h<nul)
+
+rem add "true" if you want to bypass windows version check (bypasswinvercheck=true)
+rem O======================O
+set bypasswinvercheck=
+rem O======================O
 
 rem Cursor Changer by tamago_1908
 rem English version.
@@ -59,9 +63,9 @@ rem Shutdown this batch : call :exit 0 or 1 (0 is nothing, 1 is will show "Shutt
 
 
 rem environment setting, It is not recommended to change.
-rem VER v1.15β1
-set batver=1.15β1
-set batbuild=Build 100
+rem VER v1.15β2
+set batver=1.15β2
+set batbuild=Build 111
 set batverdev=beta
 set Mainmenueaster=false
 set firststartbat=no
@@ -95,34 +99,75 @@ if "%errorlevel%"=="1" (set batbootargumentbad=false)
 if "%batbootargumentbad%"=="true" (call :BSOD_Errors 5)
 
 
-rem check powershell is available
-if "%batbootargumentbad%"=="false" (goto :batbootcheckpowershellsafe)
-:batbootcheckpowershell
->nul 2>&1 powershell exit && goto :batbootcheckpowershellsafe
+:batbootcheckwinver
+rem checking windows version
+setlocal enabledelayedexpansion
+rem check windows 10 1803 or higher
+for /f "tokens=6 delims=.] " %%i in ('ver') do set version=%%i
+if %version% geq 17134 (set batbootcheckwinversafe=true) else (set batbootcheckwinversafe=false)
+if "%batbootcheckwinversafe%"=="true" (goto :batbootcheckwinversafe) else (goto :batbootcheckwinverbad)
+
+:batbootcheckwinverbad
+if "%DynamicWinverCheck%"=="true" if "%1"=="dynamic" (exit /b 1)
+rem check windows 8.1 or lower
+for /f "usebackq delims=" %%a in (`ver`) do set version2=%%a
+echo %version2% | find /i "Version 10.0" > nul
+if "%errorlevel%"=="0" (set windowsverfilter=Windows 10, old build) else (set "windowsverfilter=Too old! like Windows XP?")
+echo %version2% | find /i "Version 6.3." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=Windows 8.1)
+echo %version2% | find /i "Version 6.2." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=Windows 8)
+echo %version2% | find /i "Version 6.1." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=Windows 7)
+echo %version2% | find /i "Version 6.0." > nul
+if "%errorlevel%"=="0" (set windowsverfilter=Windows vista)
+if "%bypasswinvercheck%"=="true" (goto :batbootcheckwinverbadwarning)
+rem winver check failed message
+title Cursor Changer ^| Windows version error^^!
 cls
-echo Powershell check failed!
+echo Cursor Changer is does not support Your version of windows^^!
+echo (%windowsverfilter%)
 pause
 cls
-echo It appears that powershell is not installed on your PC.
+echo Cursor Changer is compatible with windows 10 version 1803 or later^^!
+echo (build 17134 or later. Your windows is build %version%^^!)
 pause
 cls
-echo Powershell is required for Cursor Changer to work.
-echo Since Powershell comes standard with windows 10 1803 and later, it is likely intentionally uninstalled or unavailable due to an error.
+echo Older versions (like windows 7, windows 8, 8.1, etc.) are not supported.
 pause
 cls
-echo Please download Powershell 5.1 or later separately or try reinstalling it.
+echo Please update your windows.
+echo If you are using Windows 10 1803 or later and this message appears, please report it in a Github issue.
 pause
+call :exit 1
+
+:batbootcheckwinverbadwarning
+if "%1"=="BatBootErrorHandlerArgument1908" if "%batbootargumentbad%"=="false" (goto :batbootcheckwinversafe)
 cls
-echo If the problem persists ^(the message continues to appear^), please report it in an issue on Github.
-pause
+rem Warning message (when use bypsvck in violation of winvercheck)
+set selected=
 cls
-exit
-:batbootcheckpowershellsafe
+echo.
+echo                                  WARNING
+echo.
+echo Your version of Windows (%windowsverfilter%) does not seem to support Cursor Changer^^!
+echo You seem to be using bypasswinvercheck=true, but if you continue, you are very likely to encounter fatal problems.
+echo If you continue, tamago_1908, the developer of the Cursor Changer, will not be held responsible for any subsequent problems caused.
+echo.
+echo Do you still wish to continue?
+set /p selected=Y or N : 
+if %selected%==n call :exit 1
+if %selected%==y cls & goto :batbootcheckwinversafe
+if %selected%== echo what? "Y" or "N".& pause & goto :batbootcheckwinverbadwarning
+
+:batbootcheckwinversafe
+setlocal disabledelayedexpansion
+if "%DynamicWinverCheck%"=="true" if "%1"=="dynamic" (exit /b 0)
+set batbootcheckwinversafe=& set version=& set version2=
 
 
 :batboot_animationcheck
 setlocal enabledelayedexpansion
-
 rem bootloader animation loader. first of all, load theme setting.
 if exist %Settingsfile% (
     find "wmode=true" %Settingsfile% > nul 
@@ -173,30 +218,40 @@ setlocal disabledelayedexpansion
 if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" ((echo [%linuxishclr%info%linuxishclr2%] Bootanimation Checked...))
 
 
-
 rem boot message
 if not exist %Settingsfile%  (
     if not exist %FirstSTFsfile% (
-        if not "%batbootargumentbad%"=="false" (echo Preparing Setup... 1/2)
-    ) else (title Cursor Changer ^| Preparing...& echo Please wait a while... 1/2)
+        if not "%batbootargumentbad%"=="false" (echo Preparing Setup...)
+    ) else (title Cursor Changer ^| Starting...& echo Starting Cursor Changer...)
 )
-if exist %Settingsfile% if not "%linuxboot%"=="true" (if not "%batbootargumentbad%"=="false" (title Cursor Changer ^| Preparing...& echo Please wait a while... 1/2)) else (if not "%batbootargumentbad%"=="false" (title Cursor Changer ^| Preparing...))
-rem chenge the boot message if it is the first time, or if a value is defined in batbotpowershell, or at boot up
+if exist %Settingsfile% if not "%linuxboot%"=="true" (if not "%batbootargumentbad%"=="false" (title Cursor Changer ^| Starting...& echo Starting Cursor Changer...)) else (if not "%batbootargumentbad%"=="false" (title Cursor Changer ^| Starting...))
 if not exist %Settingsfile% set firststartbat=yes
-if "%batbootargumentbad%"=="false" (
-if not "%linuxboot%"=="true" (
-if not "%firststartbat%"=="yes" (
-if "%bootbatnow%"=="yes" (cls & echo Please wait a while... 2/2)
-) else (
-    if not defined Powersheller (
-        if not exist %FirstSTFsfile% (
-        cls & echo Preparing Setup... 2/2
-        ) else (cls & echo Please wait a while... 2/2)
-    )
-)
-)
-)
-if "%linuxboot%"=="true" if "%batbootargumentbad%"=="false" ((echo [%linuxishclr%info%linuxishclr2%] Boot Message IS NO MORE WORKING...))
+if "%1"=="BatBootErrorHandlerArgument1908" (if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] No more boot message!!!))
+
+
+rem check powershell is available
+if "%batbootargumentbad%"=="false" (goto :batbootcheckpowershellsafe)
+:batbootcheckpowershell
+>nul 2>&1 powershell exit && goto :batbootcheckpowershellsafe
+cls
+echo Powershell check failed!
+pause
+cls
+echo It appears that powershell is not installed on your PC.
+pause
+cls
+echo Powershell is required for Cursor Changer to work.
+echo Since Powershell comes standard with windows 10 1803 and later, it is likely intentionally uninstalled or unavailable due to an error.
+pause
+cls
+echo Please download Powershell 5.1 or later separately or try reinstalling it.
+pause
+cls
+echo If the problem persists ^(the message continues to appear^), please report it in an issue on Github.
+pause
+cls
+exit
+:batbootcheckpowershellsafe
 
 
 
@@ -241,7 +296,6 @@ for /l %%i in (1,1,%n%) do (
     if "!current!"=="recovery" (echo recovery menu is enabled.& set argmentserror=false& goto :Cursor_Changer_REmenu)
     if "!current!"=="uninstall" (setlocal disabledelayedexpansion & set Uninstall_Shutdown=true& goto :Uninstall)
     if "!current!"=="help" (call :batstarthelp& set argmentserror=false)
-    if "!current!"=="bypsvck" (echo winver check is bypassed.& set bypasswinvercheck=true& set argmentserror=false)
     if "!current!"=="bypsadm" (echo getadmin is bypassed.& set adminbypass=true& set adminbypass=false& set argmentserror=false)
     if "!current!"=="bypsloadsg" (echo setting load is bypassed.& set settingbypass=true& set argmentserror=false)
     rem exception handling
@@ -260,86 +314,12 @@ set argmentserror=& set Arguments_Loaderbreaked=& set arguments=& set n=& set i=
 setlocal disabledelayedexpansion
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Arguments_Loader is done.)
 
+rem Error Hander call
 call :batbootErrorHandlerCall
 call :BSOD_Errors 1 %errorlevel%
 
 :batbootErrorHandlerCall
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Error_Handler_Call is Started.)
-
-
-:batbootcheckwinver
-rem checking windows version
-setlocal enabledelayedexpansion
-if "%1"=="BatBootErrorHandlerArgument1908" if not "%1"=="dynamic" (
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Checking Windows Version...)
-)
-rem check windows 10 1803 or higher
-for /f "tokens=6 delims=. " %%i in ('ver') do set version=%%i
-if %version% gtr 17134 (set batbootcheckwinversafe=true) else (set batbootcheckwinversafe=false)
-if "%batbootcheckwinversafe%"=="true" (goto :batbootcheckwinversafe) else (goto :batbootcheckwinverbad)
-
-
-:batbootcheckwinverbad
-if "%batbootargumentbad%"=="false" (title Cursor Changer ^| Preparing...) else if not "%1"=="BatBootErrorHandlerArgument1908" if "%1"=="dynamic" (exit /b 1)
-if "%bypasswinvercheck%"=="true" (goto :batbootcheckwinverbadwarning)
-rem check windows 8.1 or lower
-for /f "usebackq delims=" %%a in (`ver`) do set version2=%%a
-echo %version2% | find /i "Version 10.0" > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows 10, old build) else (set "windowsverfilter=too old! like windows xp?")
-echo %version2% | find /i "Version 6.3." > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows 8.1)
-echo %version2% | find /i "Version 6.2." > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows 8)
-echo %version2% | find /i "Version 6.1." > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows7)
-echo %version2% | find /i "Version 6.0." > nul
-if "%errorlevel%"=="0" (set windowsverfilter=windows vista)
-rem winver check failed message
-title Cursor Changer ^| Windows version error^^!
-cls
-echo Cursor Changer is does not support Your version of windows^^!
-echo (%windowsverfilter%)
-pause
-cls
-echo Cursor Changer is compatible with windows 10 version 1803 or later^^!
-echo (build 17134 or later. Your windows is build %version%^^!)
-pause
-cls
-echo Older versions (like windows 7, windows 8, 8.1, etc.) are not supported.
-pause
-cls
-echo Please update your windows.
-echo If you are using Windows 10 1803 or later and this message appears, please report it in a Github issue.
-pause
-call :exit 1
-
-
-:batbootcheckwinverbadwarning
-cls
-rem Warning message (when use bypsvck in violation of winvercheck)
-set selected=
-cls
-echo.
-echo                                  WARNING
-echo.
-echo Your version of Windows (%windowsverfilter%) does not seem to support Cursor Changer^^!
-echo You seem to be using bypsvck as arguments, but if you continue, you are very likely to encounter fatal problems.
-echo If you continue, tamago_1908, the developer of the Cursor Changer, will not be held responsible for any subsequent problems caused.
-echo.
-echo Do you still wish to continue?
-set /p selected=Y or N : 
-if %selected%==n call :exit 1
-if %selected%==y goto :batbootcheckwinversafe
-if %selected%== echo what? "Y" or "N".& pause & goto :batbootcheckwinverbadwarning
-
-
-:batbootcheckwinversafe
-setlocal disabledelayedexpansion
-if "%batbootargumentbad%"=="false" (title Cursor Changer ^| Preparing...) else if not "%1"=="BatBootErrorHandlerArgument1908" if "%1"=="dynamic" (exit /b 0)
-set batbootcheckwinversafe=& set version=& set version2=
-if "%1"=="dynamic" (exit /b)
-if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] WinverCheck is done.)
-
 
 
 rem main code, (like set variable)
@@ -352,13 +332,14 @@ if "%errorlevel%"=="0" (set checkupdatetoggle=true) else (set checkupdatetoggle=
 if "%disableexit%"=="false" (goto :Powersheller_end)
 
 :Powersheller
-cd %~dp0 & set Powersheller=
+cd %~dp0 & set Powersheller=& set Powersheller_passed=false
 if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Powersheller is started...)
-set Powersheller_passed=false
-if not "%Powersheller%"=="OOBEMusic" (
-    set "batverforpowersheller=%batver:β=.b%"
+if not "%Powersheller%"=="OOBEMusic" (set "batverforpowersheller=%batver:β=.b%")
+if not "%1"=="BatBootErrorHandlerArgument1908" (
+    if not "%bootbatnow%"=="yes" (
+        if "%1"=="CheckUpdate" (set Powersheller=CheckUpdate& set checkupdatetoggle=true) else (set Powersheller=%1& set checkupdatetoggle=)
+    )
 )
-if not "%1"=="BatBootErrorHandlerArgument1908" (set Powersheller=%1)
 
 rem code from startid~powershell must not be displaced code before or after that is ok If it's before or after that, it's ok
 :: StartID1908
@@ -366,7 +347,7 @@ call :getLineNumber startLine StartID1908 0
 goto :Powershellerendcode
 :Powershellercodestart
 set /a startline=startline+5& set /a endline=endline-3
-if "%Powersheller%"=="OOBEMusic" (start /min powershell.exe  -noexit -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto :Powersheller_end)
+if "%Powersheller%"=="OOBEMusic" (start /min powershell.exe -noexit -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto :Powersheller_end)
 if "%checkupdatetoggle%"=="true" (for /f "delims=" %%a in ('powershell -NoProfile "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*') do set Updateinfo=%%a&goto :Powersheller_end) else (powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[System.Management.Automation.ScriptBlock]::create((Get-Content \"%~f0\" -TotalCount $env:endline|Where-Object{$_.readcount -gt $env:startline }) -join \"`n\");&$s" %*&goto :Powersheller_end)
 
 function Disablemax {
@@ -410,7 +391,6 @@ Add-Type $code
 }
 
 
-
 function RefreshCursor {
 # Refresh the Cursor setting.
 Add-Type @"
@@ -432,7 +412,7 @@ function Updater {
 # Check for updates of Cursor Changer with GitHub API. Just check.
 $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
 try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
+}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){return "APIErr"}else{return "GNErr"};break}
 
 
 $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
@@ -470,83 +450,6 @@ if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
             return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
         } elseif ($comparisonResult -lt 0) { return "die" }
         if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) { return "null" }
-    }
-  }
-}
-
-
-
-function Fullupdater {
-Write-Host "Checking update...`n"
-# Check for updates of Cursor Changer with GitHub API
-$repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest"
-try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
-}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went wrong. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
-
-$fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
-$batVersion = "$env:batverforpowersheller"
-if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
-    $fileverArray = $fileVersion -split "\."
-    $batverArray = $batVersion -split "\."
-
-    # Compare version elements
-    function Compare-VersionElement($a, $b) {
-        $isANumber = $a -as [int]
-        $isBNumber = $b -as [int]
-
-        if ($isANumber -and $isBNumber) {
-            return [math]::Sign($isANumber - $isBNumber)
-        } elseif ($a -match "^[a-z]+[0-9]*$" -and $b -match "^[a-z]+[0-9]*$") {
-            return [string]::Compare($a, $b)
-        } elseif ($a -match "^[a-z]+$") { return 1 }
-        elseif ($b -match "^[a-z]+$") { return -1 }
-        return [string]::Compare($a, $b)
-    }
-
-    # Check if version is beta
-    function Is-Beta($versionArray) { return $versionArray[-1] -match "^[a-z][0-9]*$" }
-
-    $isFileBeta = Is-Beta $fileverArray
-    $isBatBeta = Is-Beta $batverArray
-
-    # Compare version arrays
-    for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
-        $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
-        $batElement = if ($i -lt $batverArray.Length) { $batverArray[$i] } else { "0" }
-        $comparisonResult = Compare-VersionElement $fileElement $batElement
-
-        if ($comparisonResult -gt 0) {
-            # Update available
-            Write-Host "An update is available. The current version is `"$($batVersion)`". The updated version is `"$($fileVersion)`".`n"
-            Start-Sleep 1; Changelog; Start-Sleep 2
-
-            if ($isFileBeta) { Write-Host "[TIP] This update is a beta version, so it may have bugs or issues.`n" -ForegroundColor DarkGray }
-                $answer = Read-Host "Do you want to update? (y or n)"
-                if ($answer -eq "y") {
-                $downloadFile = Join-Path (Join-Path $env:USERPROFILE "Downloads") $file.name
-                Invoke-WebRequest -Uri $file.url -OutFile $downloadFile -Headers @{'Accept'='application/octet-stream'}
-                Move-Item $downloadFile (Join-Path (Split-Path (Get-Item "Cursor.Changer.*.bat")) "Cursor.Changer.$fileVersion.bat") -Force
-                Remove-Item "Cursor.Changer.$batVersion.bat" -Force
-                Write-Host "The update is complete.`n"
-                Start-Sleep 2; Write-Host "Rebooting..."
-                PowerShell -WindowStyle Hidden -Command Exit
-                Start-Process "Cursor.Changer.$fileVersion.bat"
-                Killwhole
-            } else {
-                Write-Host "The update was canceled.`n"
-                Start-Sleep 2
-                return
-            }
-        } elseif ($comparisonResult -lt 0) {
-            Write-Host "[ERROR] You have a newer version ($($batVersion)) than the update file ($($fileVersion))!`nPerhaps you changed the version manually... >:(`n" -ForegroundColor Red
-            Start-Sleep 2
-            return
-        }
-    }
-
-    if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) {
-        Write-Host "You already have the latest version ($($batVersion)), so you don't need to update.`n"
-        Start-Sleep 2
     }
   }
 }
@@ -657,16 +560,17 @@ taskkill /pid $pid1 /pid $pid2 /pid $pid > $null 2>&1
 
 Function Changelog {
 # Get latest Changelog from Github, and format it, then show it.
-$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 22};$w.BufferSize=$s;
+try {$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=(irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n' | Measure-Object | %{$_.Count + 22};$w.BufferSize=$s;} catch {}
 try{if($env:wmodetoggle -eq "false"){Write-Host "Change Log :" -foregroundcolor white}elseif($env:wmodetoggle -eq "true"){Write-Host "Change Log :" -foregroundcolor black }else{Write-Host "Change Log :" -foregroundcolor white};$e=[char]27;$clr="$e[7m";$clred="$e[91m";$clrgrn="$e[92m";$clryel="$e[93m";$clrmag="$e[95m";$clrgra="$e[90m";$clrcyan="$e[96m";$c="$e[0m";if($env:wmodetoggle -eq "true"){$clr="$e[100m$e[97m";$c="$e[0m$e[107m$e[30m"};foreach($s in (irm -Uri "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/latest").body -split '\r\n'){if($s -match "####"){write-host "$clrcyan$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match ">"){write-host "$clred$($s -replace '\>', '')$c" `n -NoNewline}elseif($s -match "###"){write-host "$clryel$e[1m$($s -replace '(^\#+)|(\#+$)', '')$c" `n -NoNewline}elseif($s -match "___"){write-host "$clrgra--------------------------------------------------$c" `n -NoNewline}else{$s=$s -replace "\*{3}(.+?)\*{3}", "$e[3m`$1$c";$s=$s -replace "\*{2}(.+?)\*{2}", "$e[1m`$1$c";$s=$s -replace "^\s*-(\s+)(.*)", "$clred-$c`$1`$2";$s=$s -replace "\*+", "";write-host "$s" `n -NoNewline}};rv e,clr,clred,clrgrn,clryel,clrmag,clrgra,clrcyan,c,s}catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){Write-Host "[ERROR] You have exceeded the GitHub API rate limit. This may be because you have checked for updates too frequently. Please wait for an hour and try again." -foregroundcolor red}else{Write-Host "[ERROR] Oops, something went worng. You can try again later. or check the internet connection. `nError log : $_" -foregroundcolor red};break}
 }
 
 
+
 if ($env:checkupdatetoggle -eq "true") {Disablemax; Updater} else {Disablemax}
 if ($env:Powersheller -eq "RefreshCursor") {RefreshCursor}
-if ($env:Powersheller -eq "Fullupdater") {Fullupdater}
 if ($env:Powersheller -eq "OOBEMusic") {OOBEMusic}
 if ($env:Powersheller -eq "Updater") {Updater}
+if ($env:Powersheller -eq "CheckUpdate") {Updater}
 if ($env:Powersheller -eq "Doupdate") {Doupdate}
 if ($env:Powersheller -eq "Changelog") {Changelog}
 
@@ -685,13 +589,13 @@ set "%~1=%LineNr%" & set LineNr=& exit /b
 set startline=& set endline=& set Powersheller_passed=& set batverforpowersheller=
 cd %batchmainpath%
 if "%Powersheller%"=="OOBEMusic" (set Powersheller=& exit /b)
-if "%bootbatnow%"=="no" if not "%Powersheller%"=="Updater" (set Powersheller=& exit /b)
+if "%bootbatnow%"=="no" if not "%Powersheller%"=="Updater" if not "%Powersheller%"=="CheckUpdate" (set Powersheller=& exit /b)
 
 rem get updater variable
 if not "%checkupdatetoggle%"=="true" (goto :Powersheller_get_updater_variable_end)
 rem conversion powershell return variable to batch variable
 if "%updateinfo%"=="null" (goto :Powersheller_get_updater_variable_end)
-if "%updateinfo%"=="die" (set Punish=true& goto :Powersheller_get_updater_variable_end)
+if "%updateinfo%"=="die" (if not "%Powersheller%"=="CheckUpdate" (set Punish=true) & goto :Powersheller_get_updater_variable_end)
 setlocal enabledelayedexpansion
 for /f "tokens=1-4 delims=," %%a in ("%updateinfo%") do (
     for /f "tokens=1-2 delims==" %%x in ("%%a") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%b") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%c") do set "%%x=%%y"& for /f "tokens=1-2 delims==" %%x in ("%%d") do set "%%x=%%y"
@@ -701,8 +605,29 @@ set updatemyversion=%batver:β=.b%
 
 
 :Powersheller_get_updater_variable_end
+if "%Powersheller%"=="CheckUpdate" (if "%Updateinfo%"=="null" (set Powersheller=& exit /b 1) else if "%Updateinfo%"=="die" (set Powersheller=& exit /b 2) else if "%Updateinfo%"=="APIErr" (set Powersheller=& exit /b 3) else if "%Updateinfo%"=="GNErr" (set Powersheller=& exit /b 4) else (call :UpdateAvailable & set Powersheller=& exit /b 0))
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] Powersheller is Ended...)
 set updateinfo=& set checkupdatetoggle=
+goto :CursorChangerOOBE
+
+
+
+:Core_Powershell
+if exist %Settingsfile% (find "PlaySound=false" %Settingsfile% > nul) else (exit /b)
+if not %ErrorLevel%==0 (
+    if "%1"=="1" (start /b /realtime powershell -NoProfile -ExecutionPolicy Bypass -Command "[System.Reflection.Assembly]::LoadWithPartialName('System.Media') > $null; $file=\"%~dp0%~n0%~x0\"; $lines=Get-Content -Path $file -Encoding UTF8; $index=($lines | Select-String -Pattern ':: Base64ID_Sound_Tada$').LineNumber; if ($index -and $index -lt $lines.Length) { $b64=$lines[$index].Trim(); try { $bytes=[Convert]::FromBase64String($b64); $stream=New-Object System.IO.MemoryStream; $stream.Write($bytes, 0, $bytes.Length); $stream.Position=0; $player=New-Object System.Media.SoundPlayer; $player.Stream=$stream; $player.PlaySync(); $stream.Close(); $stream.Dispose() } catch { Write-Host \"Error decoding Base64 or playing sound: $^($_.Exception.Message^)\"; Write-Host \"Press any key to continue...\"; $null = $host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown') } } else { Write-Host \"Marker ':: Base64ID_Sound_Tada' not found or no data in next line.\" }")
+    if "%1"=="2" (start /b /realtime powershell -NoProfile -ExecutionPolicy Bypass -Command "[System.Reflection.Assembly]::LoadWithPartialName('System.Media') > $null; $file=\"%~dp0%~n0%~x0\"; $lines=Get-Content -Path $file -Encoding UTF8; $index=($lines | Select-String -Pattern ':: Base64ID_Sound_Shutdown$').LineNumber; if ($index -and $index -lt $lines.Length) { $b64=$lines[$index].Trim(); try { $bytes=[Convert]::FromBase64String($b64); $stream=New-Object System.IO.MemoryStream; $stream.Write($bytes, 0, $bytes.Length); $stream.Position=0; $player=New-Object System.Media.SoundPlayer; $player.Stream=$stream; $player.PlaySync(); $stream.Close(); $stream.Dispose() } catch { Write-Host \"Error decoding Base64 or playing sound: $^($_.Exception.Message^)\"; Write-Host \"Press any key to continue...\"; $null = $host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown') } } else { Write-Host \"Marker ':: Base64ID_Sound_Shutdown' not found or no data in next line.\" }")
+)
+if "%1"=="3" (powershell -command "$parentProcessId = (Get-CimInstance -Query \"SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = $PID\").ParentProcessId;$processGroup = Get-CimInstance -Query \"SELECT ProcessId FROM Win32_Process WHERE ParentProcessId = $parentProcessId AND Name = 'powershell.exe'\";$processGroup | Where-Object { $_.ProcessId -ne $PID } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }")
+exit /b
+
+rem Base64 Encoded sound data :
+
+:: Base64ID_Sound_Tada
+UklGRvJPAABXQVZFZm10IBAAAAABAAEASD8AAEg/AAABAAgATElTVBoAAABJTkZPSVNGVA0AAABMYXZmNjEuMS4xMDAAAGRhdGGrTwAAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAf4B/gH+Af4B/gH9/f39/f4B/f4B/gIF/fn9+f3+AgYB/f359fX+BgX+AgoOCgn99fH19fXx+f317fHt5enx9fHx7enl8gYWEhYeGhoeIhYOCgX9+fYB/enp8enh8gIF9fH1/f4KHhH+AgH18fXt2cnN0eHh7f31/hIOBg4eKh4SCf319hIaBhIZ8eH2DhX98e3l4en56d3t9eHV4gIN8eHp7fYSIhoeLhXx8gYOBfnx8f4KCfHmAhn94e3+Bf35/fXh6gHt7hYV3cnuFhoJ/gH19goB2eIB9eXp9goSAfH+AhImEgouNhHx8fnx3dHBudoWGenuFiYB9gIB/f399e36Hhn6BioZ3c36EhHxzc3aDioWCg4R7dnZ4fH51bXJ8iIiMlJSMf3yBgX56cmtugY2GioqFfXR1eHV1eXZ1d359hJSNhn52fYWIiYN8eoCGfYOHd3R1e3x5gIV+eHuEgXySl4R+dnd7eHVzbGVufnl2ioh7fn6Dh4iLiYJ9gXx4gpeRgIB+gomLhHp5f4F4cHiGemtydXd9gYGCgIB7dYCTn5B9e36BgH16eH2Ce3aEjY6Dcm9vdX6EhISEenF6hoqTiXWAiYeJhHx/gnpyc3R2hYR0cneDi4mXpo94dnyBh5aLdXJ2eHRsbn17cG1+jomQh29wfIuRj5KNfXh4dHiCh3yDmo6Ae3l6d3RxbGp1iY51aXF9eXaInJB5fX19jKKchoOCgn+Ag397dXF0hpyScGRndIOCg4aHiYd6cnR/gXJ3iJiMfH94dHt4b3F7kIx+hoeFfHt+hJeeg3J2go97bW50dnl/dWxoa2xzfJKYeG14jZWSh4KPloh9goaMd3J4hpiop3xrcWxcZXSLi3F1dn96b2NofImGhYSGqJN8d32OjIqDh4JvYGp6jox2iImAgHZoboudiXV5gIpsZ3R5jIiIiZaRem52eIeKcoSNoJx2Y2l7gnuDlJ6fbWdzcYqPgW1udmxfb4GbhGB9jayvkHx7g4yDgI6fp2ZRX26LiH9+lJdyWWhvioZpfYSWk3NkcntyXGqDqNSQdpKXl5GIfoyMcV9wd5OCYXd7jpZpSV5sbmqAlp+rg3R0hZaJeHSDk6WQhoKQfnCJi5yQcGx6dnhwe3Z/o5eBZGl8h3FbbXZiW29wno55npKVpZtpeYt/eYyQoLN0bYOEjIJmZXh4kZ12c5R8YXyEmJVmVHB5a1FfZXOOg4KOtb2of36NhGhogX6ekHGUmJCQj2Fdbk5LdX6YwXp6oJ+pimRqdnVzk3RkmXhdhIqPk2dagZJvWHBvgJOEpX+Ou4dib393bWhueZ6LcqazsaKMeFV1d2l6iKOSUVpreKmDSVhsdHSosnSPdGeKiq2hem+CfnJ1d3mIfVWTcmWtrKianIZuaHOGknR0f2yIfW6KbE9XW2l4lZWCfmmMmpOPjoN1hZOedolzgYuDp4pwZ3iJlYl5dHtrbqGKdoR3dHllWm1uXWyHc4+Aoq51e5OJT3aOmqm1h3F6Yop+cHNzZF13ksa8gXeBYomli35zb15jcXB1hE9cbYF+WXymrYSHjYBzk5KOpnWIgnJ9kpJRVmxwjZ+GqntukGhuh5aAdYCKiptYZodskXl1gnRke499d4qIXHp6rrRha3qJgXaFhGt4XXmKi8CfeoWDeXVqiJKolnWAYXFtWmRoZ2RkcpK4tGh6g4mcgZOpjmJjdYqFlHJnaFeEf2N8p42KiIaGk4xykX6Ng2t7g3lra2JsepRxlJVqeWVneYmEnZyJfpiTd3pxl4VwgYt8aouZgImJXn51gpyDcWJvbH6Je2x6Xmd3dKCcjYaOfnWGio+yoHWMeYR8YGdmZ2B0i4GMtIqCd3KYhomZmn1jZXiAkX1hdWNzcmxxfIxvgp6MhpeAj5GFineCjY18bnR1c4+DeKaVempganeAeIynkH2BcYJ1cYFweIiJeXaLhXyMdnGKipGJhnplcHN7lI9/bF1ze4eTmZKHiH99jomIn4R0gISAa2hmY2FfbomQnJB0hHyEjoeOmpl/b3V6h4ltb3d9f3B8hoSDdHSImpx9dIeLiHNzfoWDd3F7eHyFdn6Qknlpc3p8eXiFj5GReXmJgnx4eX+HiYKJjn2DfHF8go2Ifn98b252en2JhmlqdIGHg4OAg4iJh4uKjod6eoOPgHNxcXFvb3eDmp59dYCJhH+EiYyGenZ2eoR0a3F7h3x4gIh9cXd9iJqPen6BiYF3fYOCfXt9gIKCfIOJjIl4dXl4d3h7fH2MiXt8f4J4d3+ChIOEh359hHp6eoiRgnp8fXR1e3h7i4V3dXyNjIR+gISEgoOIi4J2d3iFjHpxcXR0dHZ5hJaNe3yFioCBiYqEfXt8fYB7cHJ2g4eAgImJeHR7fYGLi4R+eoJ+e39/enh8f4KBfX2DgoWHgHx6e319end+hoaDfX5/fH+AgoeHiIR/gn54dnuIiH55fHp1eHh1fYWBf3t/iIZ/fYGCf4KHi4Z5eXt9h4Z6dnl5eHp8gIiIg4KBhIB/hYWCfXx+foB9dXV2eoKDf4CFf3d8f3+Dh4iEfX6BgH9+e3p8f4GFg32BgYCEhH96e318e3h7f4CCgHyAf36AgoGBhYOAg4F8e3yCg357e359enl6foGAg4OBhYWBf4B/e3+DhYV9eXp9gYJ+e3t8e3t9f4SCfYKDgoKBgoKAfX1/f4CAenl6e4CDgoGCgH18fX6BgoKCf4CBgIB/fHl5fX+Dg31/fn6DhYJ+foB9ent8gH5+f36Bgn+AgoKBgoF/g4F8fH2Ag4B9e3x9enh4fH99gYOChYWBgIGAe32Cg4N+en18foKCgH19fnx9gISAen6DgoCDg4F/fnt8foCAeXZ6fn9/g4WCf39+fHyCgoB/gYWBgIKCf3x6e32Bg4F+en2CgYGBgH59e3l5fHx5eHyFg36BhIOCgoGAgoN+e32Chn99gX97eXp5eXx/gICEjIh8f4SBenqAgX9+fXp2eYB9eX+Bfn19gIJ/f4GAf4aKgX2DhX59gH98e3t5d3uHiIGBgoB/f317enp8e3yCiYB5gIB5eHx+fHx/enZ7h4mChoyGgIGBfnt7fHp5f4mGgISIfnd7f3x6gIJ4cXyIh4KFgXp7fHpzcXR2eHqChYiHhYKBhYeAe319e3uDh4mLhoB6f4iDdXN4eHZ5gn6DioF6dX2DfHR2fH97fYGAj4t6dnaAhn14fH18fIJ8g5qJd3d+iYV5eHp4eH1/eIiVfG5ueIaAeX2Dg3+Ae3aNk3Vvdn6Bd3N3gIKDfniCmZp7dn6Dg3p3e39/f3RxgpeRdXiEhH10cnh9hYJ3eoWQjHZ2gIB6dnuDhoJ0bHeDioR1en58fn+FjZSJd3qKjpCQgH59d3V0dHR1aWN1iYuNkYSDgHl6fICIhXBnbnN0go2DhoyNj46QlIh4eHt5d4eOenBvcXmAh4Z3cXV3d4GZnImCeXV2c3VvZmp0dXeLoJKBfoCJjJWXh32BfXV2hI19eXqAiIWGe25vcWtpcoWEc3V7hoiJin6Dkoh5d36Qhnh6eXl5gnpwd395c3iRqo54dHeAhYl8dHZzaWlugIR0c3mMoayagnt5cG5zfI2AdHJ1f4WEdW97jIZ9fY2SgoF/g359eW9wdXBpbHiVmZeHdoGIhH2Ej4+AenuFi3p0anKAio5+cnNwaG12iIJ4fH2MmZF5cXqEhYuRkI9/f4CEi4V5bnF3dnR5eoqHfISGiouGenZ7e3Bvd4OOfXZuc4uWlo6Ymn5ucneIgnN7eoiYlH5tbW9sbnCLsZmEgoCIg3hxcXR3c2pleoB4fICXs6aGhYqJhIWGiZSGfnRxf4F5bnN/hoVtZHh3a3eNoqWahnRxcW51doWblpiFgo6Ccm11dnJ1d3KKind2cIKNmZqCfXhte4WKjHd2c3SGkIyBf4iHlJh3iYBueYCNlJSLgXVvZWlkb4V0kqiMjX5lbX11a3l7cYmEdX53fYqIpLiWg3F5g46LcYKCeYN8bGVqZV5pi5V9bmZ1gZOZjpCOgnZygXuLjHSSta2GcmFsfndxlp2MjnV+j2hlY1VolpZvgHxwkoNsinx3f3B4iYN7fomMu6hhhYJ9moRtfod1dYV/eIFlZXVwrI5YamhlaXyHg5KIbpSMi4lnaHyWqomLpJmbdIiTiaB+c32Gb1VaZWmPkGCDgYt2WnmLfV9pgY6qmlh/go68n2puf19ke4eHp36NqYCcakdUam2Bl3V6mpVsl4WPkmN3jYhwb3R5f5+YoH92mWpjd4Btb3mJhZWJaYxkipaEbFxuXWuGpK6ydYeIiaxzWmVxdZe3kXKbd26fhpV5VmmAd3FqaHB6imyTYGmQYnCSnHt0coKDnYiCmYuwi4ijgmloaoikspdnh3yXl2VSWlhQZH+KZHladYuYvIRmb4SAkpKGgpWHga+Xo5h0eYd8c3JqboCMdZN0f52DfYZhOVRbeJOwhnx6d6yRfm1mWl10lbOrkGp/dp6mjoZ7dm18gHiCkmmCipSWd25uhn5+gnhzlX1zelF+bW6KnJBjbXFzlaCDpoGJlneEe3BqdomQnp5HX3FomHyJpZ6BdIyZfIZ2WYJ3taFod2tkYniOfnV/T3ZwbJZ+gpCdkF1dgIKihISfcZaOhpZ9X116kIqvvGh/cnuLcomKeWRYY2toj3BzhHarfmCBi31qfJOClZl6o4aBd1lnco2ZdXOJma57kJqHkW9xe25haHqCd558QGRsgGlifn56g4+rpJiLX4GHl7aSfI2IZV+BjXeDYm2Tf31xfoh7fI93Z3yVfFZ6bm94epSVeGBjeYSOt513fpaXeIibiHJzc3hrfHJhe4Gesah7fY9wX3h9eoNmf4+KeVlbXmdwiYBoiKZ5fKakmXt+kpJ6a3OIipWQeGdfjHJQcY2IcHaXp5WTcXJ4hZmPmHN4fVpbgYV9YlBweol7fImDg36Xn3yXn2JxfH93ZoCUlH6Bj4uDnouOeXKsfWWGkXNUWm5ycmZSaWWNlYmjjJaZdW2Dj45md5CboG1nbGppYn2LgbeqbYaaroNng5GKbm1ybHyMY3ljaZRdUm96ZF+Aoa6sg3iFfKeYjqJ/gIZwb32Le1h8iJmPand1dHd7kZCHqHNPYm1+V1t9johzeX59n6GAmHWTr3l6mJltWmJvjI9VV2N4sJ6ipYiOiHN3h5FrWnt5mIFbZWhmW2B9cn6pgH2Prqx2fIyRhXuDe3SOdXiTZoaJY3OZkFpYc3+ioHaAeJOpfYSIaG13bG2HkV9ccHmhi3R4e3x0fZ2Pn6ZwZmuUhlVfd4uNlZyLkqJ2f4tylJF4e417UlRdZolvWGdiiJKBpLCQi4yDgqCOXXFvgJZ1a3V5bmR3mZSelYaBiK6Rc36GiHNqbWl8b1d5f3aOg2driH5ibnKJooSHgpC0oYOSimZtfHaBqop4hXiTl29eandvaH+al4B5e1xzkWpUZnh6bnyIn7KGgJCXkI2RiIiPd11kbIh2YXBwlqaNgqKkc3KLfpKicWVcZYF8YltlbWhteJCZbYufiaSzlH2Llox3cWuIf19pb42LkZiFfIV7al1yjXJ/g4ScmoZ5joJTWG53o5RycHGVppJsY3JzaneGr5lmiIF7j45wZ4KPfnd7kKx9c3mGooyHfnR7fW1fXX5zYHZodYqSjI2nlG2BiJWri4BnZn2CeWFdamp4i5GzgW+Qf4ulq4yBk492bGBveVVcUW6ThYN+gpCRg21ykXRwgoWZnJWGg5qAVGRvna+Vim+IoJl8YmJnY3BzhZ5iY3N0gYqGbXCAdnF8iKeNeIZ6mKqVhXZyfIB/bHuEaoWGgoSKkIqKk3pjeIWlk4ZxWGx3dltLVl5hb3ecq4CDgoqeuLCTmaCIenFzgl5eX2SSrI92eH+LiXdhfnloe3iLj419c4CKYkpdeIiAmoyHmaKYf3Nya214fpiGa2x4iI6imYuJgm9yfI6GZW9re5qzkG5tZWR4d2t0YGt1d4mTmIaDjZWAb4GmmYyYeXB4i3pjYWxwcG19mJGGbnmEkqikoJqLdnFyfF5KTExkgpx7dIqHgIyFhYd1hoWLlJyOdX2IiHRng5dueZOSjpCZfnJuaWZoan56c2tVcXuGjISDgn9+hJKRc3t3eYupuIR0emhkfIeOgICHe4SJmYhxen9/cmOJm3mFh3ttdHtdWFdSWGFvj4+ZjXmUnqSlrK+ch3t5jXtdZGJ1fZOXa3CDdG99hoJofIWEi4ySdmdsa25jVn17aIObqJmgnYaJg3RxbHl8cIduZYScpZiUjX55eX+RcWRqZnuJqKFzbXBZUGSEdl1wcYKXop5/eYiMk4N/nYmAhI6Qg4d+doBxV1higH18k3h1iZaRkaeqkHpufn5VUk1RYHOUknh7fnNyj6mKhJGMkpqcinZ1fIOPfXh8b3V5k52akXpvenppYGp3YW9+YVx1hnh4jpWLgoCWkXx8eIWRnaaXeXh3ZV+Jp4Z4cXWKop19bHF0dH9/iH54eHaLjYBsX19kW05UeoNxi5aLkayumJiqqpV6gJGAgndnZ21/kIpxbmleYouIfoiAiJOgjm1dXWBobW9vbYB/hJusrZiHh4+HamZ8a2yHj4eKlYVxeZGZjnaEi3t3ZW1/iZCZhWppYEdRd3J3c25/mK2XeXR+hpGhpIV8gHSDnKmkjnVta2VQZnlkcYSMeoWclYOHmqOMdnpfY2ZVWGJxg5uLc3VuYoKVmqmXjJCgqpV7fH10boJ6YHyBeoOXpp6EcXZ8cF1vYVpkbnZmd39uX3SXo46Pi4CVkI2TmJGRmoR1hHludmh7hn59h5ich2lkbXN/o35ugXRvc4OGgm9gYGhib3lkb3OMlo6mtaSHiZ6moaiIfn5vZ2VwdoeSfG5yXmZobI2RkIiNlZV7V1NfWGiEYXGKg4GLoKmtnI+SiXV7Z2R+hZeNeX+EcGB1kY+Xj3B/hoqGh4h/g4VsYFtQXU9bdoWRjpGUmINnboGFqqt+h4yOkp2blY91aG9rcHxhZWhsiImDj5uDcX6NjJZ3XGpnaWJsd4KNi3p1cHJ6couZoqOcorC3kWtoZVx7eml7gH99ipCgpYx/f3FyaE1UU1x2emhxf3BvgISMnYWBkp2mo6KXlJWdkXpoZ1tTaXmVm5KGio5zYWxudZCHd3Z6dHB2dIF6aGp2e4dzZ3FteI6bjqGmiIOXpLatgXd1dnNzeXuCfX93aGx1ZW15gY+MiX2JhWlfYFdidXx7eIWCh4yUr6+hmIyIjX56cWlvg4FofYRxdXt5ioB3hY+Zl5mNhoBtcGlUXFVBVWiHoKSWhJKJcnN3gIuJl5SaopOQhYWJeHN6f4h0Z2xocHSQkXuMhGpsb3uIe3drbXN4hnyBgHWGgXB9c3SGiZais6aXo5B4cWpwaXCEcnR8e4B+laagnot/dFhZU09VWndwaIaBdHqBjH18hYihqrKwoa6gipJ9b2BKVmB0hZaki3+KeXV1d3dfcX1udXZ6dm98eHeEhYx5cn1zd3eCoZSMmY+LipGNg5KHe4CDkohzem5tgoB7a2pzdn57hIdvcX5ybmp0b2eAgnl9gYZ+gpmgr7e1pX55d2tnYGp/d3uDd3F3hHJyhIGJk56lkIKEb257d1pCT1lreYCdpY+Mh32BiIt2e5OQiYqTk3+BhX2Jj45zZXV0d3h6jZiHfXRpYWtrVm1+fHt/lJmGgHtrdoyNcHKEiZqWkp+XiIZ+e36Lf2dxfIJ1cYOEeoiMi5mjmGlcYF5eUVFicn6Ae3x9inlpgYuWmqS7tqWikYOLnIVWW2Jmbmx7k5GQi4CBh41kUl1pdGZugnlueXV9j6CLZ3B0f4aBjp+qq5J/e36CZWh+i5SLkJqOhYBpYXSWgmVzcXJ0cn2BeHhrYGZ7iXBweIeQe4COh4qam6Kwuph6e3V5cGVqb3yDcW94gHpldYWOkISIkYmNhnBrfpBmU2NmamlxhY+Um4yKl6yfc2pre4J0gpGIioqAhZKbfGhrb36DhoyKkIpvaWlrXkxaaX2JiZOXkZSCaWuFnIeHkoeCfoSOio2OeHN8i4RwdnqIhnmJkYqMgHJ9kZd4aGdlZl1cY2uBe2h0foJ4cYabrayenJeUnY5/gpWdd3B3bmlncn2DlZiGhYiHc1pZWmpoYXN3eIR+e4eUln5zdHaFlqmon6iOdH1/eGdgcX6OlJOVj5GQeGxzi49sa29oZ2l0dnZ/dGRteIB0cXyAjoiHm6Stp4mAipqahH53c3RzenF3h25kdXt9cnaGiYuHi4d9hINycHiMhm11dG1pbHd6iaCgoKKbj3Vta2x6c3aBgo+Of4KNlol8f3l5fIaMgIuRbGVycGVPVmZ2hYyVjomUiXqAkq6YfIB4cnB7g3+HiHl8hYp9bXp8hpOJkJSSlH9sbnuEdHNzZmRlc3VpfH5iaXyGfH+WnJ2WlJqOi5OGfYCPnoZ9gX53b3h5eouPhoaGgmZbYVtlbGVpbnyGfHmEmIt6iY6TlJWdlIiYkXV6jINfYGt3hYaTmo2NkoaAhI+FbmhoZ11gcG9xeXBxgI15ZHJ5foycpKekpp2IfYeSfH2EfnVteYN3coJ8aXmOc2V1fYeDe4ODen5/eHaEhoCAeIB+cXeAgpGel5Simm5lb3N1cnh2cnyIh3+GnI5+hIuSh3yEhHVyfXhrgnxXVl5ueXiBjo2KjZWWo6OGiYJ3f3Ztd3dyeoJ7g5yDanF9jIiHmJiOj46CcXp3Zm5wentpZ3V0bW59d3qUh3p5g5GQio2Ojo2NiISWh3yJh4qOg32CfHiEjoOOimdTUGJwZmJxa2t5g3yAin2FjZalo5GMkIuDgoyJi4FyZmR2fXuBjZCSkZGJkZF7dHNwbGtmZ2pjYHF7e4Z/dWluiZuXmaWZkZqaj45+dXt5g4yHeHR2dnZ8hYd8d3txcXt3cXR3eH6FgH6Df4B5gImHiIeNkIaDj5SUiYR3Ymh3em9ygXh1hImMiHp/g4mWnpeEe3hydniAfWRnaWFtdnJyf4qQnaSal4yHiH2Egnt6dnd1bHKAiX52hX1wfo2Vk5mcg3+GhoBraGppcnuFhHNubW97g5aHdIF7eICEfXiEiIGOlJCMgYqKhJCMhoaGjImGhIWHb2l0Y1hfZ2hldXxrcX6KhnyJiYuWmZ2bkYqBhY6Sk3NodHFyeHt2dYaLipigoIl3fXRwdW5samtuZ2tueXplcoOAgoqUlpikmYWHjpWDeHxzeYWNkIh/d3B1fIuLb3Z+dXFycWRld3d1f4qOeneGho+SiouMj5CLiISOhnJ9gnZram9ueIh8b3iGinh7gn6MlpOMiYR4cXmEkn5cY2pnanR3c32VmJScp5x9fIJ9hYV5dHV4e3t4eIF1aHV+f3+GkJScoYpwcX19bnRwZ3aEhIKDgnp4gY2YgW13eXd5fXpwdIOCe4eflH2Fi46ZlIF8gYyRi4OBf2lmc3VwZmBhZXJ+cWh6koyDjIaBjZWQjJGTiYCFmJt9bnBsbHJ5eHB3ipGTpK2LcHFsb315amdpcXZxcHlzaHeEiY2KiYuPn6eNeYSJc3iDeniHkY2JjIp7bneLh3Vxbm1ra2xqZmx4dnWLkHd4goiaraOKf4KKjIiOjnNten2Bf3Zsam19h3VuhH5tfoiFhYuNg3uCioN6iY97dGhhYmVxf4SBh5OTnK2ZgoB5dHuJg3Fud4KBfYh5X2hxdX+JjomFiJeafXl+ZGNzd3NzfoeGi5qfjIGKenN5bm9yc3Z1cnF7hIKTkn+DhoeHkqKWgH6FioKJimZca3V6enpyY11ieoiEjH9udoWLhYSOkYiDjpmOlJJ8gYV5bmtsbnFzdoWRnqaQgn52b2t0gnhlZHN6e4iAbm54f3yCjYyEgo2goJWDbGZtfYSBgomMi4uamo+GcmlwdWhhZWprbGtveH+LfnF4iZeVk5qil4J/i4uRjXdlZHiBg4mMgW9ncoCLgmpjZHeJiIF/gYJ7gZKak35zbHWBdXB6enZ0eISQnJeRjYuQg3Nye4OAcHiHjYR3bV1meHl7h46IeXuLmJiCbl9fb3Z2eH2LlJaisa2MeGxic4F2amxtbG14ho+Jgn9zf4+KhIqQmJaJh5GDb29kXWt6fIGIiHlrdYuPf31uX2+Ag4WKiouIhpOkmIeCd3aBhn1wbXBrbX6SjIGJg36Mj35ycnZ3enp/h3p7fG9rdHt+goqQi4SQnYuAhnJndn98fH+ChYyWq6iRiHdkYmhsbWVnbGpugopzc399f5CWjIeMk5aZmpyMe3luY2VwfoiPlZWIeYF/am92Z2Jze3l5fX6Ch5Gai4aGdWt0gYiHfXl5dXmOh3iHj4qLlJOBd32ChYiPhm5wdG5pam95gISEhoKBi392f4BzanJ3d3+HiIyYqqaWmZF5a2xxdHNsaG90hZN+dX6BeXiFjIOAh5GTmJ6CbnNxaGBia3mEi5SclZGGb251d2tndX1+h4uLiJOfjoqUjnhrcHd8gHp3d3iJhW5seIB9g5CQg31/gn+RlHVudXdxa21yfIiMj5GRlH9weIWLe3R5eHh9gYKHnqKQlJuPcl9fZGtuZmhte4t/dXmEh31/iYqGhIyTma2cfHh5dmplanKAjI6UlJuSdGpteXdkYmlrcn2FgoebkoWIjot2bXJ4hoh9enqJjX10dYOGgIWOk5KOjoeOl3ljZnBzbGxvcXyEhICBjoFtaneOiHR1enp/homEkJyUj5Wfl35wbW93cWlteYiDenN2gn96foKEhIeJipuZfGxsdG9pbG9ygY+TkpugjXpweYd2YmZtc36LjImVmpWNio2AbWhreYeCe3mDhXxzaW11dXZ9h5KZmpSVnYpuYmlyb290dHeEkpGOkId7cHGKln9vb3Fzf42MjY2Oj4qSlIR0a2VscGxqdIB/gXt3f4GAgYCAg4yRkJyhk39xdXdzeHtxbHmKjZOVkIx7eIaBal1aXGR2hImLiZaYkpKJeXFucHyFhYSFfX2Cfn9+dnV9hY2Yop6Ykoh6aWVsbGpxdnJwf4qMhXRycGx9kYp6dnJweYuWmoyGjYuQmJWMh3tydHh7f3Vob3N1fHx4fIOCfoaRk4+Gg3htbW5scoKEeXaEj5WMiJGMiIqHdGpsaWh1hZSTiI+SjY2HeXBycXJ6gYqMd3F1c3h4bmNndYGQpK6wn46Dc29wbGdrd3l1fpCemIB5eXqBiIFua3Jtb3+Sn5KIiYWHiIV+fH53bm51iIRubXB1fX96dX6HhYaOm6GUj4R3enl1cHZ/enN3hZKIf4eLj5SPemBdYFpebIGJgo6VlJWRhHZ0eXp7fYaQf3R5fIWIgnNrdYGFkJ+tpJWPe3Bzb2Zia3Nvb3iKj3pvcHKAjY96aW90dHqLnpePkYuKj4+Ig4iJhoF8hIJtZ2Vpc3p6cnOAh4iJj5SHhoJwbG9xbnF+gn59hJKNgYSIj5aak3hqbm5sbn+IgomPjI2PiXpwdHZ7f4KLgHJubXJ3eXBhZXaEjZanqJygloJ7eXJkZG90eH6Ml4qAf3t8gYaAbGVscXV+kZKMlJCHgoF9cnJ6fICFjIt6cW1scXd+eHF4hIuOlJ6Si5aMe3Z5dGpveXp7fomKfoCCho6TlYVtYmJjYWp3dn+QkY6OkYp9e31+g4mNhXp5eXp+gYF1bHB5g4iVnpaYn5eEe3pwY2RnZ2tzgHpyeH2ChIaFfHFucnl/jZSMkJmVjYqLg3l8g4eOlpN+cXBsaWtxdW9wd3+GipKKfH+HgXFxeXVuc3h8gY2ThYKJi4uPlpWMgHRwb3N9eXaDjYuFhIZ+d3l7fISTi3JtbmxrbXFwbHJ6foSQm5SUoaylj4R/cGhqbnJ7iIR4eYOHhIKBfHdyamx0g4uDhY+TjIJ8eG5qbnmHmqiTeHR2dHBzeXd0eH2AiZmbi4aNlY5+enlwa25zd4KNhHp+hYiFhYiFg3lrZGl3enV7hYuJhoeFgoSEhIWUnYd2eH16dXZ4dHV6fHqBkYyDipupo4+DeWpiX2FlcndubnmGi4aBfnp/fHV3g4+Ig4uVmZSPin53d3mAjqOihnZ1dW9sb3FtcHV2dH+Jgnl7hpKQhH91a2pudYCQkIiFh4uMiImLjpSIdnF8gHp2eYGDgYCAeXl+gYCIlYtzZ2psaWlyd3l8fHl5hIqKjJWns6qXinxycG9xeXx1c3d+hIOBfnh5f3lvdIB/fX6Dh4aDgntyc32DhJGalIJ3e3x6e3x3dHh8e4CIiYuIiJGZk4R4bWhqbXSChIKCgYOCf315dX+Hf3V9gXx4c3d9f4OJh3+Bio2PlZWMfHV4dXJ1eXh3e3t6fHp9homQn6egk4FuZmZla25udXp6eXV3f357hIuDfYB+gYSFjJCQk5KFd3qDhoeLkY2AeXl3dnl3cG5ycXFuanWBh4+amIx/cGVnb3eBg4eMjIuIg4aMiYWNjoWEfnd6eXZ4enuEiH92e4WLioWDeGxpam10e3dwcHZ5fHZ4h5OYnqWkopuJe3p8e3Vvdnt4d3Nud4KBgYaCfXlucHh5dXh7gIuQh31/g4V/gYSDg4KCgIWHgXl6fX98cnWAio+Yl42JgG9mbXR3c3eBh4eDenJ5gX9/goWJfm9wd3h1eX6Fj5KHf4WQlZCOiYR7c3ByeXtzbnN5fXdyeIeRmJ6WkJOKd25xeHZwcnd2cG5qanqJjouHiYd4cnqEhYOFh42Xloh+gImHgX19gYB+fH6Ghnlvbm9sY2JugI6VkoSBhntsbHiAenZ+io6Ni4WEj5mThYCEf3Fwd317e35/h4+Mf3qAhoN7dHV2cXNxcXh2amdvenp2eoSSm6WglJeelYeDiIZ3cnV5dXBvaW6Bj4t/f4R6bGpwc3FydnyNmpGBeoGEgHt5f4KChIOIkpCDfoOEdm5xe4SMlIqAhol+cnN8d25we4OBf3pydoeRiX5+emxnbHZ8foSGiZSYjoOFjo+MhoOEgH56cnR7dWppdXl0dXyGjpufj4WIhnx0e4N9c3B0dXFwbGt2i5OIf4WDenh8goKDhIOJlJeMgoSFhIF6e359f39/h42Dc25ybGRmcXp9iIh9fIWHf3qAgHVxdYKJjI+LiI+bm4l/fHBoaXN6fYSIh4yWk4d+f3h0cW1ydXx+dnBzd29ka3R0dX+KjZOiopiWmpWJhYqFenR1eXd3dnJxfIuKfXx7cWxtcGxtdHp+iJGNhIKDfH1/gIKCg4SDhpGWjoWGgXVzeHt2e4iHgIKHhX5/fnVvb3Z3d3h5eXuFkpCDfG9jY21zdn+LkZKXm5SNjomAgYSCfn6BgHp2eXlvam5sa3SDh4SNmZWKh4R8eX9+d3N2d3R0dnl5e4SNiIB+dnN7hoJ8f4eLi42OiIaIfnd+hYJ9fH+DgX+Eg3l1cWppc3x1b3eFhH+DhoSGh3tydHx9f4OKj5CQlZmRhXhrZW10cHJ9jJGTl5SLhn9vaG90cnR4e356dnZzb25tbHB+h4iJlqWjnZuVjY2IfHR3fXl3d3yAf32ChYF4bmZlbnFraXODioiIhYOFgXl5hoqEgYGFi4uLj46Lhn97fIJ/d3J8h4SBg4KChoB0bnJzbmtudn6Ei5GSiHluZmZvc3J1g5Sam5yZlpOLgH2GhH96eX6DgXx3cm5pZmZwfYGAgY2Uj4qHg4OFfW9tdXh3dHmCiImIiYd+dXFvd4GFgoCJkI+LiYWBf314foeFgX1/g4aDfnl1cnJzdXt7eHJxfIOCg4WDg4WCeXh9fn58gouUmZqXj4B2b2lsb3NydYOQmJmWjYR+d25yeHd1cHF3f4F9eHFrbGttdXyDh5Cfo6GfnZeOiH5ycnZ4eXh8hYuLiYh7bGdjYmRqcnV8hYqJhoN9d3t+gIiIhIOBg4uSko2Hf3+GhYN+fHx4fYODgoOCfHl/fXVxbm5sanB/jpKSjX9ycG5sbHJ4d3qFkpqenZWPkY6OjoV8dnJze4OEf3VqaWxtbm91eX2Hjo2Ok5WJf352bmhrc3h9g42Uk5KMeW9ydHNzfoaIiImMi4mEeXZ+g4eFgH9/fn6Eh4N7b2t1gIB2cXR2eoGEgYKGg3l7hIV9dnl+gISLlZiXl4t4cnZ0bGx0eHl7g4yQlY6BfoSKioF0bGpqbnd/gn1xam92dW9ye4SPnKCfoqSZiIKFf3BobHN7gIiPkpORf2pmaWNeZnN8fXx/f4GDe3F2g4qKhoGChIaMk5WXj394f4eAeHh8f4SJhn+Bg3pyd4F9cGprcHZ8hIiIi4h5bHF1b21ye4CAgoeMl56Wj5afnJOFeHJwcXd7gIV6amlydm5pbXR8hpCQj5aUg3Z6f3VpZWl1foiSlZeak390eXlycnmBhIODg4OJhnhyfYaIiIJ9fn+BhoiKintranRzbW1zen6HjIaCiIN1c3+Ggnt7gYWHjJCOj5GIeXN4dG1udX2AgIF/g46Ng4GMkIyEdWpoaXB2eoGDdWtvd3VwcnqEjp2jnJufk4J+hYR6b2ttdH+Lk5WXkoV0bm5nYWVtcnN2eHh/hXxydoOIiYuFgoSKlZuen5R/c3R3c3N4foGEjo+FhYZ6b3F6e3Zzb290fIODgoWBeXFwdHJzeH6ChIiIiZOZlZCUm5iSjH90cXR6fICCeW5qcHJtbHF2e4CMkIyPint0eH57dHFtcHeFk5ebmpKLhoF7cnF0d3l7gYKBh4N5dXqDg4eLg3x+iI+OjYl8bmZmZmRtdXt+hpOSi4mBd3V8hoeFg35+gYqOjIyIgHx4dXNwdXt/gYSHg4SIgXp9hoyHhYN2bWx1e36BfXNubnNzc3uDhoiRnZyYlImBgIWFf3t4cnB3hpGVlo+Hg3lwZmRoampqcnd3en15dnmAhISNkYuIjpmdnJqPgXhycGxtdnyAg42Wk42GenJyeXl0dHJwcXeAgX9+dnR3d3Vxc3uAg4aOk5KSjoaGjJORj5KPg3h5foB/fXVvb3Bva291dXR2hI+OiYB3dHp/e3p8fHd3f4yUmJmTkJCKfHFwc3R1eH6Af397d3mBhICCi46HgoWKiYmGe3JwbWJcY295gIeRmJSOg3t9hoh/fYCCf3+Fi4qIgXh4gH9ybXN9g4OGi4uHgHZyeoeGf4CFhXx1eHx8fHdwcHh5cnN7goSEiJCWlo+FfoWLg3t8f4J+foWKjJCMg4KFeWdiZWpraW5xdHh4dneBh4B+hZOalZOVlpSRioGAgXVnZWx4gIWLk5aTiXx5gX5wamx0eXh5e3l5d3Jve4J2bG54g4iLkpSTkIuCgoyMhoaNl5OJg4B+fXp0dHh0a2hpcHR1eX+FiIR8dXp+enZ3f4aHhoeIi5GVkZKVjHtwbnV4d3h6eXl8e3uAgn56fIeTkouHhISFg316dGthXGFrdH6HjpOXlIyJioZ+d3h+g4WHiIaCgX57fH55cG10foOGioqFgoJ+fHp3dnV6ho2JhIF/fHx6eXdzcnJ0en+BhIeKjZGNiIV/fXx7gIaKjI2LhoWHh4WBf3htaWpramttbm1ze39+ent7f4mVnZuYlY+Njo6JfnVwbW1wdHqCi5CTlpKMgnZxbG1yd3l7fn13dXZ4dXFzcW5zeoGJkZaUj5CSj4R9fH2EjJWXko6Jgn9/f3ZsaWhqbm9ydnt/foCAf3pxbXB1fYSJjJCVk4+OkpOLhYV+eHd1dHV5end3e4OCenh5fYKIjo+NjIiDgoSCc2hkY2drbXB2gYuRl5ubkYN9eXl9f4GCh4yJhIKDgHRyc3Fzd3l8gIiKhoSHioJ1b2xweYGLi4qKhoJ/gn91cG5xeHx7fH+GiImLi4l+d3V2foSKjI2SlpKJhIaCenp5c29raGRmbXFwcnmAfXl6f4eNk5iWlZSRjYuMhntzb3F2eHZ2fIaNlJiWjn91cG9ydXZ0c3h+fXl7fHVucXFwdXuAgYiRlJGOkZGIf3p5f4aPlZORkY2HhIJ4bWZjZ290c3N3fX17fHt0bGtscXuFi42Rm6CdlZKOhICCgHt4dnNwc3h6eHl/gH1+fX6ChomKiYmJh4OBem5oZmRpcHV1dX6Jk5ugnJCDfXl2eX5/fH2EjIyKi4R4dHZ0c3V3dnZ8hIiHiYh/d3JtbHN8hYqLjI6NjY2Cd3JtbHB3fH19g4iJi42GeXJydXmBiY6PkJSXlJKNgHV1dnJtaWdlZWlucXV8fHl9gYOGjJGSkpCPkZCSjn52dXRzdXt/fn2Di5CWmYx8dnRycXFycGxtdX6EiIR4c3R4d3Z4enx/g4mNk5WMg4KAfX2CiY+Sk5OUlpiLdmtnZGRnbXJzc3V5eoGAcGdna3F4gIqRkpacoqWhkIB8f4F9d3V0c3R1eH2EgHd3e359foOIi4mGhYSIhXVmY2dqbG92fX+CiI+YopqJfnx8fn18e3p5fISOmZWFe3p+f3lycG9wdXyAiIyBdW5xcnFzeH+Fi5CVnKGYhndwcG5sbnV7fX+DiZCRg3Rub3R6gIWIiouQlqGkloFycHJxbGhmZmhtcXd+fXZydH6EhomMkJKTk5SXlId4bnB0dnd7gIaJioqPko+FeXV1dHRybmppbHN/ioyEeXZ7gYJ9eHV0eYGIjo6KgXp8goOEg4WJj5ado6GXiXhubGpoZmZqbnJ2e359em9mZ2pweYCEiI6XoKanopWFf318fHd1c3N6goaCfnpybXF2fIGEiImNkJCKgHhvZ2RmaG1xdn+IkJeWkI6Lg359fH2Af3t4eoOMjI6PiIOCgYF9d3JucXqEgnp2cWxrb3R4e3x9g4+copyXkomBenRvbm9wdHqFjIaCg4F6dXNzeH+BgYKMmp2bm5aLfnVua2poZmZseoJ8d3ZzcXN3fYKJjI6SnqOZjYV+eXd0cXJ3foKHkJiViYOEgn13cm5ucHBubXZ9e3qAg4OEgoCBgn96d3yHiIB8end3eXyAhouNjZOippuTjoiEgHlwaWZmZGdwenhxcHN0cm9ubnV/hIeMmJ2am52clYyBeHd4d3R2gIiGgH13cG5vcXZ/homJjpeRg3lzb2xqZ2VncHuCi5iclYyHhYSBfXh2en+Af4OIhoSGioyLiIF6e35+enh+fXVuaWZkZ2tudH2FiYyXoJyVkZCMiIN8dG9wc3N4gYJ/fHt+gH56dnV4foGFjpOUk5STjod+cmhoa2xrcXp9fHt5dXJyc3R5goyRlJ2fl42GgX15d3Jwc3yEiJCVlJCLhYF8dm5nZmpxc3d8end5f4SGh4aBfICEg4CCg396d3Rwb3N4fIKNl5yfpKCYkY6LiIV+dWtlZGVnbG9ub3FydHZ3dXJze4GGjZKQk5ecm5eTi393eHt7fYGEhYKAe3NucHJzd36Gio2NiYN/enNvbWpnaW94gouTk5KRkIuFgX14cnN6gIWLiYWFiI6NiYaCfnyBhIOBfHRtZ2ZjXl5kaXB6hpOeop+alZORioeEf3l0c3N2eXl3d3yBgYCCgHx2dn2EjI6NiomNj4mEf3pybW9wdHd2eXp7fXlycHBydX2GkZqbmZSQjYh/e3h1c3V5f4WMjo+OkY+Ge3NtZmJmb3h+f357fYSHhIGBgH6BhYiKhn95dnVzbmpqb3eAjJmlqqegmJWUjoaCfXVuamdoamloZ2lxd3h3eHh2dXmCio2NjYyPlZWRjYqGgoGChISCgH5/gH14c3FwcXR6gYeJiYaCgX94cG5ubG5yeH6Dh4uNj5OTi4J8d3NyeIOIioyMi42OiYN/fn+BhIeHgXlwamhlYVxbXmNteoqXn6OjnpmVkYqDgoB7eXp8eXV0c3V5f4KCgX57eXuCioqJiYaEhIJ/fHp5eHp9f3t5eHZ4fHx4dHJycnZ+iI2PlJeVko+Kgn19e3h4e359f4WJjI6NiH93bmdmanR5en+DhYaFgX17e3p+hYyNh4OAfHl3cmpmaGtxfo6bnqCkpaOdlo2Cfnp1cG9xbWZkZWhscHR2d3h3d3qBiYmIioyNjIyKh4iHh4mOko2Gg4B9fn56dnRzcXF0fH99foKHiISAenZ2dXJxdHl4d3yCiY6Qj4yJhHx3eICEhIeMkZOQioJ+fn19gYiLg3t2cnBuaGBaWl1ia3mJkZOZoKSjnJKIg4OCfnyAgHh0dHV4fH59fX58enyCi4yIhYSDgX55dHN3enuAiYuEfXh3eXt5c3FydHV4gIeJiIyQlZaRiYSEhYN8eX17eHp+goaJhoF9e3Vua3B2eHl9hIiIhoB6eHp9foSMjIeCgH+AfXVqZmhrc3yJkpSYnqSoppyNgHt5dXBxc25qampscHNyb3B1d3h7hIuKiYiKi4qIgn5/hIiLkpmXkIeAfn9/eXJwcXBydXp6d3l8goeJhXx4eHt6dnd3c3N4fYKIjIqHiImGgX+ChISHio+Qj4uEf31+f3+EhIB8dnJxcW9mXVteZGt2f4SKkZqgpqWbjIOBgoF/gH14eHp7fX9/enZ3fH+Ag4aHhoWDgX57dnFucHd+hoyNioWAenh6eXJubnJ2fIOFg4SHi4+UlpCIg4SHhIOBenZ2eXt8fn98eXl7e3h4dnd7fX+Bg4SCfnp6fYKFh4aFhYN/fX98c2xrbXJ7goWIkJmfoqWiloV6d3h2c29qam1yc3J0c29rbnZ7gIKChYmLi4mIhoJ9fH+Gj5aXlZSSi4N/gHtxamhqb3d5dnN3fICDiYuFfHZ4fIB/eXNyd3t8foOGhYSHi42MhoKDiIqKiYqKiIJ+fn+CgXx6enp1cG5wbmhjYmVrc3Z4fYmUmqClpJmMhIOGh4J6dnh9gH9+f314d3p+hIN/e32ChIF9e3Zyb29zfYeJiIiLiYN7eXp3cm1ucnuCg4GCh4yOkZaWj4aCg4mMhXt1dHV1dHV4eXd3eoCEgHt2d36Af36AgX9+fX+Eh4WBg4eHgnx7fHt3c3F1en1+f4SNlZmcn5uPg3t4e3lybGluc3V0dXRycHB0fIB/fHuAiI2Mi4mFf31+g4uRkpOVmJWLgn16dXBqaGxvcXJydHp/g4eLioJ8eHp/gH14dXd4eXt/g4SEhoqQkIuGgoSKjo2LioaCf31+fnx6d3l7eXRwcHFwbmtpamttcXV9iZKZoKShmZCKiIaEgHt6fH6AgoSBfXt5e318eXV0d32BgX98d3Nzdnp8gIOEiYyLhX99e3h3dXV1d3t+f4KIjZGVmJWQioaFgoF+eHRzcnBzdXV2d3p/gYF+enZ4fIGDhIOAgIGCgoCChIOFiIaBf4B+fH17eXVzdnh6gIiQlZqblo+IgXp1dHRxb3Bxc3Z3dXN0dnd5ent7fYKKj5CPioSBg4SDhYqPj5GSjoiCfXZ0cm9rZ2lscHN4foSHiYiFgX99enl9f3t5eHl7gIKBgoaIiYqLi4iFhoqOjYqEf36Afnh1eHp4d3h3dnd2c3JxbmhlaG1yd3+IkpqfoJ6blo2EgYSEf319f4KFg357e3hzcnN1dHR6gISEgXx4eHh2cnR7goSHioqIhYF9fX55c3F0en6Bh4yRlZWSj42KgXt8gH53c3FxdXd2dHZ7e3p7fX14d3yCh4iFgH6BhIJ/gIWHhIOEhIWFgoGCgHhwbW9yc3h/ho6UlpWTkIl8dnh8eHJubXF3fHp3eHh1cXN5fX6CipKUkYyGg4WEf3yBiYyMi4yLioV9eXh1bGVjaG5zeX2BhIaEgYGDf3l3foKAfHt7foOFgn+DhoSChYqKh4eLj46LhH17fXx4d3p9fHl3eHp9enR0dXBoY2RpbnR7hI2XnZ6dnZuSh4SIiIN+fHt/hIaBe3p2b2ttcnZ4fYSIiIV/eXZ1cG1vdn2ChYiKjY+KhYOCe3Jub3R6gYmOkpWVkIuLiIB6e39+eXV0dHd6enV0d3Zzc3d6fH2BhomJhoB9f4GAf4OHiIaFhIWJi4iFg392bmpqbG91fIKJkZSTkpCLg35+fHdxbm5wdn1+fHp4dHFydnuAho2SlJKOiYSCf3t6fYGFh4mKi42Nh4J9dWxlY2VqcHd+gYSGhoOBf316e4CBgH5+foCEhoOBgIB/gIOFh4mMj5CMiIJ8eXh3eHp8fn18e3x7fX16eHRtZmNkZ2txeoSLk5qdnpyXk46NjIiBfXx8foGFgn55c29ub3BzeYGIioiFgHp0b2xrb3R4fYOJjY+Sk5CMhHpxbm9xdn6Hj5KTlJGNh4F9e3+AfXl4eXl6fHx6dnJvb3F1d3p/hoyMiYWCf3x8fYGGiIiHiImKi4yLiYR8cmtqaWlrcXqCh4yRlJOOioWDg392cG9xcnZ7fn57d3Rzdnh7foWPlpaSj4uFfnl2eHt9foGHi42Oj46KgnhsZmVkZmpye4KFiImHg357en2ChIKBgoSFhoeGg397eXt/goOGipCTkImDfXdzcnR5fX9+fn+Af359fXt2cGhlZWZpb3iCi5GVmpyZlZGPkZGMhH99fn1/gYF8eHNub3BxcnZ9hoyLh4F6cm1rbHB0dnqAh46TlpiVkYuBd3Fvb3F4gIqQk5KRjIV+e3p8fn57ent8fX17d3Jua2tuc3d7gIaOk5GNhoB7enyAhIeJiIiMjo2MioaBfXZwa2hnZ2tzfIOIjI2MiYeGhIOEgXt4d3h5e318enl5eHl6fH+DipGXl5SNgnt4d3Z2eHp8f4WLjo+OiIN+eG9nY2NlbHWAhoqKhoF/fn9+gYeKiIiKioiHhH56eXl4eHt/goeMkpSRioB2cXFzdXh7fHx+gIKBgX96d3d0bmlpam52f4iPlJaTkJGTk5CPkI6JhIKAfXx6dXJzcm9tbnJ1eYCHjIuFfHVxcW9vcXV5foWMk5ial5GOjIV6c3Fxc3mCiY6QjYeAfn57eXp/gX9/gH58eXRtamxubW5zen+GjZSZmZOIgH1+fX6BhYiLjI2PjouEfX19d21oZWZobnV8goeHgoCDhYOChIiIhIF/fn1+e3h6fn57eXp+goaOlZqZkIR8eHZycHF0eHuAhYmNjYeChIN4bGVjZWlxeoGHi4mCgIKEhISIj5COjIuKiIV+d3d3dXJydnyBh4ySlpKGeXNzcW9wcnd7fYCChIWCfHh8fXdxbnBzd36EiY+SjoqKj5COjY+SkIuGgn9+eHFtcHJwbW1vc3Z7gYmPjIF2cnJwb290eoCGjZKWmpiRj5KPhHlzcXN1en+EioqDfHp6eXh5f4SEg4F+fHpzbGprbGprbnR8hY6XoKSdkIR/fn18fYGFiIyNjIyKg318fntyamVmZ2tyd32CgHt4e36Bg4WKjoyJhYOGhX97e319fHt7fYGGjJKZmpGDeXVzcG5ucXN2e3+DiIqHhIWFf3VtaGhqb3R6gYaHhIKFhoiJjJGTkpGNi4qFfXd0cnBubnB1eoKKkJWTiX10cnFwb3FydnuAg4SFgn99gYSBfHd1dXh9gYaMjYmFg4aJi42PkZCNiYN/fXhxbWxtbW5vcHF0e4KKj4uCd3FwcXJ1eHyAhouPkpWVlJWVkYmBeXRyc3Z6foGBfXl4d3d4fYKFhYaDfnx6dXBsa2ppam1yeYSQm6KjnpOIgoKBf35/gIKHiYmIh4OAgYB7dW5oZmdrcHV6e3p2dXZ7fYKJjI2NjYyKiYiFgX9+fXt+f4CBhYuSlpOLgXl0cnBvbm9wc3d7foKFhomKiIB5c25sbG90eX+DhIOFiImJjJGUlJWUkIuHg314dnNua2xucXZ9iI+QjYZ/enh0cXFyc3Z6foGCg4OEiY2Jg397eXd5fYKFiIaDgYKEg4WKj5COjIqEf3t3c3Jyb2xsbnFzdn2EiYmGgHt6d3V1d3t+gISIio2RlJicmpGIgXx3dHR2eHp7end3eXh2d32DhYSFg4B7eXd0dHFsaWpwdnyEjpidnJiTko6HgX5+gICBg4SEhYSDhoiCeHFtbWxrbXF0dXVzdHd3d3d9h4+RkZKQjYuIh4iHgn18foKEhIeLkJCMhoOAeXBram1vb3FzdXh9gYaNjYd9eHd3dXN1eX2AgoKFhoWDg4iSl5eWk4+Lh4OBf3lyamhqbnJ0eoGIi4iHhYF6c25vc3Z5e31/gYaIjJCOh4F+f3+Af4GDhYWDgYB+e3p7g4uPjoyIhIB9enl2cW5rbnJ0d3p9g4iJiIaCfnp1c3Z6fX+Ag4aLkJSYmJWNhoSCgX16eHd4eXh3dHJwb3N8hIeHhYKBf35+enZybm1wdHh8goiQlpmamJONhoB9fX+AgYKCgoOFhoWDfndzcXFycXJzdHV3dnRxcHBzeoWOkpOTkY6PjoyHgoB/f4CDhIWHiY6Qj4yEe3Vva2lqbG1vcXN3fIKEhYWDgX9+f3+Af35/gYODgH18fYCGj5WXlZOPjIyLhX13cWxramxucXZ7goeKiYN9eXVycXN2eX2AgoWJjY2LioeDgoKCg4WGhYSDhIF7d3V1d3yDh4mJhoOBgoF8dXFwb3BzdXh8gIWKjo+Lg3x4dnV2dnh7foGDh4yQj46OjYyKh4SCgH16eHh4dG9sa21yeICEhYWEg4OGhoB7dnNyc3R2en6DipGWmZaPiYWCgH+Af4CBgH+Bg4N/fXx5d3Z1dXZ4eXh3eHh1cXBwc3h+houOkI+NjpGOiISAf3+AgYKFiYyOkZGOhHpybmtqamlqbW9ydXl+gH+BhIaHhoWEhYeFg4KDgn15d3d7gYiNj5CRkI+Pj4mAeHJubGtqa25zeH6FioqEfXh2d3h5ent9gIGDh4uJiYiHhoWEg4OFh4eFhYeEfXZycHF1en5/goOCgYOEgHp1c3NzdHd6f4WKj5OTjoV9d3R1dnV1d3l9f4OIi4qLjY2Mi4iEgYGBf3x7e3Vvamlqb3Z8gIGEh4iKjIqEfXh1dHV0dnh8goiPlZeSi4WBgYODgX58fX18foF/fHt8e3l6eXd3enx9foGBe3Vwbm9zeoCDhoiLjI+RjomFgoCAgYODhYiMj5OTjYJ4cGtqa2xqaWptcXV7fn1+gYaGh4eGhYSHiImKioV+eHR0d3yDiYuNj5CQkI2GfXdybmxtbGxucnmBiYuGgXx4eHp9f358fH2AhIeGg4KFh4eGh4aEhYiLjY6KgXlybmtscHV4eXt+goWFgn16eHd4eXx+f4GFi5OXk4uCfHd1dXd4d3V2eoCFhoWChIeIh4eGg4B/gYSFhH52bmtpaW1zfIGEh4uOj4uFf3t5dnR1dnZ4fIKLk5WSi4aDgX9/gIB+e3t+gH97d3V3ent7fHx9fICFi4yJgHhybmxsb3V8f4KGjI+Oi4eEg4SDg4WFhIOGi5GTj4Z9dnJubG1ub25ucnd7fHx6e4CEhISFhoWGio+SkIuDfXl2dHV5f4aJi4+Qj4qFfnl3dHBubm9wcnh/hYeHg39+fXt6fH5/foCDhYSBfXp8gISFhYeIiYyRlJKOhXx1b2xpaGtvdXl+goOBf3t5e3x+foCCg4OGioyOjouFgH16d3Z4ent8f4KBgH16eXt/gYKBg4KChYmJh4N9d3Jwbmxuc3uCiI2Oi4iEgH19fHl3d3h6fYKIioyOjYmGg397e3x+f4CCgX15dXJxc3Z5enx/g4ePkpGOiYF6c3Bsam1wd36EiYqIhoSCg4SGhYSEhYaIioqHhoWCfXh1cXBvcnR2ent7eXh4dnd5fYCAg4SHi4+Rjo2KhoF8end2eHt/houMiYWCfnt5d3VycHBydXl9f36BhoeFg4B9e3t8gIOGhoN/fXt5eXp9gYKGio+UlpSQjIZ/d3BqZmVmanB5gIF+fHt7enyAgoSEhoeKjIyKhoeIhIB9enl5en2AhYeFgHt5dnV0dXh7fX+BhIiKh4WEgn55dXNyc3d6gIiMioaCgH9+fnx7e3p7fYGGh4aGiYyKhoF9enh5e32BgoB6d3VycXBxdHh8gomQlZaTj4yHgHlybWpqbXF5goeHhIOCg4KEhYSEhYaIiouHgn+Af3x4dHFxc3V4foSFgn57eXZ1c3V4e4CEiI6Qj4yKi4uHg357enp7fYKHh4J9e3l4d3d2dXZ3eHt9gH9/goiKiYWBfXt6e36DhoaCfnt6eHh3eX2BhYqQlJaUkIyJhH10bWdkZWhtdXt+fHt8fYCBgoOEh4mKi42LiISEhYSBfXl4eXyAhYqMioV/e3Zyb21ucnZ6f4SHiIeFhYWEgX58e3p7foKFh4V/fXx8e3t7e31/goWHiIeGhYiKioaBfHh2d3l8fn9+end1c3FwcHN5gIiOkpSUkpCOioaAenJtbG1xdnyBgoGCg4SEg4KBgoWIiYiGgoB9fn58eXRycXR6gYaLjIqGgXx2cW9ucHV8g4iKjIyLjI2LioeEgX58fn+AgX97eHV0c3JzdHZ6foOEhIWEhYeJiYeDf3t5en2AgYKBgIB+e3h2dnd7gYiNjo+Ojo2MiYR/eXNuamptb3J2eXp9gIGBgoOCgoWJjIuKiIaFhISDgHx5eHl+hYmLjIuJhX94cGtoaGtxeH1/gYOFh4mIh4eHhoOBgYKBgIB+fHt5d3V2d3p8gomNjIuLioqJiIWBfXl1dHZ5enl6eXp7eHVycnR4gIeNjo2NjI2NjYqGg396dnR1dnZ4e32AgoOBf39+fn+ChoaDgYB/gIB+fHl2dXV6gYeKi4yLioeAeHFtbG1zeoCBg4WHio6PjYuKiYaCgIB+e3p5d3Ryb2xrbXB1e4OKjY+Pjo+Oi4eDf3t5d3l9fX5+fX6AgH56eHh6foWLjImHhoWGh4WBfXt5dnR0c3JydXp9gYOBfn18fX6BhoiIh4eGh4eGhIF+fHt9gYaHiIiHh4aDe3JsZ2Zpb3V4eXt+g4mOj42Mi4mGhYOBfnx9fHt6d3RxcHJ2fISMkJOUk5KPjIeBfHh0cnJzdHR1dnd4enx6eHl7foOJi4mHhoWHiImHhIKBgH+Af3x6e36AgYGAfHh2dnh6f4CAf4B/gIGBf359fH1/goWGhYaGhYaGg312cm9vdHp8e32AhYmOkpGOioeFg4SBfXl3d3VzcW5qaGhscnyGjZGVlpWTkIyHg355dnZ4eXh5e3x+f4GCgYB+foCEhoWDgYGAf4B/fnx6eXp7fH18fH+BgoF/fXp3dnd6fYCBgoSGiIiJiomIh4SDg4SDgX9/gH+Af315c29rbG9ycnR4foWLj5GRjouHhoaFgX58e3x7eXd1c3JzdnyDiIyPkpSSkIyIhYB7dXFvcG9ub3J2eHyAg4SDgoKDhYWEgoGBgoODhIODgoOEh4iGhIOCg4F+end1dHR0dnd4d3h7fX+AgoSIiomIhoWFg4B+f3+AgYGAfnt5d3l6e3p7f4OHi4yNjYqHhIODgX15dnV0cnBtbG1vc3h+g4eKjpGTk5GPi4iFgHt5eHd3d3h6fH6AgoODg4KBgIGAf359fn19fHp6e3t8gIOGh4WEg4KAfXl4dnZ3d3h6ent+gYSHiYuNj4+NioeFgn98enl6eXp5eHd2dXR0dXZ5fH+DhomLi4qIhYODgoF/fXx7fHt6eXd4ent9f4GDhYiKjY6Ni4mGgn15d3Ryc3J0d3p8fX5/gICBgIGBgIGAgICBg4KDgoKDhIaIiYiGhYSCf316d3Z2dXV1dHV2eHp9gISGiIqKiIeGg4KBf35+fXx9fH1+fX5+fX5/f4GBgoSFhoWEhIKBf39+fHt6enl5eHd4eXt8fX5/gIKEhoiJiomIh4SCgH19fHx9fn9/gH9/fn+Af35+f35+fXx8fX59fn1+f4CCg4WEhYSDg4F/fXt7ent6enp7fX6AgoWHiImIiIaEgoB/f35+fXx7ent6e3t8e3x9fn9/gICCgoODgoOBgYCAgYCBgYCBgIB/fn9+f35/f35/gYKDhIWEg4KBf318enp6e3x9fn19fn5/gICBgIGAgYB/gIGCgYKBgoGCgoOEg4SDgoGAf317enp5eHh5eHp7fH+Bg4SFhIWEgoKBgIGAgH9+f35+f3+AgYGBgIGAgYCBgoGCgYCAfn59fH18fX59fX59fH19fn1+fX5+f4CCg4SFhIWEg4OBgICAf4B/gH9+fn19fn9+f39+fX59fn1+f39/gH+Af4CBgIGBgoKBgYB/fn59fXx9fH1+fn+AgoODhIODgoGBgYB/gH9+fX18fXx9fX5/f4B/gH+Af4CBgICBgH+AgH+AgYGCgoGBgH+Af39+fn9+fX9+f4CBgYCBgH9/fn9+fX5/fn9+fX59fn9/gIGBgH+AgYCBgYCBgoGAgYGAgYCBgYKBgYB/fn19fXx7fHt7fH1+f3+AgYGCgYGAgYCBgIGBgIGAf4B/gIGAgIGAf4B/gH9/gH+Af359fn18fX5/f4CAf35/f35/fn9/fn9/gH+AgIGCgYKCgYKBgIGAgYB/f359fn1+fX5/fn19fn9+f4B/gIGBgH+Af4B/gIGAgIGAf4B/f35/f39+f35/f3+AgYCBgIGAf4B/f4B/gH9/fn1+fX5/fn9+f35/gH+Af4B/gIB/gH+Af4CAgYKAgYB/f4B/fn9+f35/fn9+f35/gH+Af4CAf4B/gH+Af35+fX5+f3+Af4B/gIGAgYCBgICBgH+Af35/gH+Af4B/f35/fn9+f35/fn1+fX5/fn+Af4B/gIB/gIGAgYCBgH+Af4B/gH+Af4B/gH+Af35/fn5/fn1+fX5+f4B/f4B/fn5/gH+Af4B/f4B/gH+AgYCBgIGAgYCBgYB/gH9/fn1+fX5/fn9+f39+f35/gH+Af4B/gH+Af4CAgICAgICAf4B/gH+Af4B/fn9+fn9+f4B/gH+AgH+Af4B/gH9/f35/fn+Af4B/gICAgICAgH+Af4B/gH+Af4CAf4CAf35/gIB/gH9+f39+f35/fn9+f4B/gH+AgYCBgIB/fn9+fn9+fn+AfwA=
+
+:: Base64ID_Sound_Shutdown
+UklGRlooAABXQVZFZm10IBAAAAABAAEAqjcAAKo3AAABAAgATElTVBoAAABJTkZPSVNGVA0AAABMYXZmNjEuMS4xMDAAAGRhdGEUKAAAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgH+Af4B/gH+Af4B/f39+f39+f39+f4B/f39/f3+Af39/fn9/f39/f39/foB/fn+Af39/f4B/fn+Af3+Af3+Af39/fn9/f35/f39/f39/gH5/f35/f39/f3+Af35/gH9/gH9+f39+f39+gH9+f39/gH9/f39/f4B+f39/f39/f4B+f39/gH9/f39/f39/f3+Af4B/gH+Af4B/gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAf4B/gH+Af4CAf39/f39/f4B/gH+Af4B/gYJ5eIKBgoN+gnh8en+Dg4h/g3d5e32Cg4qCgnp5eHuEg4uEg3t5eHiCgoqFhH15eHeBgYmFhH55eXeAgYmGhH54eXeAgYiGhH94eXeAgoiHg393eHd/goiIg4B4eXd/goeIhIF4eXV9gYaJhYN5eXV7gIWJhYN7eXZ5f4OIhYV8end5f4KIhYV9e3h5foGIhYV+e3h4foCHhYV+e3h5foCGhIR/fHp4fn+FhISAfHp5fn+EhYSBfXx5fn+EhISBfXx5fX6DhIOCfXx5fX6DhISCfnx5fX6ChISDfn16fH6BhYODfn16fH6BhISDfn16fH6AhIOEf316fH6Ag4OEf317e36AhIKDf318e35/hIODgH18en5/g4ODgH58en5/g4ODgX58en5/g4ODgX58en1/goODgn58en1+goSDgn59e31+gYSDgn5+e31+gYSCgn5+e3x/gYSCg399e3x/gISCg399e3x/gIOCg399e3t/f4ODg4B9fHt+f4ODg4B9fHt+f4ODg4F9fHt+f4ODg4F9fXt+f4KDg4F9fXp+foKDgoF+fXp9foGDgoJ+fXt9foGDgoJ/fXp9foGDgoN+fnt8foCEgoN/fnt8f4CDgoN/fnx8fn+DgoN/fnx7fn+DgoN/fnx7fn+CgoOAfnx7fn+Dg4KAfn17fn+Cg4KBfn17fn+Cg4OBfn17fn+Cg4KCfn17fn+Bg4KCfn17fX+Bg4KCfn17fH6Ag4KCf318fH6Ag4KCf318fH6Ag4KCf358fH6Ag4KDf358fH5/g4ODgH59e35/goKDgX59e35/goODgX59e35/goODgX59e31/gYKCgn59fH1/gYOCgn59fH1+gIOCgn9+fH1/gIKDgn9+fHx+gIKDgoB+fHx+gIKDgoB+fHx+gIKCg4B+fXt+f4KCg4B+fXt+f4GDg4F+fXt+foGDg4F+fXt+foGDgoJ+fnx9f4GDgoJ+fnx9f4GDgoJ/fnx9foCDgoJ/fnx8foCDgoJ/fnx8fn+CgoKAfnx8fn+CgoKAfnx8fn+CgoKAfnx8fn+Cg4KAfn18fn+CgoKAfn18fn+CgoGBfn18fX+Bg4KBfn18fX+Bg4KBfn18fX+Ag4KBf359fX6AgoGBf359fX6Ag4KBf359fX6Ag4KBf359fX5/g4KBgH58fH5/goKBgH59fH5/goKCgH59fH5/goKCgX59fH5/gYKBgX59e35/gYKBgX59fH5/gYKBgX5+fH1/gIKBgX9+fX1+gIGBgX9+fX1+gIGBgn9+fX1+gIGBgn9+fX1+gIGCgYB/fX1+f4GCgYB/fXx+f4GBg4Z3dXmAgoCGhX6BgHV7fnmDhn+FhnqBgXh7gXt9gnyDiIKChXx5e3V7g4CGjISAgnl3fXh8hYGCiIF/g318f3p4gH1+h4WDhoB5fHd2f4CCioeBg3x2fHp6goOBhoR+gn96fnx5fn9+hYaDhYN7enl1fIGCiImDgn93eXt5f4OBhIaAgYF7fX15en99goeFhYV+enp1eX+AhYmGg4N7eHt5e4GBgoaCgYN/fX97eX18foWFhYaCfHx4dn1/gYeHg4N/eXx6en+Bf4SEgIOBfn99eXx9fIKFg4aEfn17dnt/f4WHg4OBent8en+CgIGDf4GCf3+Ae3t+fH+Eg4WFgHx8eHl+foKHhYOCfXt9e32AgICDgYCDgH+AfXp9fHyCg4OGg359enh8foCGhoODf3t9fHt/gX+Cgn+CgX+Bf3t9fXyAg4OFhH99fHd6fn+EhoOCgXx7fHt+gYCBg3+Agn9/gH18fnx+goKEhYF+fXh4fX+ChoWCgn16fHt9gYGAgoB/goF/gX57fXx7gYKEhoR/fnp2fH6AhYaDg397fHx8f4J/gYJ/gIJ/gIB9fH16foODhYaBfX13eX1/goaFgoJ9e317fYGBgIKAf4KAgIJ+e318e4GDhIaEfn56d3x/gIWGg4N/en18fICBf4GBfoGCf4CAe3x8e4CDhIWGgH57dnp+f4OHhIOBe3t9fH6CgICCf4CCgICBfXp9e32DhIWGgn19eHh8foKGhYKCfnt9fHyAgX+BgH+CgoCBfnt8e3uBhIOGhH99end7foCFhoODgHt8fXt+gn+Agn+BgoCAgHt7fXp/g4OGhoB9e3d4fX+DhoSDgnx7fXx9gX9/gn9/g4GAgX16fHt8goSFh4N+fXl3fH+BhoaCg396fHx7f4F+gYF+goKAgYB6e3x6gISEh4Z/fXt2eX5/hIiEgoF7e3x7foKAf4J/gYKBgYF8en16jnNzfoSOfHuDfXWCjH53hX1uf4h3gZaDeY2DbXaEeHeGfXmJj4KEj4N1enVocoR+gpqVg4mHb3B7b22DhXuLlImGjoNzdXVoboSEg5aZhYOHcWt5dXCEin+GkIV/h4F0d3tycYOFgY2Tgn6Gdm18fHSBin6Ai4V+iIh7eXx0bnyBfIeUiYKKf3F5fHF3hHx8i4uFjI5/eXlvZ3F9fYeYlImOhXBxdmtugYB+jpGJi4+AdXZvaG9+gIiXlYmIhXFtd3FwgoZ+iY+Eg4qBd3p3b3N/f4GOkYWDh3hxfXpzgYZ5f4qBgIqIfoB/c3B5enmGj4iFjIJ3fn1xeIJ2eYiFg46Pg4F+cWxyeHqEkI+KjYV2d3lvc4F9fIqLhYyNgHx7cWxze36HkZGJh4Jzcnh0dYSFfoiLgYOIfnp+eHJ4f36Di4uEgoN4dn57eIOFe4CFfX+JhX+FgHV3e3l7hYiFhoiAe399dnuBeHmEgoCLjYODgXNvdXV4hIyLi4uEeXh5cnR/fXuHiYSKjIF9fXNtdHp8hpCPioiCdXN4dXaDhX+HioCCiH96f3lyeH9+g4uKhYOAeHZ8fHqDhn1/hH18h4V+hYJ2dnx5eoWIhYaIgHt/fnd7gXh4g4F/i46DhIN0b3V1d4SMi4uMhHl5eXJ0f316h4qDi46BfX9ybXV6e4eQjoqJgXVzd3R2g4V/h4uBgoh+eX95cXmAfYONiYSFgHd2fHt6g4d9f4V9fIeEfYWCdnd9eHqFh4OHh397f313fIF5eIOBf4uNgoSEdG92c3WEjIuNjoR6enhxdH58e4iKhIqOgX1/cWt1eXmHko6Mi4F1dHVydYKFgYmLgYKJfnh/eHB4gHyDj4qGh4B2dnp4eoSGf4KGfXyGg3uDgnV4f3h6h4eDiId9e398eH6CenqDgX6JjIOEhXZwd3Vzg4uIjI6FfHx5cnR9fHuFiYSKj4R+gHVrc3l3hJGNjI2Dd3V1cnR/g4CHjISDiYF4fnlvdn98go6Lh4eBdnZ6d3iChoCBhoB8hYR8goN2dn96eoeHgoeGfnx/fHh8gXt6g4F+iIyDg4V3cHh2c4GKh4yPhX19eXF0e3p6hYmFi4+EfYB0aXN5doSRjY2PhHh2dG9zfoGBiY2GhImAdnx4bnZ/fIORjIaJgXV1eXV4goWBhIiBfYSDeoCCdXeAe3qIiIGHh3x7f3t4foF7fIKBf4eLg4OFd3B4dnKCi4aMkIR8fnhxdXt5e4WIhYuPhH2AdGlyeHOKqX5xjHhzgXtpb4aPg4ONko+CbHCAc1lrioqCi5mgl3txgoNoYXOGgXl7hYmEfYSXlHd2iIh2d3t/fXNoeop/cIedloODioyCd3KBf2RZdIJ3eZCdpJuHho99YmZ4dGRpfY2Oh4iWm4VseYp8cYCJiHxsa3x6aG+RnJCLlpiOe3Bwd2VRYYGBfY+kpp2HfYaBY191f21od4aHgoKQnpd9fpGIb256e3NoZniHe3eSqJiGipOLe25weHJYV3OBc3ycq6edj5CRdVZgcWZWZH2LjIuVpqSHc4WMdWl7hHxvZWp6dGV5naKTlqSjj3lsbmlTRV18e3iXsK6hkoqPgmNeeHljYHWAfXh/kaCVgoqfjnN1gnhpX2ByfW1xlaiWi5aekn90eHtsU1Vyd2h3nKmkn5eXlXZcaXdhUmZ/hIKFlaSegniMj3Jsg4p6bmdveWxdep+cjZmqpI56cnRoTkZjfHVzmLOtnpaRj35fYHt3XWJ7g3t4gpegkIGQn4pueId5Yl5kc3VocpuolI+hopB8dXt6Yk9ac3JmeaGsoJygnZJ1Ym52XE5pgH56hZmlm4WEk41xboiKdGdscXVnX36el4yerqGKfHx4ZkxMZXVqc5u0qJybmI14YGd9c1pmgIJ1doeZmYqDkpqCbn+Md2Fja3FwZnWboo2Po5+Ienl8d2FSYHRvZH2iqJyboJuMcWJydltSboB8eoeZopeDhZGJb3CJi3Vrb3FxZV97nZWLoa+gin16d2VLTGZzanWcsqabnJeMd2BpfnJbaYF/cnSFlZWHhZachHGCjXdhY2pta2V2mp+MkqagiHx8fnVfU2JzamOAoqOYnKGbinBndnVZVXKAdnaHmZ+Qg4mUhW92jYhwbHRzbWJkgJmPiaSwmoiEgXhjTVFpb2Z4oK+hm6CaiXRkbnxsW2+FfXF5jJWRhomYl4B2iI50YWdwa2Zqe5mdjZernoN7gH5wXVhoc2hmhqOflZ6mmoVyb3lyV1l0fHF1i52dkYqRk4BueYyCa215dGhjbISWjIunr5SEiIR0X1BXaWhieqGsnZ2nnIVxaHB2Z1tyhnhufpCSjIeMmZF7eYqKb2JscGZhaX6WmI2crpuAfoJ5alxaaXFlaImhm5SgpZWBc3B4cFlceHttdYyWl5CJkZaBb3yLgG1tdnNpYmmCkouMpq6XiIiDdGFRVWdoYnmeqJ6dpJyIc2dudmhccYZ7cH2Lj42EiJeVf3uMjHNlaW5oYmR3lJmPnK6ghX+AeGxbVWdzaGqKoZyWnKCWg3FvenNdXXd9cHOGk5aQh5CYhXF+i35sa3FybGNrhZSKjKSrlYaHg3djUldqamN3mqWdm6CdjHZqcXdoXG2BfHF7i5KOhYiVk4B7iot2ZWdvbGJlepOWjpiroYZ9gHxuXVdpdGlqhp6ak5ifmIVzcnx1X150fHBxgpKXjYeSmYZ0fYqAb2pwdW1jaoWSi4yhqpeGg4N5ZVRZbGxjdpeim5mcnI53a3R7bWBugXxxd4aPjISGl5eCe4qMeGlnbW5lY3aRlo2Vp6CLf399dGNZZ3ZsZ3+XmJSVm5qMd3N9eWRfcXtzcX6OlI6FjZmMd3yLhHNrb3RvZGZ+kIyKnamcioOCfGtWV2xuZXOSoJuWmpuPemxzfXFibYB9c3WCjIyDg5SYhXyJjXxrZ21vZ2JzjpSMkqShjYF/f3ZjWWZ1bWh/l5iTlJmYi3dxfntmYHN8c3F8jJSOhIyYjHh8iYNzbHB1cWZof5CKiJikmomEhH5tWltrbWVwjp2al5mbkX1udHxxY2t9fHN1go6OhISTl4V7h41+bmhsbmdjdI6UjZOkoI2Afn53ZVpodW5pfpWXkpOYmY14c398Z2JxeXNweoqUj4eOmY14e4iDdG1udXJnZ32PioiXpJqKg4J/cV1ba3BmbouamZaXmJSBb3N9dGZsfH11dH2JjIaCjpiUkpiPbVJTYGheVWaHlpadpp+NgX6Agntqa3dwZXWSnp2am5qHaWN0eGpmcW9jYGp8kJqXlJmQfHmJko+EfH12Y2F+mJeWoaGOe3JwbmpgW2NkXGJ5kZ+gmZmXgW14jYp9go2Gd3V/jZSSj5SRfXJ2enduYVtfWk5dgZWUmKekj4CBiImCeHyBdnCAk52in5aSh3Bib3hrX2ZqX1lhdoqQjZKajXyBjo+NiYB+fnNtgJqfmZ2hlIByc3hvXFReW09YdImTmZmXkIN1eoiLgn6GiH13gZWemJKXkn1weH53bGReXFZRXnmLkJWbm5GCf4iNg3Z5gXlygZehoZ2YkYNwaG90bGNiY2BcX3KIkIqLlpCAgY+VjoaBgXxxcYWZnpqamI1+cm9zb1xRWV1VWXOLlJaWl5SGe4KQj4aDhoV/fYSTnpiNjIx9bm93dmteWltWUF96i46SmZqSi4qOlI6BfIKAeYCVoqCWjouAbGVtcmhfYGFeXWNyg4yJh46Oh4eSm5mPhYODe3WFmJuXlpOJfHJucGxeVFZZVlxugpCSjo2OhnuBkpWMiYyLhoOJlZyXjYuIfHJzd3ZtYFdYV1JZc4WJipCUj4eGjZSMgYCEgoCKmaSlnZGLg3NobXRsYV5fX1xfboCGgIGJiICEkJaWjoSChIB9i52hnJeVjoJ1cnZyYlVYW1ZbboGJjIiGiIJ7f4yQioWGiYiFipmim4+OjoB1d3t5b2NcW1lVX3WDh4iJi4mEgYmRi358hIN/iZqkpJuTjoV2b3R3b2VgX2BgYm+BiIJ/h4eAgYyUkomBgYN+foybnZmVkouCeHR3dmdYWV5dYHCCiouFhIeBfIKOkIqFg4SFhYqVnZiNiYmBeXh9fHNlXF5eW2N3hIaGiImIhYWMkIuAfIGBgIiWn6GYjYqFd292eXFoZGNiY2Zxf4SAfoOFgoSMkpOMgoCEf32KmZuXlJKMhHp3eXRnXV5fXWNwfoiJhIOGgnuAjY+IhYaHh4aKlpyWjYuJgXt7fXt0aGBgX1tic4CDhIaJiYWEi4+Jfn2CgoGKlp2el4+MhnpzeHlzamRkZWRmcH6BfX2DhIGEi5GRioGBg4CAi5eZlpGPjIV9eXx3aV9gYV9jcHyFhYKChYN/goqMh4ODhYeHipSalIuJiYN8fYB9dWpiY2JfZnR+gIKEh4mHhoqOiH57gIKCiZObm5SNioV7d3p6dGtmZWdoanN9gH58gISDhIuQj4mBf4KBgIqTlJGOi4mFf318eW5jYWNkaHJ9hIWAf4OCgISLi4eEgoOGh4mPlI+IhYWBfX6AfnhuZWVmZWl1fn+AgoSGh4eKjYiAfX6AgoePlpaRioeFfXd6e3VvaWhqbG50fYB9e36BgoWLj4+KgoCCgICHj5GPjImJhX98fHhuZWRlZ2tzfIOFgoCDg4CDiYqIhIKEh4eIj5OPiIWEgX59fn13bmZmaGdrdX2AgYGEh4eGio2JgHx/gYKHjpWVkImHhX55eXl0bmloa21vdX2BfHt/goKEio6OiYKAgoKCiI+QjouJiIaAfXx4bmVkZmlsdH2Dg4B/goSBg4iJhYKBg4eIiI6RjYeEhIOAfn99d21maGppbHZ9foCAg4eHhoiMiH98f4GDiI2Sko2HhYV/e3t6dW9sam1wcnZ8fnt6fYCDhomMjIiCf4KDg4eNjYuJh4eGg399eHBpZmlscHV9gYF/foGDgoSIioaDgYOGh4eLj4uGg4SDgYB/fnlxamlsbW92fH+AgIKFh4aIioeBfX+BhIeLkJCMhoSEgHx7e3hybmxvcXJ2e358en6ChYaJjIyIgX+Bg4KFi42LiYiIh4J+fXpya2psbnF1fIGBf36ChIOEh4iGgoGDhoeHio2KhYSFhIKAf355cGtrbm5wdnx+f4CChoeFhomGgH5/goSHiY6OioWFhoJ9fXx4cm5ucHJzdXt+e3t/g4WGiIuKhoB+goKChYqMioiGh4eDfn16cmtrbW9zdnuAgH5+goSDhIiIhYKAgoWGhYiLiYSDhISDgn99eXFsbW9wcnd8fn5/gYaHhoeIhYB/gIGFhoiLi4iFg4WCf358eHRwbnF0dHZ7fXx8foGEhoeJiIWBf4GDgoSIiYiGhYaGg39+e3VvbW9xdHd7foB+foCCgoOGh4WCgIKEhYSHiYeEg4SDg4KAfnpzb29xcnN3fH1+f4GFhoWGh4SAfn+Bg4WHioqIhISFgoB+fHl1cnBzdXZ3e318e36BhIWGh4iFgYCCgoKEhoiGhYSFhYN/fXx2cW9wc3V3e35/fn+Cg4SEhYaFgYCBhIWEhYeGg4KDhIOBf316dXFxc3R1eHx+fn+BhIaGhYaEgH+AgYOEhYiIhoODhIKAfn16d3NydHZ2d3t9fX1/goWGhYaHhICAgYGCg4WHhoSDhIWCf358d3NxcnR2eHt+f35+gIKEhYWGhYKBgYSEg4WGhYOCgoODgn9+e3ZycXJ0dXd6fn9/gYSGhYWGhYKAgIGDhYaHiIaDg4OCgH59e3h1c3N1dXd6fH19foGDhoWGh4WCgIGBgoOEhoeGhIWFg4B+fHhzcXBydXZ5fYB/f4GCg4SEhYWEgoGDhYSEhoaFg4KDhIKAf3x3c3FxcnN2en5/gICDhYaFhoWDgH+Bg4SFh4mIhYSDgoB+fXx4dHFyc3V2eX1+fX6BhIaFh4iHg4CBgYKDhYeHhoWEhYSAfn15c29ucHN1eH2AgH+Ag4SEhIaGhIGBg4SEhYeIhoOCg4OBgH58d3Jvb3FydXp+f3+Bg4WGhYaGhIB/gIOFhYiKiIWDg4OBf318eHNwcXJ0dnh9fn1+gYSFhoeIh4OAgIOEhIaIiYaEg4SEgX58eXNvbnBzdnl9f39+f4GEhYSGh4SCgoSGhoaIiIWDgoOEg4B+fHdwbm9xcnV6fn9/f4KFhoSFhoSAgIGDhYeIi4mGg4KCgX9+fXp1cXBydHV4fX9+foCDhYWFh4eCf3+AgoOFh4qHhYSFhIF+fXp1cHBxdHZ4foGBf3+BgoODhYaEgICChISEh4mHhIOEg4J/fn55cm9wcXN1en+BgIGDhYSDhIWDfn2AgoSFiIyLh4SEhIF+fHx5dHBxc3R1eH6Af36Ag4SFhYaGgn5+gYKChImKiIWFhoWBfn57dG5ucHJ1eH6CgX6Ag4ODg4SFg39/goSDhIiKh4SDhISCgYB/eXFubnBxdHl/gYCBg4aEg4WFgn58f4OEhYmMi4aEhIOBf359enNvcHJzdHh+f319gIOFhIWIh4J/f4KDhIaJi4iFhIaFgYB/e3RvbW9xc3d9gX9+f4KDgoOFhoN/f4KEhIWJioeDg4SEg4GCgHlyb3BwcHR6foB/f4OFhIOFhYJ9fH6CgoWIjIqGg4SEgYB/gHx2cnJzcnV5foB+foCDg4OFiIaBfn+AgIGFiImHhYWGhYGBgX12cG9wcnR4foKAfoCCgoGDhYaCf3+BgoKFiImGg4OFhIOCg4F6c3BxcXF0e3+AfoCDhYOEhoaCfXx/gIKEh4qKhYOFhIGBgYB8dXFyc3J0eX5/fn6Ag4OEhoeGgH1+gICBhYiJh4SFhoSCgoF9dnBvcHFzeH6Bf36AgoKDhIaGgn5+gYKDhYiIhoOCg4SDhIOBenNvb3BxdXp+f36Ag4OEhYeGgn59f4GDhYmKh4SCg4KBgYKBfXdycnJzdXl8fXx9f4KDhYiJh4F+fn9/goWIiYeEhYaDgoOCfXdyb3BydXl+gH9+gIGAgYOEhIJ/f4CAgYSGh4WDgoODg4SFgn13c3JxcnV6fYCAgYOEg4WFhIF9e3x+gYOIiomGg4OCgYGCgX56dnR1dHZ6fX59fX+Cg4SGh4SBfXt8fYCDhYeHhoWGhIWEgX15dHFyc3Z6foCBgICBgYKDhIOBf31+f4KFhoeGg4KDgoOEhIF9d3NxcnN2en5/gIGDhIWGhYOBfXt7fYCEh4iJh4SCg4KCgYB8eXZzc3V3enx+fn6AgoOGiIaEgX57fH+AhIaHhoWEhISEg4F+enRxcXN2en1/gIB/gIKEhYWEgoB9fX+ChIWGhYOBgYODhIOAfXhycXJ0d3p9f4B/gIKFh4WEgn98e32BhIeHiIaDgYGDgoKBfXl1cnF1eHl7fn99foGDhYeGhYN/e3x/gYKGh4aGg4KEhIOBf3x2c3N0d3p8f4KCf4CDg4KEg4B/fHt/goOEhoaDgYKDhISDgX56dXJ0dXZ6fX+BgIGDhYSDhIJ+e3t9gIOEhoeGg4KEhIKBgX57d3R0d3h5fH5/fn+Ag4SFhIWDfnt8f4CBg4WGhYOEhoWDgoB8d3NydHZ5fH+CgYCBg4SDgoOCf3x8f4GChIaFhIOCg4SDgoF/e3ZzdHV2eHt/gH+BhIaFhISDgHt6e36AgoWIh4WDhISDgH9+fHZzdHd4eXx/gH9+gISFhIWFg398fH6AgIKFhoSCg4aFg4KBfnlzcnR2d3p+gIB/gYKEhIKDg4B9fX+BgYOGh4WCgYODgoKCgXx3dHR1dnh6fX9+foOEhYSFhIF9eXt+f4GFh4iGhISFg4GBf3x4dXZ4eXp8f4GAfn+BgoGDg4J/fHx+f4CChIWEg4OFhYSDgoB7dnR1dnd7foGCgICDg4KBgoB9enp8foCChIeGg4KEg4OCg4J+eXZ3eHd5fH+Af4CBg4KDgoN/e3l7fX+Ag4aHhYOEhYWDg4J+eXZ1d3h6fICBgH+AgoGAgYCAfnp7f4CAgoWFhIOChYaEg4SCfHd1d3Z3en2BgoCAhISCgYKBfXp5fH6Ag4WIh4OCg4SDg4KBfnh1dnh4eX2AgYCAgYKDgoGCf3t5e31/gYSHiIWDhIWEgoOBf3p2dXZ3eXyAgoB/gIGAgYKBgH16e31/gYSHiIWDgoKDhIODgX13dXR1d3p+gIGAgIGCgYKCgH57eXt+gYSHiYiFgoOCgoOEgn96d3Z1dnp9gIF/gIGAgYGBgX56eXl6fYKEh4iGhYSEg4OEgn98eXZ2eHp9f4GBf3+AgIGBgH99eXh6e3+ChYeHhoOEhYSFhIF9eXd3dnl8foGCgYCBgH+AgH59enh5fH6BhYeGhoSDhISFg4OAe3h3d3h7fX+BgoCAgoGCgoF9end2eXyAg4eJh4WGhoSEg4F/fHh1d3l6foGCgYB/gIGBgoGAfXh3eXp+goSHiIeFhoeFhIOBfHd1dXZ6fYCDg4KBgYKBgoB9e3l2d3t/goaIiIeFhIOEg4KDgHt3dnd3en1+gYKAgIODgoKBfXl1dHd7gISIi4qIhoWEg4OBf3x4dXd5e32AgYB/fn+AgoOCgX55dnh6fYGFh4mIhoaHhoaEgX55dnR2eHt9goOCgIGBgH9+fnx5dnZ5fH+EiIiHhYSFhIWEhIN+end3eHl8f4GCgICCg4KBf316dXN1eX2BhoqLiYaHhYSDgoF+enZ4ent9gIKDgH5/f4CBgH99eHZ3eXx/goaJiIeHiIeGhYOAe3d0dnh6fYGEg4GBgoGAfnx8eHR1eHt+g4eJiIeHhoeGg4KBfHl3eHh6fH6CgoB/goKAf4B+eXZ0dXp9gIWJiYmIiYiGhIKAfnp2d3p6e3+CgYGAgIGAf39/fHd1dnd7f4KGiYmHiImHhoSDf3t4d3h5en2BgoCAf4CAf39+fHl2dHh7foKGiImHhoeIh4WEgn55eHh4en1/gYJ/foCAf4B/fXl3dXZ6fYCEiIiGhoiHhoaFgoB8eHh6e32AgYGAfn6BgH5/fnt3dHZ4e36ChYaGhYaIhoWGhIF/e3p7fH5/gYGAfn+Af4B/fnx4dXV3eHuBhIWGhYWGh4aGhYN/fHt8fH1/gYGAf3+Af35/f316eHV3eXp+gYOEhYaHh4aHhoOBfnx7fHt+gYGAgYB/gH9+f316d3Z3eXt+gYOEhYSFh4aGh4WBf3x8fXx+gIB/fX5/gIB/gH57eHZ2eXl7gIODhIWGh4eGhYWCfn59fn5+gIF/f359f39+gIB9enh3d3l6foGCg4SFh4aHh4eEgn99fH18foF/fn9+fn9+f399eXd2d3h6foGDhISDhIaFhoiGg4F/fX1+foCAfn19fn9+f4F/fHp3dnd5e4CCgoOFhISFhYaGhIKAf31+f4GBf35+fX1+foCAfXt6d3d4enx/gICChIOEhYeHhYOCf35+foGCgYCBgH5/fn9/fnt5eHd3eX1/gIGBgoKDgoSGhYOCgX5+f4CBgoB+gH99foCAf317eXd2d3p+gH+Cg4KDhISFhYOBgH9+foCCgoGBgH5+fX5/gH17fHl3eXp8f39/goOCg4WGhYSDgn9+fX+Bg4GBgoB+fX5+f317e3p4eHt+gICBgYKCgYKFhoSDhIJ/fn+AgYB/gIB+fX+Af317enl3d3l8gIGAgoSBgYOEhISDgoOAfn+Cg4F/gIB+fX1+gH98e3t4dnl7fn+BgIKCgYKEhYWDgoJ/fX6AgoOBgIF/fHx+fn19e3x6eHh8fn+AgIKBf4CDhYaFg4SCfn6AgIGCgICBf31/gH99e3p5d3h6foCAgYKCf3+Cg4OEg4KCgX+Ag4GAgIGAfn5/gYB/fXt7eHZ5fH1+f4CBgoGBhISDgoOCf36AgoOEg4GCgHx+f39+fXx7enl5fH59fn+Af3+BgoSFhIODgX5+gYGBgoKBgX9+f4B/fHx7eXh5fH5/gH+AgH5+gYOCg4OCgoGAgYOCgYCAf31+f4CBf319fHl3en19f4B/gIGAgYOEgoKCgYB/gIKDgoKBgX99fn9/fn18fHx6en1+fX5/gH+AgIOEg4ODgoF/f4GCgYCBgIF/fX9/fnx9fHt6en1+gH9/gYB+f4GDgoODgoKAfoCCgX+BgYB/fn+Af358fXx6eXx+f3+AgYGAf4GDg4KCg4GAf4CCgoGAgYB/fH2Afn1+fn19enp9f35+gICAf4CCg4OCgoOCf3+BgoGBgoGBf31/gH18fn18e3p8fn9+f4CAfn6AgoKBgoOCgX+AgoGAgIGAf31+gIB+fX19e3p7fn5+gICBgH6AgoKAgYKBgH+AgoOBgICBgH59f399fX59fXt7fn99fn+Af36AgYOCgYGCgn9/gIKBgIGBgH9+f4B/fX5+fXt7fH5/f4CBgH99gIGAgIGCgYB/gIKCgIGCgH59fn+Af35/fnx7fH5/fn+BgIB/gIGBgICBgH9+f4CCgYGCgYB+fn9/fn5/f318fX9/fn+AgH9/f4CCgYGCgYB+f4CAf4CBgIB/foCAf35/fn17fH1+gICBgoF/foCAf4CBgIB/foCBgYCBgH9+fn9/gH9/gH59e31+f36AgYCAf4CBgYCAgX9+f3+AgYCBgoGAfn5/f31+f359fH1/f39/gIB/fn+AgYCAgoGAf3+AgX+AgIGAf3+AgH9/fn99fHx+f35/gICAf35/gH9+f4B/gH+AgYB/gIB/gH+Af4B/f39+fn1+f39+f4B/gH+Af4B/gH+Af35/gH+Af4B/gICAgIB/fn9+f39+f39/f39/f39/gIB/gH+Af4B/gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA
 
 
 rem ############################################################################################################################
@@ -1364,7 +1289,7 @@ echo          I 2 Admin when boot              I
 echo          O================================O   W or S and 1~5 to move.
 echo          I 3 Check update at boot         I   Y to Toggle it, N or B to
 echo          O================================O   Discard.
-echo          I 4 Longpress detection of enter I   move to "OK" and enter Y to
+echo          I 4 Allow sound to play          I   move to "OK" and enter Y to
 echo          O================================O   confirm.
 echo          I 5 Boot animation               I   
 echo          O================================O
@@ -1400,7 +1325,7 @@ echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr
 echo          O================================O   Cursor Change (1 at Mainmenu)
 echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   after startup.
 echo          O================================O   you can change the cursor faster.
-echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I
+echo          I%OOBEsetting4clr% 4 Allow sound to play          %OOBEsetting4clr2%I
 echo          O================================O   %clrgra%disable is recommended.%OOBEsettingclr2%
 echo          I%OOBEsetting5clr% 5 Boot animation               %OOBEsetting5clr2%I
 echo          O================================O
@@ -1438,7 +1363,7 @@ echo          I%OOBEsettingclr% 2 Admin when boot              %OOBEsettingclr2%
 echo          O================================O   Should be enabled in case of
 echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   problems changing Cursors.
 echo          O================================O   Enabling may also faster boot up.
-echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I   
+echo          I%OOBEsetting4clr% 4 Allow sound to play          %OOBEsetting4clr2%I   
 echo          O================================O   %clrgra%disable is recommended.%OOBEsettingclr2%
 echo          I%OOBEsetting5clr% 5 Boot animation               %OOBEsetting5clr2%I
 echo          O================================O
@@ -1476,7 +1401,7 @@ echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr
 echo          O================================O   However, Boot time may be slower.
 echo          I%OOBEsettingclr% 3 Check update at boot         %OOBEsettingclr2%I   API rate limit of github
 echo          O================================O   may be reached.
-echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I
+echo          I%OOBEsetting4clr% 4 Allow sound to play          %OOBEsetting4clr2%I
 echo          O================================O   %clrgra%disable is recommended.%OOBEsettingclr2%
 echo          I%OOBEsetting5clr% 5 Boot animation               %OOBEsetting5clr2%I
 echo          O================================O
@@ -1509,12 +1434,12 @@ echo.
 echo.
 echo          O================================O   Customize of Settings
 echo          I%OOBEsetting1clr% 1 Boot as Cursor Changer       %OOBEsetting1clr2%I
-echo          O================================O   You can toggle the message when
-echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I   you press and hold enter without
-echo          O================================O   typing anything in the main menu.
-echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   However, this setting may not be
-echo          O================================O   meaningful.
-echo          I%OOBEsettingclr% 4 Longpress detection of enter %OOBEsettingclr2%I
+echo          O================================O   You can toggle whether or not to
+echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr2%I   play sounds such as when boot up.
+echo          O================================O   If this is enabled, sounds will
+echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   be played at boot up, etc.
+echo          O================================O   
+echo          I%OOBEsettingclr% 4 Allow sound to play          %OOBEsettingclr2%I
 echo          O================================O   %clrgra%enable is recommended.%OOBEsettingclr2%
 echo          I%OOBEsetting5clr% 5 Boot animation               %OOBEsetting5clr2%I
 echo          O================================O
@@ -1552,7 +1477,7 @@ echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr
 echo          O================================O   If disabled, boot up will be
 echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   2 seconds faster, but
 echo          O================================O   with less visual.
-echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I
+echo          I%OOBEsetting4clr% 4 Allow sound to play          %OOBEsetting4clr2%I
 echo          O================================O   %clrgra%enable is recommended.%OOBEsettingclr2%
 echo          I%OOBEsettingclr% 5 Boot animation               %OOBEsettingclr2%I
 echo          O================================O
@@ -1586,7 +1511,7 @@ echo          I%OOBEsetting2clr% 2 Admin when boot              %OOBEsetting2clr
 echo          O================================O   However, it is recommended that
 echo          I%OOBEsetting3clr% 3 Check update at boot         %OOBEsetting3clr2%I   at least one setting be enabled.
 echo          O================================O   All of these settings can be
-echo          I%OOBEsetting4clr% 4 Longpress detection of enter %OOBEsetting4clr2%I   change later.
+echo          I%OOBEsetting4clr% 4 Allow sound to play          %OOBEsetting4clr2%I   change later.
 echo          O================================O   
 echo          I%OOBEsetting5clr% 5 Boot animation               %OOBEsetting5clr2%I
 echo          O================================O
@@ -1677,7 +1602,7 @@ echo.
 echo          1 Boot as Cursor Changer       : %OOBEsetting1toggle% %clrgra%(recommend false)%OOBEsettingclr2%
 echo          2 Admin when boot              : %OOBEsetting2toggle% %clrgra%(recommend false)%OOBEsettingclr2%
 echo          3 Check update at boot         : %OOBEsetting3toggle% %clrgra%(recommend false)%OOBEsettingclr2%
-echo          4 Longpress Detection of enter : %OOBEsetting4toggle% %clrgra%(recommend true)%OOBEsettingclr2%
+echo          4 Allow sound to play          : %OOBEsetting4toggle% %clrgra%(recommend true)%OOBEsettingclr2%
 echo          5 Boot animation               : %OOBEsetting5toggle% %clrgra%(recommend true)%OOBEsettingclr2%
 echo.
 echo          If you continue, these settings will be written to the Setting file.
@@ -1720,10 +1645,10 @@ if not exist %Settingsfile% (
     ) else (echo CheckUpdate=false >> %Settingsfile%)
 
     if "%OOBEsetting4toggle%"=="false" (
-        echo typosWarning=false >> %Settingsfile%
+        echo PlaySound=false >> %Settingsfile%
     ) else if "%OOBEsetting4toggle%"=="true" (
-        echo typosWarning=true >> %Settingsfile%
-    ) else (echo typosWarning=true >> %Settingsfile%)
+        echo PlaySound=true >> %Settingsfile%
+    ) else (echo PlaySound=true >> %Settingsfile%)
 
     if "%OOBEsetting5toggle%"=="false" (
         echo bootanimation=false >> %Settingsfile%
@@ -1779,7 +1704,7 @@ set OOBEsetting1clr=& set OOBEsetting2clr=& set OOBEsetting3clr=& set OOBEsettin
 set OOBEsetting1clr2=& set OOBEsetting2clr2=& set OOBEsetting3clr2=& set OOBEsetting4clr2=& set OOBEsetting5clr2=
 set OOBEsettingclr=& set OOBEsettingclr2=
 set clr1=& set clresc=& set clrmove=& set clr2=&set clr=
-2>nul taskkill /im powershell.exe >nul
+call :Core_Powershell 3
 exit /b
 
 
@@ -1787,9 +1712,9 @@ exit /b
 :Cursor_Changer_REmenu
 cls
 mode con: cols=75 lines=25
-rem GUI type 2
+rem GUI type 3
 rem recovery menu for Cursor Changer, and recovery console
-call :batbootcheckwinver dynamic
+set DynamicWinverCheck=true& call :batbootcheckwinver dynamic & set DynamicWinverCheck=
 if "%errorlevel%"=="1" (goto :batbootcheckwinverbad)
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
@@ -1797,6 +1722,7 @@ if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;
 if not defined dummy (set /p nothing=[?25l<nul)
 set bootbatnow=no& set rmsel=0
 echo Preparing Recovery menu, Please wait a while...& timeout /t 1 /nobreak >nul
+
 :Cursor_Changer_REmenu_main
 cls
 title Cursor Changer ^| Recovery Menu
@@ -1820,30 +1746,16 @@ echo                    1~4 or WS to select, E or Y to Enter.
 echo.
 echo.
 choice /c 1234WSYE /n >nul
-if %ErrorLevel%==1 (set rmsel=1& set rmcb1=!clr!& set rmcb2=& set rmcb3=& set rmcb4=)
-if %ErrorLevel%==2 (set rmsel=2& set rmcb2=!clr!& set rmcb1=& set rmcb3=& set rmcb4=)
-if %ErrorLevel%==3 (set rmsel=3& set rmcb3=!clr!& set rmcb1=& set rmcb2=& set rmcb4=)
-if %ErrorLevel%==4 (set rmsel=4& set rmcb4=!clr!& set rmcb3=& set rmcb2=& set rmcb1=)
-if %ErrorLevel%==5 (
-    if %rmsel%==0 (set rmsel=1& set rmcb1=!clr!& set rmcb2=& set rmcb3=& set rmcb4=)
-    if %rmsel%==1 (set rmsel=1& set rmcb1=!clr!& set rmcb2=& set rmcb3=& set rmcb4=)
-    if %rmsel%==2 (set rmsel=1& set rmcb1=!clr!& set rmcb2=& set rmcb3=& set rmcb4=)
-    if %rmsel%==3 (set rmsel=2& set rmcb2=!clr!& set rmcb1=& set rmcb3=& set rmcb4=)
-    if %rmsel%==4 (set rmsel=3& set rmcb3=!clr!& set rmcb1=& set rmcb2=& set rmcb4=)
-)
-if %ErrorLevel%==6 (
-    if %rmsel%==0 (set rmsel=1& set rmcb1=!clr!& set rmcb2=& set rmcb3=& set rmcb4=)
-    if %rmsel%==1 (set rmsel=2& set rmcb2=!clr!& set rmcb1=& set rmcb3=& set rmcb4=)
-    if %rmsel%==2 (set rmsel=3& set rmcb3=!clr!& set rmcb1=& set rmcb2=& set rmcb4=)
-    if %rmsel%==3 (set rmsel=4& set rmcb4=!clr!& set rmcb1=& set rmcb2=& set rmcb3=)
-    if %rmsel%==4 (set rmsel=4& set rmcb4=!clr!& set rmcb1=& set rmcb2=& set rmcb3=)
-)
+if %Errorlevel% geq 1 if %Errorlevel% leq 4 (set rmsel=%Errorlevel%)
+if %rmsel%==0 (set rmsel=1& set rmcb1=%clr%& goto :Cursor_Changer_REmenu_main_loop)
+if %ErrorLevel%==5 (if not %rmsel%==1 (set /a rmsel-=1))
+if %ErrorLevel%==6 (if not %rmsel%==4 (set /a rmsel+=1))
 if %ErrorLevel%==7 (goto :Cursor_Changer_REmenu_main_Core)
 if %ErrorLevel%==8 (goto :Cursor_Changer_REmenu_main_Core)
+set rmcb1=& set rmcb2=& set rmcb3=& set rmcb4=& set rmcb%rmsel%=%clr%
 goto :Cursor_Changer_REmenu_main_loop
 
 :Cursor_Changer_REmenu_main_Core
-if %rmsel%==0 (set rmsel=1& set rmcb1=!clr!& set rmcb2=& set rmcb3=& set rmcb4=)
 if %rmsel%==1 (set runningfromfulldebug=& set FromREConsole=& call :rebootbatch)
 if %rmsel%==2 (goto :Cursor_Changer_REWipe)
 if %rmsel%==3 (call :Cursor_Changer_REConsole& cls & goto :Cursor_Changer_REmenu_main_loop)
@@ -1863,11 +1775,8 @@ echo.
 echo                           Y to confirm, N to back.
 echo.
 choice /c YN /n 
-if %ErrorLevel%==1 (
-call :Wipealldeta
-goto :Cursor_Changer_REWipeYippeee
-)
-if %ErrorLevel%==2 set rmsel=2& goto :Cursor_Changer_REmenu_main
+if %ErrorLevel%==1 (call :Wipealldeta & goto :Cursor_Changer_REWipeYippeee)
+if %ErrorLevel%==2 (set rmsel=2& goto :Cursor_Changer_REmenu_main)
 
 :Cursor_Changer_REWipeYippeee
 cls
@@ -1928,7 +1837,7 @@ SET /P selected=Cns ^>
 if "%selected%"=="help" (goto :allcommands)
 if "%selected%"=="exit" (set FromREConsole=& set rmsel=3& exit /b)
 if "%selected%"=="uninstallnow1" (goto :Uninstall1)
-if "%selected%"=="playdefboot" (set typosWarning=0&cls&goto :firstboot)
+if "%selected%"=="playdefboot" (cls&goto :firstboot)
 if "%selected%"=="debugyesnow" (goto :darkgo)
 if "%selected%"=="fulldebug" (goto :fulldebug)
 if "%selected%"=="getadmin" (goto :batstartadm)
@@ -1937,11 +1846,11 @@ call :Wipealldeta
 echo done. enter somethings to continue.
 pause >nul
 )
-if "%selected%"=="uninstalldeletebat" (set typosWarning=0&echo delete bat, confirm to type something...&pause&goto :uninstalldeletefinish5)
+if "%selected%"=="uninstalldeletebat" (echo delete bat, confirm to type something...&pause&goto :uninstalldeletefinish5)
 if "%selected%"=="windowsfiltertest" (goto :batbootcheckwinverbad)
 if "%selected%"=="funanimationdeb" (goto :batbootanimationfun)
 if "%selected%"=="openie" (goto :openiedev)
-if "%selected%"=="setenter" (echo.&set /p typosWarning=pls type:&goto :Mainmenuboot) else (set selected= &echo enter valid command.&goto :Cursor_Changer_REConsoleask)
+if "%selected%"=="setenter" (echo.&set /p PlaySound=pls type:&goto :Mainmenuboot) else (set selected= &echo enter valid command.&goto :Cursor_Changer_REConsoleask)
 
 
 rem O========================================= OOBE and Receovery Code Ended =================================================O
@@ -1954,7 +1863,7 @@ echo YourName=%USERNAME% >> %Settingsfile%
 echo BootAsCC=false >> %Settingsfile%
 echo admin=false >> %Settingsfile%
 echo CheckUpdate=false >> %Settingsfile%
-echo typosWarning=true >> %Settingsfile%
+echo PlaySound=true >> %Settingsfile%
 echo bootanimation=true >> %Settingsfile%
 echo s5_linuxboot=false >> %Settingsfile%
 echo s5_simpleboot=false >> %Settingsfile%
@@ -1967,7 +1876,7 @@ exit /b
 
 rem Detects settings related to prompts for administrative privileges,
 :batstart
-if "%linuxboot%"=="false" (mode con: cols=75 lines=25)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   & set ??????=What are you doing here? I know you here. %username%.
+if "%linuxboot%"=="false" (mode con: cols=75 lines=25)
 if "%settingbypass%"=="true" (goto :Mainmenuskipboot)
 if "%linuxboot%"=="true" (echo [%linuxishclr%info%linuxishclr2%] admin checked.) else (cls)
 rem Detection of administrative permission settings
@@ -2092,7 +2001,7 @@ goto :setting4load
 goto :whatloadgoto
 
 :setting4load
-find "typosWarning=true" %Settingsfile% > nul
+find "PlaySound=true" %Settingsfile% > nul
 if %ErrorLevel%==0 set setting4onoff=true 
 if %ErrorLevel%==1 goto :setting4load2
 if "%bootbatnow%"=="yes" (
@@ -2200,7 +2109,7 @@ if "%bootbatnow%"=="yes" (call :SAB_Manager 3)
 if "%bootbatnow%"=="yes" (goto :setting4load) else (goto :whatloadgoto)
 
 :setting4load2
-find "typosWarning=false" %Settingsfile% > nul
+find "PlaySound=false" %Settingsfile% > nul
 if %ErrorLevel%==0 (set setting4onoff=false& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Setting4 Loaded as "false")) else if %ErrorLevel%==1 set setting4onoff= null&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Setting4 is corrupted. Loaded as "null")
 if "%bootbatnow%"=="yes" (call :SAB_Manager 4)
 if "%bootbatnow%"=="yes" (goto :setting5load) else (goto :whatloadgoto)
@@ -2243,7 +2152,7 @@ if "%bootbatnow%"=="yes" (goto :wmodeload) else (goto :whatloadgoto)
 
 :wmodeload2
 find "wmode=false" %Settingsfile% > nul
-if "%ErrorLevel%"=="0" (set wmodeonoff=Change to white theme& set wmodetoggle=false& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded as "false")) else if "%ErrorLevel%"=="1" (set wmodeonoff=Change to null theme&set wmodetoggle=false&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Wmode is corrupted. Loaded as "null"))
+if "%ErrorLevel%"=="0" (set wmodeonoff=Change to white theme& set wmodetoggle=false& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclr%info%linuxishclr2%] Wmode Loaded as "false")) else if "%ErrorLevel%"=="1" (set wmodeonoff=Change to null theme &set wmodetoggle=false&set /a allsettingerror=allsettingerror+1& if "%linuxboot%"=="true" if "%bootbatnow%"=="yes" (echo [%linuxishclred%ERROR%linuxishclr2%] Wmode is corrupted. Loaded as "null"))
 if "%bootbatnow%"=="yes" (call :SAB_Manager 7)
 if "%bootbatnow%"=="yes" (goto :loads) else (goto :whatloadgoto)
 
@@ -2381,7 +2290,7 @@ for /f "tokens=1-3 delims=:., " %%i in ("%boottime1%") do (set /a seconds1=^(1%%
 for /f "tokens=1-3 delims=:., " %%i in ("%boottime2%") do (set /a seconds2=^(1%%i%%100*3600^)+^(1%%j%%100*60^)+^(1%%k%%100^)-366100)
 set /a BootTime=seconds2-seconds1
 set seconds1=& set seconds2=& set boottime1=& set boottime2=
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          set ??????=What are you doing here? I know you here... %username%.
 if "%settingbypass%"=="true" (goto :mainmenuskipboot)
 rem YAAAAAAAAAAAAAAAAAAY!!!!!!!!!!!!!!!!!!!!! I'M SO HAPPY RIGHT NOWWW!!!!!!!!!!!!!!!!
 if "%linuxboot%"=="true" (setlocal enabledelayedexpansion & set /a yay=%random%*17/32767& set yayshow=AAA
@@ -2391,21 +2300,22 @@ setlocal disabledelayedexpansion)
 if "%linuxboot%"=="true" (echo.&echo [%linuxishclr%info%linuxishclr2%] Boot Complete! Y%yayshow%Y :D&echo [%linuxishclr%info%linuxishclr2%] ^(Boot Time : %BootTime% seconds^)&title Cursor Changer ^| Y%yayshow%Y& set yay=& set yayshow=& timeout /t 2 /nobreak >nul& cls) else (cls)
 if "%rawboot%"=="true" (echo off)
 if "%firststartbat%"=="yes" (goto :batbootanimationbypassfun)
-if "%setting5onoff%"=="false" (goto :checksum)
+if "%setting5onoff%"=="false" (call :Core_Powershell 1 & goto :checksum)
 rem Play the boot animation, with a 1 in 64 chance or 1 in 256 chance or a 1 in 512 chance that another version will be played. The random specification(?) requires two consecutive random runs.
 if not defined dummy (set /p nothing=[?25l<nul)
 call :RandomDecisioner 64
 if "%errorlevel%"=="1" (goto :batbootanimationfun)
 call :RandomDecisioner 256
-if "%errorlevel%"=="1" (call :BSOD_Errors THERE_IS_NO_PROBLEMS)
+if "%errorlevel%"=="1" (call :BSOD_Errors THERE_IS_NO_PROBLEMS & cls & goto :checksum)
 call :RandomDecisioner 512
 if "%errorlevel%"=="1" (goto :batbootanimationscary)
 :batbootanimationbypassfun
+call :Core_Powershell 1
 title Cursor Changer ^| WELCOME
 if "%wmodetoggle%"=="true" (set welcomelineclr=[38;2;135;135;135m& set welcomelineclr2=[0m[107m[30m& set welcomelineclr3=[30m) else (set welcomelineclr=[38;2;120;120;120m& set welcomelineclr2=[0m& set welcomelineclr3=[39m)
 if "%wmodetoggle%"=="true" (for /l %%i in (0,1,3) do (set /p nothing=[%%i;0H[48;2;230;230;230m                                                                           [0;0H<nul)) else (for /l %%i in (0,1,3) do (set /p nothing=[%%i;0H[48;2;20;20;20m                                                                           [0;0H<nul))
 echo.
-if not defined dummy (echo [28aCursor Changer %batver%)
+if not defined dummy (echo [28CCursor Changer %batver%)
 echo.
 echo %welcomelineclr%O=========================================================================O%welcomelineclr2%
 echo.
@@ -2428,13 +2338,14 @@ echo.
 if "%wmodetoggle%"=="true" (for /l %%i in (22,1,25) do (set /p nothing=[%%i;0H[48;2;230;230;230m                                                                           [22;0H<nul)) else (for /l %%i in (22,1,25) do (set /p nothing=[%%i;0H[48;2;20;20;20m                                                                           [22;0H<nul))
 echo %welcomelineclr%O=========================================================================O%welcomelineclr3%
 echo.
-if not defined dummy (echo [23a2021-2024 tamago_1908 %batbuild%)
+if not defined dummy (echo [23C2021-2024 tamago_1908 %batbuild%)
 set welcomelineclr=& set welcomelineclr2=& set welcomelineclr3=
 timeout /t 2 /nobreak >nul
 goto :checksum
 
 
 :batbootanimationfun
+call :Core_Powershell 1
 set bootegg=
 set bootegg2=
 mode con: cols=85 lines=29
@@ -2602,7 +2513,9 @@ if %allsettingerror% gtr 0 (
     pause >nul
 )
 set allsettingerrorshow=&set clrgra=&set clr2= 
-if %allsettingerror% gtr 5 (goto :fixallsetting) else (if "%Setting1onoff%"=="true " (goto :cursorchange) else (goto :Mainmenu))
+if %allsettingerror% gtr 5 (goto :fixallsetting) else (
+    if %boottime% geq 15 if %boottime% leq 999 (call :Mainmenu_Boottime_WarningMSG)
+    if "%Setting1onoff%"=="true " (goto :cursorchange) else (goto :Mainmenu))
 echo.
 :fixallsetting
 rem auto fix
@@ -2615,14 +2528,16 @@ call :Wipealldeta
 echo.
 echo Fix Complete.
 pause
-call :exit 1
+echo Rebooting...
+call :Rebootbatch
 )
 if "%selected%"=="y" (
 call :Wipealldeta
 echo.
 echo Fix Complete.
 pause
-call :exit 1
+echo Rebooting...
+call :Rebootbatch
 )
 if "%selected%"=="no" (Mainmenuskipboot)
 if "%selected%"=="n" (Mainmenuskipboot)
@@ -2639,11 +2554,8 @@ cls
 mode con: cols=75 lines=25
 rem Preparing some variables and function
 if not defined dummy (set clr2=[0m& set ccmmul=[4m)
-if "%setting6onoff%"=="false" (
-    if "%wmodetoggle%"=="true" (set clr2=[0m[107m[30m& set ccmmul=) else (set ccmmul=)
-    ) else (
-    if "%wmodetoggle%"=="true" (set clr2=[0m[107m[30m)
-)
+if "%setting6onoff%"=="false" (if "%wmodetoggle%"=="true" (set clr2=[0m[107m[30m& set ccmmul=) else (set ccmmul=)
+    ) else (if "%wmodetoggle%"=="true" (set clr2=[0m[107m[30m))
 if "%runningfromfulldebug%"=="true" (set runningfromfulldebug=& exit /b)
 if "%FromREConsole%"=="true" (cls & goto :Cursor_Changer_REConsolemain)
 if "%Mainmenueaster%"=="true" (set Mainmenubuild=%batbuild%)
@@ -2671,7 +2583,7 @@ echo   I                                                                     I
 echo   I                  4 %ccmmul%B%clr2%atch version           5 %ccmmul%S%clr2%ettings               I
 echo   O=====================================================================O
 echo.
-if "%MenuRedrew%"=="true" (set MenuRedrew=& call :mainmenu_resetcolor & exit /b) else (call :MainmenuMessages)
+if "%MenuRedrew%"=="true" (call :background_menu 2 & set MenuRedrew=& call :mainmenu_resetcolor & exit /b) else (call :MainmenuMessages)
 if "%errorlevel%"=="1" (cls & set Updateavailable=& goto :Mainmenudrew) else if "%errorlevel%"=="0" (goto :Mainmenudrewend)
 :Mainmenudrewend
 set selected=
@@ -2679,7 +2591,7 @@ rem ask select
 echo                Enter any number or commands you wish to run.
 if "%FirstCursorisEdited%"=="true" (set /p "selected=[13;37H") else if "%MainmenuMessageshowed%"=="true" (set /p selected=[13;37H) else if not defined MainmenuMessageshowed (set /p selected=[11;37H)
 echo.& if "%selected%"=="" (goto :typosMainmenu) else (echo %selected% was selected.)
-set typosWarning=0
+set Typoswarning=0
 
 
 rem Selection Branching
@@ -2705,11 +2617,11 @@ if "%selected%"=="1908" (goto :1908hell)
 if "%selected%"=="helloworld" (call :Hello_World& goto :Mainmenu)
 if "%selected%"=="Im tired" (echo you too&pause& goto :Mainmenuboot)
 
-rem Debugging command references (SAO refarence)
+rem Debugging command references
 if "%selected%"=="help" (goto :allcommands)
 
 rem For debugging
-if "%selected%"=="halloween" (set setting7_1onoff=true& goto :mainmenu)
+if "%selected%"=="halloween" (if "%setting7_1onoff%"=="true" (set setting7_1onoff=false) else (set setting7_1onoff=true)) & goto :mainmenu
 
 if "%selected%"=="crashtest" (exit /b)
 if "%selected%"=="checkmem" (call :checkmem& goto :mainmenu)
@@ -2726,7 +2638,7 @@ if "%selected%"=="uninstalldeletebat" (echo delete bat, confirm to type somethin
 if "%selected%"=="windowsfiltertest" (goto :batbootcheckwinverbad)
 if "%selected%"=="funanimationdeb" (goto :batbootanimationfun)
 if "%selected%"=="openie" (goto :openiedev)
-if "%selected%"=="setenter" (echo.&set /p typosWarning=pls type:&goto :Mainmenuboot)
+if "%selected%"=="setenter" (echo.&set /p Typoswarning=pls type:&goto :Mainmenuboot)
 
 rem FUCK YOU!!!!!!
 if "%selected%"=="fucku" (echo fuck you too&pause&goto :Mainmenuboot)
@@ -2738,7 +2650,7 @@ rem Power Commands
 if "%selected%"=="exit" (goto :exitmenu)
 if "%selected%"=="shutdown" (goto :batshutdown)
 if "%selected%"=="reboot" (echo.& echo Rebooting...& call :rebootbatch)
-if "%selected%"=="counttestdeb" (set typosWarning=0&goto :stupidtest) else echo. &echo Invalid (or unusable) selection! Please enter a valid entry.&pause&goto :Mainmenudrew
+if "%selected%"=="counttestdeb" (goto :stupidtest) else echo. &echo Invalid (or unusable) selection! Please enter a valid entry.&pause&goto :Mainmenudrew
 
 rem Return process if no input is made
 :typosMainmenu
@@ -2748,61 +2660,60 @@ pause
 echo Can you type somethings?
 echo.
 pause
-if "%setting4onoff%"=="false" (goto :Mainmenu)
 
 rem Mechanism for detecting long presses
-set /a typosWarning=typosWarning+1
-if %typosWarning% gtr 20  (goto :typosWarningtest1)
+set /a Typoswarning+=1
+if %Typoswarning% gtr 20  (goto :Typoswarningtest1)
 goto :Mainmenuboot
 
-:typosWarningtest1
-if not %typosWarning% gtr 50 (goto :typosWarning1)
-if %typosWarning% gtr 50 (goto :typosWarningtest2)
+:Typoswarningtest1
+if not %Typoswarning% gtr 50 (goto :Typoswarning1)
+if %Typoswarning% gtr 50 (goto :Typoswarningtest2)
 
-:typosWarningtest2
-if not %typosWarning% gtr 100 (goto :typosWarning2)
-if %typosWarning% gtr 100 (goto :typosWarningtest3)
+:Typoswarningtest2
+if not %Typoswarning% gtr 100 (goto :Typoswarning2)
+if %Typoswarning% gtr 100 (goto :Typoswarningtest3)
 
-:typosWarningtest3
-if not %typosWarning% gtr 130 (goto :typosWarning3)
-if %typosWarning% gtr 130 (goto :typosWarningtest4)
+:Typoswarningtest3
+if not %Typoswarning% gtr 130 (goto :Typoswarning3)
+if %Typoswarning% gtr 130 (goto :Typoswarningtest4)
 
-:typosWarningtest4
-if not %typosWarning% gtr 200 (goto :typosWarning4)
-if %typosWarning% gtr 200 (goto :typosWarningtest5)
+:Typoswarningtest4
+if not %Typoswarning% gtr 200 (goto :Typoswarning4)
+if %Typoswarning% gtr 200 (goto :Typoswarningtest5)
 
-:typosWarningtest5
-if not %typosWarning% gtr 250 (goto :typosWarning5)
-if %typosWarning% gtr 250 (goto :typosWarning6)
+:Typoswarningtest5
+if not %Typoswarning% gtr 250 (goto :Typoswarning5)
+if %Typoswarning% gtr 250 (goto :Typoswarning6)
 
 rem Collection of long press warning messages
-:typosWarning1
-if %typosWarning% gtr 21 (goto :Mainmenuboot)
+:Typoswarning1
+if %Typoswarning% gtr 21 (goto :Mainmenuboot)
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"Uh, What are you doing...?\", '...', 'OK', 'none');exit $result;"
 goto :Mainmenuboot
 
-:typosWarning2
-if %typosWarning% gtr 51 (goto :Mainmenuboot)
+:Typoswarning2
+if %Typoswarning% gtr 51 (goto :Mainmenuboot)
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"...Why did you hit enter without any inputs...?\", '>:/', 'OK', 'none');exit $result;"
 goto :Mainmenuboot
 
-:typosWarning3
-if %typosWarning% gtr 101 (goto :Mainmenuboot)
+:Typoswarning3
+if %Typoswarning% gtr 101 (goto :Mainmenuboot)
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"You wouldn't make a hundred hit enter without any fucking inputs, You've got to be kidding me!\", '>:(', 'OK', 'none');exit $result;"
 goto :Mainmenuboot
 
-:typosWarning4
-if %typosWarning% gtr 131 (goto :Mainmenuboot)
+:Typoswarning4
+if %Typoswarning% gtr 131 (goto :Mainmenuboot)
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"STOP.\", 'PLEASE STOP.', 'OK', 'none');exit $result;"
 goto :Mainmenuboot
 
-:typosWarning5
-if %typosWarning% gtr 201 (goto :Mainmenuboot)
+:Typoswarning5
+if %Typoswarning% gtr 201 (goto :Mainmenuboot)
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"STOP, IT, NOW.\", 'FINAL WARNING', 'OK', 'Warning');exit $result;"
 goto :Mainmenuboot
 
-:typosWarning6
-if %typosWarning% gtr 251 (goto :Mainmenuboot)
+:Typoswarning6
+if %Typoswarning% gtr 251 (goto :Mainmenuboot)
 powershell -Command "Add-Type -AssemblyName System.Windows.Forms;$result = [System.Windows.Forms.MessageBox]::Show(\"...\", '...', 'OK', 'Error');exit $result;"
 shutdown /r /t 10 /c "REGRET IT"
 call :exit 0
@@ -2812,7 +2723,7 @@ call :exit 0
 rem Display messages. FirstCursorisEdited message, and updateavailable message
 Call :MainmenuMessagesTimecheck & set tcmrand=&set tcmrand2=
 if not "%errorlevel%"=="1" (
-if "%FirstCursorisEdited%"=="true" (echo [17aEasy to change the %FirstSTFsfile%, huh?&echo.)
+if "%FirstCursorisEdited%"=="true" (echo [17CEasy to change the %FirstSTFsfile%, huh?&echo.)
 ) else (set MainmenuMessageshowed=true)
 if "%Updateavailable%"=="true" (call :UpdateAvailable& exit /b 1)
 exit /b 0
@@ -2820,17 +2731,17 @@ exit /b 0
 :MainmenuMessagesTimecheck
 rem Display messages for specific dates
 if "%timecheckmessageshowed%"=="true" (set MainmenuMessageshowed=& exit /b 0) else (set timecheckmessageshowed=true)
-if "%date:~0,4%"=="1999" (echo [27aWhere is the axolotl?& echo.& exit /b 1)
-if "%date:~5%"=="01/01" (echo [30aHappy New Year!& echo.& exit /b 1)
-if "%date:~5%"=="04/01" (echo [21aYour Computer is Destroyed!!!!!!!& echo.& exit /b 1)
-if "%date:~5%"=="10/01" (echo [25aIT IS DA SPOOKY MONTH!!!& echo.& exit /b 1)
-if "%date:~5%"=="10/31" (echo [30aHappy Halloween!& echo.& exit /b 1)
-if "%date:~5%"=="12/25" (echo [30aHappy Holiday!& echo.& exit /b 1)
-if "%date:~5%"=="12/31" (echo [20aDespite everything, it's still you.& echo.& exit /b 1)
+if "%date:~0,4%"=="1999" (echo [27CWhere is the axolotl?& echo.& exit /b 1)
+if "%date:~5%"=="01/01" (echo [30CHappy New Year!& echo.& exit /b 1)
+if "%date:~5%"=="04/01" (echo [21CYour Computer is Destroyed!!!!!!!& echo.& exit /b 1)
+if "%date:~5%"=="10/01" (echo [25CIT IS DA SPOOKY MONTH!!!& echo.& exit /b 1)
+if "%date:~5%"=="10/31" (echo [30CHappy Halloween!& echo.& exit /b 1)
+if "%date:~5%"=="12/25" (echo [30CHappy Holiday!& echo.& exit /b 1)
+if "%date:~5%"=="12/31" (echo [20CDespite everything, it's still you.& echo.& exit /b 1)
 rem you're bit lucky if you see this.
 call :RandomDecisioner 24
 if "%errorlevel%"=="1" (set tcmrand=0& set /a tcmrand=%random%*12/32767& set /a tcmrand=%random%*12/32767)
-if defined tcmrand (if "%tcmrand%"=="0" (echo [26aThis is all meaningless.& echo.& exit /b 1) else if "%tcmrand%"=="1" (echo [19aWho is actually reading this message?& echo.& exit /b 1) else if "%tcmrand%"=="2" (echo [20aNobody don't care about this batch.& echo.& exit /b 1) else if "%tcmrand%"=="3" (echo [25aPlease don't uninstall me& echo.& exit /b 1) else if "%tcmrand%"=="4" (echo [28aThe cake is a lie&echo.&exit /b 1) else if "%tcmrand%"=="5" (echo [28aAre you really %YourName%?& echo.& exit /b 1) else if "%tcmrand%"=="6" (echo [19aAll your batches are belong to me ^>:D& echo.& exit /b 1) else if "%tcmrand%"=="7" (echo [30aHello world :D& echo.& exit /b 1) else if "%tcmrand%"=="8" (echo [30aAlso try Debios& echo.& exit /b 1) else if "%tcmrand%"=="9" (echo [27aAlso try Shivtanium OS& echo.& exit /b 1) else if "%tcmrand%"=="10" (set /p nothing=[21a<nul& call :RainbowDrawer WOW!!! You're so lucky today!!! :D& echo.& echo.& exit /b 1) else if "%tcmrand%"=="11" (goto :MainmenuMessagesTimecheckEASTEREGG))
+if defined tcmrand (if "%tcmrand%"=="0" (echo [26CThis is all meaningless.& echo.& exit /b 1) else if "%tcmrand%"=="1" (echo [19CWho is actually reading this message?& echo.& exit /b 1) else if "%tcmrand%"=="2" (echo [20CNobody don't care about this batch.& echo.& exit /b 1) else if "%tcmrand%"=="3" (echo [25CPlease don't uninstall me& echo.& exit /b 1) else if "%tcmrand%"=="4" (echo [28CThe cake is a lie&echo.&exit /b 1) else if "%tcmrand%"=="5" (echo [28CAre you really %YourName%?& echo.& exit /b 1) else if "%tcmrand%"=="6" (echo [19CAll your batches are belong to me ^>:D& echo.& exit /b 1) else if "%tcmrand%"=="7" (echo [30CHello world :D& echo.& exit /b 1) else if "%tcmrand%"=="8" (echo [30CAlso try Debios& echo.& exit /b 1) else if "%tcmrand%"=="9" (echo [27CAlso try Shivtanium OS& echo.& exit /b 1) else if "%tcmrand%"=="10" (set /p nothing=[21C<nul& call :RainbowDrawer WOW!!! You're so lucky today!!! :D& echo.& echo.& exit /b 1) else if "%tcmrand%"=="11" (goto :MainmenuMessagesTimecheckEASTEREGG))
 set tcmrand=
 exit /b 0
 
@@ -2842,19 +2753,19 @@ color 04
 title 
 :MainmenuMessagesTimecheckEASTEREGG_ASK
 cls
-if not defined dummy (echo [19aWhat is the most GREATEST Batch file?)
+if not defined dummy (echo [19CWhat is the most GREATEST Batch file?)
 set name=
 if "%namecount%" gtr "2" start /min powershell -WindowStyle Hidden -Command "& {Add-Type -AssemblyName System.Windows.Forms; Start-Sleep -Milliseconds 100; $welcomeText = \"Cursor Changer\"; foreach ($char in $welcomeText.ToCharArray()) {[System.Windows.Forms.SendKeys]::SendWait($char); Start-Sleep -Milliseconds 125}; Start-Sleep -Milliseconds 500; [System.Windows.Forms.SendKeys]::SendWait('{ENTER}'); exit}"
 rem where is my location code is below. maybe I'll use it someday.
 rem powershell -Command "& { Add-Type -AssemblyName System.Windows.Forms; Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class KeyboardHelper { [DllImport(\"user32.dll\", SetLastError = true)] public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo); public const byte VK_LWIN = 0x5B; public const byte VK_S = 0x53; public const uint KEYEVENTF_KEYUP = 0x0002; public static void SendWinS() { keybd_event(VK_LWIN, 0, 0, UIntPtr.Zero); keybd_event(VK_S, 0, 0, UIntPtr.Zero); keybd_event(VK_S, 0, KEYEVENTF_KEYUP, UIntPtr.Zero); keybd_event(VK_LWIN, 0, KEYEVENTF_KEYUP, UIntPtr.Zero); } }'; Start-Sleep -Milliseconds 500; [KeyboardHelper]::SendWinS(); Start-Sleep -Milliseconds 250; $welcomeText = 'Where is my location?'; foreach ($char in $welcomeText.ToCharArray()) { [System.Windows.Forms.SendKeys]::SendWait($char); Start-Sleep -Milliseconds 50; }; Start-Sleep -Milliseconds 3500; [System.Windows.Forms.SendKeys]::SendWait('{ESC}') }"
-if not defined dummy (set /p "name=[30a")
+if not defined dummy (set /p "name=[30C")
 if not "%name%"=="Cursor Changer" (set /a namecount=namecount+1) else (goto :MainmenuMessagesTimecheckEASTEREGG_RIGHT)
-if "%namecount%"=="1" (echo [29aThat's incorrect.)
-if "%namecount%"=="2" (echo [29aTHAT'S INCORRECT.) else if %namecount% gtr 2 (echo [35a...)
+if "%namecount%"=="1" (echo [29CThat's incorrect.)
+if "%namecount%"=="2" (echo [29CTHAT'S INCORRECT.) else if %namecount% gtr 2 (echo [35C...)
 ping -n 2 -w 500 localhost >nul
 goto :MainmenuMessagesTimecheckEASTEREGG_ASK
 :MainmenuMessagesTimecheckEASTEREGG_RIGHT
-if not defined dummy (echo [30aThat's right :D)
+if not defined dummy (echo [30CThat's right :D)
 if "%wmodetoggle%"=="true" (color f0) else (color 07)
 timeout /t 2 /nobreak >nul
 set name=& set namecount=
@@ -2866,35 +2777,34 @@ rem Honestly, I have no idea HOW this is working.
 if "%setting7onoff%"=="false" (exit /b)
 if not defined dummy (set /p nothing=[?25l<nul)
 setlocal enabledelayedexpansion
-rem argument 1 is for OOBE. give 0~200 (every 10) value.
+rem argument 1 is for OOBE. give 0~200 (every 10) value. argument 2 is for ovarlay background.
 rem initialize variable
-if "%wmodetoggle%"=="true" (
-    if not defined dummy (set thmclr2=[107m[30m)
-    set thml=26& set thml2=25& set thmldrewb=255
-) else (if not defined dummy (set thmclr2=[0m) & set thmldrewb=12)
-if not "%setting7_1onoff%"=="true" (if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=61,-9,12)) else (
-if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=69,-9,12)) & set thmldred=155
+set thml=26& set thml2=25& set thmldrewb=12& set thmldred=155
+if "%wmodetoggle%"=="true" (if not defined dummy (set thmclr2=[107m[30m& set thmldrewb=255)
+) else (if not defined dummy (set thmclr2=[0m))
+if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=61,-9,12)
+if "%1"=="2" (if "%wmodetoggle%"=="true" (set thmlfor=216,5,243& set thmldrewb=225) else (set thmlfor=39,-5,12))
 
 rem Drew bg. thml means theme line.
-for /l %%i in (!thmlfor!) do (
-    if "%wmodetoggle%"=="true" (set /a thml2-=1& set /a thml-=1) else (set /a thml=19+%%i/10& set /a thml2=thml-1)
-    if "%setting7_1onoff%"=="true" (
-        rem halloween theme
+for /l %%i in (!thmlfor!) do (set /a thml2-=1& set /a thml-=1 & rem < Line position (26-1)
+    if "%setting7_1onoff%"=="true" ( rem Halloween theme
         if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set /a thmldrew=%%i-6)
-        if !thmldrew! lss 12 (set thmldrew=12) 
-        if not "%wmodetoggle%"=="true" (set /a thmldred=thmldred-21) else (set /a thmldred=thmldred+11)
-        if !thmldred! lss 12 (set thmldred=18) else if !thmldred! gtr 220 (set /a thmldred=230)
-        rem normal theme
-    ) else (if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170 & if !thmldrew! lss 12 (set thmldrew=12)) else (set thmldrew=%%i))
+        if !thmldrew! lss 12 (set thmldrew=12) & rem < Value correction
+        if not "%1"=="2" (if not "%wmodetoggle%"=="true" (set /a thmldred-=21) else (set /a thmldred+=11)) else (
+            if not "%wmodetoggle%"=="true" (set /a thmldred-=21& set /a thmldrew-=4) else (set /a thmldred+=16& set /a thmldrew+=16))
+        if !thmldred! lss 30 (set thmldred=27) else if not "%1"=="2" (if !thmldred! gtr 220 (set /a thmldred=230)) else if !thmldred! geq 245 (set /a thmldred=242& set thmldrew=242& set thmldrewb=242)
+    ) else ( rem Normal theme
+    if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170 & if !thmldrew! lss 12 (set thmldrew=12)) else (set thmldrew=%%i))
     if not "%setting7_1onoff%"=="true" (set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m) else (set thmclr=[48;2;!thmldred!;!thmldrew!;!thmldrewb!m)
-    for /l %%a in (1,1,3) do (set /p nothing=[!thml!d!thmclr!                         !thmclr2!<nul)
+    for /l %%a in (1,1,3) do (set /p nothing=[!thml!d!thmclr!                         !thmclr2!<nul) & rem < Draw lines
     echo [!thml2!d
 )
 
 rem delete variables
 set thml=& set thml2=& set thmclr=& set thmldrew=& set thmldrewb=& set thmldred=& set thmlfor=
-if not "%1"=="1" (setlocal disabledelayedexpansion & set /p nothing=[?25h<nul)
+if not "%1"=="1" if not "%1"=="2" (set /p nothing=[?25h<nul)
 if not defined dummy (set /p nothing=[0;0H<nul)
+setlocal disabledelayedexpansion
 exit /b
 
 
@@ -2949,6 +2859,42 @@ for /l %%i in (0,1,%length%) do (set "char=!text:~%%i,1!" & if not "!char!"=="" 
 )
 setlocal disabledelayedexpansion
 set text=& set length=& set rbphase=& set i=& set char=& set ratio=& set r=& set g=& set b=& set section=& set value=& set rbclr=& exit /b
+
+
+:Mainmenu_Boottime_WarningMSG
+rem GUI type 3
+rem Preparing of Menu and Variables
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clryel=[93m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clryel=[93m&set clrwhi=[97m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clryel=[93m&set clrwhi=[30m&set clr2=[90m[107m[30m)
+rem Draw Update Available UI
+title Cursor Changer ^| Boottime Warning!
+if %boottime% leq 100 (set "BoottimeTEMP=%boottime% ") else (set BoottimeTEMP=%boottime%)
+if not defined dummy (set /p nothing=[?25l%clr2%<nul& set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :Mainmenudrew & echo %clr2%)
+if not defined dummy (
+echo [5;11H O===================================================O 
+echo [6;11H I                                                   I 
+echo [7;11H I                     %clrwhi%!Warning!%clr2%                     I 
+echo [8;11H I                                                   I 
+echo [9;11H I  It seems like it's taking too long to start up!  I 
+echo [10;11H I      Cursor Changer usually launches in about     I
+echo [11;11H I      3-5 seconds on average, but in your case,    I
+echo [12;11H I        it took %BoottimeTEMP%seconds! This is too slow.      I
+echo [13;11H I                                                   I
+echo [14;11H I    Please check the following points :            I
+echo [15;11H I                                                   I
+echo [16;11H I   %clryel%・%clr2%   Check your computer's performance          I
+echo [17;11H I   %clryel%・%clr2%   Check your antivirus software              I
+echo [18;11H I   %clryel%・%clr2%   Check if it takes a long time for          I
+echo [19;11H I        PowerShell to start                        I
+echo [20;12HI                                                   I
+echo [21;12HI           %clrgra%^(Press any key to continue...^)%clr2%          I
+echo [22;12HI                                                   I
+echo [23;12HO===================================================O
+)
+pause >nul
+if not defined dummy (set /p nothing=[?25h<nul)
+cls & set clryel=& set clrwhi=& set BoottimeTEMP=& exit /b
 
 
 
@@ -3056,13 +3002,14 @@ exit /b
 
 
 :batshutdown
+call :Core_Powershell 2
 if not defined dummy (set /p nothing=[?25l<nul)
 title Cursor Changer ^| BYE
 cls
 if "%wmodetoggle%"=="true" (set welcomelineclr=[38;2;135;135;135m& set welcomelineclr2=[0m[107m[30m& set welcomelineclr3=[30m) else (set welcomelineclr=[38;2;120;120;120m& set welcomelineclr2=[0m& set welcomelineclr3=[39m)
 if "%wmodetoggle%"=="true" (for /l %%i in (0,1,3) do (set /p nothing=[%%i;0H[48;2;230;230;230m                                                                           [0;0H<nul)) else (for /l %%i in (0,1,3) do (set /p nothing=[%%i;0H[48;2;20;20;20m                                                                           [0;0H<nul))
 echo.
-if not defined dummy (echo [28aCursor Changer %batver%)
+if not defined dummy (echo [28CCursor Changer %batver%)
 echo.
 echo %welcomelineclr%O=========================================================================O%welcomelineclr2%
 echo.
@@ -3085,9 +3032,10 @@ echo.
 if "%wmodetoggle%"=="true" (for /l %%i in (22,1,25) do (set /p nothing=[%%i;0H[48;2;230;230;230m                                                                           [22;0H<nul)) else (for /l %%i in (22,1,25) do (set /p nothing=[%%i;0H[48;2;20;20;20m                                                                           [22;0H<nul))
 echo %welcomelineclr%O=========================================================================O%welcomelineclr3%
 echo.
-if not defined dummy (echo [23a2021-2024 tamago_1908 %batbuild%)
+if not defined dummy (echo [23C2021-2024 tamago_1908 %batbuild%)
 set welcomelineclr=& set welcomelineclr2=& set welcomelineclr3=
 call :exitmenuexit
+timeout /t 1 /nobreak >nul
 call :exit 0
 
 :mainmenu_resetcolor
@@ -3130,18 +3078,16 @@ echo [16;16H I    I%UAcb1%     Yes     %clr2%I    I%UAcb2%     No     %clr2%I  
 echo [17;16H I    O=============O    O============O    I 
 echo [18;16H I            O================O           I 
 echo [19;16H I            I%UAcb3% See Change log %clr2%I           I 
-echo [20;16H I            O================O           I 
-echo [21;16H I                                         I 
-echo [22;16H O=========================================O 
-echo [24;10H %clrgra%1~3 or W,A,S,D to Move, Y or E to Select, B or N to Exit.
+echo [20;17HI            O================O           I
+echo [21;17HI                                         I
+echo [22;17HI %clrgra%Move: WASD or 1~3 Select: Y,E Exit: B,N%clr2% I
+echo [23;17HO=========================================O
 call :UpdateAvailable_VersionDraw
 )
 choice /c 123WASDYEBN /n >nul
 rem Processing of each move
 if %Errorlevel%==10 (set UAexit=true) else if %Errorlevel%==11 (set UAexit=true)
-if %ErrorLevel%==1 (set UAsel=1)
-if %ErrorLevel%==2 (set UAsel=2)
-if %ErrorLevel%==3 (set UAsel=3)
+if %Errorlevel% geq 1 if %Errorlevel% leq 3 (set UAsel=%Errorlevel%)
 if %UAsel%==0 (set UAsel=1& set UAcb1=%clr%& goto :UpdateAvailable_main)
 if %ErrorLevel%==4 (if %UAsel%==3 (if "%UAselPre%"=="1" (set UAsel=1) else if "%UAselPre%"=="2" (set UAsel=2)))
 if %ErrorLevel%==5 (if not %UAsel%==3 (set UAsel=1))
@@ -3154,14 +3100,14 @@ set UAcb1=& set UAcb2=& set UAcb3=& set UAcb%UAsel%=%clr%& goto :UpdateAvailable
 :UpdateAvailable_Core
 rem Processing of Confirm key, like Y and E.
 set /p nothing=%clr2%<nul
-if %UAsel%==1 (cls & echo Updating...& call :Powersheller Doupdate)
+if %UAsel%==1 (cls & title Cursor Changer ^| Updating...& echo Updating...& call :Powersheller Doupdate)
 if %UAsel%==2 (set UAexit=true& exit /b)
-if %UAsel%==3 (cls & echo Loading Change log...& echo. & call :Powersheller Changelog& pause & set UAboot=& mode con: cols=75 lines=25 & exit /b)
+if %UAsel%==3 (cls & title Cursor Changer ^| Change log& echo Loading Change log...& echo. & call :Powersheller Changelog& pause & set UAboot=& mode con: cols=75 lines=25 & exit /b)
 
 :UpdateAvailable_VersionDraw
 rem Detect version
 set /p nothing=%clr2%<nul
-if "%batbeta%"=="true" (set /p nothing=[13;18H %clrgra%This update is beta, and maybe unstable%clr2%<nul)
+if "%batbeta%"=="True" (set /p nothing=[13;18H %clrgra%This update is beta, and maybe unstable%clr2%<nul)
 if not defined updatemyversion (set /p nothing=[9;30H%clrwhi%Null%clr2%<nul)
 if not defined updateversion (set /p nothing=[9;42H%clrwhi%Null%clr2%<nul& exit /b)
 rem Calculete version length
@@ -3177,7 +3123,8 @@ exit /b
 
 :UpdateAvailable_exit
 rem initialize of variable
-set UAexit=& set UAboot=& set UAsel=& set UAPre=& set UAcb1=& set UAcb2=& set UAcb3=& set clrgra=& set clryel=
+set UAexit=& set UAboot=& set UAsel=& set UAselpre=& set UAPre=& set UAcb1=& set UAcb2=& set UAcb3=& set clrgra=& set clryel=
+set batbeta=& set updateavailable=& set updatemyversion=& set updateversion=
 set checkupdatetoggle=false
 if not defined dummy (set /p nothing=[?25h<nul)
 exit /b
@@ -3327,7 +3274,7 @@ echo I%clr%                        %clr2%I 2 Admin When Boot                   I
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 echo I========================I                                     O==========O
-Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
+Echo I                        I 4 Allow sound to play               I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
@@ -3362,7 +3309,7 @@ echo I%clr%                        %clr2%I 2 Admin When Boot                   I
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 echo I========================I                                     O==========O
-Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
+Echo I                        I 4 Allow sound to play               I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
@@ -3380,8 +3327,9 @@ if %ErrorLevel%==6 goto :settingcategory1intsetting1
 if %ErrorLevel%==7 goto :settingcategory1intsetting2
 if %ErrorLevel%==8 goto :settingcategory1int
 if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 goto :setting1
-if %ErrorLevel%==11 goto :setting1
+if %ErrorLevel%==10 Call :SettingApplyer 1
+if %ErrorLevel%==11 Call :SettingApplyer 1
+goto :settingcategory1intsetting1
 
 :settingcategory1intsetting2
 title Cursor Changer ^| Setting Menu
@@ -3399,7 +3347,7 @@ echo I%clr%                        %clr2%I %clr%2 Admin When Boot%clr2%         
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 echo I========================I                                     O==========O
-Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
+Echo I                        I 4 Allow sound to play               I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
@@ -3417,8 +3365,9 @@ if %ErrorLevel%==6 goto :settingcategory1intsetting1
 if %ErrorLevel%==7 goto :settingcategory1intsetting3
 if %ErrorLevel%==8 goto :settingcategory1int
 if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 goto :setting2
-if %ErrorLevel%==11 goto :setting2
+if %ErrorLevel%==10 Call :SettingApplyer 2
+if %ErrorLevel%==11 Call :SettingApplyer 2
+goto :settingcategory1intsetting2
 
 
 :settingcategory1intsetting3
@@ -3437,7 +3386,7 @@ echo I%clr%                        %clr2%I 2 Admin When Boot                   I
 echo I========================I                                     O==========O
 echo I  Category  up or down  I %clr%3 Check Update at boot%clr2%              I  %setting3onoff%   I
 echo I========================I                                     O==========O
-Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
+Echo I                        I 4 Allow sound to play               I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
@@ -3455,8 +3404,9 @@ if %ErrorLevel%==6 goto :settingcategory1intsetting2
 if %ErrorLevel%==7 goto :settingcategory1intsetting4
 if %ErrorLevel%==8 goto :settingcategory1int
 if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 goto :setting3
-if %ErrorLevel%==11 goto :setting3
+if %ErrorLevel%==10 Call :SettingApplyer 3
+if %ErrorLevel%==11 Call :SettingApplyer 3
+goto :settingcategory1intsetting3
 
 
 :settingcategory1intsetting4
@@ -3475,7 +3425,7 @@ echo I%clr%                        %clr2%I 2 Admin When Boot                   I
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 echo I========================I                                     O==========O
-Echo I                        I %clr%4 Long press detection of enter%clr2%     I  %setting4onoff%   I
+Echo I                        I %clr%4 Allow sound to play%clr2%               I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I 5 Initialization or Uninstallation             I
 echo O========================O==O=====================O==========O============O
@@ -3493,8 +3443,9 @@ if %ErrorLevel%==6 goto :settingcategory1intsetting3
 if %ErrorLevel%==7 goto :settingcategory1intsetting5
 if %ErrorLevel%==8 goto :settingcategory1int
 if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 goto :setting4
-if %ErrorLevel%==11 goto :setting4
+if %ErrorLevel%==10 Call :SettingApplyer 4
+if %ErrorLevel%==11 Call :SettingApplyer 4
+goto :settingcategory1intsetting4
 
 
 :settingcategory1intsetting5
@@ -3513,7 +3464,7 @@ echo I%clr%                        %clr2%I 2 Admin When Boot                   I
 echo I========================I                                     O==========O
 echo I  Category  up or down  I 3 Check Update at boot              I  %setting3onoff%   I
 echo I========================I                                     O==========O
-Echo I                        I 4 Long press detection of enter     I  %setting4onoff%   I
+Echo I                        I 4 Allow sound to play               I  %setting4onoff%   I
 echo I Cursor Changer Visuals I                                     O==========O
 echo I                        I %clr%5 Initialization or Uninstallation%clr2%             I
 echo O========================O==O=====================O==========O============O
@@ -3533,6 +3484,7 @@ if %ErrorLevel%==8 goto :settingcategory1int
 if %ErrorLevel%==9 goto :settingcategory1int
 if %ErrorLevel%==10 goto :Uninstall
 if %ErrorLevel%==11 goto :Uninstall
+goto :settingcategory1intsetting5
 
 :settingcategory2int
 title Cursor Changer ^| Setting Menu
@@ -3638,10 +3590,11 @@ if %ErrorLevel%==3 goto :settingcategory2intsetting1
 if %ErrorLevel%==4 goto :settingcategory2intsetting3
 if %ErrorLevel%==5 goto :settingcategory2int
 if %ErrorLevel%==6 goto :settingcategory2int
-if %ErrorLevel%==7 goto :setting6
-if %ErrorLevel%==8 goto :setting6
+if %ErrorLevel%==7 Call :SettingApplyer 6
+if %ErrorLevel%==8 Call :SettingApplyer 6
 if %ErrorLevel%==9 goto :settingcategory2intsetting3
 if %ErrorLevel%==10 goto :settingcategory2intsetting4
+goto :settingcategory2intsetting2
 
 
 :settingcategory2intsetting3
@@ -3675,10 +3628,11 @@ if %ErrorLevel%==3 goto :settingcategory2intsetting2
 if %ErrorLevel%==4 goto :settingcategory2intsetting4
 if %ErrorLevel%==5 goto :settingcategory2int
 if %ErrorLevel%==6 goto :settingcategory2int
-if %ErrorLevel%==7 goto :setting7
-if %ErrorLevel%==8 goto :setting7
+if %ErrorLevel%==7 Call :SettingApplyer 7
+if %ErrorLevel%==8 Call :SettingApplyer 7
 if %ErrorLevel%==9 goto :settingcategory2intsetting3
 if %ErrorLevel%==10 goto :settingcategory2intsetting4
+goto :settingcategory2intsetting3
 
 
 :settingcategory2intsetting4
@@ -3712,10 +3666,11 @@ if %ErrorLevel%==3 goto :settingcategory2intsetting3
 if %ErrorLevel%==4 goto :settingcategory2intsetting4
 if %ErrorLevel%==5 goto :settingcategory2int
 if %ErrorLevel%==6 goto :settingcategory2int
-if %ErrorLevel%==7 goto :wmode
-if %ErrorLevel%==8 goto :wmode
+if %ErrorLevel%==7 Call :SettingApplyer wmode
+if %ErrorLevel%==8 Call :SettingApplyer wmode
 if %ErrorLevel%==9 goto :settingcategory2intsetting3
 if %ErrorLevel%==10 goto :settingcategory2intsetting4
+goto :settingcategory2intsetting4
 
 
 :settingcategory2intsetting5_stg0
@@ -3752,9 +3707,10 @@ if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg0
 if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg1
 if %ErrorLevel%==6 goto :settingcategory2intsetting1
 if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 goto :setting5
-if %ErrorLevel%==9 goto :setting5
+if %ErrorLevel%==8 Call :SettingApplyer 5
+if %ErrorLevel%==9 Call :SettingApplyer 5
 if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
+goto :settingcategory2intsetting5_stg0
 
 
 :settingcategory2intsetting5_stg1
@@ -3795,9 +3751,10 @@ if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg0
 if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg2
 if %ErrorLevel%==6 goto :settingcategory2intsetting1
 if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 goto :setting5_1
-if %ErrorLevel%==9 goto :setting5_1
+if %ErrorLevel%==8 Call :SettingApplyer 5_1
+if %ErrorLevel%==9 Call :SettingApplyer 5_1
 if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
+goto :settingcategory2intsetting5_stg1
 
 
 :settingcategory2intsetting5_stg2
@@ -3836,9 +3793,10 @@ if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg1
 if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg3
 if %ErrorLevel%==6 goto :settingcategory2intsetting1
 if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 goto :setting5_2
-if %ErrorLevel%==9 goto :setting5_2
+if %ErrorLevel%==8 Call :SettingApplyer 5_2
+if %ErrorLevel%==9 Call :SettingApplyer 5_2
 if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
+goto :settingcategory2intsetting5_stg2
 
 :settingcategory2intsetting5_stg3
 if "%setting5onoff%"=="false" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0) else if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg2)
@@ -3877,9 +3835,10 @@ if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg2
 if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg3
 if %ErrorLevel%==6 goto :settingcategory2intsetting1
 if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 goto :setting5_3
-if %ErrorLevel%==9 goto :setting5_3
+if %ErrorLevel%==8 Call :SettingApplyer 5_3
+if %ErrorLevel%==9 Call :SettingApplyer 5_3
 if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
+goto :settingcategory2intsetting5_stg3
 
 :settingcategory2intsetting5blockcheck
 set sc2s5s1lock=&set sc2s5s1lock2=&set sc2s5s2lock=&set sc2s5s2lock2=&set sc2s5s3lock=&set sc2s5s3lock2=&
@@ -3984,650 +3943,139 @@ if "%wmodetoggle%"=="true" (set clr=[46m&set clrhelp=[100m[97m&set clrhelp2=
 goto :settingcategoryhelpmode
 
 
+:Settingapplyer
+rem Setting applyer
+rem Setting lists 
+if not "%1"=="" (set "SGApplyer_SettingNum=%1") else (echo SettingApplyer : Please gimme a argument :3& pause & exit /b 1)
+if "%SGApplyer_SettingNum%"=="1" (set "SGApplyer_Applytext=Reboot as Cursor Changer" & set "SGApplyer_Settingname=BootAsCC")
+if "%SGApplyer_SettingNum%"=="2" (set "SGApplyer_Applytext=request for administrative privileges at startup" & set "SGApplyer_Settingname=admin")
+if "%SGApplyer_SettingNum%"=="3" (set "SGApplyer_Applytext=Check update at boot" & set "SGApplyer_Settingname=CheckUpdate")
+if "%SGApplyer_SettingNum%"=="4" (set "SGApplyer_Applytext=allow sound to play" & set "SGApplyer_Settingname=PlaySound")
+if "%SGApplyer_SettingNum%"=="5" (set "SGApplyer_Applytext=boot animation" & set "SGApplyer_Settingname=bootanimation")
+if "%SGApplyer_SettingNum%"=="5_1" (set "SGApplyer_Applytext=linux-ish boot animation" & set "SGApplyer_Settingname=s5_linuxboot")
+if "%SGApplyer_SettingNum%"=="5_2" (set "SGApplyer_Applytext=simple boot animation" & set "SGApplyer_Settingname=s5_simpleboot")
+if "%SGApplyer_SettingNum%"=="5_3" (set "SGApplyer_Applytext=raw boot animation" & set "SGApplyer_Settingname=s5_rawboot")
+if "%SGApplyer_SettingNum%"=="6" (set "SGApplyer_Applytext=Show Underline at the mainmenu" & set "SGApplyer_Settingname=Underline")
+if "%SGApplyer_SettingNum%"=="7" (set "SGApplyer_Applytext=Show Background at the mainmenu" & set "SGApplyer_Settingname=MainmenuBg")
+if "%SGApplyer_SettingNum%"=="wmode" (set "SGApplyer_Applytext=Unused text" & set "SGApplyer_Settingname=wmode")
+goto :SettingApplyer_Main
 
-:setting1
-rem Apply and verify rem settings
-rem Verifying the existence of rem settings:setting1
-rem by the way, why this code is so goofy
-rem i know why. becouse ITS OLD CODE!!!!!!!!
 
-if "%settinghelptoggle%"=="true" (goto :setting1help)
-find "BootAsCC=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting1setonoff=enable& goto :setting1okey
-if %ErrorLevel%==1 set setting1setonoff=Repair& goto :setting1onoff
+:SettingApplyer_Main
+rem Detect settings and decide toggle text (like "enable" and "disable")
+if "%SGApplyer_Settingname%"=="" (echo SettingApplyer : Argument "%SGApplyer_SettingNum%" is Invalid argument or undefined setting!& pause & exit /b 1)
+if "%settinghelptoggle%"=="true" (if not "%SGApplyer_SettingNum%"=="wmode" (goto :setting%1help) else if "%SGApplyer_SettingNum%"=="wmode" (goto :wmodehelp))
+find "%SGApplyer_Settingname%=false" %Settingsfile% > nul
+if not "%SGApplyer_SettingNum%"=="wmode" (
+    if %ErrorLevel%==0 set "SGApplyer_ToggleText=enable" & goto :SettingApplyer_Ask
+    if %ErrorLevel%==1 set "SGApplyer_ToggleText=repair" & goto :SettingApplyer_DetectTrue
+) else (
+    if %ErrorLevel%==0 set "SGApplyer_ToggleText=White theme" & goto :SettingApplyer_Ask
+    if %ErrorLevel%==1 set "SGApplyer_ToggleText=Default theme" & goto :SettingApplyer_DetectTrue
+)
+:SettingApplyer_DetectTrue
+find "%SGApplyer_Settingname%=true" %Settingsfile% > nul
+if not "%SGApplyer_SettingNum%"=="wmode" (
+if %ErrorLevel%==0 set "SGApplyer_ToggleText=disable"
+) else (if %ErrorLevel%==0 set "SGApplyer_ToggleText=Dark theme" & goto :SettingApplyer_Ask)
 
-:setting1onoff
-find "BootAsCC=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting1setonoff=disable
 
-:setting1okey
+:SettingApplyer_Ask
+rem ask enbale / disable setting or not
 cls
 set selected=
-echo Do you want to %setting1setonoff% Reboot as Cursor Changer? (Y=Yes N=No B=Back)
+if not "%SGApplyer_SettingNum%"=="wmode" (echo Do you want to %SGApplyer_ToggleText% the %SGApplyer_Applytext%?
+) else (echo Do you want to change the theme of Cursor Changer to %SGApplyer_ToggleText%?)
+echo ^(Y=Yes N=No B=Back^)
 SET /P selected= :
 echo %selected% has selected.
-if "%selected%"=="y" (goto :setting1y)
-if "%selected%"=="n" (goto :setting1n)
-if "%selected%"=="back" (goto :settingcategory1intsetting1)
-if "%selected%"=="b" (goto :settingcategory1intsetting1)
-goto :setting1okey
+if "%selected%"=="yes" (goto :SettingApplyer_Apply)
+if "%selected%"=="y" (goto :SettingApplyer_Apply)
+if "%selected%"=="no" (goto :SettingApplyer_Sad)
+if "%selected%"=="n" (goto :SettingApplyer_Sad)
+if "%selected%"=="back" (goto :SettingApplyer_Sad)
+if "%selected%"=="b" (goto :SettingApplyer_Sad)
+goto :SettingApplyer_Ask
 
-:setting1y
-find "BootAsCC=false" %Settingsfile% > nul
-echo Applying settings...
-if %ErrorLevel%==1 goto :setting1ygo3test
-if %ErrorLevel%==0 goto :setting1ygo1
 
-:setting1ygo3test
-find "BootAsCC=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo BootAsCC=false >> %Settingsfile%& goto :setting1yokey
-if %ErrorLevel%==0 goto :setting1ygo2
+:SettingApplyer_Apply
+rem main applyer
+echo.& echo Applying setting...
+find "%SGApplyer_Settingname%=false" %Settingsfile% > nul
+if %ErrorLevel%==1 goto :SettingApplyer_Apply_DetectTrue
+if %ErrorLevel%==0 goto :SettingApplyer_Apply_FalseToTrue
 
-:setting1ygo2
-powershell "(gc %Settingsfile%) -replace 'BootAsCC=true','BootAsCC=false' | sc %Settingsfile%"
-goto :setting1yokey
+:SettingApplyer_Apply_DetectTrue
+rem detect true or false
+find "%SGApplyer_Settingname%=true" %Settingsfile% > nul
+if %ErrorLevel%==1 (
+    rem default setting value list
+    if "%SGApplyer_Settingname%"=="BootAsCC" (echo BootAsCC=false >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="admin" (echo admin=false >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="CheckUpdate" (echo CheckUpdate=false >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="PlaySound" (echo PlaySound=true >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="bootanimation" (echo bootanimation=true >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="s5_linuxboot" (echo s5_linuxboot=false >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="s5_simpleboot" (echo s5_simpleboot=false >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="s5_rawboot" (echo s5_rawboot=false >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="Underline" (echo Underline=true >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="MainmenuBg" (echo MainmenuBg=true >> %Settingsfile%)
+    if "%SGApplyer_Settingname%"=="wmode" (echo wmode=false >> %Settingsfile%)
+    goto :SettingApplyer_Apply_Complete
+)
+if %ErrorLevel%==0 goto :SettingApplyer_Apply_TrueToFalse
 
-:setting1ygo1
-powershell "(gc %Settingsfile%) -replace 'BootAsCC=false','BootAsCC=true' | sc %Settingsfile%"
-goto :setting1yokey
+:SettingApplyer_Apply_TrueToFalse
+rem change the setting true to false
+powershell "(gc %Settingsfile%) -replace '%SGApplyer_Settingname%=true','%SGApplyer_Settingname%=false' | sc %Settingsfile%"
+if "%SGApplyer_Settingname%"=="s5_linuxboot" (set linuxboot=false) & if "%SGApplyer_Settingname%"=="s5_simpleboot" (set simpleboot=false) & if "%SGApplyer_Settingname%"=="s5_rawboot" (set rawboot=false)
+if "%SGApplyer_Settingname%"=="wmode" (set wmodetoggle=false)
+goto :SettingApplyer_Apply_Complete
 
-:setting1yokey
+:SettingApplyer_Apply_FalseToTrue
+rem change the setting to false to true
+powershell "(gc %Settingsfile%) -replace '%SGApplyer_Settingname%=false','%SGApplyer_Settingname%=true' | sc %Settingsfile%"
+if "%SGApplyer_Settingname%"=="s5_linuxboot" (set linuxboot=true) & if "%SGApplyer_Settingname%"=="s5_simpleboot" (set simpleboot=false) & if "%SGApplyer_Settingname%"=="s5_rawboot" (set rawboot=false)
+if "%SGApplyer_Settingname%"=="wmode" (set wmodetoggle=true)
+goto :SettingApplyer_Apply_Complete
+
+
+:SettingApplyer_Apply_Complete
+call :SettingApplyer_Theme_Apply
+rem Yaaay it changed
 cls
 Echo The change was made successfully.
 Pause
-set wantload=setting1
+if "%SGApplyer_SettingNum%"=="wmode" (set "wantload=wmode") else (set "wantload=setting%SGApplyer_SettingNum%")
 call :SAB_Manager
-goto :settingcategory1intsetting1
+call :SettingApplyer_Exit
+exit /b 0
 
-:setting1n
+:SettingApplyer_Sad
+rem nooo you didn't change the setting :(
 cls
-Echo Did not change settings
-Pause
-goto :settingcategory1intsetting1
-
-:setting2
-if "%settinghelptoggle%"=="true" (goto :setting2help)
-find "admin=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting2setonoff=enable& goto :setting2okey
-if %ErrorLevel%==1 set setting2setonoff=Repair& goto :setting2onoff
-
-:setting2onoff
-find "admin=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting2setonoff=disable
-
-:setting2okey
-cls
-echo Do you want to %setting2setonoff% the request for administrative privileges at startup? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting2y)
-if "%selected%"=="n" (goto :setting2n)
-if "%selected%"=="back" (goto :settingcategory1intsetting2)
-if "%selected%"=="b" (goto :settingcategory1intsetting2)
-goto :setting2okey
-
-:setting2y
-find "admin=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting2ygo3test
-if %ErrorLevel%==0 goto :setting2ygo1
-
-:setting2ygo3test
-find "admin=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo admin=true >> %Settingsfile%& goto :setting2yokey
-if %ErrorLevel%==0 goto :setting2ygo2
-
-:setting2ygo2
-powershell "(gc %Settingsfile%) -replace 'admin=true','admin=false' | sc %Settingsfile%"
-goto :setting2yokey
-
-:setting2ygo1
-powershell "(gc %Settingsfile%) -replace 'admin=false','admin=true' | sc %Settingsfile%"
-goto :setting2yokey
-
-:setting2yokey
-cls
-Echo The change was made successfully.
-
-Pause
-set wantload=setting2
-call :SAB_Manager
-goto :settingcategory1intsetting2
-
-:setting2n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory1intsetting2
-
-:setting3
-if "%settinghelptoggle%"=="true" (goto :setting3help)
-find "CheckUpdate=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting3setonoff=enable& goto :setting3onoff
-if %ErrorLevel%==1 set setting3setonoff=Repair&goto :setting3onoff
-
-:setting3onoff
-find "CheckUpdate=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting3setonoff=disable&set setting3warning=
-:setting3okey
-cls
-echo Do you want to set Check update at boot to be %setting3setonoff%? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected
-if "%selected%"=="y" (goto :setting3y)
-if "%selected%"=="n" (goto :setting3n)
-if "%selected%"=="back" (goto :settingcategory1intsetting3)
-if "%selected%"=="b" (goto :settingcategory1intsetting3)
-goto :setting3okey
-
-:setting3y
-find "CheckUpdate=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting3ygo3test
-if %ErrorLevel%==0 goto :setting3ygo1
-
-:setting3ygo3test
-find "CheckUpdate=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo CheckUpdate=false >> %Settingsfile%& goto :setting3yokey
-if %ErrorLevel%==0 goto :setting3ygo2
-
-:setting3ygo2
-powershell "(gc %Settingsfile%) -replace 'CheckUpdate=true','CheckUpdate=false' | sc %Settingsfile%"
-goto :setting3yokey
-
-:setting3ygo1
-powershell "(gc %Settingsfile%) -replace 'CheckUpdate=false','CheckUpdate=true' | sc %Settingsfile%"
-goto :setting3yokey
-
-:setting3n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory1intsetting3
-
-:setting3yokey
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting3
-call :SAB_Manager
-goto :settingcategory1intsetting3
-
-:setting4
-if "%settinghelptoggle%"=="true" (goto :setting4help)
-find "typosWarning=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting4setonoff=enable&goto :setting4okey
-if %ErrorLevel%==1 set setting4setonoff=Repair&goto :setting4onoff
-
-:setting4onoff
-find "typosWarning=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting4setonoff=disable
-
-:setting4okey
-cls
-echo Do you want to %setting4setonoff% the enter key long press detection function? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting4y)
-if "%selected%"=="n" (goto :setting4n)
-if "%selected%"=="back" (goto :settingcategory1intsetting4)
-if "%selected%"=="b" (goto :settingcategory1intsetting4)
-goto :setting4okey
-
-:setting4y
-find "typosWarning=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting4ygo3test
-if %ErrorLevel%==0 goto :setting4ygo1
-
-:setting4ygo3test
-find "typosWarning=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo typosWarning=true >> %Settingsfile%& goto :setting4yokey
-if %ErrorLevel%==0 goto :setting4ygo2
-
-:setting4ygo2
-powershell "(gc %Settingsfile%) -replace 'typosWarning=true','typosWarning=false' | sc %Settingsfile%"
-goto :setting4yokey
-
-:setting4ygo1
-powershell "(gc %Settingsfile%) -replace 'typosWarning=false','typosWarning=true' | sc %Settingsfile%"
-goto :setting4yokey
-
-:setting4yokey
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting4
-call :SAB_Manager
-goto :settingcategory1intsetting4
-
-:setting4n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory1intsetting4
-
-:setting5
-if "%settinghelptoggle%"=="true" (goto :setting5help)
-find "bootanimation=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5setonoff=enable&goto :setting5okey
-if %ErrorLevel%==1 set setting5setonoff=Repair&goto :setting5onoff
-
-:setting5onoff
-find "bootanimation=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5setonoff=disbale
-
-:setting5okey
-cls
-echo Do you want the boot animation to be %setting5setonoff%? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting5y)
-if "%selected%"=="n" (goto :setting5n)
-if "%selected%"=="back" (goto :settingcategory2intsetting5_stg0)
-if "%selected%"=="b" (goto :settingcategory2intsetting5_stg0)
-goto :setting5okey
-
-:setting5y
-find "bootanimation=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting5ygo3test
-if %ErrorLevel%==0 goto :setting5ygo1
-
-:setting5ygo3test
-find "bootanimation=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo bootanimation=true >> %Settingsfile%& goto :setting5yokey
-if %ErrorLevel%==0 goto :setting5ygo2
-
-:setting5ygo2
-powershell "(gc %Settingsfile%) -replace 'bootanimation=true','bootanimation=false' | sc %Settingsfile%"
-goto :setting5yokey
-
-:setting5ygo1
-powershell "(gc %Settingsfile%) -replace 'bootanimation=false','bootanimation=true' | sc %Settingsfile%"
-goto :setting5yokey
-
-:setting5yokey
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting5
-call :SAB_Manager
-goto :settingcategory2intsetting5_stg0
-
-:setting5n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory2intsetting5_stg0
+echo Setting were not changed.
+timeout /t 1 /nobreak >nul
+call :SettingApplyer_Exit
+exit /b 1
 
 
-:setting5_1
-if "%settinghelptoggle%"=="true" (goto :setting5_1help)
-find "s5_linuxboot=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5_1setonoff=enable&goto :setting5_1okey
-if %ErrorLevel%==1 set setting5_1setonoff=Repair&goto :setting5_1onoff
-
-:setting5_1onoff
-find "s5_linuxboot=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5_1setonoff=disbale
-
-:setting5_1okey
-cls
-echo Do you want the linux-ish boot animation to be %setting5_1setonoff%? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting5_1y)
-if "%selected%"=="n" (goto :setting5_1n)
-if "%selected%"=="back" (goto :settingcategory2intsetting5_stg0)
-if "%selected%"=="b" (goto :settingcategory2intsetting5_stg0)
-goto :setting5_1okey
-
-:setting5_1y
-find "s5_linuxboot=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting5_1ygo3test
-if %ErrorLevel%==0 goto :setting5_1ygo1
-
-:setting5_1ygo3test
-find "s5_linuxboot=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo s5_linuxboot=false >> %Settingsfile%& goto :setting5_1yokey
-if %ErrorLevel%==0 goto :setting5_1ygo2
-
-:setting5_1ygo2
-powershell "(gc %Settingsfile%) -replace 's5_linuxboot=true','s5_linuxboot=false' | sc %Settingsfile%"
-set linuxboot=false
-goto :setting5_1yokey
-
-:setting5_1ygo1
-powershell "(gc %Settingsfile%) -replace 's5_linuxboot=false','s5_linuxboot=true' | sc %Settingsfile%"
-set linuxboot=true
-goto :setting5_1yokey
-
-:setting5_1yokey
+:SettingApplyer_Theme_Apply
+rem theme and boot animation color set
 if "%linuxboot%"=="true" (
 if "%wmodetoggle%"=="true" (set linuxishclr2=[107m[30m) else (set linuxishclr2=[0m)
 set linuxishclred=[91m& set linuxishclr=[92m
 ) else (set linuxishclred=& set linuxishclr=& set linuxishclr2=)
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting5_1
-call :SAB_Manager
-goto :settingcategory2intsetting5_stg1
+if "%wmodetoggle%"=="false" (set clr=[7m&set clr2=[0m& color 07)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clr2=[0m[107m[30m& color f0) else (color 07)
+exit /b
 
-:setting5_1n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory2intsetting5_stg1
+:SettingApplyer_Exit
+rem delete the variables
+set SGApplyer_SettingNum=& set SGApplyer_Settingname=& set SGApplyer_ToggleText=
+exit /b
 
 
-:setting5_2
-if "%settinghelptoggle%"=="true" (goto :setting5_2help)
-find "s5_simpleboot=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5_2setonoff=enable&goto :setting5_2okey
-if %ErrorLevel%==1 set setting5_2setonoff=Repair&goto :setting5_2onoff
-
-:setting5_2onoff
-find "s5_simpleboot=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5_2setonoff=disbale
-
-:setting5_2okey
-cls
-echo Do you want the simple boot animation to be %setting5_2setonoff%? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting5_2y)
-if "%selected%"=="n" (goto :setting5_2n)
-if "%selected%"=="back" (goto :settingcategory2intsetting5_stg1)
-if "%selected%"=="b" (goto :settingcategory2intsetting5_stg1)
-goto :setting5_2okey
-
-:setting5_2y
-find "s5_simpleboot=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting5_2ygo3test
-if %ErrorLevel%==0 goto :setting5_2ygo1
-
-:setting5_2ygo3test
-find "s5_simpleboot=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo s5_simpleboot=false >> %Settingsfile%& goto :setting5_2yokey
-if %ErrorLevel%==0 goto :setting5_2ygo2
-
-:setting5_2ygo2
-powershell "(gc %Settingsfile%) -replace 's5_simpleboot=true','s5_simpleboot=false' | sc %Settingsfile%"
-set simpleboot=false
-goto :setting5_2yokey
-
-:setting5_2ygo1
-powershell "(gc %Settingsfile%) -replace 's5_simpleboot=false','s5_simpleboot=true' | sc %Settingsfile%"
-set simpleboot=true
-goto :setting5_2yokey
-
-:setting5_2yokey
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting5_2
-call :SAB_Manager
-goto :settingcategory2intsetting5_stg2
-
-:setting5_2n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory2intsetting5_stg2
-
-
-
-:setting5_3
-if "%settinghelptoggle%"=="true" (goto :setting5_3help)
-find "s5_rawboot=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5_3setonoff=enable&goto :setting5_3okey
-if %ErrorLevel%==1 set setting5_3setonoff=Repair&goto :setting5_3onoff
-
-:setting5_3onoff
-find "s5_rawboot=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting5_3setonoff=disbale
-
-:setting5_3okey
-cls
-echo Do you want the raw boot animation to be %setting5_3setonoff%? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting5_3y)
-if "%selected%"=="n" (goto :setting5_3n)
-if "%selected%"=="back" (goto :settingcategory2intsetting5_stg3)
-if "%selected%"=="b" (goto :settingcategory2intsetting5_stg3)
-goto :setting5_3okey
-
-:setting5_3y
-find "s5_rawboot=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting5_3ygo3test
-if %ErrorLevel%==0 goto :setting5_3ygo1
-
-:setting5_3ygo3test
-find "s5_rawboot=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo s5_rawboot=false >> %Settingsfile%& goto :setting5_3yokey
-if %ErrorLevel%==0 goto :setting5_3ygo2
-
-:setting5_3ygo2
-powershell "(gc %Settingsfile%) -replace 's5_rawboot=true','s5_rawboot=false' | sc %Settingsfile%"
-set rawboot=false
-goto :setting5_3yokey
-
-:setting5_3ygo1
-powershell "(gc %Settingsfile%) -replace 's5_rawboot=false','s5_rawboot=true' | sc %Settingsfile%"
-set rawboot=true
-goto :setting5_3yokey
-
-:setting5_3yokey
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting5_3
-call :SAB_Manager
-goto :settingcategory2intsetting5_stg3
-
-:setting5_3n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory2intsetting5_stg3
-
-
-:setting6
-if "%settinghelptoggle%"=="true" (goto :setting6help)
-find "Underline=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting6setonoff=enable&goto :setting6okey
-if %ErrorLevel%==1 set setting6setonoff=Repair&goto :setting6onoff
-
-:setting6onoff
-find "Underline=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting6setonoff=disbale
-
-:setting6okey
-cls
-echo Do you want the Show Underline at the mainmenu to be %setting6setonoff%? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting6y)
-if "%selected%"=="n" (goto :setting6n)
-if "%selected%"=="back" (goto :settingcategory2intsetting2)
-if "%selected%"=="b" (goto :settingcategory2intsetting2)
-goto :setting6okey
-
-:setting6y
-find "Underline=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting6ygo3test
-if %ErrorLevel%==0 goto :setting6ygo1
-
-:setting6ygo3test
-find "Underline=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo Underline=true >> %Settingsfile%& goto :setting6yokey
-if %ErrorLevel%==0 goto :setting6ygo2
-
-:setting6ygo2
-powershell "(gc %Settingsfile%) -replace 'Underline=true','Underline=false' | sc %Settingsfile%"
-goto :setting6yokey
-
-:setting6ygo1
-powershell "(gc %Settingsfile%) -replace 'Underline=false','Underline=true' | sc %Settingsfile%"
-goto :setting6yokey
-
-:setting6yokey
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting6
-call :SAB_Manager
-goto :settingcategory2intsetting2
-
-:setting6n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory2intsetting2
-
-
-:setting7
-if "%settinghelptoggle%"=="true" (goto :setting7help)
-find "MainmenuBg=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting7setonoff=enable&goto :setting7okey
-if %ErrorLevel%==1 set setting7setonoff=Repair&goto :setting7onoff
-
-:setting7onoff
-find "MainmenuBg=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set setting7setonoff=disbale
-
-:setting7okey
-cls
-echo Do you want the Show Background at the mainmenu to be %setting7setonoff%? (Y=Yes N=No B=Back)
-SET /P selected= :
-echo %selected% has selected.
-if "%selected%"=="y" (goto :setting7y)
-if "%selected%"=="n" (goto :setting7n)
-if "%selected%"=="back" (goto :settingcategory2intsetting3)
-if "%selected%"=="b" (goto :settingcategory2intsetting3)
-goto :setting7okey
-
-:setting7y
-find "MainmenuBg=false" %Settingsfile% > nul
-echo Applying settings...
-
-if %ErrorLevel%==1 goto :setting7ygo3test
-if %ErrorLevel%==0 goto :setting7ygo1
-
-:setting7ygo3test
-find "MainmenuBg=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo MainmenuBg=true >> %Settingsfile%& goto :setting7yokey
-if %ErrorLevel%==0 goto :setting7ygo2
-
-:setting7ygo2
-powershell "(gc %Settingsfile%) -replace 'MainmenuBg=true','MainmenuBg=false' | sc %Settingsfile%"
-goto :setting7yokey
-
-:setting7ygo1
-powershell "(gc %Settingsfile%) -replace 'MainmenuBg=false','MainmenuBg=true' | sc %Settingsfile%"
-goto :setting7yokey
-
-:setting7yokey
-cls
-Echo The change was made successfully.
-Pause
-set wantload=setting7
-call :SAB_Manager
-goto :settingcategory2intsetting3
-
-:setting7n
-cls
-Echo Did not change settings.
-Pause
-goto :settingcategory2intsetting3
-
-
-:wmode
-if "%settinghelptoggle%"=="true" (goto :wmodehelp)
-cd /d %batchmainpath%
-:wmodetest
-find "wmode=false" %Settingsfile% > nul
-if %ErrorLevel%==0 set wmodesetonoff=white
-if %ErrorLevel%==1 set wmodesetonoff=Repair the theme settings and restore the normal& goto :wmodeonoff
-
-:wmodeonoff
-find "wmode=true" %Settingsfile% > nul
-if %ErrorLevel%==0 set wmodesetonoff=dark
-
-cls
-echo Do you want to change to %wmodesetonoff% theme? (Y=Yes N=No B=Back)
-SET /P selected= :
-rem theme branching
-if "%selected%"=="y" (goto :wmodey)
-if "%selected%"=="yes" (goto :wmodey)
-if "%selected%"=="egg" (goto :secret)
-if "%selected%"=="n" (goto :no01)
-if "%selected%"=="no" (goto :no01)
-if "%selected%"=="back" (goto :settingcategory2intsetting4)
-if "%selected%"=="b" (goto :settingcategory2intsetting4)
-if "%selected%"=="def" (goto :defultwok)
-if "%selected%"=="defult" (goto :defultwok)
-goto :wmode
-
-:wmodey
-find "wmode=false" %Settingsfile% > nul
-echo Applying theme...
-if %ErrorLevel%==1 goto :wmodeygo3test
-if %ErrorLevel%==0 goto :wmodeygo1
-
-:wmodeygo3test
-find "wmode=true" %Settingsfile% > nul
-if %ErrorLevel%==1 echo wmode=false >> %Settingsfile%&goto :wmodeygo1
-if %ErrorLevel%==0 goto :wmodeygo2
-
-:wmodeygo2
-powershell "(gc %Settingsfile%) -replace 'wmode=true','wmode=false' | sc %Settingsfile%"
-goto :wmodeyokey
-
-:wmodeygo1
-powershell "(gc %Settingsfile%) -replace 'wmode=false','wmode=true' | sc %Settingsfile%"
-goto :wmodeyokey
-
-:wmodeyokey
-find "wmode=false" %Settingsfile% > nul
-if %ErrorLevel%==0 color 07
-if %ErrorLevel%==1 goto :wmodeonoffdetect
-:wmodeonoffdetect
-find "wmode=true" %Settingsfile% > nul
-if %ErrorLevel%==0 color f0
-cls
-echo Successfully Changed to %wmodesetonoff% theme.
-Pause
-set wantload=wmode
-call :SAB_Manager
-if "%wmodetoggle%"=="false" (set clr=[7m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clr2=[0m[107m[30m)
-if "%linuxboot%"=="true" (
-    if "%wmodetoggle%"=="false" (set linuxishclr2=[0m)
-    if "%wmodetoggle%"=="true" (set linuxishclr2=[107m[30m) else (set linuxishclr2=[0m)
-)
-goto :settingcategory2intsetting4
-
-:no01
-cls
-echo No changes were made to the %wmodesetonoff% theme.
-pause
-goto :settingcategory2intsetting4
 
 rem setting help txt 
 :setting1help
@@ -4659,10 +4107,9 @@ goto :settingcategory1intsetting3
 
 :setting4help
 cls
-echo This setting is a little confusing, but simply put, it comes up when you press and hold enter without typing anything on the screen that appears when you start the batch,
-echo This function allows you to turn off/on warning messages.
-echo It is easier to understand this if you actually experience it, but, well, you have to press and hold enter for about 50~250 times,
-echo It would be like a warning message being displayed. But sometimes people find this annoying, so we have added a setting that allows you to turn this feature off.
+echo This setting determines whether Cursor Changer is allowed to play sound.
+echo If this setting is on, sound effects and other sounds will be played at startup, etc.
+echo These sounds are played by Powershell when it is launched from Cursor Changer from the background.
 echo This setting is true by default.
 pause
 goto :settingcategory1intsetting4
@@ -4810,7 +4257,6 @@ exit /b
 rem drawer of Text and Colors.
 if not defined dummy (echo [9;41H %batver% ^(%batverdevshow%^))
 if not defined dummy (echo [10;41H %batbuild:~6%)
-if not defined dummy (set /p nothing=[25;0H%clrgra%Developed by tamago_1908%clr2%<nul)
 if "%batvercurrent%"=="0" (echo [18;29H %clrgra%Nothing Selected...%clr2%) else (echo [18;29H                                 )
 if "%batvercurrent%"=="1" (set bvb=%clr%& set bvb2=& exit /b)
 if "%batvercurrent%"=="2" (set bvb2=%clr%& set bvb=& exit /b)
@@ -4823,13 +4269,31 @@ if not defined dummy (set /p nothing=[?25h<nul)
 exit /b
 
 :batverupdate
-cls
+rem Update process
 title Cursor Changer ^| Updater
-echo Starting Update Process...
-call :Powersheller Fullupdater
-pause
-mode con: cols=75 lines=25
-exit /b
+for /l %%i in (7,1,15) do (set /p nothing=[%%i;14H                                                 <nul)
+if not defined dummy (set /p nothing=[8;15H Checking Update...<nul)
+call :Powersheller CheckUpdate
+set TempErrorlevel=%errorlevel%
+rem Update messages
+if "%TempErrorlevel%"=="0" (set /p nothing=[?25l<nul& set TempErrorlevel=& exit /b)
+if not defined dummy (for /l %%i in (7,1,15) do (set /p nothing=[%%i;14H                                                 <nul))
+if not "%TempErrorlevel%"=="0" if not "%TempErrorlevel%"=="1" (set /p nothing=[8;15H [91mAn error occurred while checking updates!%clr2%[13;15H %clrgra%^(Press any key to continue...^)%clr2%<nul)
+if "%TempErrorlevel%"=="1" (
+if not defined dummy (set /p nothing=[8;15H You already have the latest version![9;15H There is no need to update.[11;15H %clrgra%^(Press any key to continue...^)%clr2%<nul)
+pause >nul
+) else if "%TempErrorlevel%"=="2" (
+if not defined dummy (set /p nothing=[10;15H You have a newer version than the update file![11;15H Perhaps you changed the version manually ^>:/<nul)
+pause >nul
+) else if "%TempErrorlevel%"=="3" (
+if not defined dummy (set /p nothing=[10;15H Github API rate limit has been reached![11;15H Please wait an hour or so and try again.<nul)
+pause >nul
+) else if "%TempErrorlevel%"=="4" (
+if not defined dummy (set /p nothing=[10;15H Something went wrong.[11;15H Check your internet connection and try again.<nul)
+pause >nul
+)
+if not defined dummy (set /p nothing=[?25l<nul)
+set TempErrorlevel=& exit /b
 
 
 
@@ -5393,8 +4857,7 @@ call :Progress_bar_drawer 14 %a% 63 8 0
 timeout /t 1 /nobreak >nul
 if "%wmodetoggle%"=="true" (color f0) else (color 07)
 if not defined dummy (call :cursorchange_clear& set /p nothing=[5;13H Refreshing the Cursor...<nul)
-set Powersheller=RefreshCursor& call :Powersheller
-set a=
+call :Powersheller RefreshCursor & set a=
 if not defined dummy (call :cursorchange_clear& set /p nothing=[5;13H Cursor Color changed to white.<nul& timeout /t 3 /nobreak >nul)
 goto :cursorchange_afterchange
 
@@ -5455,8 +4918,7 @@ call :Progress_bar_drawer 14 %a% 63 8 0
 timeout /t 1 /nobreak >nul
 if "%wmodetoggle%"=="true" (color f0) else (color 07)
 if not defined dummy (call :cursorchange_clear& set /p nothing=[5;13H Refreshing the Cursor...<nul)
-set Powersheller=RefreshCursor& call :Powersheller
-set a=
+call :Powersheller RefreshCursor & set a=
 if not defined dummy (call :cursorchange_clear& set /p nothing=[5;13H Cursor Color changed to black.<nul& timeout /t 3 /nobreak >nul)
 goto :cursorchange_afterchange
 
@@ -5581,9 +5043,9 @@ echo                                Uninstall Menu
 echo                       O=============================O
 call :UninstallMenu_Textdraw
 echo                   O======================================O
-echo                   I%UMcb1%      Uninstall of Cursor Changer     %clr2%I
+echo                   I%UMcb1%       Uninstall Cursor Changer       %clr2%I
 echo                   O======================================O
-echo                   I%UMcb2%  Management of Cursor Changer files  %clr2%I
+echo                   I%UMcb2%    Management Cursor Changer File    %clr2%I
 echo                   O======================================O
 echo                   I%UMcb3%         Exit Uninstall Menu          %clr2%I
 echo                   O======================================O
@@ -5592,12 +5054,10 @@ echo             %clrgra%W,S or 1~3 to move, Y or E to select, B or N to exit.%c
 choice /c 123WSYEBN /n >nul
 rem Processing of each move
 if %Errorlevel%==8 (set UMexit=true) else if %Errorlevel%==9 (set UMexit=true)
-if %ErrorLevel%==1 (set UMsel=1)
-if %ErrorLevel%==2 (set UMsel=2)
-if %ErrorLevel%==3 (set UMsel=3)
+if %Errorlevel% geq 1 if %Errorlevel% leq 3 (set UMsel=%Errorlevel%)
 if %UMsel%==0 (set UMsel=1& set UMcb1=%clr%& goto :UninstallMenu_main)
-if %ErrorLevel%==4 (if %UMsel%==1 (set UMsel=1) else if %UMsel%==2 (set UMsel=1) else (set UMsel=2))
-if %ErrorLevel%==5 (if %UMsel%==1 (set UMsel=2) else if %UMsel%==2 (set UMsel=3) else (set UMsel=3))
+if %ErrorLevel%==4 (if not %UMsel%==1 (set /a UMsel-=1))
+if %ErrorLevel%==5 (if not %UMsel%==3 (set /a UMsel+=1))
 if %ErrorLevel%==6 (call :UninstallMenu_Core)
 if %ErrorLevel%==7 (call :UninstallMenu_Core)
 set UMcb1=& set UMcb2=& set UMcb3=& set UMcb%UMsel%=%clr%& goto :UninstallMenu_main
@@ -5629,15 +5089,15 @@ echo                   Select the feature that you wish to use.
 echo.
 echo           %clrgra%Currently, Nothing is selected. Please select something.%clr2%
 ) else if "%UMsel%"=="1" (
-echo                         %clrwhi%Uninstall of Cursor Changer%clr2%
+echo                           %clrwhi%Uninstall Cursor Changer%clr2%
 echo.
 echo         You can uninstall this batch ^(Cursor Changer^) in this feature.
 echo                Several uninstallation options are also available.
 ) else if "%UMsel%"=="2" (
-echo                      %clrwhi%Management of Cursor Changer files%clr2%
+echo                       %clrwhi%Management Cursor Changer File%clr2%
 echo.
-echo              You can manage some Cursor Changer necessary files.
-echo              like %Settingsfile%, and %FirstSTFsfile%.
+echo             You can manage some Cursor Changer necessary file.
+echo            like %Settingsfile%, and %FirstSTFsfile%.
 ) else if "%UMsel%"=="3" (
 echo                              %clrwhi%Exit Uninstall Menu%clr2%
 echo.
@@ -5771,8 +5231,7 @@ call :UninstallMenu_Uninstall_Textdraw
 choice /c 12WSYEBN /n >nul
 rem Processing of each move
 if %Errorlevel%==7 (set UMUexit=true) else if %Errorlevel%==8 (set UMUexit=true)
-if %ErrorLevel%==1 (set UMUsel=1)
-if %ErrorLevel%==2 (set UMUsel=2)
+if %Errorlevel% geq 1 if %Errorlevel% leq 2 (set UMUsel=%Errorlevel%)
 if %UMUsel%==0 (set UMUsel=1& set UMUcb1=%clr%& goto :UninstallMenu_Uninstall_main)
 if %ErrorLevel%==3 (if %UMUsel%==2 (set UMUsel=1))
 if %ErrorLevel%==4 (if %UMUsel%==1 (set UMUsel=2))
@@ -5855,8 +5314,7 @@ echo           %clrgra%A,D or 1~2 to move, Y or E to select, B or N to exit.%clr
 choice /c 12ADYEBN /n >nul
 rem Processing of each move
 if %Errorlevel%==7 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true)) else if %Errorlevel%==8 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true))
-if %ErrorLevel%==1 (set UOCsel=1)
-if %ErrorLevel%==2 (set UOCsel=2)
+if %Errorlevel% geq 1 if %Errorlevel% leq 2 (set UOCsel=%Errorlevel%)
 if %UOCsel%==0 (set UOCsel=1& set UOCcb1=%clr%& goto :UninstallMenu_Uninstall_Confirm_main)
 if %ErrorLevel%==3 (if %UOCsel%==1 (set UOCsel=1) else if %UOCsel%==2 (set UOCsel=1) else (set UOCsel=1))
 if %ErrorLevel%==4 (if %UOCsel%==1 (set UOCsel=2) else if %UOCsel%==2 (set UOCsel=2) else (set UOCsel=2))
@@ -5925,16 +5383,16 @@ set FromREConsole=
 
 rem message indication
 timeout /t 1 /nobreak >nul
-mode con: cols=97 lines=25
-rundll32 user32.dll,MessageBeep || echo 
-color 1f
 cls
 if "%1"=="" (goto :BSOD_Errors_Error) else if "%1"=="BatBootErrorHandlerArgument1908" (goto :BSOD_Errors_Error)
 if "%2"=="" (set bsoderrorlevel=Undefined) else (set bsoderrorlevel=%2)
 if "%1"=="THERE_IS_NO_PROBLEMS" (goto :BSOD_Errors_NOERRORS)
-call :batbootcheckwinver dynamic
+set DynamicWinverCheck=true& call :batbootcheckwinver dynamic & set DynamicWinverCheck=
 if "%errorlevel%"=="1" (call :BSOD_Errors_OG %1) else (set /p nothing=[?25l<nul)
 title Cursor Changer ^| CRASHED!
+mode con: cols=97 lines=25
+rundll32 user32.dll,MessageBeep || echo 
+color 1f
 echo.
 echo.
 call :BSOD_Errors_RANDOMFACEHAHA
@@ -6028,11 +5486,11 @@ if "%errorlevel%"=="1" (goto :bsod_errors_RANDOMFACEHAHA2)
 call :RandomDecisioner 128
 if "%errorlevel%"=="1" (goto :bsod_errors_RANDOMFACEHAHA3)
 rem :)
-if not defined dummy (echo [16a▐█& echo [09a█▌[4a█▌& echo [15a█▌& echo [09a█▌[4a█▌& echo [16a▐█)
+if not defined dummy (echo [16C▐█& echo [09C█▌[4a█▌& echo [15C█▌& echo [09C█▌[4a█▌& echo [16C▐█)
 exit /b
 :bsod_errors_RANDOMFACEHAHA2
 rem :(
-if not defined dummy (echo [13a▐█& echo [09a█▌[4a█▌& echo [15a█▌& echo [09a█▌[4a█▌& echo [13a▐█)
+if not defined dummy (echo [13C▐█& echo [09C█▌[4a█▌& echo [15C█▌& echo [09C█▌[4a█▌& echo [13C▐█)
 exit /b
 :bsod_errors_RANDOMFACEHAHA3
 echo.
@@ -6045,37 +5503,35 @@ exit /b
 
 :BSOD_Errors_OG
 rem Alternative version of BSOD displayed when Windows version is not supported
-timeout /t 1 /nobreak >nul
-mode con: cols=97 lines=21
 rundll32 user32.dll,MessageBeep || echo 
 color 07
-cls
 title Cursor Changer ^| CRASHED!
-echo O=========================================== Crashed ===========================================O
 echo.
+echo [ERROR] Cursor Changer has Crashed!
 echo.
-echo          Oops! The Cursor Changer has Crashed!
+echo Error information : 
 echo.
-echo          This screen is displayed when Cursor Changer crashes for some reason.
-echo          The following information may be helpful in obtaining support.
-echo          (WARNING : Cursor Changer does not support your windows version!)
+echo Cursor Changer Version  : %batver% (%batbuild%)
+echo Windows Build           : %bsodwinver%
+echo Error ID                : %1
+echo Errorlevel              : %bsoderrorlevel%
 echo.
-echo          Batch Version : %batver% (%batbuild%)
-echo          Windows Build : (Unsupported version)
-echo          Error ID      : %1
-echo          Error Level   : %2
+echo It appears that you are using a version of Windows
+echo that is not supported by the Cursor Changer!
+echo This crash is very likely caused by that.
+echo To avoid the crash, please use a supported version of Windows.
 echo.
-echo          For more information about this screen and possible fixes, visit this link:
-echo.
-echo          https://github.com/tamago1908/Cursor-Changer.bat/wiki/BSOD-Crash-(Error-Screen)
-echo.
-echo          Hit Any key to Exit...
+echo Press any key to exit...
 echo.
 pause >nul
+if "%wmodetoggle%"=="true" (color f0) else (color 07)
 call :exit 1
 
 
 :BSOD_Errors_NOERRORS
+mode con: cols=97 lines=25
+rundll32 user32.dll,MessageBeep || echo 
+color 1f
 rem Your Cursor Changer is running perfectly fine :)
 title Cursor Changer ^| NOT CRASHED!
 echo.
@@ -6145,6 +5601,7 @@ reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v SizeNWSE /t REG_EXPAND_SZ /
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v SizeWE /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_ew.cur >nul
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v UpArrow /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_up.cur >nul
 reg add "HKEY_CURRENT_USER\Control Panel\Cursors" /v Wait /t REG_EXPAND_SZ /f /d %SystemRoot%\cursors\aero_busy.ani >nul
+call :Powersheller RefreshCursor
 :uninstallnowfinish
 rem Message after uninstallation is complete
 title Cursor Changer ^| Good bye!
@@ -6215,7 +5672,7 @@ exit /b
 
 
 :batstarthelp
-call :batbootcheckwinver dynamic
+set DynamicWinverCheck=true& call :batbootcheckwinver dynamic & set DynamicWinverCheck=
 if "%errorlevel%"=="1" (goto :batbootcheckwinverbad)
 set batargmentonly=true
 if not defined dummy (
@@ -6285,7 +5742,7 @@ if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[91m&set clrgrn=[92m
 if not defined dummy (set /p nothing=[?25l<nul)
 cls
 echo [Loading Command list...]
-powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=65;$w.BufferSize=$s;}"
+powershell -command "&{$h=Get-Host;$w=$h.UI.RawUI;$s=$w.BufferSize;$s.height=64;$w.BufferSize=$s;}"
 cls
 echo %clr%::%clr2%                      [Entire list of menu commands]      %clrgra%6colors test%clr2%
 echo                  (You can use all of them in the main menu.)
@@ -6342,7 +5799,6 @@ echo            %clrcyan%-%clr2% recovery          %clrgra%(boot up with recover
 echo            %clrcyan%-%clr2% uninstall         %clrgra%(boot up with Uninstaller.)%clr2%
 echo            %clrcyan%-%clr2% bypsbootpwsh      %clrgra%(bypass the powershell when boot.)%clr2%
 echo            %clrcyan%-%clr2% bypsloadsg        %clrgra%(bypass the loading of settings.)%clr2%
-echo            %clrcyan%-%clr2% bypsvck           %clrgra%(bypass the windows version check.)%clr2%
 echo            %clrcyan%-%clr2% bypsadm           %clrgra%(bypass the getting admin.)%clr2%
 if "%batargmentonly%"=="true" (echo.&echo.&goto :allcommandswait)
 echo.
@@ -6356,12 +5812,7 @@ echo.
 echo.
 :allcommandswait
 set /p nothing=%clred%^/^/%clr2%[Type something to back to menu...]                              %clrgra%%batver%%clr2% <nul&pause >nul
-set clrcyan=
-set clrgra=
-set clred=
-set clrgrn=
-set clryel=
-set clrmag=
+set clrcyan=& set clrgra=& set clred=& set clrgrn=& set clryel=& set clrmag=
 if "%batargmentonly%"=="true" (set batargmentonly=& if exist %Settingsfile% (if not "%linuxboot%"=="true" (cls &echo Please wait a while... 2/2& exit /b) else (exit /b)) else (cls &echo Preparing Setup... 2/2& exit /b))
 goto :Mainmenu
 
@@ -6501,7 +5952,7 @@ cls&pause&echo hello! this is easteregg!&pause&cls&title Cursor Changer ^| Now y
 
 :Rebootbatch
 PowerShell -WindowStyle Hidden -Command Exit
-if "%1"=="1" (start "Cursor Changer" ^"%~dp0%~n0%~x0^" recovery& call :exit 0) else (start "Cursor Changer" ^"%~dp0%~n0%~x0^"& call :exit 0)
+if "%1"=="1" (start "Cursor Changer" conhost.exe cmd.exe /c ^"%~dp0%~n0%~x0^" recovery& call :exit 0) else (start "Cursor Changer" conhost.exe cmd.exe /c ^"%~dp0%~n0%~x0^"& call :exit 0)
 
 :exit
 if "%1"=="1" (echo Shutting Down...)
