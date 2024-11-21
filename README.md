@@ -31,11 +31,11 @@ See the Change log for detailed changes.
 &nbsp;
 ## 💡 - **About this batch** -
 Cursor Chager is a project that tries to explore what can be done with batch and powershell, and is as OS-like functionally running on a single batch file!
-At the very least, it is by far larger and more complex than the other Batch OS Projects. And I (**tamago1908**) **created all of them by myself.**  
-In other word, Cursor Changer.bat is a combination of Real Cursor Changer and OS!  
+At the very least, it is by far larger and more complex than the other Batch Projects. And I (**tamago1908**) **created all of them by myself.**  
+In other word, Cursor Changer.bat is a combination of Real Cursor Changer and Batch OS! (However, it is not strictly a Batch OS. It is more like a Utility tool)  
 
 and also, This Cursor Changer is a batch that has been in **development since 2021 and is still being developed over three years later**.  
-It is probably one of the longest developing Batch OS in the world. Moreover, development is scheduled to continue in the future.  
+It is probably one of the longest developing Batch project in the world. Moreover, development is scheduled to continue in the future.  
 
 If you need any other backstory or detailed explanations, please visit the [Wiki](https://github.com/tamago1908/Cursor-Changer.bat/wiki).
 
