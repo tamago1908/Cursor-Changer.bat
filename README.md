@@ -23,10 +23,9 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Update released! (2024/11/18)**  
-1.15β2 (1.15.b2) has been released!  
-This update includes several functional improvements and additions!  
-See the Change log for detailed changes.  
+### **Development News (2024/11/26)**  
+Ehm...  
+
 
 &nbsp;
 ## 💡 - **About this batch** -
