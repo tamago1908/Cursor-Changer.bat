@@ -56,16 +56,20 @@ rem İ’è‚Ì“K‰‚ğ‰ü‘P‚·‚é
 
 rem Œv‰æ     : rem customƒe[ƒ}‹@”\ (ˆêƒJƒ‰[) ‚ğÀ‘•‚·‚é (1.15?)
 rem ã ‹ï‘Ì“I‚É‚ÍColor_Applyer‚ğÀ‘•‚µ‚ÄAæ‚Éfor•ª‚Å‹ó”’‚ğ—˜—p‚µ‚Ä•¶šF‚È‚Ç‚ğw’èAŒã‚É•`Ê‚³‚ê‚éGUI‚âƒnƒCƒ‰ƒCƒg‚Í]—ˆ‚Ì•û–@‚ÅÅ“K‰»‚·‚éB
+
 rem ‚à‚¤­‚µŒ«‚¢•û–@‚Åİ’èƒtƒ@ƒCƒ‹‚È‚Ç‚Ì‰ü•Ï‚ğŒŸ’m‚·‚é  (1.15?)
+rem İ’è‚Ì•”•ª‚ÌUIƒR[ƒh‚ğ­‚µ‚Å‚à‰ü—Ç‚·‚éBŒ»İ‚Ì‚Í*‚ ‚Ü‚è‚É*ç’·‚·‚¬‚é (1.15?)
+rem o—ˆ‚½‚çapplication manager‚ğŠ®¬‚³‚¹‚é
+
 rem Œ»İÀ‘•‚³‚ê‚Ä‚¢‚éyoutubeŠÖ˜A‚Ìˆ—‚ğ‚·‚×‚ÄŠù’è‚Ìƒuƒ‰ƒEƒU‚ÅŠJ‚­‚æ‚¤‚É•ÏX‚·‚éBŒ»İ‚Íchrome‚ÅŒÅ’è‚³‚ê‚Ä‚¢‚é‚½‚ß (1.15?)
-rem İ’è‚Ì•”•ª‚ÌUIƒR[ƒh‚ğ‰ü—Ç‚·‚éBŒ»İ‚Ì‚Íç’·‚·‚¬‚é (1.15?)
+rem Cursor‚Ìback up‹@”\‚ğì‚é
 
 
 rem Make sure to fill in the build number and version! Also, don't forget to put it in the archive!
 rem environment setting, It is not recommended to change.
-rem VER v1.15ƒÀ2
-set batver=1.15ƒÀ2
-set batbuild=Build 111
+rem VER v1.15ƒÀ3
+set batver=1.15ƒÀ3
+set batbuild=Build 121
 set batverdev=beta
 set hazimeeaster=false
 set firststartbat=no
@@ -424,7 +428,6 @@ $repo = "https://api.github.com/repos/tamago1908/Cursor-Changer.bat/releases/lat
 try{$file = (Invoke-RestMethod -Uri $repo -Method Get -Headers @{'Accept'='application/vnd.github.v3+json'}).assets | Where-Object { $_.name -like "Cursor.Changer.*" }
 }catch{if($_.Exception.Response.StatusCode.Value__ -eq 403){return "APIErr"}else{return "GNErr"};break}
 
-
 $fileVersion = $file.name -replace "Cursor\.Changer\.|\.bat", ""
 $batVersion = "$env:batverforpowersheller"
 if ("$fileVersion" -eq "$batVersion") { return "null" }
@@ -450,6 +453,13 @@ if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
     $isFileBeta = Is-Beta $fileverArray
     $isBatBeta = Is-Beta $batverArray
 
+    # Ensure "die" is only returned for stable-to-beta mismatches
+    if (-not $isBatBeta -and $isFileBeta) {
+        # Check if the beta version is part of the same progression (e.g., 1.15 vs 1.15.b2)
+        $fileWithoutBeta = $fileverArray[0..($fileverArray.Length - 2)] -join "."
+        if ($fileWithoutBeta -eq $batVersion) {return "die"}
+    }
+
     # Compare version arrays
     for ($i = 0; $i -lt [Math]::Max($fileverArray.Length, $batverArray.Length); $i++) {
         $fileElement = if ($i -lt $fileverArray.Length) { $fileverArray[$i] } else { "0" }
@@ -459,8 +469,7 @@ if ($file.name -match "^Cursor\.Changer\..*\.bat$") {
         if ($comparisonResult -gt 0) {
             return "batbeta=$isFileBeta,updateavailable=true,updatemyversion=$batVersion,updateversion=$fileVersion"
         } elseif ($comparisonResult -lt 0) { return "die" }
-        if ($i -eq [Math]::Max($fileverArray.Length, $batverArray.Length)) { return "null" }
-    }
+    } ; return "null"
   }
 }
 
@@ -833,7 +842,7 @@ if exist %FirstSTFsfile% goto :settingloads
 )
 if not defined dummy (echo [38;2;5;5;5myou know what i HATE? that's [3mbepis[0m[38;2;5;5;5m.)
 if not defined dummy (echo [38;2;5;5;5mTHE TASTE, the smell, the texture... hey.... your [3mdrooling[0m[38;2;5;5;5m......)
-ping -n 1 -w 500 localhost >nul
+pathping 127.0.0.1 -n -q 1 -p 100 1>nul
 setlocal enabledelayedexpansion
 title ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ö‚æ‚¤‚±‚»
 cls
@@ -850,8 +859,8 @@ echo.
 echo %show%
 rem call background_menu to drew bg
 call :Background_menu 1
-if "%count%" == "200" (ping -n 2 -w 500 localhost >nul& set count=& goto :CursorChangerOOBE_Animation2) else (
-    for /l %%. in (0,1,5000) do rem
+if "%count%" == "200" (pathping 127.0.0.1 -n -q 1 -p 250 1>nul & set count=& goto :CursorChangerOOBE_Animation2) else (
+    pathping 127.0.0.1 -n -q 1 -p 100 1>nul
 )
 goto :CursorChangerOOBE_Animation
 
@@ -865,11 +874,11 @@ echo %show%
 echo.& echo.
 echo %show2%
 if "%count%" == "120" (
-    set clresc=& pause >nul& echo.& echo %show%& ping -n 1 -w 500 localhost >nul
+    set clresc=& pause >nul& echo.& echo %show%& pathping 127.0.0.1 -n -q 1 -p 250 1>nul
     set count=200& set count2=120& set clresc=204;204;204
     goto :CursorChangerOOBE_Animation3
 ) else (
-    for /l %%. in (0,1,5000) do rem
+    pathping 127.0.0.1 -n -q 1 -p 100 1>nul
     goto :CursorChangerOOBE_Animation2
 )
 
@@ -885,9 +894,9 @@ echo %show2%
 rem call background_menu to drew bg
 call :Background_menu 1
 if !count2! leq 12 (
-    if !count! leq 20 (ping -n 1 -w 500 localhost >nul& set count=& set count2=0& set clresc=200;200;200& set clrmove=22& goto :CursorChangerOOBE_Animation4)
+    if !count! leq 20 (pathping 127.0.0.1 -n -q 1 -p 250 1>nul& set count=& set count2=0& set clresc=200;200;200& set clrmove=22& goto :CursorChangerOOBE_Animation4)
 ) else (
-    for /l %%. in (0,1,5000) do rem
+    pathping 127.0.0.1 -n -q 1 -p 500 1>nul
     goto :CursorChangerOOBE_Animation3
 )
 
@@ -899,17 +908,17 @@ set /a clrmove-=1
 if %clrmove% equ 1 (
     goto :CursorChangerOOBE_Animation5
 ) else (
-    for /l %%. in (0,1,2500) do rem
+    pathping 127.0.0.1 -n -q 1 -p 100 1>nul
     goto :CursorChangerOOBE_Animation4
 )
 
 :CursorChangerOOBE_Animation5
 rem WOW IT CHANGED INTO SETUP!!!!!!!!!
-ping -n 2 -w 500 localhost >nul & cls
+pathping 127.0.0.1 -n -q 1 -p 500 1>nul & cls
 set "show=[38;2;%clresc%m  ƒJ[ƒ\ƒ‹‘Ö‚¦ %batver% ƒZƒbƒgƒAƒbƒv [0m"
 echo.
 echo %show%
-ping -n 2 -w 500 localhost >nul
+pathping 127.0.0.1 -n -q 1 -p 500 1>nul
 set show=& set show2=& set clresc=& set clrmove=& set count2=& set count=
 setlocal disabledelayedexpansion
 goto :CursorChangerOOBEdev
@@ -1891,7 +1900,8 @@ set OOBEsetting1toggle=& set OOBEsetting2toggle=& set OOBEsetting3toggle=& set O
 set OOBEsetting1clr=& set OOBEsetting2clr=& set OOBEsetting3clr=& set OOBEsetting4clr=& set OOBEsetting5clr=
 set OOBEsetting1clr2=& set OOBEsetting2clr2=& set OOBEsetting3clr2=& set OOBEsetting4clr2=& set OOBEsetting5clr2=
 set OOBEsettingclr=& set OOBEsettingclr2=
-set clr1=& set clresc=& set clrmove=& set clr2=&set clr=
+set clr1=& set clresc=& set clrmove=& set clr2=& set clr=
+set boottime1=%time%
 call :Core_Powershell 3
 exit /b
 
@@ -1937,8 +1947,7 @@ if %Errorlevel% geq 1 if %Errorlevel% leq 4 (set rmsel=%Errorlevel%)
 if %rmsel%==0 (set rmsel=1& set rmcb1=%clr%& goto :Cursor_Changer_REmenu_main_loop)
 if %ErrorLevel%==5 (if not %rmsel%==1 (set /a rmsel-=1))
 if %ErrorLevel%==6 (if not %rmsel%==4 (set /a rmsel+=1))
-if %ErrorLevel%==7 (goto :Cursor_Changer_REmenu_main_Core)
-if %ErrorLevel%==8 (goto :Cursor_Changer_REmenu_main_Core)
+if %Errorlevel% geq 7 if %Errorlevel% leq 8 (goto :Cursor_Changer_REmenu_main_Core)
 set rmcb1=& set rmcb2=& set rmcb3=& set rmcb4=& set rmcb%rmsel%=%clr%
 goto :Cursor_Changer_REmenu_main_loop
 
@@ -2904,7 +2913,7 @@ if not defined dummy (set /p "name=[30C")
 if not "%name%"=="ƒJ[ƒ\ƒ‹‘Ö‚¦" (set /a namecount=namecount+1) else (goto :hazimemenuMessagesTimecheckEASTEREGG_RIGHT)
 if "%namecount%"=="1" (echo [29Cc”OA•s³‰ğI)
 if "%namecount%"=="2" (echo [34Cˆá‚¤) else if %namecount% gtr 2 (echo [35C...)
-ping -n 2 -w 500 localhost >nul
+pathping 127.0.0.1 -n -q 1 -p 500 1>nul
 goto :hazimemenuMessagesTimecheckEASTEREGG_ASK
 :hazimemenuMessagesTimecheckEASTEREGG_RIGHT
 if not defined dummy (echo [31C‚»‚Ì’Ê‚èI)
@@ -2927,19 +2936,16 @@ if "%wmodetoggle%"=="true" (if not defined dummy (set thmclr2=[107m[30m& set t
 if "%wmodetoggle%"=="true" (set thmlfor=194,9,243) else (set thmlfor=61,-9,12)
 if "%1"=="2" (if "%wmodetoggle%"=="true" (set thmlfor=216,5,243& set thmldrewb=225) else (set thmlfor=39,-5,12))
 
-rem Drew bg. thml means theme line.
+rem Drew bg. thml means theme line. "thmldrew=%%i" is define the base line color
 for /l %%i in (!thmlfor!) do (set /a thml2-=1& set /a thml-=1 & rem < Line position (26-1)
-    if "%setting7_1onoff%"=="true" ( rem Halloween theme
-        if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170) else (set /a thmldrew=%%i-6)
-        if !thmldrew! lss 12 (set thmldrew=12) & rem < Value correction
+    if "%setting7_1onoff%"=="true" (set /a thmldrew=%%i-6 & rem < Halloween theme. normal drew or overlay drew.
         if not "%1"=="2" (if not "%wmodetoggle%"=="true" (set /a thmldred-=21) else (set /a thmldred+=11)) else (
             if not "%wmodetoggle%"=="true" (set /a thmldred-=21& set /a thmldrew-=4) else (set /a thmldred+=16& set /a thmldrew+=16))
-        if !thmldred! lss 30 (set thmldred=27) else if not "%1"=="2" (if !thmldred! gtr 220 (set /a thmldred=230)) else if !thmldred! geq 245 (set /a thmldred=242& set thmldrew=242& set thmldrewb=242)
-    ) else ( rem Normal theme
-    if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170 & if !thmldrew! lss 12 (set thmldrew=12)) else (set thmldrew=%%i))
-    if not "%setting7_1onoff%"=="true" (set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m) else (set thmclr=[48;2;!thmldred!;!thmldrew!;!thmldrewb!m)
-    for /l %%a in (1,1,3) do (set /p nothing=[!thml!d!thmclr!                         !thmclr2!<nul) & rem < Draw lines
-    echo [!thml2!d
+        if !thmldred! lss 30 (set thmldred=27) else if not "%1"=="2" (if !thmldred! gtr 220 (set /a thmldred=230)) else if !thmldred! geq 245 (set /a thmldred=242& set thmldrew=242& set thmldrewb=242) & rem < Value correction
+    ) else ( rem < Normal theme
+    if "%1"=="1" (set /a thmldrew=^(%%i-57^)+^(!count!*^(61-12^)^)/170 & if !thmldrew! lss 12 (set thmldrew=12)) else (set thmldrew=%%i)) & rem < Gradation calc, and Value correction. if argument is not 1, use raw value.
+    if not "%setting7_1onoff%"=="true" (set thmclr=[48;2;!thmldrew!;!thmldrew!;!thmldrew!m) else (set thmclr=[48;2;!thmldred!;!thmldrew!;!thmldrewb!m) & rem < Main drew. Normal drew or Halloween drew (same color or r, g, b.)
+    if not defined dummy (echo [!thml2!A) & for /l %%a in (1,1,3) do (set /p nothing=[!thml!d!thmclr!                         !thmclr2!<nul) & rem < Draw lines
 )
 
 rem delete variables
@@ -2947,12 +2953,6 @@ set thml=& set thml2=& set thmclr=& set thmldrew=& set thmldrewb=& set thmldred=
 if not "%1"=="1" if not "%1"=="2" (set /p nothing=[?25h<nul)
 if not defined dummy (set /p nothing=[0;0H<nul)
 setlocal disabledelayedexpansion
-exit /b
-
-rem delete variables
-set thml=& set thml2=& set thmclr=& set thmldrew=& set thmldrewb=& set thmldred=& set thmlfor=
-if not "%1"=="1" (setlocal disabledelayedexpansion & set /p nothing=[?25h<nul)
-if not defined dummy (set /p nothing=[0;0H<nul)
 exit /b
 
 
@@ -3001,7 +3001,7 @@ for /l %%i in (0,1,%length%) do (set "char=!text:~%%i,1!" & if not "!char!"=="" 
     ) else if !section! equ 1 (set /a r=255-^(!ratio!-60^)*255/60, g=255) else if !section! equ 2 (set /a g=255, b=^(!ratio!-120^)*255/60
     ) else if !section! equ 3 (set /a g=255-^(!ratio!-180^)*255/60, b=255) else if !section! equ 4 (set /a r=^(!ratio!-240^)*255/60, b=255
     ) else (set /a r=255, b=255-^(!ratio!-300^)*255/60)
-    if defined rbdark (for %%a in (r,g,b) do (set /a "value=!%%a!-rbdark" & if !value! lss 12 (set "%%a=12") else (set "%%a=!value!")))
+    if %rbdark% geq 0 (for %%a in (r,g,b) do (set /a "value=!%%a!-rbdark" & if !value! lss 12 (set "%%a=12") else (set "%%a=!value!")))
     set /p nothing=[38;2;!r!;!g!;!b!m!char!%rbclr%<nul& rem ^ Ensure RGB values are within bounds and apply dark adjustment, And show
 )
 setlocal disabledelayedexpansion
@@ -3045,105 +3045,70 @@ cls & set clryel=& set clrwhi=& set BoottimeTEMP=& exit /b
 
 
 :exitmenu
+rem GUI type 3
 rem Preparing of Menu and Variables
 rem Smart Processing!!!! DO NOT CARE ABOUT SO MANY OF IF STATEMENTS. PLS
-cls
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| I—¹ 
-set exitmenucurrent=0& call :exitmenu_exit
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| I—¹ƒƒjƒ…[ 
+set exitmenucurrent=0
 if not defined dummy (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrcyan=[46m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clred=[41m&set clrgrn=[42m&set clrgra=[90m&set clrcyan=[46m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[107m[38;2;140;140;140m&set clrcyan=[46m&set clr2=[0m[90m[107m[30m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clred=[41m&set clrgrn=[42m&set clrgra=[107m[38;2;140;140;140m&set clrcyan=[46m&set clr2=[90m[107m[30m)
+if not defined dummy (set ccmmul=[4m)
 if not defined dummy (set /p nothing=[?25l<nul)
 
 :exitmenu_main
 rem Main Exit Menu
-if "%exitmenuexit%"=="true" (set exitmenucurrent=& call :exitmenu_exit & goto :hazime)
+if "%exitmenuexit%"=="true" (set exitmenucurrent=& call :exitmenu_exit & goto :hazimemenu)
 if not defined exitmenuboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :hazimemenudrew & echo %clr2% & set exitmenuboot=true)
-call :exitmenu_Core_Drew
-if not defined dummy (set ccmmul=[4m)
+rem I'm doing this because when I use ANSI ESC sequences in Virtual Studio Code, the parentheses are colored incorrectly and I don't like that
+call :exitmenu_draw
 if not defined dummy (
-echo.
-echo.
 echo [3;22H O====================O 
 echo [4;22H I ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌI—¹ I 
 echo [5;22H O==========O====%ccmmul%===%clr2%===O===========O 
-echo [6;22H I%emb%     ^|    %clr2%I%emb2%   /   \  %clr2%I%emb3%           %clr2%I 
-echo [7;22H I%emb%   / ^| \  %clr2%I%emb2%  V    È %clr2%I%emb3%  ^-^-^-^-^-^-^>  %clr2%I 
-echo [8;22H I%emb%   \___/  %clr2%I%emb2%   \___/  %clr2%I%emb3%           %clr2%I 
+echo [6;22H I%emb1%     ^|    %clr2%I%emb2%   /   \  %clr2%I%emb3%           %clr2%I 
+echo [7;22H I%emb1%   / ^| \  %clr2%I%emb2%  V    È %clr2%I%emb3%  ^-^-^-^-^-^-^>  %clr2%I 
+echo [8;22H I%emb1%   \___/  %clr2%I%emb2%   \___/  %clr2%I%emb3%           %clr2%I 
 echo [9;22H O==========O==========O===========O 
 echo [10;22H I[10;57HI 
 echo [11;22H O=================================O 
-echo [12;20H%clrgra%1~3A‚à‚µ‚­‚ÍA,D‚ÅˆÚ“®AY,E‚ÅŒˆ’èAB‚ÅI—¹%clr2%
+echo [12;20H%clrgra%1~3 ‚© A,D ‚ÅˆÚ“®AY,E ‚Å ‘I‘ğAB ‚Å ‘Şo%clr2%
 )
 choice /c 123adyeb /n >nul
-if %ErrorLevel%==1 set exitmenucurrent=1& goto :exitmenu_main
-if %ErrorLevel%==2 set exitmenucurrent=2& goto :exitmenu_main
-if %ErrorLevel%==3 set exitmenucurrent=3& goto :exitmenu_main
-if %ErrorLevel%==4 call :exitmenu_Core a
-if %ErrorLevel%==5 call :exitmenu_Core d
-if %ErrorLevel%==6 call :exitmenu_Core y
-if %ErrorLevel%==7 call :exitmenu_Core e
-if %ErrorLevel%==8 call :exitmenu_Core b
-goto :exitmenu_main
-
-
-:exitmenu_Core
 rem Processing of each move
-if "%1"=="1c" (set exitmenucurrent=1& exit /b)
-if "%1"=="2c" (set exitmenucurrent=2& exit /b)
-if "%1"=="a" (set /a exitmenucurrent-=1
-    if "%Exitmenucurrent%"=="1c" (set exitmenucurrent=1)
-    if "%Exitmenucurrent%"=="2c" (set exitmenucurrent=1)
-    if "%exitmenucurrent%"=="0" (set exitmenucurrent=1)
-    if "%exitmenucurrent%"=="1" (set exitmenucurrent=1)
-    exit /b
-)
-if "%1"=="d" (set /a exitmenucurrent+=1
-    if "%exitmenucurrent%"=="3" (set exitmenucurrent=3)
-    exit /b
-)
-if "%1"=="b" (
-    if "%Exitmenucurrent%"=="1c" (set exitmenucurrent=1)
-    if "%Exitmenucurrent%"=="2c" (set exitmenucurrent=2) else (set exitmenuexit=true)
-    exit /b
-)
-if "%1"=="y" (
-    call :exitmenuselect_core
-    if "%exitmenucurrent%"=="3" (set exitmenuexit=true)
-    exit /b
-)
-if "%1"=="e" (
-    call :exitmenuselect_core
-    if "%exitmenucurrent%"=="3" (set exitmenuexit=true)
-    exit /b
-)
-
+if %Errorlevel%==8 (set exitmenuexit=true& goto :exitmenu_main)
+if %Errorlevel% geq 1 if %Errorlevel% leq 3 (set exitmenucurrent=%Errorlevel%)
+if %exitmenucurrent%==0 (set exitmenucurrent=1& set emb1=%clred%& goto :exitmenu_main)
+if %ErrorLevel%==4 (if not %exitmenucurrent%==1 (set /a exitmenucurrent-=1))
+if %ErrorLevel%==5 (if not %exitmenucurrent%==3 (set /a exitmenucurrent+=1))
+if %Errorlevel% geq 6 if %Errorlevel% leq 7 (call :exitmenuselect_core)
+goto :exitmenu_main
 
 :exitmenuselect_core
 rem Processing of Confirm key, like Y and E.
-if "%Exitmenucurrent%"=="0" (set exitmenucurrent=1& exit /b)
-if "%Exitmenucurrent%"=="1" (set exitmenucurrent=1c& exit /b)
-if "%Exitmenucurrent%"=="2" (set exitmenucurrent=2c& exit /b)
-if "%Exitmenucurrent%"=="1c" (set exitmenucurrent=1& goto :batshutdown)
-if "%Exitmenucurrent%"=="2c" (call :exitmenuexit &call :rebootbatch)
+if "%Exitmenucurrent%"=="1c" (call :exitmenu_exit & goto :batshutdown)
+if "%Exitmenucurrent%"=="2c" (call :exitmenu_exit & call :rebootbatch)
+if %Exitmenucurrent% geq 1 if %Exitmenucurrent% leq 2 (set exitmenucurrent=%exitmenucurrent%c& exit /b)
+if "%Exitmenucurrent%"=="3" (set exitmenuexit=true& exit /b)
 exit /b
 
-:exitmenu_Core_Drew
-rem drawer of Text and Colors.
-if not defined dummy (echo [10;24H                                 )
-if "%Exitmenucurrent%"=="0" (echo [10;24H ‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB& exit /b)
-if "%Exitmenucurrent%"=="1" (echo [10;24H ƒVƒƒƒbƒgƒ_ƒEƒ“& set emb=%clred%& set emb2=& set emb3=& exit /b)
-if "%Exitmenucurrent%"=="2" (echo [10;24H Ä‹N“®& set emb2=%clrgrn%& set emb=& set emb3=& exit /b)
-if "%Exitmenucurrent%"=="3" (echo [10;24H –ß‚é& set emb3=%clrcyan%& set emb2=& set emb=& exit /b)
-if "%Exitmenucurrent%"=="1c" (echo [10;24H –{“–‚ÉƒVƒƒƒbƒgƒ_ƒEƒ“‚µ‚Ü‚·‚©H& exit /b)
-if "%Exitmenucurrent%"=="2c" (echo [10;24H –{“–‚ÉÄ‹N“®‚µ‚Ü‚·‚©H& exit /b)
+:exitmenu_draw
+rem Draw text messages
+for /l %%i in (56,-1,24) do (set /p nothing=[10;%%iH <nul)
+if "%Exitmenucurrent%"=="0" (echo [10;24H ‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB)
+if "%Exitmenucurrent%"=="1" (echo [10;24H ƒVƒƒƒbƒgƒ_ƒEƒ“& set emb1=%clred%& set emb2=& set emb3=)
+if "%Exitmenucurrent%"=="2" (echo [10;24H Ä‹N“®& set emb2=%clrgrn%& set emb1=& set emb3=)
+if "%Exitmenucurrent%"=="3" (echo [10;24H ‘Şo& set emb3=%clrcyan%& set emb2=& set emb1=)
+if "%Exitmenucurrent%"=="1c" (echo [10;24H –{“–‚É‚æ‚ë‚µ‚¢‚Å‚·‚©H)
+if "%Exitmenucurrent%"=="2c" (echo [10;24H –{“–‚É‚æ‚ë‚µ‚¢‚Å‚·‚©H)
 exit /b
 
 :exitmenu_exit
 rem initialize of variable
-set exitmenuexit=& set emb=& set emb2=& set emb3=& set exitmenuboot=& set clred=& set clrgrn=& set clrcyan=& set clrgra=
+set exitmenuexit=& set exitmenuboot=& set emb1=& set emb2=& set emb3=& set clred=& set clrgrn=& set clrcyan=& set clrgra=& set ccmmul=
 if not defined dummy (set /p nothing=[?25h<nul)
 exit /b
+
 
 
 :batshutdown
@@ -3233,8 +3198,7 @@ if %ErrorLevel%==4 (if %UAsel%==3 (if "%UAselPre%"=="1" (set UAsel=1) else if "%
 if %ErrorLevel%==5 (if not %UAsel%==3 (set UAsel=1))
 if %ErrorLevel%==6 (if not %UAsel%==3 (set UAsel=3))
 if %ErrorLevel%==7 (if not %UAsel%==3 (set UAsel=2))
-if %ErrorLevel%==8 (call :UpdateAvailable_Core)
-if %ErrorLevel%==9 (call :UpdateAvailable_Core)
+if %Errorlevel% geq 8 if %Errorlevel% leq 9 (call :UpdateAvailable_Core)
 set UAcb1=& set UAcb2=& set UAcb3=& set UAcb%UAsel%=%clr%& goto :UpdateAvailable_main
 
 :UpdateAvailable_Core
@@ -3271,781 +3235,188 @@ exit /b
 
 
 
-rem İ’èƒƒjƒ…[‚Ì•`Ê
+
+rem Depiction of the settings menu
 :setting
-set wantload=
+cls
+title Cursor Changer ^| Setting Menu
+cd /d %batchmainpath%
+if not exist %Settingsfile% (goto :dogcheck)
+rem ccg=current category, csl=current select
+if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
+if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
+if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[90m&set clr2=[0m[107m[30m)
+set STG_CCG=0& set STG_CCG_Temp=Temp1
+set STG_CSL=0& set STG_CSL_Temp=Temp2
+set STG_Section=1
+set Settingexit=false
 set settinghelptoggle=false
-if not defined dummy (set clr=[7m&set clr2=[0m)
-if "%wmodetoggle%"=="false" (set clr=[7m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clr2=[0m[107m[30m)
-rem İ’èƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©‚ğŒŸ’m
-cd /d %batchmainpath%
-rem êŠ OS‚ª“ü‚Á‚½ƒhƒ‰ƒCƒu:\Users\ƒ†[ƒU[–¼
-rem (—á ƒ†[ƒU[‚Ì–¼‘O‚ªtest‚¾‚Á‚½ê‡‚ÆAOS‚ª“ü‚Á‚½êŠ‚ªCƒhƒ‰ƒCƒu‚¾‚Á‚½ê‡‚¾‚Æ C:\Users\Test)
-if not exist %Settingsfile% (goto :dogcheck)
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-if not defined "%clrgra%" (set clrgra=[90m)
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I                        I                                                I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I  ƒJƒeƒSƒŠ[‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB              I
-echo I                        I                                                I
-echo I========================I                                                I
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I                                                I
-echo I========================I                                                I
-Echo I                        I  %clrgra%[W S] ‚© [1 2] ‚Ç‚¿‚ç‚©‚ğ‰Ÿ‚µ‚ÄƒJƒeƒSƒŠ[‚ğ%clr2%   I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I  %clrgra%‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B%clr2%                            I
-echo I                        I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsdbye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-set clrgra=
-if %ErrorLevel%==1 goto :settingcategory1
-if %ErrorLevel%==2 goto :settingcategory2
-if %ErrorLevel%==3 goto :settingcategory1
-if %ErrorLevel%==4 goto :settingcategory1
-if %ErrorLevel%==5 goto :settingcategory1
-if %ErrorLevel%==6 goto :hazime
-if %ErrorLevel%==7 goto :settingcategory1
-if %ErrorLevel%==8 goto :settingcategory1
-if %ErrorLevel%==9 goto :settingcategoryhelpmode
+setlocal enabledelayedexpansion
 
-:settingcategory1
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I%clr%                        %clr2%I                                                I
-echo I%clr%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I  ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ì‹@”\‚ÉŠÖ‚·‚éİ’è‚Å‚·B          I
-echo I%clr%                        %clr2%I                                                I
-echo I========================I                                                I
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I                                                I
-echo I========================I                                                I
-Echo I                        I                                                I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                                I
-echo I                        I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsdbye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory1
-if %ErrorLevel%==2 goto :settingcategory2
-if %ErrorLevel%==3 goto :settingcategory1
-if %ErrorLevel%==4 goto :settingcategory2
-if %ErrorLevel%==5 goto :settingcategory1int
-if %ErrorLevel%==6 goto :hazime
-if %ErrorLevel%==7 goto :settingcategory1int
-if %ErrorLevel%==8 goto :settingcategory1int
-if %ErrorLevel%==9 goto :settingcategoryhelpmode
-
-:settingcategory2
-rem İ’èƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚é‚©‚ğŒŸ’m
-cd /d %batchmainpath%
-rem êŠ OS‚ª“ü‚Á‚½ƒhƒ‰ƒCƒu:\Users\ƒ†[ƒU[–¼
-rem (—á ƒ†[ƒU[‚Ì–¼‘O‚ªtest‚¾‚Á‚½ê‡‚ÆAOS‚ª“ü‚Á‚½êŠ‚ªCƒhƒ‰ƒCƒu‚¾‚Á‚½ê‡‚¾‚Æ C:\Users\Test)
-if not exist %Settingsfile% (goto :dogcheck)
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-if not defined "%clrgra%" (set clrgra=[90m)
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I                        I                                                I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I  ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌŒ©‚½–Ú‚ÉŠÖ‚·‚éİ’è‚Å‚·B        I
-echo I                        I %clrgra%iƒe[ƒ}‚È‚Çj%clr2%                                 I
-echo I========================I                                                I
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I                                                I
-echo I========================I                                                I
-Echo I%clr%                        %clr2%I                                                I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                                I
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsdbye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-set clrgra=
-if %ErrorLevel%==1 goto :settingcategory1
-if %ErrorLevel%==2 goto :settingcategory2
-if %ErrorLevel%==3 goto :settingcategory1
-if %ErrorLevel%==4 goto :settingcategoryhelpmode
-if %ErrorLevel%==5 goto :settingcategory2int
-if %ErrorLevel%==6 goto :hazime
-if %ErrorLevel%==7 goto :settingcategory2int
-if %ErrorLevel%==8 goto :settingcategory2int
-if %ErrorLevel%==9 goto :settingcategoryhelpmode
-
-rem ƒJƒeƒSƒŠ[“à•”
-
-:settingcategory1int
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O===========O==========O
-echo I%clr%                        %clr2%I 1 ‹N“®‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚Å‹N“®        I   %setting1onoff%   I
-echo I%clr%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I 2 ‹N“®‚ÌƒAƒhƒ~ƒ“                  I   %setting2onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 ‹N“®‚ÉXVŠm”F                  I   %setting3onoff%   I
-echo I========================I                                     O==========O
-Echo I                        I 4 ‰¹Šy‚ÌÄ¶‚ğ‹–‰Â                  I   %setting4onoff%   I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                     O==========O
-echo I                        I 5 ‰Šú‰»‚Ü‚½‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹                 I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsdbye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory1
-if %ErrorLevel%==2 goto :settingcategory2
-if %ErrorLevel%==3 goto :settingcategory1
-if %ErrorLevel%==4 goto :settingcategory2
-if %ErrorLevel%==5 goto :settingcategory1intsetting1
-if %ErrorLevel%==6 goto :settingcategory1
-if %ErrorLevel%==7 goto :settingcategory1intsetting1
-if %ErrorLevel%==8 goto :settingcategory1intsetting1
-if %ErrorLevel%==9 goto :settingcategoryhelpmode
-
-:settingcategory1intsetting1
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O===========O==========O
-echo I%clr%                        %clr2%I %clr%1 ‹N“®‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚Å‹N“®%clr2%        I   %setting1onoff%   I
-echo I%clr%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I 2 ‹N“®‚ÌƒAƒhƒ~ƒ“                  I   %setting2onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 ‹N“®‚ÉXVŠm”F                  I   %setting3onoff%   I
-echo I========================I                                     O==========O
-Echo I                        I 4 ‰¹Šy‚ÌÄ¶‚ğ‹–‰Â                  I   %setting4onoff%   I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                     O==========O
-echo I                        I 5 ‰Šú‰»‚Ü‚½‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹                 I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12345wsabye /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory1intsetting1
-if %ErrorLevel%==2 goto :settingcategory1intsetting2
-if %ErrorLevel%==3 goto :settingcategory1intsetting3
-if %ErrorLevel%==4 goto :settingcategory1intsetting4
-if %ErrorLevel%==5 goto :settingcategory1intsetting5
-if %ErrorLevel%==6 goto :settingcategory1intsetting1
-if %ErrorLevel%==7 goto :settingcategory1intsetting2
-if %ErrorLevel%==8 goto :settingcategory1int
-if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 Call :SettingApplyer 1
-if %ErrorLevel%==11 Call :SettingApplyer 1
-goto :settingcategory1intsetting1
-
-:settingcategory1intsetting2
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O===========O==========O
-echo I%clr%                        %clr2%I 1 ‹N“®‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚Å‹N“®        I   %setting1onoff%   I
-echo I%clr%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I %clr%2 ‹N“®‚ÌƒAƒhƒ~ƒ“%clr2%                  I   %setting2onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 ‹N“®‚ÉXVŠm”F                  I   %setting3onoff%   I
-echo I========================I                                     O==========O
-Echo I                        I 4 ‰¹Šy‚ÌÄ¶‚ğ‹–‰Â                  I   %setting4onoff%   I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                     O==========O
-echo I                        I 5 ‰Šú‰»‚Ü‚½‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹                 I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12345wsabye /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory1intsetting1
-if %ErrorLevel%==2 goto :settingcategory1intsetting2
-if %ErrorLevel%==3 goto :settingcategory1intsetting3
-if %ErrorLevel%==4 goto :settingcategory1intsetting4
-if %ErrorLevel%==5 goto :settingcategory1intsetting5
-if %ErrorLevel%==6 goto :settingcategory1intsetting1
-if %ErrorLevel%==7 goto :settingcategory1intsetting3
-if %ErrorLevel%==8 goto :settingcategory1int
-if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 Call :SettingApplyer 2
-if %ErrorLevel%==11 Call :SettingApplyer 2
-goto :settingcategory1intsetting2
-
-
-:settingcategory1intsetting3
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O===========O==========O
-echo I%clr%                        %clr2%I 1 ‹N“®‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚Å‹N“®        I   %setting1onoff%   I
-echo I%clr%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I 2 ‹N“®‚ÌƒAƒhƒ~ƒ“                  I   %setting2onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I %clr%3 ‹N“®‚ÉXVŠm”F%clr2%                  I   %setting3onoff%   I
-echo I========================I                                     O==========O
-Echo I                        I 4 ‰¹Šy‚ÌÄ¶‚ğ‹–‰Â                  I   %setting4onoff%   I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                     O==========O
-echo I                        I 5 ‰Šú‰»‚Ü‚½‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹                 I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12345wsabye /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory1intsetting1
-if %ErrorLevel%==2 goto :settingcategory1intsetting2
-if %ErrorLevel%==3 goto :settingcategory1intsetting3
-if %ErrorLevel%==4 goto :settingcategory1intsetting4
-if %ErrorLevel%==5 goto :settingcategory1intsetting5
-if %ErrorLevel%==6 goto :settingcategory1intsetting2
-if %ErrorLevel%==7 goto :settingcategory1intsetting4
-if %ErrorLevel%==8 goto :settingcategory1int
-if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 Call :SettingApplyer 3
-if %ErrorLevel%==11 Call :SettingApplyer 3
-goto :settingcategory1intsetting3
-
-
-
-:settingcategory1intsetting4
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O===========O==========O
-echo I%clr%                        %clr2%I 1 ‹N“®‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚Å‹N“®        I   %setting1onoff%   I
-echo I%clr%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I 2 ‹N“®‚ÌƒAƒhƒ~ƒ“                  I   %setting2onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 ‹N“®‚ÉXVŠm”F                  I   %setting3onoff%   I
-echo I========================I                                     O==========O
-Echo I                        I %clr%4 ‰¹Šy‚ÌÄ¶‚ğ‹–‰Â%clr2%                  I   %setting4onoff%   I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                     O==========O
-echo I                        I 5 ‰Šú‰»‚Ü‚½‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹                 I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12345wsabye /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory1intsetting1
-if %ErrorLevel%==2 goto :settingcategory1intsetting2
-if %ErrorLevel%==3 goto :settingcategory1intsetting3
-if %ErrorLevel%==4 goto :settingcategory1intsetting4
-if %ErrorLevel%==5 goto :settingcategory1intsetting5
-if %ErrorLevel%==6 goto :settingcategory1intsetting3
-if %ErrorLevel%==7 goto :settingcategory1intsetting5
-if %ErrorLevel%==8 goto :settingcategory1int
-if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 Call :SettingApplyer 4
-if %ErrorLevel%==11 Call :SettingApplyer 4
-goto :settingcategory1intsetting4
-
-
-:settingcategory1intsetting5
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O===========O==========O
-echo I%clr%                        %clr2%I 1 ‹N“®‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚Å‹N“®        I   %setting1onoff%   I
-echo I%clr%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I 2 ‹N“®‚ÌƒAƒhƒ~ƒ“                  I   %setting2onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 ‹N“®‚ÉXVŠm”F                  I   %setting3onoff%   I
-echo I========================I                                     O==========O
-Echo I                        I 4 ‰¹Šy‚ÌÄ¶‚ğ‹–‰Â                  I   %setting4onoff%   I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                     O==========O
-echo I                        I %clr%5 ‰Šú‰»‚Ü‚½‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹%clr2%                 I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12345wsabye /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory1intsetting1
-if %ErrorLevel%==2 goto :settingcategory1intsetting2
-if %ErrorLevel%==3 goto :settingcategory1intsetting3
-if %ErrorLevel%==4 goto :settingcategory1intsetting4
-if %ErrorLevel%==5 goto :settingcategory1intsetting5
-if %ErrorLevel%==6 goto :settingcategory1intsetting4
-if %ErrorLevel%==7 goto :settingcategory1intsetting5
-if %ErrorLevel%==8 goto :settingcategory1int
-if %ErrorLevel%==9 goto :settingcategory1int
-if %ErrorLevel%==10 goto :Uninstall
-if %ErrorLevel%==11 goto :Uninstall
-goto :settingcategory1intsetting5
-
-:settingcategory2int
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I                        I 1 ‹N“®‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìİ’è      I     ^>    I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I 2 ƒƒCƒ“ƒƒjƒ…[‚É”wŒi‚ğ•\¦        I   %setting6onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 %wmodeonoff%                         I
-echo I========================I                                                I
-Echo I%clr%                        %clr2%I                                                I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                                I
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsdbye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting1
-if %ErrorLevel%==2 goto :settingcategory2intsetting2
-if %ErrorLevel%==3 goto :settingcategory1
-if %ErrorLevel%==4 goto :settingcategoryhelpmode
-if %ErrorLevel%==5 goto :settingcategory2intsetting1
-if %ErrorLevel%==6 goto :settingcategory2
-if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 goto :settingcategory2intsetting1
-if %ErrorLevel%==9 goto :settingcategoryhelpmode
-
-:settingcategory2intsetting1
-set sc2s5s1lock=&set sc2s5s2lock=&set sc2s5s3lock=&set sc2s5s1lock2=&set sc2s5s2lock2=&set sc2s5s3lock2=&set setting5_stg_whereyou=
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[  
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I                        I %clr%1 ‹N“®‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìİ’è%clr2%      I     ^>    I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I 2 ƒƒCƒ“ƒƒjƒ…[‚É”wŒi‚ğ•\¦        I   %setting6onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 %wmodeonoff%                         I
-echo I========================I                                                I
-Echo I%clr%                        %clr2%I                                                I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                                I
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsabyed3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting1
-if %ErrorLevel%==2 goto :settingcategory2intsetting2
-if %ErrorLevel%==3 goto :settingcategory2intsetting1
-if %ErrorLevel%==4 goto :settingcategory2intsetting2
-if %ErrorLevel%==5 goto :settingcategory2int
-if %ErrorLevel%==6 goto :settingcategory2int
-if %ErrorLevel%==7 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==8 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==9 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==10 goto :settingcategory2intsetting3
-
-:settingcategory2intsetting2
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I                        I 1 ‹N“®‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìİ’è      I     ^>    I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I %clr%2 ƒƒCƒ“ƒƒjƒ…[‚É”wŒi‚ğ•\¦%clr2%        I   %setting6onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I 3 %wmodeonoff%                         I
-echo I========================I                                                I
-Echo I%clr%                        %clr2%I                                                I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                                I
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsabye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting1
-if %ErrorLevel%==2 goto :settingcategory2intsetting2
-if %ErrorLevel%==3 goto :settingcategory2intsetting1
-if %ErrorLevel%==4 goto :settingcategory2intsetting3
-if %ErrorLevel%==5 goto :settingcategory2int
-if %ErrorLevel%==6 goto :settingcategory2int
-if %ErrorLevel%==7 Call :SettingApplyer 6
-if %ErrorLevel%==8 Call :SettingApplyer 6
-if %ErrorLevel%==9 goto :settingcategory2intsetting3
-if %ErrorLevel%==10 goto :settingcategory2intsetting4
-goto :settingcategory2intsetting2
-
-:settingcategory2intsetting3
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I                        I 1 ‹N“®‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìİ’è      I     ^>    I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I 2 ƒƒCƒ“ƒƒjƒ…[‚É”wŒi‚ğ•\¦        I   %setting6onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I %clr%3 %wmodeonoff%%clr2%                         I
-echo I========================I                                                I
-Echo I%clr%                        %clr2%I                                                I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                                I
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsabye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting1
-if %ErrorLevel%==2 goto :settingcategory2intsetting2
-if %ErrorLevel%==3 goto :settingcategory2intsetting2
-if %ErrorLevel%==4 goto :settingcategory2intsetting3
-if %ErrorLevel%==5 goto :settingcategory2int
-if %ErrorLevel%==6 goto :settingcategory2int
-if %ErrorLevel%==7 Call :SettingApplyer wmode
-if %ErrorLevel%==8 Call :SettingApplyer wmode
-if %ErrorLevel%==9 goto :settingcategory2intsetting3
-if %ErrorLevel%==10 goto :settingcategory2intsetting4
-goto :settingcategory2intsetting3
-
-
-
-:settingcategory2intsetting5_stg0
-set setting5_stg_whereyou=stg0
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-call :settingcategory2intsetting5blockcheck
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O O====================O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I I İ’è5/...          I
-echo O========================O==================O======O=O====================O
-echo I                        I %clr%1 ‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%                I   %setting5onoff%   I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I %sc2s5s1lock%2 ƒŠƒiƒbƒNƒX•—‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s1lock2%    I   %setting5_s1onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I %sc2s5s2lock%3 ƒVƒ“ƒvƒ‹‚È‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s2lock2%      I   %setting5_s2onoff%   I
-echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I %sc2s5s3lock%4 ¶‚Ì‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s3lock2%            I   %setting5_s3onoff%   I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 123wsabye4 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==2 goto :settingcategory2intsetting5_stg1
-if %ErrorLevel%==3 goto :settingcategory2intsetting5_stg2
-if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg1
-if %ErrorLevel%==6 goto :settingcategory2intsetting1
-if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 Call :SettingApplyer 5
-if %ErrorLevel%==9 Call :SettingApplyer 5
-if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
-goto :settingcategory2intsetting5_stg0
-
-
-:settingcategory2intsetting5_stg1
-if "%setting5onoff%"=="–³Œø" if "%linuxboot%"=="false" if "%setting5_stg_whereyou%"=="stg1" (goto :settingcategory2intsetting5_stg0)
-if "%setting5onoff%"=="–³Œø" if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg0) else if "%linuxboot%"=="false" if "%setting5onoff%"=="–³Œø" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg2)
-if "%simpleboot%"=="true" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg2) else if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg0)
-if "%rawboot%"=="true" if "%setting5_stg_whereyou%"=="stg3" (goto :settingcategory2intsetting5_stg3) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg3)
-set setting5_stg_whereyou=stg1
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è  
-call :settingcategory2intsetting5blockcheck
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O O====================O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I I İ’è5/...          I
-echo O========================O==================O======O=O====================O
-echo I                        I 1 ‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“                I   %setting5onoff%   I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I %clr%2 ƒŠƒiƒbƒNƒX•—‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%    I   %setting5_s1onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I %sc2s5s2lock%3 ƒVƒ“ƒvƒ‹‚È‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s2lock2%      I   %setting5_s2onoff%   I
-echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I %sc2s5s3lock%4 ¶‚Ì‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s3lock2%            I   %setting5_s3onoff%   I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 123wsabye4 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==2 goto :settingcategory2intsetting5_stg1
-if %ErrorLevel%==3 goto :settingcategory2intsetting5_stg2
-if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg2
-if %ErrorLevel%==6 goto :settingcategory2intsetting1
-if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 Call :SettingApplyer 5_1
-if %ErrorLevel%==9 Call :SettingApplyer 5_1
-if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
-goto :settingcategory2intsetting5_stg1
-
-
-:settingcategory2intsetting5_stg2
-if "%linuxboot%"=="true" if "%setting5_stg_whereyou%"=="stg1" (goto :settingcategory2intsetting5_stg1) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0)
-if "%rawboot%"=="true" if "%setting5_stg_whereyou%"=="stg3" (goto :settingcategory2intsetting5_stg0) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg3)
-set setting5_stg_whereyou=stg2
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-call :settingcategory2intsetting5blockcheck
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O O====================O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I I İ’è5/...          I
-echo O========================O==================O======O=O====================O
-echo I                        I 1 ‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“                I   %setting5onoff%   I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I %sc2s5s1lock%2 ƒŠƒiƒbƒNƒX•—‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s1lock2%    I   %setting5_s1onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I %clr%3 ƒVƒ“ƒvƒ‹‚È‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%      I   %setting5_s2onoff%   I
-echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I %sc2s5s3lock%4 ¶‚Ì‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s3lock2%            I   %setting5_s3onoff%   I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 123wsabye4 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==2 goto :settingcategory2intsetting5_stg1
-if %ErrorLevel%==3 goto :settingcategory2intsetting5_stg2
-if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg1
-if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg3
-if %ErrorLevel%==6 goto :settingcategory2intsetting1
-if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 Call :SettingApplyer 5_2
-if %ErrorLevel%==9 Call :SettingApplyer 5_2
-if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
-goto :settingcategory2intsetting5_stg2
-
-:settingcategory2intsetting5_stg3
-if "%setting5onoff%"=="–³Œø" if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0) else if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg2)
-if "%linuxboot%"=="true" if "%setting5_stg_whereyou%"=="stg1" (goto :settingcategory2intsetting5_stg1)  else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0)
-if "%simpleboot%"=="true" if "%setting5_stg_whereyou%"=="stg2" (goto :settingcategory2intsetting5_stg2) else if "%setting5_stg_whereyou%"=="stg0" (goto :settingcategory2intsetting5_stg0)
-set setting5_stg_whereyou=stg3
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-call :settingcategory2intsetting5blockcheck
-set selected=
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O O====================O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I I İ’è5/...          I
-echo O========================O==================O======O=O====================O
-echo I                        I 1 ‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“                I   %setting5onoff%   I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I                                     O==========O
-echo I                        I %sc2s5s1lock%2 ƒŠƒiƒbƒNƒX•—‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s1lock2%    I   %setting5_s1onoff%   I
-echo I========================I                                     O==========O
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I %sc2s5s2lock%3 ƒVƒ“ƒvƒ‹‚È‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%sc2s5s2lock2%      I   %setting5_s2onoff%   I
-echo I========================I                                     O==========O
-Echo I%clr%                        %clr2%I %clr%4 ¶‚Ì‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%            I   %setting5_s3onoff%   I
-echo I%clr% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I                                     O==========O
-echo I%clr%                        %clr2%I                                                I
-echo O========================O==O=====================O==========O============O
-echo I%clrhelp%      ƒwƒ‹ƒvƒ‚[ƒh      %clrhelp2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 123wsabye4 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-if %ErrorLevel%==1 goto :settingcategory2intsetting5_stg0
-if %ErrorLevel%==2 goto :settingcategory2intsetting5_stg1
-if %ErrorLevel%==3 goto :settingcategory2intsetting5_stg2
-if %ErrorLevel%==4 goto :settingcategory2intsetting5_stg2
-if %ErrorLevel%==5 goto :settingcategory2intsetting5_stg3
-if %ErrorLevel%==6 goto :settingcategory2intsetting1
-if %ErrorLevel%==7 goto :settingcategory2intsetting1
-if %ErrorLevel%==8 Call :SettingApplyer 5_3
-if %ErrorLevel%==9 Call :SettingApplyer 5_3
-if %ErrorLevel%==10 goto :settingcategory2intsetting5_stg3
-goto :settingcategory2intsetting5_stg3
-
-:settingcategory2intsetting5blockcheck
-set sc2s5s1lock=&set sc2s5s1lock2=&set sc2s5s2lock=&set sc2s5s2lock2=&set sc2s5s3lock=&set sc2s5s3lock2=&
-if "%linuxboot%"=="true" (
-    if "%wmodetoggle%"=="true" (
-    set sc2s5s2lock=[0m[107m&set sc2s5s2lock2=[0m[107m[30m
-    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
-    ) else (
-    set sc2s5s2lock=[0m[90m&set sc2s5s2lock2=[0m
-    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
-    )
-    if "%setting5onoff%"=="–³Œø" (
-    if "%wmodetoggle%"=="true" (
-    set sc2s5s2lock=[0m[107m&set sc2s5s2lock2=[0m[107m[30m
-    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
-    ) else (
-    set sc2s5s2lock=[0m[90m&set sc2s5s2lock2=[0m
-    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
-    )
-    exit /b
-  )
+:Setting_Main
+rem GUI type 4 (SUPER FAST!!! WOAH!!! YIPPEE!!! :D)
+rem But it's a spaghetti code :(
+rem debug title, delete original title, and place this title to after of call core : title EL: !errorlevel! CCG: !STG_CCG! CSL: !STG_CSL! SCT: !STG_Section! LoopCT: %%i ^| CCG_Temp: !STG_CCG_Temp! CSL_Temp: !STG_CSL_Temp!
+if not defined dummy (set /p nothing=[0;0H[2K<nul)
+for /l %%i in (1,1,512) do if "!Settingexit!" neq "true" (
+title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è
+rem Main Screen draw
+if "!STG_CSL!"=="true" (call :Setting_Main_Drawer redraw) else (call :Setting_Main_Drawer)
+if !STG_CCG! neq !STG_CCG_Temp! (call :Setting_Main_CUI) else (set /p nothing=[22;0H<nul)
+rem Ask
+choice /c 12345WASDBYE /n >nul
+call :Setting_Main_Core !Errorlevel!
 )
-if "%simpleboot%"=="true" (
-    if "%wmodetoggle%"=="true" (
-    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
-    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
-    ) else (
-    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
-    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
-    )
-) 
-if "%rawboot%"=="true" (
-    if "%wmodetoggle%"=="true" (
-    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
-    set sc2s5s2lock=[0m[107m&set sc2s5s2lock2=[0m[107m[30m
-    ) else (
-    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
-    set sc2s5s2lock=[0m[90m&set sc2s5s2lock2=[0m
-    )
-)
-if "%setting5onoff%"=="–³Œø" (
-    if "%wmodetoggle%"=="true" (
-    set sc2s5s1lock=[0m[107m&set sc2s5s1lock2=[0m[107m[30m
-    set sc2s5s3lock=[0m[107m&set sc2s5s3lock2=[0m[107m[30m
-    ) else (
-    set sc2s5s1lock=[0m[90m&set sc2s5s1lock2=[0m
-    set sc2s5s3lock=[0m[90m&set sc2s5s3lock2=[0m
-    )
+if "!Settingexit!" neq "true" (set /p nothing=[0;0HLag spike :3<nul& goto :Setting_Main) else (call :Setting_Exit & goto :Hazimemenu)
+
+:Setting_Main_CUI
+if not defined "%clrgrabg%" (if "%wmodetoggle%"=="true" (set clrgrabg=[48;2;215;215;215m) else (set clrgrabg=[48;2;40;40;40m))
+if not defined dummy (set /p nothing=[?25l[0;0H<nul& set SCB_1=& set SCB_2=& set SCB_3=& set SCB_%STG_CCG%=%clr%)
+if not defined dummy (
+echo.
+Echo                                 İ’èƒƒjƒ…[
+echo.
+echo O========================O                  O======O
+echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
+echo O========================O==================O======O======================O
+echo I%SCB_1%                        %clr2%I [48CI
+echo I%SCB_1%  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  %clr2%I [48CI
+echo I%SCB_1%                        %clr2%I [48CI
+echo I========================I [48CI
+echo I%clrgrabg%                        %clr2%I [48CI
+echo I========================I [48CI
+Echo I%SCB_2%                        %clr2%I [48CI
+echo I%SCB_2% ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn %clr2%I [48CI
+echo I%SCB_2%                        %clr2%I [48CI
+echo O========================O==O=====================O==========O============O
+echo I%SCB_Help%      ƒwƒ‹ƒvƒ‚[ƒh      %clr2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
+echo O========================O  O=====================O==========O============O
+echo [2B[12C ‘I‘ğ‚µ‚½‚¢İ’è‚ğwasd‚©”šƒL[‚Å‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢...
 )
 exit /b
 
 
+:Setting_Main_Core
+set STG_CSL_Temp=%STG_CSL%& set STG_CCG_Temp=%STG_CCG%
+if "%STG_CSL_Temp%"=="true" (set STG_CSL_Temp=1)
+rem initial value move, 1~3 = move, else set Category to 1
+if "%STG_CSL%"=="0" (
+    if "%1"=="10" (set Settingexit=true& exit /b)
+    if "%STG_CCG%"=="0" (if %1 geq 1 if %1 leq 3 (set STG_CCG=%1) else (set STG_CCG=1) & set STG_CSL=0& exit /b)
+) else (if "%1"=="10" (if "%STG_CSL%"=="true" (set STG_CSL=0& exit /b) else if not "%STG_Section%"=="2" (if %STG_CSL% geq 1 if %STG_CSL% leq 5 (set STG_CSL=true& exit /b)) else (set STG_Section=1& call :Setting_Main_Drawer redraw & exit /b))) & rem < return to previous point
 
-:settingcategoryhelpmode
-rem ƒƒ‚ ‚±‚±‚Ì•ªŠò‚Ìtrue‚Ì‚Æ‚±‚ë‚ÉAclr‚ÌF‚ğ•Ï‚¦‚éˆ—‚ğ’Ç‰Á‚µ‚½‚¢Bchoice‚Ì’¼Œã‚É•ªŠò‚Å‚à‚Æ‚É–ß‚·ˆ—‚à’Ç‰Á‚µ‚Ä
-if "%settinghelptoggle%"=="true" (set settinghelp=—LŒø)
-if "%settinghelptoggle%"=="false" (set settinghelp=–³Œø)
-title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| İ’è 
-set selected=
-if not defined "%clrgra%" (set clrgra=[90m)
-if "%settinghelptoggle%"=="true" (set clr=[46m)
-Cls
-echo.
-Echo                                 İ’èƒƒjƒ…[
-echo. 
-echo O========================O                  O======O
-echo I      ƒJƒeƒSƒŠ[        I                  I İ’è I
-echo O========================O==================O======O======================O
-echo I                        I                                                I
-echo I  ƒJ[ƒ\ƒ‹‘Ö‚¦  ‹@”\Œn  I  ƒwƒ‹ƒvƒ‚[ƒh‚Å‚·B‚±‚Ì‹@”\‚ğ‘I‘ğ‚µ‚½ŒãA      I
-echo I                        I  ŠT—v‚ğŒ©‚½‚¢İ’è‚ğ‘I‘ğ‚·‚é‚ÆA                I
-echo I========================I  ‚»‚Ìİ’è‚ÌŠT—v‚ğŒ©‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B          I
-echo I  ƒJƒeƒSƒŠ[  ã‚©‰º‚©  I                                                I
-echo I========================I  ƒwƒ‹ƒvƒ‚[ƒh‚ğ–³Œø‚É‚µ‚½‚¢ê‡‚ÍA            I
-Echo I                        I  Ä“x‚±‚Ì‹@”\‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B              I
-echo I ƒJ[ƒ\ƒ‹‘Ö‚¦  Œ©‚½–ÚŒn I                                                I
-echo I                        I  %clrgra%ƒwƒ‹ƒvƒ‚[ƒh‚Í%settinghelp%‚Å‚·%clr2%                        I
-echo O========================O==O=====================O==========O============O
-echo I%clr%      ƒwƒ‹ƒvƒ‚[ƒh      %clr2%I  I ˆÚ“® : W A S D ”š I –ß‚é : B I Œˆ’è : Y E I
-echo O========================O  O=====================O==========O============O
-echo.
-echo.
-choice /c 12wsbye3 /n /m "•ÏX‚·‚é‚à‚Ì‚ğ”š‚Åw’è–”‚Íwasd‚ÅˆÚ“®‚µ‚Äw’è‚µ‚Ä‚­‚¾‚³‚¢"
-set clrgra=
-if "%wmodetoggle%"=="false" (set clr=[7m&set clr2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clr2=[0m[107m[30m)
-if %ErrorLevel%==1 goto :settingcategory1
-if %ErrorLevel%==2 goto :settingcategory2
-if %ErrorLevel%==3 goto :settingcategory2
-if %ErrorLevel%==4 goto :settingcategoryhelpmode
-if %ErrorLevel%==5 goto :hazime
-if %ErrorLevel%==6 goto :settingcategoryhelpmodetoggle
-if %ErrorLevel%==7 goto :settingcategoryhelpmodetoggle
-if %ErrorLevel%==8 goto :settingcategoryhelpmode
+rem Process 1~3, WS categoly movements
+if "%STG_CCG%"=="1" (set MaxSTG=5) else if "%STG_CCG%"=="2" if "%STG_Section%"=="1" (set MaxSTG=3) else (set MaxSTG=4) & rem < Max setting buttons
+if not "%STG_CSL%"=="0" ( if %1 leq %MaxSTG% (set STG_CSL=%1) & rem < number current move
+    if "%STG_CSL%"=="true" if not %1 geq 10 if %1 leq 11 (set STG_CSL=0& if %1==6 (if not %STG_CCG%==1 (set /a STG_CCG-=1)) else if %1==8 (if not %STG_CCG%==3 (set /a STG_CCG+=1)) else (if %1 geq 1 if %1 leq 3 (set STG_CCG=%1))) & rem < Move while viewing inside of category
+    if not %STG_CCG%==3 (
+        if not "%STG_CSL%"=="true" (
+            if %1==6 (if not %STG_CSL%==1 set /a STG_CSL-=1) else if %1==8 (if not %STG_CSL%==%MaxSTG% set /a STG_CSL+=1)) & rem < W,S Inside category move
+            if %1==9 (if "%STG_CSL%"=="true" (set STG_CSL=1) else if "%STG_Section%"=="1" if "%STG_CCG%"=="2" (if %STG_CSL% equ 1 set STG_Section=2& call :Setting_Main_Drawer redraw & exit /b)) else (if %1==7 (if not "%STG_Section%"=="2" (set STG_CSL=true) else (set STG_Section=1& call :Setting_Main_Drawer redraw & exit /b)))) & rem < 9=A, =return, 7=D, =get inside of category
+    ) else ( if %1 leq 3 (set STG_CCG=%1) else ( rem < number category move
+        if %1==6 (if not %STG_CCG%==1 (set /a STG_CCG-=1)) else if %1==8 (if not %STG_CCG%==3 (set /a STG_CCG+=1)) & rem < W,S category move
+        if not %STG_CCG%==3 (if %1==9 (set STG_CSL=true)) & rem < D=show inside of category
+    ) 
+)
 
-:settingcategoryhelpmodetoggle
-if "%settinghelptoggle%"=="true" (set settinghelptoggle=false&set clrhelp=&set clrhelp2=&goto :settingcategoryhelpmode)
-if "%settinghelptoggle%"=="false" (set settinghelptoggle=true&goto :settingcategoryhelpmodetoggleiftrue)
+rem Y,E process
+if %1 geq 11 if %1 leq 12 (
+    if not "%STG_CSL%"=="true" (if %STG_CSL% geq 1 if %STG_CSL% leq 5 (if "%STG_CCG%"=="2" (if %STG_CSL% equ 1 (set /p nothing=[?25l<nul)) else (set /p nothing=[?25h<nul)
+        if "%STG_CCG%"=="1" (if not "%STG_CSL%"=="5" (call :SettingApplyer %STG_CSL%) else (call :Uninstall))
+        if "%STG_CCG%"=="2" (if not "%STG_Section%"=="2" (if "%STG_CSL%"=="1" (set STG_Section=2& call :Setting_Main_Drawer redraw & exit /b) else if "%STG_CSL%"=="2" (call :SettingApplyer 6) else if "%STG_CSL%"=="3" (call :SettingApplyer wmode)) else (
+            if "%STG_CSL%"=="1" (call :SettingApplyer 5) else if "%STG_CSL%"=="2" (if not "%simpleboot%"=="true" if not "%rawboot%"=="true" if not "%setting5onoff%"=="false" call :SettingApplyer 5_1) else if "%STG_CSL%"=="3" (if not "%linuxboot%"=="true" if not "%rawboot%"=="true" call :SettingApplyer 5_2) else if "%STG_CSL%"=="4" (if not "%simpleboot%"=="true" if not "%linuxboot%"=="true" if not "%setting5onoff%"=="false" call :SettingApplyer 5_3) & rem < Process select (with settings block)
+        ))
+        cls & call :Setting_Main_CUI & call :Setting_Main_Drawer redraw & exit /b & rem < Redraw entire screen
+    )) else (set STG_CSL=1) & rem < Y,E=get inside of category
+    if not "%STG_CSL%"=="true" (
+        if %STG_CCG% geq 1 if %STG_CCG% leq 2 (set STG_CSL=true) & rem < Category Select
+        if "%STG_CCG%"=="3" (if not "%settinghelptoggle%"=="true" (set settinghelptoggle=true) else (set settinghelptoggle=false)) & rem < Help mode select
+    )
+)
+exit /b
+
+:Setting_Main_Drawer
+if "%1"=="redraw" (set ForTemp=1,1,5) else (if %STG_CSL% leq %STG_CSL_Temp% (set ForTemp=%STG_CSL_Temp%,-1,%STG_CSL%) else if %STG_CSL% geq %STG_CSL_Temp% (set ForTemp=%STG_CSL_Temp%,1,%STG_CSL%)) & rem < Skip drawing unupdated button
+if "%STG_CCG%"=="1" (set ForTemp_button=14) else if "%STG_CCG%"=="2" (if "%STG_Section%"=="2" (set ForTemp_button=14) else (set ForTemp_button=10))
+if "%STG_CSL%"=="0" (for /l %%i in (15,-1,7) do (set /p nothing=[%%i;27H                                                <nul)) else if "%STG_CSL%"=="true" (for /l %%i in (15,-1,7) do (set /p nothing=[%%i;27H                                                <nul)) else if "%1"=="redraw" (for /l %%i in (15,-1,7) do (set /p nothing=[%%i;27H                                                <nul)) & rem < Clear texts
+for /l %%i in (1,1,5) do (set STG_B%%i=) & if %STG_CSL% geq 1 if %STG_CSL% leq 5 (set STG_B%STG_CSL%=%clr%) & rem < Update Button highlight
+if "%STG_CSL%"=="0" ( rem < Draw description
+    if "%STG_CCG%"=="0" (set /p nothing=[8;28H ƒJƒeƒSƒŠ[‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB[9;28H ƒJƒeƒSƒŠ[‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B[14;28H %clrgra%[W,S] ‚© [1~3] ‚ÅƒJƒeƒSƒŠ[‚ğ‘I‘ğ...%clr2%<nul)
+    if "%STG_CCG%"=="1" (set /p nothing=[8;28H ƒJ[ƒ\ƒ‹‘Ö‚¦‚Ì‹@”\‚ÉŠÖ‚·‚éİ’è‚Å‚·B<nul)
+    if "%STG_CCG%"=="2" (set /p nothing=[8;28H ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌŒ©‚½–Ú‚ÉŠÖ‚·‚éİ’è‚Å‚·B[9;28H %clrgra%^(ƒe[ƒ}“™^)%clr2%<nul)
+    if "%STG_CCG%"=="3" (set /p nothing=[8;28H ƒwƒ‹ƒvƒ‚[ƒh‚Å‚·B‚±‚Ì‹@”\‚ğ‘I‘ğ‚µ‚½ŒãA[9;28H ŠT—v‚ğŒ©‚½‚¢İ’è‚ğ‘I‘ğ‚·‚é‚ÆA[10;28H ‚»‚Ìİ’è‚ÌŠT—v‚ğŒ©‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B[12;28H ƒwƒ‹ƒvƒ‚[ƒh‚ğ–³Œø‚É‚µ‚½‚¢ê‡‚ÍA[13;28H Ä“x‚±‚Ì‹@”\‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B[15;28H %clrgra%ƒwƒ‹ƒvƒ‚[ƒh‚Í%settinghelptoggle%‚Å‚·%clr2%<nul
+    if "%settinghelptoggle%"=="true" (set SCB_Help=[46m& set /p nothing=[17;0HI[46m      ƒwƒ‹ƒvƒ‚[ƒh      %clr2%I<nul) else (set SCB_Help=%clr%& set /p nothing=[17;0HI%clr%      ƒwƒ‹ƒvƒ‚[ƒh      %clr2%I<nul& set SCB_3=) & rem < Help mode toggle
+    ) else (if "%settinghelptoggle%"=="true" (set SCB_Help=%clr%) else (set SCB_Help=))
+) else (if "%1"=="redraw" (for /l %%i in (8,2,%ForTemp_button%) do (set /p nothing=[%%i;64HO==========<nul)) else if "%1"=="clear" (for /l %%i in (8,2,%ForTemp_button%) do (set /p nothing=[%%i;64HO==========<nul))
+    if "%STG_CCG%"=="1" ( rem < Draw Category 1 buttons
+        for /l %%i in (%ForTemp%) do (
+                if "%%i"=="1" (set /p nothing=[7;27H 1 %STG_B1%‹N“®‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚Å‹N“®%clr2%<nul
+                ) else (if "%%i"=="2" (set /p nothing=[9;27H 2 %STG_B2%‹N“®‚ÌƒAƒhƒ~ƒ“%clr2%<nul
+                ) else (if "%%i"=="3" (set /p nothing=[11;27H 3 %STG_B3%‹N“®‚ÉXVŠm”F%clr2%<nul
+                ) else (if "%%i"=="4" (set /p nothing=[13;27H 4 %STG_B4%‰¹Šy‚ÌÄ¶‚ğ‹–‰Â%clr2%<nul
+                ) else (if "%%i"=="5" (set /p nothing=[15;27H 5 %STG_B5%‰Šú‰»‚Ü‚½‚ÍƒAƒ“ƒCƒ“ƒXƒg[ƒ‹%clr2%<nul)
+                set /p nothing=[7;64HI  %setting1onoff%<nul& set /p nothing=[9;64HI  %setting2onoff%<nul& set /p nothing=[11;64HI  %setting3onoff%<nul& set /p nothing=[13;64HI  %setting4onoff%<nul
+            )))))
+    ) else if "%STG_CCG%"=="2" ( rem < Draw Category 2 buttons
+    if not "%STG_Section%"=="2" (
+        set /p nothing=[4;56H[0K[5;56H[0K<nul
+        for /l %%i in (%ForTemp%) do (
+            if "%%i"=="1" (set /p nothing=[7;27H 1 %STG_B1%‹N“®‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìİ’è%clr2%<nul
+            ) else (if "%%i"=="2" (set /p nothing=[9;27H 2 %STG_B2%ƒƒCƒ“ƒƒjƒ…[‚É”wŒi‚ğ•\¦%clr2%<nul
+            ) else (if "%%i"=="3" (set /p nothing=[11;27H 3 %STG_B3%%wmodeonoff%%clr2%<nul)
+            set /p nothing=[7;64HI    ^>   <nul& set /p nothing=[9;64HI  %setting6onoff%<nul
+        ))))
+    if "%STG_Section%"=="2" (
+        set /p nothing=[4;56HO==================O[5;56HI İ’è5/...        I<nul
+        for /l %%i in (%ForTemp%) do (
+            call :Setting_Main_STGSection_2_Grayout
+            if "%%i"=="1" (set /p nothing=[7;27H !STG_B1_gray!1 !STG_B1!‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%<nul
+            ) else (if "%%i"=="2" (set /p nothing=[9;27H !STG_B2_gray!2 !STG_B2!ƒŠƒiƒbƒNƒX•—‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%<nul
+            ) else (if "%%i"=="3" (set /p nothing=[11;27H !STG_B3_gray!3 !STG_B3!ƒVƒ“ƒvƒ‹‚È‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%<nul
+            ) else (if "%%i"=="4" (set /p nothing=[13;27H !STG_B4_gray!4 !STG_B4!¶‚Ì‹N“®ƒAƒjƒ[ƒVƒ‡ƒ“%clr2%<nul)
+            set /p nothing=[7;64HI  %setting5onoff%<nul& set /p nothing=[9;64HI  %setting5_s1onoff%<nul& set /p nothing=[11;64HI  %setting5_s2onoff%<nul& set /p nothing=[13;64HI  %setting5_s3onoff%<nul
+        )))) & for /l %%a in (1,1,4) do (set STG_B%%a_gray=))
+    )
+)
+set ForTemp=& set ForTemp_button=& exit /b
 
 
-:settingcategoryhelpmodetoggleiftrue
-if "%wmodetoggle%"=="false" (set clr=[46m&set clrhelp=[7m&set clrhelp2=[0m)
-if "%wmodetoggle%"=="true" (set clr=[46m&set clrhelp=[100m[97m&set clrhelp2=[0m[107m[30m)
-goto :settingcategoryhelpmode
+:Setting_Main_STGSection_2_Grayout
+rem Gray out settings to match setting5 related setting values
+for /l %%a in (1,1,4) do (set STG_B%%a_gray=)
+if "%linuxboot%"=="true" (
+    if "%wmodetoggle%"=="true" (
+    set STG_B3_gray=[107m[38;2;140;140;140m& set STG_B4_gray=[107m[38;2;140;140;140m
+    ) else (set STG_B3_gray=[0m[90m& set STG_B4_gray=[0m[90m)
+    exit /b
+)
+if "%simpleboot%"=="true" (
+    if "%wmodetoggle%"=="true" (
+    set STG_B2_gray=[107m[38;2;140;140;140m& set STG_B4_gray=[107m[38;2;140;140;140m
+    ) else (set STG_B2_gray=[0m[90m& set STG_B4_gray=[0m[90m)
+    exit /b
+) 
+if "%rawboot%"=="true" (
+    if "%wmodetoggle%"=="true" (
+    set STG_B2_gray=[107m[38;2;140;140;140m& set STG_B3_gray=[107m[38;2;140;140;140m
+    ) else (set STG_B2_gray=[0m[90m& set STG_B3_gray=[0m[90m)
+    exit /b
+)
+if "%setting5onoff%"=="–³Œø" (
+    if "%wmodetoggle%"=="true" (
+    set STG_B2_gray=[107m[38;2;140;140;140m& set STG_B4_gray=[107m[38;2;140;140;140m
+    ) else (set STG_B2_gray=[0m[90m& set STG_B4_gray=[0m[90m)
+    exit /b
+)
+exit /b
 
+
+:Setting_Exit
+rem delete variables
+set STG_CCG=& set STG_CSL=& set STG_CCG_Temp=& set STG_CSL_Temp=& set MaxSTG=& set Settingexit=& set SCB_Help=& set settinghelptoggle=
+for /l %%i in (1,1,3) do (set SCB_%%i=)
+setlocal disabledelayedexpansion
+exit /b
 
 
 
@@ -4188,7 +3559,7 @@ echo ‚±‚Ìİ’è‚ÍA‹N“®Œã‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦ (ƒƒCƒ“ƒƒjƒ…[‚Å1‚Ì€–Ú‚É‚ ‚é‹@”\) ‚É‘JˆÚ
 echo ‚±‚ê‚ğ—LŒø‚É‚·‚é‚ÆA‹N“®’¼Œã‚ÉƒƒCƒ“ƒƒjƒ…[‚É‘JˆÚ‚·‚é‘ã‚í‚è‚ÉƒJ[ƒ\ƒ‹‘Ö‚¦‚É‘JˆÚ‚·‚é‚Ì‚ÅA‘f‘‚­ƒJ[ƒ\ƒ‹‚ğ•ÏX‚Å‚«‚Ü‚·B
 echo ‚±‚Ìİ’è‚ÍƒfƒtƒHƒ‹ƒg‚Å‚Í–³Œø‚Å‚·B
 pause
-goto :settingcategory1intsetting1
+exit /b
 
 :setting2help
 cls
@@ -4197,7 +3568,7 @@ echo ‚à‚µ‰¼‚ÉAƒJ[ƒ\ƒ‹‚ğ•ÏX‚·‚éÛ‚ÉƒGƒ‰[‚à‚µ‚­‚Í•ÏX‚Å‚«‚È‚©‚Á‚½ê‡‚Ì‚İ‚É‚±‚
 echo ‚±‚Ìİ’è‚ğ—LŒø‚É‚·‚é‚±‚Æ‚É‚æ‚Á‚Ä‹N“®ŠÔ‚ª’Zk‚³‚ê‚éê‡‚ª‚ ‚è‚Ü‚·B
 echo ‚±‚Ìİ’è‚ÍƒfƒtƒHƒ‹ƒg‚Å‚Í–³Œø‚Å‚·B
 pause
-goto :settingcategory1intsetting2
+exit /b
 
 :setting3help
 cls
@@ -4208,7 +3579,7 @@ echo ‚¨g‚¢‚ÌƒCƒ“ƒ^[ƒlƒbƒg‚âŠÂ‹«‚Ì‘¬“x‚É‚æ‚Á‚Ä‚Í‹N“®ŠÔ‚ª’x‚­‚È‚é‰Â”\«‚ª‚ ‚è‚
 echo ˆêŠÔ‚É‚¾‚¢‚½‚¢50‰ñˆÈã˜A‘±‚µ‚Ä‹N“®‚·‚é‚ÆAgithub‚ÌAPIƒŒ[ƒg§ŒÀ‚É“’B‚·‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B(‘‡“I‚É3~4‰ñ‚Ù‚ÇAPI‚ğ—˜—p‚·‚é‚½‚ßA‚•‰‰×)
 echo ‚±‚Ìİ’è‚ÍƒfƒtƒHƒ‹ƒg‚Å‚Í–³Œø‚Å‚·B
 pause
-goto :settingcategory1intsetting3
+exit /b
 
 :setting4help
 cls
@@ -4217,7 +3588,7 @@ echo ‚±‚Ìİ’è‚ª—LŒø‚¾‚ÆA—á‚¦‚Î‹N“®“™‚Å‰¹‚ªÄ”w‚³‚ê‚é‚æ‚¤‚É‚È‚è‚Ü‚·B
 echo ‚»‚ÌÛ‚ÉÄ¶‚³‚ê‚é‰¹‚ÍƒJ[ƒ\ƒ‹‘Ö‚¦‚ª‹N“®‚µ‚½Powershell‚ªƒoƒbƒOƒOƒ‰ƒEƒ“ƒh‚©‚çÄ¶‚µ‚Ä‚¢‚é•¨‚Å‚·B
 echo ‚±‚Ìİ’è‚ÍƒfƒtƒHƒ‹ƒg‚Å‚Í—LŒø‚Å‚·B
 pause
-goto :settingcategory1intsetting4
+exit /b
 
 :setting5help
 cls
@@ -4225,7 +3596,7 @@ echo ‚±‚Ìİ’è‚ÍA‹N“®‚É•K‚¸–ˆ‰ñ—¬‚ê‚éƒu[ƒgƒAƒjƒ[ƒVƒ‡ƒ“A‚¢‚í‚Î‹N“®‰æ–Ê‚ğ–³Œ
 echo ‚±‚Ìİ’è‚ğ–³Œø‚É‚·‚é‚±‚Æ‚É‚æ‚Á‚ÄA‹N“®ŠÔ‚Ì’Zk‚â‚¤‚Á‚Æ‚¤‚µ‚³‚ÌŒyŒ¸‚É‚Â‚È‚ª‚è‚Ü‚·B
 echo ‚±‚Ìİ’è‚ÍƒfƒtƒHƒ‹ƒg‚Å‚Í—LŒø‚Å‚·B
 pause
-goto :settingcategory2intsetting5_stg0
+exit /b
 
 :setting5_1help
 cls
@@ -4234,7 +3605,7 @@ echo ‹N“®’†‚È‚Ì‚ª‚í‚©‚è‚â‚·‚­AŒ©‚½–Ú‚ª—Ç‚¢‚Å‚·B‚Ü‚½A‹N“®’†‚ÉƒGƒ‰[‚ª”­¶‚µ‚½
 echo ‚±‚Ìİ’è‚Ísimpleboot‚¨‚æ‚Ñrawboot‚Æ•¹—p‚Å‚«‚Ü‚¹‚ñB
 echo ‚±‚Ìİ’è‚Í•W€‚Å‚Ífalse‚Å‚·B
 pause
-goto :settingcategory2intsetting5_stg1
+exit /b
 
 :setting5_2help
 cls
@@ -4243,7 +3614,7 @@ echo ‚‘¬‚©‚Â•ª‚©‚è‚â‚·‚­AƒVƒ“ƒvƒ‹‚Å‚·B‚½‚¾‚µ‚Â‚Ü‚ç‚È‚­Œ©‚¦‚é‰Â”\«‚ª‚ ‚èƒ}ƒX
 echo ‚±‚Ìİ’è‚Ílinuxboot‚¨‚æ‚Ñrawboot‚Æ•¹—p‚Å‚«‚Ü‚¹‚ñB
 echo ‚±‚Ìİ’è‚Í•W€‚Å‚Ífalse‚Å‚·B
 pause
-goto :settingcategory2intsetting5_stg2
+exit /b
 
 :setting5_3help
 cls
@@ -4252,7 +3623,7 @@ echo ƒVƒ“ƒvƒ‹‚Å‚í‚©‚è‚â‚·‚­AŒ»İ‰½‚ªÀs‚³‚ê‚Ä‚¢‚é‚©‚ªˆê–Ú‚Å‚í‚©‚è‚Ü‚·B‚Ü‚½Aƒ
 echo ‚±‚Ìİ’è‚Ílinuxboot‚¨‚æ‚Ñsimpleboot‚Æ•¹—p‚Å‚«‚Ü‚¹‚ñB
 echo ‚±‚Ìİ’è‚Í•W€‚Å‚Ífalse‚Å‚·B
 pause
-goto :settingcategory2intsetting5_stg3
+exit /b
 
 :setting6help
 cls
@@ -4261,7 +3632,7 @@ echo İ’è‚Å‚«‚Ü‚·B‚±‚ê‚ğ—LŒø‚É‚·‚é‚ÆA‚æ‚è—Ç‚¢Œ©‚½–Ú‚É‚È‚è‚Ü‚·B
 echo ‚½‚¾‚µAƒRƒ“ƒsƒ…[ƒ^[‚Ì«”\‚É‚æ‚Á‚Ä‚ÍƒƒCƒ“ƒƒjƒ…[‚ÌƒŒƒXƒ|ƒ“ƒX‚ªˆ«‚­‚È‚é‰Â”\«‚ª‚ ‚è‚Ü‚·B
 echo ‚±‚Ìİ’è‚ÍƒfƒtƒHƒ‹ƒg‚Åtrue‚Å‚·B
 pause
-goto :settingcategory2intsetting2
+exit /b
 
 :wmodehelp
 cls
@@ -4271,7 +3642,7 @@ echo •W€‚Å‚Í•F‚Å‚·‚ªA”’F‚É‚µ‚½ŒãA¡Œã‹N“®‚µ‚½‚Æ‚«‚É©“®“I‚É‰æ–Ê‚ª”’F‚É‚È‚
 echo ‚Ü‚½A‚¿‚å‚Á‚Æ‚µ‚½— ˜b‚Å‚·‚ª‚±‚Ìİ’è‚ÍA1.10ˆÈ‘O‚Ü‚Å‚Íƒz[ƒ€‘¤‚Éİ’u‚³‚ê‚Ä‚¢‚Ü‚µ‚½B‚Ü‚½A‚±‚Ì‹@”\‚Íİ’è‚Ì“à•”\‘¢‚Ì‚à‚Æ‚É‚È‚Á‚Ä‚¢‚Ü‚·B
 echo •W€‚Å‚Íƒ_[ƒNƒe[ƒ}‚Å‚·B
 pause
-goto :settingcategory2intsetting3
+exit /b
  
 :uninstallhelp
 cls
@@ -4280,29 +3651,31 @@ echo ‚±‚Ìƒƒjƒ…[‚É‚Íİ’èƒtƒ@ƒCƒ‹iİ’è‚ª‹L˜^‚³‚ê‚Ä‚¢‚éƒeƒLƒXƒgƒtƒ@ƒCƒ‹j‚ÌƒpƒX‚
 echo ƒAƒ“ƒCƒ“ƒXƒg[ƒ‹‚ğÀs‚·‚éê‡AƒJ[ƒ\ƒ‹‘Ö‚¦–{‘Ì‚ªíœ‚³‚êAi”CˆÓjƒJ[ƒ\ƒ‹‚àƒfƒtƒHƒ‹ƒg‚Éíœ‚³‚ê‚Ü‚·Bi”CˆÓjİ’èA‰‰ñ‹N“®‚ğŒŸ’m‚·‚é‚½‚ß‚Ìƒtƒ@ƒCƒ‹‚àŠ®‘S‚Éíœ‚³‚ê‚Ü‚·B
 echo Às‚·‚éÛ‚Í‚­‚ê‚®‚ê‚à©ŒÈÓ”C‚ÅÀs‚µ‚Ä‚­‚¾‚³‚¢B
 pause
-goto :settingcategory1intsetting5
+exit /b
 
 
 
 
 :batver
-set batvercurrent=0& call :batver_exit
-if "%batverdev%"=="dev" (set batverdevshow=Dev)
-if "%batverdev%"=="beta" (set batverdevshow=Beta)
-if "%batverdev%"=="stable" (set batverdevshow=Stable)
+set batvercurrent=0
+if "%batverdev%"=="dev" (set batverdevshow=ŠJ”­”Å)
+if "%batverdev%"=="beta" (set batverdevshow=ƒx[ƒ^”Å)
+if "%batverdev%"=="stable" (set batverdevshow=ˆÀ’è”Å)
 if not defined dummy (set /p nothing=[?25l<nul)
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="false" (set clr=[7m&set clrgra=[90m&set clr2=[0m)
 if "%wmodetoggle%"=="true" (set clr=[100m[97m&set clrgra=[107m[38;2;140;140;140m&set clr2=[90m[107m[30m)
 
 :batver_main
+rem GUI type 3
 rem Main Bat Version Menu
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒo[ƒWƒ‡ƒ“î•ñ
 if "%batverexit%"=="true" (set batvercurrent=& call :batver_exit & goto :hazimemenu)
 if not defined batverboot (set MenuRedrew=true& set /p nothing=%clrgra%<nul& call :hazimemenudrew & echo %clr2% & set batverboot=true)
 rem I'm doing this because when I use ANSI ESC sequences in Virtual Studio Code, the parentheses are colored incorrectly and I don't like that
-call :batver_Core_Drew
-if not defined dummuy (set ccmmul=[4m)
+if not defined dummy (echo [9;42H %batver% ^(%batverdevshow%^))
+if not defined dummy (echo [10;42H %batbuild:~6%)
+if "%batvercurrent%"=="0" (echo [18;29H %clrgra%‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ...%clr2%) else (set /p nothing=[18;0H[2K<nul)
 if not defined dummy (
 echo [6;12H O=================================================O 
 echo [7;12H I             ƒJ[ƒ\ƒ‹‘Ö‚¦  ƒo[ƒWƒ‡ƒ“            I 
@@ -4311,60 +3684,34 @@ echo [9;12H I          Œ»İ‚Ìƒo[ƒWƒ‡ƒ“ :[9;63HI
 echo [10;12H I          Œ»İ‚Ìƒrƒ‹ƒh     :[10;63HI 
 echo [11;12H I                                                 I 
 echo [12;12H I    O====================O         O========O    I 
-echo [13;12H I    I%bvb% ƒAƒbƒvƒf[ƒg‚ÌŠm”F %clr2%I         I%bvb2% •Â‚¶‚é %clr2%I    I 
+echo [13;12H I    I%bvb1% ƒAƒbƒvƒf[ƒg‚ÌŠm”F %clr2%I         I%bvb2% •Â‚¶‚é %clr2%I    I 
 echo [14;12H I    O====================O         O========O    I 
 echo [15;12H I                                                 I 
 echo [16;12H O=================================================O 
 echo [17;20H %clrgra%1~2‚©A,D‚Å“®‚©‚µAY,E‚ÅŒˆ’èAB‚ÅI—¹%clr2%
 )
 choice /c 12adyeb /n >nul
-if %ErrorLevel%==1 set batvercurrent=1& goto :batver_main
-if %ErrorLevel%==2 set batvercurrent=2& goto :batver_main
-if %ErrorLevel%==3 call :batver_Core a
-if %ErrorLevel%==4 call :batver_Core d
-if %ErrorLevel%==5 call :batver_Core y
-if %ErrorLevel%==6 call :batver_Core e
-if %ErrorLevel%==7 call :batver_Core b
+if %Errorlevel%==7 (set batverexit=true& goto :batver_main)
+if %Errorlevel% geq 1 if %Errorlevel% leq 2 (set batvercurrent=%Errorlevel%)
+if %batvercurrent%==0 (set batvercurrent=1& set bvb1=%clr%& goto :batver_main)
+if %ErrorLevel%==3 (if not %batvercurrent%==1 (set /a batvercurrent-=1))
+if %ErrorLevel%==4 (if not %batvercurrent%==2 (set /a batvercurrent+=1))
+if %Errorlevel% geq 5 if %Errorlevel% leq 6 (call :batverselect_core)
+set bvb1=& set bvb2=& set bvb%batvercurrent%=%clr%
 goto :batver_main
-
-
-:batver_Core
-rem Processing of each move
-if "%1"=="a" (set /a batvercurrent-=1
-    if "%batvercurrent%"=="0" (set batvercurrent=1)
-    if "%batvercurrent%"=="1" (set batvercurrent=1)
-    exit /b
-)
-if "%1"=="d" (set /a batvercurrent+=1
-    if "%batvercurrent%"=="2" (set batvercurrent=2)
-    exit /b
-)
-if "%1"=="b" (set batverexit=true& exit /b)
-if "%1"=="y" (call :batverselect_core& exit /b)
-if "%1"=="e" (call :batverselect_core& exit /b)
-
 
 :batverselect_core
 rem Processing of Confirm key, like Y and E.
-if "%batvercurrent%"=="0" (set batvercurrent=1& exit /b)
-if "%batvercurrent%"=="1" (call :batverupdate& set batverboot=& exit /b)
+if "%batvercurrent%"=="1" (call :batverupdate & set batverboot=& exit /b)
 if "%batvercurrent%"=="2" (set batverexit=true& exit /b)
-exit /b
-
-:batver_Core_Drew
-rem drawer of Text and Colors.
-if not defined dummy (echo [9;42H %batver% ^(%batverdevshow%^))
-if not defined dummy (echo [10;42H %batbuild:~6%)
-if "%batvercurrent%"=="0" (echo [18;27H %clrgra%‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ...%clr2%) else (echo [18;29H                                 )
-if "%batvercurrent%"=="1" (set bvb=%clr%& set bvb2=& exit /b)
-if "%batvercurrent%"=="2" (set bvb2=%clr%& set bvb=& exit /b)
 exit /b
 
 :batver_exit
 rem initialize of variable
-set batverexit=& set bvb=& set bvb2=& set batverboot=& set batverdevshow=& set clrgra=
+set batverexit=& set bvb1=& set bvb2=& set batverboot=& set batverdevshow=& set clrgra=
 if not defined dummy (set /p nothing=[?25h<nul)
 exit /b
+
 
 :batverupdate
 rem Update process
@@ -4408,7 +3755,10 @@ set Appmenucurrent=0
 :Appmenu_main
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒƒjƒ…[ (Œ±“I)
 if "%Appmenuexit%"=="true" (call :Appmenu_exit& goto :hazimemenu)
-call :Appmenu_Core_Drew
+if "%Appmenucurrent%"=="0" (echo [7;38H ‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ) else (for /l %%i in (6,1,10) do (echo [%%i;38H                        ))
+if "%Appmenucurrent%"=="1" (echo [7;42H ƒVƒ“ƒvƒ‹‚È“d‘ì& echo [8;41H ƒoƒJ‚Å‚àg‚¦‚Ü‚·B)
+if "%Appmenucurrent%"=="2" (echo [7;44H 2048 ƒQ[ƒ€B& echo [8;44H –³ŒÀ‚ÉŠy‚µ‚¢& echo [9;44H Å‹­‚ÌƒQ[ƒ€B& echo [10;42H %clrgra%‚¿‚å‚Á‚Æ’x‚¢‚©‚à%clr2%)
+if "%Appmenucurrent%"=="3" (echo [7;41H Internet Explorer& echo [8;43H IE‚ğŠJ‚«‚Ü‚·B)
 if not defined dummy (set /p nothing=[0;0H<nul)
 if not defined dummmy (
 echo.
@@ -4432,50 +3782,14 @@ echo             %clrgra%Às‚µ‚½‚¢ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B%clr2%
 echo.
 )
 choice /c 123wsyebn /n >nul
-if %ErrorLevel%==1 set Appmenucurrent=1
-if %ErrorLevel%==2 set Appmenucurrent=2
-if %ErrorLevel%==3 set Appmenucurrent=3
-if %ErrorLevel%==4 call :Appmenu_Core w
-if %ErrorLevel%==5 call :Appmenu_Core s
-if %ErrorLevel%==6 call :Appmenu_Core y
-if %ErrorLevel%==7 call :Appmenu_Core e
-if %ErrorLevel%==8 call :Appmenu_Core b
-if %ErrorLevel%==9 call :Appmenu_Core n
+if %Errorlevel%==8 (set Appmenuexit=true& goto :Appmenu_main)
+if %Errorlevel% geq 1 if %Errorlevel% leq 3 (set Appmenucurrent=%Errorlevel%)
+if %Appmenucurrent%==0 (set Appmenucurrent=1& set amb1=%clr%& goto :Appmenu_main)
+if %ErrorLevel%==4 (if not %Appmenucurrent%==1 (set /a Appmenucurrent-=1))
+if %ErrorLevel%==5 (if not %Appmenucurrent%==3 (set /a Appmenucurrent+=1))
+if %Errorlevel% geq 6 if %Errorlevel% leq 7 (call :Appmenuselect_core)
+set amb1=& set amb2=& set amb3=& set amb%Appmenucurrent%=%clr%
 goto :Appmenu_main
-
-
-:Appmenu_Core
-rem Processing of each move
-
-if "%1"=="w" (
-    if "%Appmenucurrent%"=="0" (set Appmenucurrent=1& exit /b)
-    if "%Appmenucurrent%"=="1" (set Appmenucurrent=1& exit /b)
-    if "%Appmenucurrent%"=="3" (set Appmenucurrent=2& exit /b)
-    set /a Appmenucurrent-=1
-    exit /b
-) else if "%1"=="s" (
-    if "%Appmenucurrent%"=="0" (set Appmenucurrent=1& exit /b)
-    if "%Appmenucurrent%"=="1" (set Appmenucurrent=2& exit /b)
-    if "%Appmenucurrent%"=="3" (set Appmenucurrent=3& exit /b)
-    set /a Appmenucurrent+=1
-    exit /b
-)
-
-if "%1"=="y" (
-call :Appmenuselect_core
-exit /b
-) else if "%1"=="e" (
-call :Appmenuselect_core
-exit /b
-)
-
-if "%1"=="b" (
-set Appmenuexit=true
-exit /b
-) else if "%1"=="n" (
-set Appmenuexit=true
-exit /b
-)
 
 :Appmenuselect_core
 rem Processing of Confirm key, like Y and E.
@@ -4484,19 +3798,7 @@ if "%Appmenucurrent%"=="1" (call :Startcal)
 if "%Appmenucurrent%"=="2" (call :2048_game)
 if "%Appmenucurrent%"=="3" (call :Openie)
 rem I know it works the same way as cls when mode con is changed, but well... whatever.
-mode con: cols=67 lines=20
-cls & call :Appmenu_Core_Drew
-exit /b
-
-:Appmenu_Core_Drew
-rem drawer of Text and Colors.
-if "%Appmenucurrent%"=="0" (echo [7;38H ‰½‚à‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ) else (for /l %%i in (6,1,10) do (echo [%%i;38H                        ))
-if "%Appmenucurrent%"=="1" (echo [7;42H ƒVƒ“ƒvƒ‹‚È“d‘ì& echo [8;41H ƒoƒJ‚Å‚àg‚¦‚Ü‚·B)
-if "%Appmenucurrent%"=="2" (echo [7;44H 2048 ƒQ[ƒ€B& echo [8;44H –³ŒÀ‚ÉŠy‚µ‚¢& echo [9;44H Å‹­‚ÌƒQ[ƒ€B& echo [10;42H %clrgra%‚¿‚å‚Á‚Æ’x‚¢‚©‚à%clr2%)
-if "%Appmenucurrent%"=="3" (echo [7;41H Internet Explorer& echo [8;43H IE‚ğŠJ‚«‚Ü‚·B)
-if "%Appmenucurrent%"=="1" (set amb1=%clr%& set amb2=& set amb3=& exit /b)
-if "%Appmenucurrent%"=="2" (set amb2=%clr%& set amb1=& set amb3=& exit /b)
-if "%Appmenucurrent%"=="3" (set amb3=%clr%& set amb1=& set amb2=& exit /b)
+mode con: cols=67 lines=20 & cls
 exit /b
 
 :Appmenu_exit
@@ -4581,7 +3883,7 @@ title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ƒCƒ“ƒ^[ƒlƒbƒgƒGƒNƒXƒvƒ[ƒ‰[‚ğŠJ‚­
 cls
 echo ƒCƒ“ƒ^[ƒlƒbƒgƒGƒNƒXƒvƒ[ƒ‰[‚ğŠJ‚¢‚Ä‚¢‚Ü‚·...
 powershell -command "$ie = New-Object -ComObject InternetExplorer.Application; $ie.Visible = $true"
-ping -n 2 127.0.0.1 > nul 2>&1
+pathping 127.0.0.1 -n -q 1 -p 500 1>nul
 exit /b
 
 
@@ -4688,6 +3990,7 @@ exit /b
 
 :cursorchange
 cls
+rem GUI type 1
 rem initialize variable
 mode con: cols=75 lines=20
 if not defined dummy (set clr=[7m&set clrgra=[90m&set clr2=[0m)
@@ -5020,7 +4323,6 @@ if not defined dummy (call :cursorchange_clear& set /p nothing=[5;13H ƒJ[ƒ\ƒ‹‚
 goto :cursorchange_afterchange
 
 
-
 :cursorchange_afterchange
 rem Determining whether or not to play reboot message depending on settings
 reg query "HKEY_CURRENT_USER\Control Panel\Cursors" /v "" | find "Windows •" >nul
@@ -5031,15 +4333,6 @@ if "%ErrorLevel%"=="0" (set cursorcolor=•)
 set cursorchangeexit=& exit /b
 
 
-
-
-
-rem dogcheckB%Settingsfile%‚ª‘¶İ‚·‚é‚©‚ğŒŸØ
-:Uninstall
-cd /d %batchmainpath%
-if "%settinghelptoggle%"=="true" (goto :uninstallhelp)
-if exist %Settingsfile% goto :Uninstalltest
-if not exist %Settingsfile% goto :Dogcheck
 
 :Dogcheck
 rem dogcheck, respect tobyfox and dog
@@ -5114,15 +4407,15 @@ taskkill /im chrome.exe
 call :exit 0
 
 
-rem uninstall
-:Uninstalltest
-cd /d %batchmainpath% 
-find "nodogcheckfor1234567890qwertyuiop" %Settingsfile%
-cls
-if %ErrorLevel%==0 call :UninstallMenu & goto :settingcategory1intsetting5
-if %ErrorLevel%==1 goto :Dogcheck
-goto :settingcategory1intsetting5
 
+:Uninstall
+if "%settinghelptoggle%"=="true" (goto :uninstallhelp)
+cd /d %batchmainpath% 
+find "nodogcheckfor1234567890qwertyuiop" %Settingsfile% >nul
+cls
+if exist %Settingsfile% call :UninstallMenu & exit /b
+if not exist %Settingsfile% goto :Dogcheck
+exit /b
 
 :UninstallMenu
 cls
@@ -5158,8 +4451,7 @@ if %Errorlevel% geq 1 if %Errorlevel% leq 3 (set UMsel=%Errorlevel%)
 if %UMsel%==0 (set UMsel=1& set UMcb1=%clr%& goto :UninstallMenu_main)
 if %ErrorLevel%==4 (if not %UMsel%==1 (set /a UMsel-=1))
 if %ErrorLevel%==5 (if not %UMsel%==3 (set /a UMsel+=1))
-if %ErrorLevel%==6 (call :UninstallMenu_Core)
-if %ErrorLevel%==7 (call :UninstallMenu_Core)
+if %Errorlevel% geq 6 if %Errorlevel% leq 7 (call :UninstallMenu_Core)
 set UMcb1=& set UMcb2=& set UMcb3=& set UMcb%UMsel%=%clr%& goto :UninstallMenu_main
 
 :UninstallMenu_Core
@@ -5171,7 +4463,7 @@ if %UMsel%==3 (set UMexit=true& exit /b)
 
 :UninstallMenu_exit
 rem initialize of variable
-set UMexit=& set UMsel=& set UMcb1=& set UMcb2=& set UMcb3=& set clrgra=
+set UMexit=& set UMsel=& set UMcb1=& set UMcb2=& set UMcb3=
 if not defined dummy (set /p nothing=[?25h<nul)
 cls
 mode con: cols=75 lines=25
@@ -5307,7 +4599,7 @@ if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
 if "%UMUexit%"=="true" (goto :UninstallMenu_Uninstall_exit)
 if defined UMUcb2 if "%wmodetoggle%"=="true" (set clrgra=[107m[48;2;180;180;180m) else (set clrgra=[90m)
 echo.
-echo                        ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹
+echo                       ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹
 echo.
 echo.          O==================================================O
 echo           I                                                  I
@@ -5325,7 +4617,7 @@ echo           I                                                  I
 echo           O==================================================O
 echo.
 if not defined dummy (set clrgra=[90m) & if "%wmodetoggle%"=="false" (set clrgra=[90m) & if "%wmodetoggle%"=="true" (set clrgra=[107m[38;2;140;140;140m)
-echo        %clrgra%W,S ‚Ü‚½‚Í 1~3 ‚Å ˆÚ“®A Y ‚Ü‚½‚Í E ‚Å‘I‘ğA B ‚Ü‚½‚Í N ‚Å‘Şo%clr2%
+echo      %clrgra%W,S ‚Ü‚½‚Í 1~3 ‚Å ˆÚ“®A Y ‚Ü‚½‚Í E ‚Å‘I‘ğA B ‚Ü‚½‚Í N ‚Å‘Şo%clr2%
 echo.
 call :UninstallMenu_Uninstall_Textdraw
 choice /c 12WSYEBN /n >nul
@@ -5335,8 +4627,7 @@ if %Errorlevel% geq 1 if %Errorlevel% leq 2 (set UMUsel=%Errorlevel%)
 if %UMUsel%==0 (set UMUsel=1& set UMUcb1=%clr%& goto :UninstallMenu_Uninstall_main)
 if %ErrorLevel%==3 (if %UMUsel%==2 (set UMUsel=1))
 if %ErrorLevel%==4 (if %UMUsel%==1 (set UMUsel=2))
-if %ErrorLevel%==5 (call :UninstallMenu_Uninstall_Core)
-if %ErrorLevel%==6 (call :UninstallMenu_Uninstall_Core)
+if %Errorlevel% geq 5 if %Errorlevel% leq 6 (call :UninstallMenu_Uninstall_Core)
 set UMUcb1=& set UMUcb2=& set UMUcb%UMUsel%=%clr%& goto :UninstallMenu_Uninstall_main
 
 :UninstallMenu_Uninstall_Core
@@ -5362,18 +4653,18 @@ exit /b
 :UninstallMenu_Uninstall_THISISWIP!!!!!
 title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| ‚±‚Ì‹@”\‚ÍÀ‘•‚³‚ê‚Ä‚¢‚Ü‚¹‚ñI
 echo.
-echo                        ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
+echo                       ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
 echo.
-echo          O=====================================================O     
-echo          I                                                     I
-echo          I            ‚±‚Ì‹@”\‚ÍŒ»İ—˜—p‚Å‚«‚Ü‚¹‚ñI           I
-echo          I                                                     I
-echo          I        ‚±‚Ì‹@”\‚ÍŒ»“_‚Å‚ÍÀ‘•‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB     I
-echo          I           ‘¼‚ÌƒIƒvƒVƒ‡ƒ“‚ğ—˜—p‚µ‚Ä‚­‚¾‚³‚¢B        I
-echo          I                                                     I
-echo          I              %clrgra%(‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘Şo...)%clr2%              I
-echo          I                                                     I
-echo          O=====================================================O
+echo         O======================================================O     
+echo         I                                                      I
+echo         I             ‚±‚Ì‹@”\‚ÍŒ»İ—˜—p‚Å‚«‚Ü‚¹‚ñI           I
+echo         I                                                      I
+echo         I        ‚±‚Ì‹@”\‚ÍŒ»“_‚Å‚ÍÀ‘•‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB      I
+echo         I            ‘¼‚ÌƒIƒvƒVƒ‡ƒ“‚ğ—˜—p‚µ‚Ä‚­‚¾‚³‚¢B        I
+echo         I                                                      I
+echo         I               %clrgra%(‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä‘Şo...)%clr2%              I
+echo         I                                                      I
+echo         O======================================================O
 echo.
 pause >nul
 exit /b
@@ -5396,7 +4687,7 @@ if not defined dummy (set /p nothing=[0;0H[?25l%clr2%<nul)
 if "%UOCexit%"=="true" (goto :UninstallMenu_Uninstall_Confirm_exit)
 if not "%UOCsel%"=="0" if not "%UOCsel%"=="1" (set UOCcb2=[48;2;214;174;174m[30m)
 echo.
-echo                        ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
+echo                       ƒJ[ƒ\ƒ‹‘Ö‚¦‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹ 
 echo.
 echo         O======================================================O     
 echo         I                                                      I
@@ -5410,7 +4701,7 @@ echo         I             O========O           %clred%O======O%clr2%           
 echo         I                                                      I
 echo         O======================================================O
 echo.
-echo        %clrgra%W,S ‚Ü‚½‚Í 1~3 ‚Å ˆÚ“®A Y ‚Ü‚½‚Í E ‚Å‘I‘ğA B ‚Ü‚½‚Í N ‚Å‘Şo%clr2%
+echo      %clrgra%W,S ‚Ü‚½‚Í 1~3 ‚Å ˆÚ“®A Y ‚Ü‚½‚Í E ‚Å‘I‘ğA B ‚Ü‚½‚Í N ‚Å‘Şo%clr2%
 choice /c 12ADYEBN /n >nul
 rem Processing of each move
 if %Errorlevel%==7 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true)) else if %Errorlevel%==8 (if %UOCsel%==3 (set UOCsel=2) else (set UOCexit=true))
@@ -5418,8 +4709,7 @@ if %Errorlevel% geq 1 if %Errorlevel% leq 2 (set UOCsel=%Errorlevel%)
 if %UOCsel%==0 (set UOCsel=1& set UOCcb1=%clr%& goto :UninstallMenu_Uninstall_Confirm_main)
 if %ErrorLevel%==3 (if %UOCsel%==1 (set UOCsel=1) else if %UOCsel%==2 (set UOCsel=1) else (set UOCsel=1))
 if %ErrorLevel%==4 (if %UOCsel%==1 (set UOCsel=2) else if %UOCsel%==2 (set UOCsel=2) else (set UOCsel=2))
-if %ErrorLevel%==5 (call :UninstallMenu_Uninstall_Confirm_Core)
-if %ErrorLevel%==6 (call :UninstallMenu_Uninstall_Confirm_Core)
+if %Errorlevel% geq 5 if %Errorlevel% leq 6 (call :UninstallMenu_Uninstall_Confirm_Core)
 if not "%UOCsel%"=="2true" (set UOCcb1=& set UOCcb2=& set UOCcb%UOCsel%=%clr%) & goto :UninstallMenu_Uninstall_Confirm_main
 
 :UninstallMenu_Uninstall_Confirm_Core
@@ -5477,9 +4767,8 @@ goto :uninstallnow
 
 :BSOD_Errors
 if not defined dummy (set bsod_errors_clrforsad=[44m[7m&set bsod_errors_clrforsad2=[0m[44m[97m)
-for /f "tokens=6 delims=. " %%i in ('ver') do set bsodwinver=%%i
-set runningfromfulldebug=
-set FromREConsole=
+for /f "tokens=6 delims=.] " %%i in ('ver') do set bsodwinver=%%i
+set runningfromfulldebug=& set FromREConsole=
 
 rem message indication
 timeout /t 1 /nobreak >nul
@@ -5758,7 +5047,7 @@ cls
 for /l %%i in (1,1,1000) do (
     title ƒJ[ƒ\ƒ‹‘Ö‚¦ ^| Hello world!! ^(%%i / 1000^)
     set /p nothing=Hello world!! <nul
-    ping -n 0 -w 500 localhost >nul
+    pathping 127.0.0.1 -n -q 1 -p 0 1>nul
 )
 echo.& echo HELLO WORLD!!! (‰½‚©ƒL[‚ğ‰Ÿ‚µ‚Ä–ß‚é...)
 exit /b
