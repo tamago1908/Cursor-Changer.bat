@@ -23,8 +23,10 @@ well.
 > ***I Need reviews!***  
 
 # 📰 - **Latest News** -
-### **Development News (2024/11/26)**  
-Ehm...  
+### **Update released! (2024/12/14)**  
+Cursor Changer 1.15β3 (1.15.b3) has been released!  
+This update includes many improvement!  
+See the Change log for detailed changes.  
 
 
 &nbsp;
@@ -145,13 +147,31 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 **Thanks so much for giving me feedback!**  
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.15β2](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.2) (build 111)**  
+>  **Beta latest : [1.15β3](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.3) (build 121)**  
 >  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**  
 >   
 >  (Build numbers mean something like milestones)
 ___
 
-### - 1.15β2 build 111 (Beta Update, NO MORE OLD CODE) 🔥  
+### - 1.15β3 build 121 (Beta Update, SETTING IMPROVE!!!) 🔥  
+
+#### Changed : 
+- **Setting The CUI code has been significantly improved!**
+  - This change is a big one. The number of lines has been reduced by about **-78%** compared to the old Setting CUI code!  
+- **All CUI code changed to be more efficient except `cursorchange`!**
+- Background_menu has been improved to be more efficient
+- Delay functionality has been improved 
+
+#### Fixed : 
+- boottime is now initialized after setup is done
+- Several UI elements have been improved
+- Several bugs fixed
+
+> This update is smaller than the usual updates, but it is more focused on improving the Setting CUI code.  
+> If you find a bug or a glitch, please report it in an issue.   
+___
+
+### - 1.15β2 build 111 (Beta Update, NO MORE OLD CODE)  
 
 #### Added : 
 - **New Start up / Shutdown Sound!**  
@@ -225,19 +245,6 @@ ___
 > With this update, the Build number has finally reached 100.  
 > Also, the size of the Cursor Changer is now over 300KB, so I feel like I've reached a big milestone.  
 > If you find a bug or a glitch, please report it in an issue.   
-___
-
-### - 1.14c build 91 (Minor Update, HALLOWEEN!!!)  
-
-#### Changed : 
-- **The background of the mainmenu is now Halloween style!**  
-
-> Dark Pumpkin theme &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; White Ghosty theme
-<img src="https://github.com/user-attachments/assets/971b531e-6db2-4d5b-ba35-8d4f76929044?raw=true" alt="SPOOKY THEME" width="300px">  
-<img src="https://github.com/user-attachments/assets/ea67cfc5-7a9a-4747-bbba-9e7825d35d52?raw=true" alt="SPOOKY BUT COLD THEME" width="300px">  
-
-> [IT IS THE SPOOKY MONTH!!!](https://www.youtube.com/watch?v=vxYgjkZ4L_0)  
-> If you find a bug or a glitch, please report it in an issue.  
 ___
 
 
