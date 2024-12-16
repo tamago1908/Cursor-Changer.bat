@@ -20,7 +20,9 @@ ITS WORK ON MY MACHINE!
 > If you have any criticisms or problems with this batch, or find any, please submit an issue.  
 > I will respond as quickly as possible.  
 well.  
-> ***I Need reviews!***  
+> ***I Need reviews!***
+
+# ***DO NOT DOWNLOAD CURSOR CHANGER FROM REPOSITORY!!! PLEASE DOWNLOAD IT FROM [RELEASES](https://github.com/tamago1908/Cursor-Changer.bat/releases) TAB!!!***  
 
 # 📰 - **Latest News** -
 ### **Update released! (2024/12/14)**  
