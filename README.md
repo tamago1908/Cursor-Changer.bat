@@ -22,12 +22,14 @@ ITS WORK ON MY MACHINE!
 well.  
 > ***I Need reviews!***
 
-# ***DO NOT DOWNLOAD CURSOR CHANGER FROM REPOSITORY!!! PLEASE DOWNLOAD IT FROM [RELEASES](https://github.com/tamago1908/Cursor-Changer.bat/releases) TAB!!!***  
+> [!CAUTION]
+> # ***DO NOT DOWNLOAD CURSOR CHANGER FROM REPOSITORY!!! PLEASE DOWNLOAD IT FROM [RELEASES](https://github.com/tamago1908/Cursor-Changer.bat/releases) TAB!!!***  
 
 # 📰 - **Latest News** -
-### **Update released! (2024/12/14)**  
-Cursor Changer 1.15β3 (1.15.b3) has been released!  
+### **Update released! (2024/12/30)**  
+Cursor Changer 1.15β4 (1.15.b4) has been released!  
 This update includes many improvement!  
+And this update will be 2024 last update!  
 See the Change log for detailed changes.  
 
 
@@ -44,20 +46,13 @@ If you need any other backstory or detailed explanations, please visit the [Wiki
 
 >  Incidentally, it is in no way related to the Real [Cursor Changer](https://github.com/L413/Cursor-Changer), and the name match is coincidental. However, I feel there are some similarities in concept...  
 
-<details>  
-<summary>Click here to see Cursor Changer pictures</summary>  
 
 &nbsp;  
 Main manu looks like This :  
-<p>
-<img src="https://github.com/user-attachments/assets/65f13314-4a4a-4262-b2ac-1805a7e806b1" width="430px">
-<br clear="left">
 
-Setting menu looks like This :
-</p>
-<img src="https://github.com/user-attachments/assets/0bad5910-f911-4437-8003-b31317dc0b1e" width="430px" >  
+<img src="https://github.com/user-attachments/assets/65f13314-4a4a-4262-b2ac-1805a7e806b1" width="430px">  
+
 &nbsp;  
-</details>  
 
 
 ## 🔎	 - **Features** -
@@ -75,8 +70,6 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 ~~No update and No news for 1 years over? That's pathetic lol.~~  
 
 ### ***In creating this BATCH, I were inspired by the following.***
-<details>  
-<summary>Click here to see all</summary>  
  
 - *[Tobyfox](https://en.wikipedia.org/wiki/Toby_Fox) (Undertale and Deltarune)*
 
@@ -96,11 +89,11 @@ At least as far as I have searched, almost all Batch OS have stopped updating in
 
 - *[Battles of Batch](https://github.com/136MasterNR/Battles-of-Batch) (Batch Project)*
 
-</details>  
 
 &nbsp;  
 ## ❓ - **How to use this batch** -
-To use Cursor Changer, you must first set it up. Here is the procedure.  
+> [!IMPORTANT]
+> **To use Cursor Changer, you must first set it up. Here is the procedure :**  
 
 1 : Download the latest version from **"Release"** on Github. The following image shows a concrete example.  
 ![Cursor Changer](https://github.com/tamago1908/Cursor-Changer.bat/assets/134849551/62967f2a-84fb-4790-8390-881dd749d3c3)  
@@ -114,7 +107,9 @@ You can change the cursor, use the calculator, check for updates, or even find E
 however, that the current version has fewer features and is not perfect. If you want games or further OS-scale features, please wait for updates or report them in an issue.
 
 ## 💻 - **System Requirements** -
-### The following requirements must be met in order to run Cursor Changer :
+> [!WARNING]
+> ### The following requirements must be met in order to run Cursor Changer :
+
 > @ mean is Windows 10 1803 have this by default)
 - **Windows 10 1803 or later**  
 - **@ Powershell 5.1 or later**  
@@ -149,13 +144,59 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 **Thanks so much for giving me feedback!**  
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.15β3](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.3) (build 121)**  
->  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**  
->   
->  (Build numbers mean something like milestones)
+>  **Beta latest : [1.15β4](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.4) (build 131)**  
+>  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**
+
+> [!NOTE]  
+> > (Build numbers mean something like milestones)
 ___
 
-### - 1.15β3 build 121 (Beta Update, SETTING IMPROVE!!!) 🔥  
+### - 1.15β4 build 131 (Beta Update, 2024 LAST UPDATE!!!) 🔥  
+
+#### Changed : 
+- **Cursor backup feature is added!!**  
+  -  Cursors can now be backed up! The registry values where the cursor settings are stored are saved by default in FirstCursor.txt,  
+  -  Which can then be loaded. However, this may not work in all environments.  
+  -  If you are concerned, please do not use this feature and backup the registry keys separately!  
+- **10 New main menu messages are added!**  
+  - Now, there are currently about 20 different messages!  
+- Dark gray background is added in Default Boot animation  
+- Reboot/Shutdown messages are added!  
+
+#### Changed : 
+- **Error handler argument is changed from `BatBootErrorHandlerArgument1908` into `BatBootErrorHandlerArgument1908␍␊`!**  
+  - This means Newline characters are now included directly into Error Handler argument!  
+  - I believe there is no way to enter this character in cmd other than to copy and paste it directly. This further improves the stability of the Error handler!  
+- **Recovery menu CUI code is improved!**  
+  - The `for` statement loop used in the Setting Menu CUI is now also used in the Recovery Menu CUI!  
+  - This allows for much faster move. In the future, I'm planing to implement this method in other CUI Code  
+- **Smoother transtion with overlay And better Overlay Code!**  
+  - This allows the background to darken without flickering. This can be seen, for example, in the `Exit menu` and `Version info`!  
+- **BSOD color is changed to darker color!**  
+  - `#080884` to `#003D92`!  
+  - (`3003D92` is actually same as windows 11's BSOD Color!)  
+- Change log Code is bit improved  
+  - *The Github API, which used to be used twice, is now combined into a single API use  
+- Mainmenu Messages logic is bit improved  
+- `:batshutdown` is renamed with `:Powerscreen`!  
+- Minor improvement in Setting CUI code  
+  - *Syntax fixes*  
+- All `start chrome.exe` is replaced with `start (URL)...`  
+
+#### Fixed : 
+- **Main menu background's halloween theme is fixed!**  
+  - After 1.15β2, the colors were a little darker than in 1.14c and not correct, but this has been fixed and the colors are now correct!  
+- Minor bug fixes  
+- Minor code fixes  
+
+> This update will be the last update for this year.  
+> The cursor backup feature has not been well tested for different registry key configurations or for registry values containing special characters.  
+> What has been tested is under the standard Windows cursor environment.  
+> If you are concern about it, don't use it.  
+> If you find a bug or a glitch, please report it in an issue.  
+___
+
+### - 1.15β3 build 121 (Beta Update, SETTING IMPROVE!!!)  
 
 #### Changed : 
 - **Setting The CUI code has been significantly improved!**
