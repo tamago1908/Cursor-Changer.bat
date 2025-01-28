@@ -26,11 +26,11 @@ well.
 > # ***DO NOT DOWNLOAD CURSOR CHANGER FROM REPOSITORY!!! PLEASE DOWNLOAD IT FROM [RELEASES](https://github.com/tamago1908/Cursor-Changer.bat/releases) TAB!!!***  
 
 # 📰 - **Latest News** -
-### **Update released! (2024/12/30)**  
-Cursor Changer 1.15β4 (1.15.b4) has been released!  
-This update includes many improvement!  
-And this update will be 2024 last update!  
-See the Change log for detailed changes.  
+### **Development Progress (2025/01/28)**  
+I haven't had the motivation to develop, so I have not been able to update the news lately...  
+But, I'm continuing to develop steadily.  
+The latest develop version is **1.15β5 Build 137**, which has various fixes.  
+The biggest fix is the OOBE Customize settings section, which now runs much faster and with about **-60% shorter** lines of code!  
 
 
 &nbsp;
