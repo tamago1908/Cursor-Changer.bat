@@ -26,11 +26,10 @@ well.
 > # ***DO NOT DOWNLOAD CURSOR CHANGER FROM REPOSITORY!!! PLEASE DOWNLOAD IT FROM [RELEASES](https://github.com/tamago1908/Cursor-Changer.bat/releases) TAB!!!***  
 
 # 📰 - **Latest News** -
-### **Development Progress (2025/01/28)**  
-I haven't had the motivation to develop, so I have not been able to update the news lately...  
-But, I'm continuing to develop steadily.  
-The latest develop version is **1.15β5 Build 137**, which has various fixes.  
-The biggest fix is the OOBE Customize settings section, which now runs much faster and with about **-60% shorter** lines of code!  
+### **Update released! (2025/02/21)**  
+**Cursor Changer 1.15β5 has been released!**  
+This update includes so many fixes and improvements!  
+Check the change log for more details.  
 
 
 &nbsp;
@@ -116,7 +115,6 @@ however, that the current version has fewer features and is not perfect. If you 
 - **@ VT100 Support (Advanced ESC Sequence)**
 - **@ UTF-8 Support** (Recommend : MS Gothic)  
 - Internet Connection (Optional)  
-- Good CPU (Optional)
 
 Cursor Changer will not work in environments that do not meet the above conditions.  
 If your computer is running Windows 10 1803 or later, it will work without separate software installation.  
@@ -144,14 +142,56 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 **Thanks so much for giving me feedback!**  
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.15β4](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.4) (build 131)**  
+>  **Beta latest : [1.15β5](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.5) (build 150)**  
 >  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**
 
 > [!NOTE]  
 > > (Build numbers mean something like milestones)
 ___
 
-### - 1.15β4 build 131 (Beta Update, 2024 LAST UPDATE!!!) 🔥  
+### - 1.15β5 build 150 (Beta Update, I'M NOT GONNA STOP DEVELOPPING THIS BATCH!!!) 🔥  
+
+#### Added :  
+- **New version info UI!**
+  - (This new version info UI now also displays Your name and has a more refined design!)  
+- **Reinstall cursor changer function has been added to the Recovery menu!**
+  - (This function downloads the latest Cursor Changer via the Cursor Changer repository and directly replaces itself!)  
+
+#### Changed :
+- **All GUI processing now uses a `for` loop, including OOBE (except for `:cursorchange`)!**
+  - (It's way faster now!)
+- **OOBEMusic has been improved!**
+  - (OOBEMusic now plays music in a separate process after downloading it in the Cursor Changer window. This makes the experience much smoother!)  
+- BufferSize change is integrated into `:Core_PowerShell`  
+- PowerShell check now uses the `where` command
+  - (Faster and safer powershell check!)   
+- `:Core_PowerShell` is slightly improved  
+- OOBE's header/underbar drawer is integrated into `:OOBE_Drawer` (2x faster!)
+  - (it was slow because it had to be called twice in Header_Drawer and Underbar_Drawer, but it is now faster because they are combined into one!)  
+- OOBE Animation now uses a `for` loop (way faster)
+  - (The animation used to be very slow because of `goto`, but now it is much more stable and fast!)  
+- `:OOBEmain4` is slightly changed  
+- `:OOBEmainblank` is slightly improved  
+- Checking administrative privileges now uses `icacls.exe` instead of `cacls.exe`  
+- Default boot animation processing is slightly improved  
+- Typos warning is now much shorter
+  - (Better `if` statements!)  
+- Some UI elements are slightly changed or improved  
+- Some unnecessary code has been deleted  
+
+#### Fixed :
+- Boot message bug fixed  
+- Call error handler bug fixed  
+  - (Since the call error handler bug was fixed, the "check update at boot" feature is also fixed at the same time!)  
+- Some bugs have been fixed  
+
+> This is the first update of 2025!  
+> This update reduces the number of lines of code by an additional 300 lines, making it 10KB lighter.
+> (About 5100 lines, and 300KB)  
+> If you find a bug or a glitch, please report it in an issue.  
+___  
+
+### - 1.15β4 build 131 (Beta Update, 2024 LAST UPDATE!!!)  
 
 #### Changed : 
 - **Cursor backup feature is added!!**  
@@ -257,37 +297,6 @@ ___
 > This increase is almost entirely accounted for by Start up / Shutdown sounds...  
 > I was able to reduce the increase by shortening some code and compressing the sounds.  
 > If you find a bug or a glitch, please report it in an issue.  
-___
-
-
-### - 1.15β1 build 100 (Beta Update, BUILD 100!!!)  
-
-#### Added : 
-- **Error Handler has been Improved!**  
-  - (Error Handler no longer uses Powershell)  
-- **New Update available UI!**  
-  - (UI displayed when updates are available when the Check Update at boot setting is set to true)  
-- **New Uninstall UI!**  
-- labellist command  
-  - (You can use it in mainmenu)  
-- Uninstall argument  
-- New easter egg messages  
-  - (RAINBOWWWWW)
-- Halloween theme is gone by default... :(
-  - (But don't worry! Enter `halloween` in the main menu and it will be active until you reboot!)  
-
-#### Changed : 
-- **Powersheller code is now much shorter! (-23%)**  
-- **OOBE code is now much shorter! (-25%)**  
-  - (Also no more flickering)  
-- Small UI elements  
-
-#### Fixed : 
-- Small bugs  
-
-> With this update, the Build number has finally reached 100.  
-> Also, the size of the Cursor Changer is now over 300KB, so I feel like I've reached a big milestone.  
-> If you find a bug or a glitch, please report it in an issue.   
 ___
 
 
