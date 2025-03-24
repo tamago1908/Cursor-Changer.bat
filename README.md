@@ -26,9 +26,9 @@ well.
 > # ***DO NOT DOWNLOAD CURSOR CHANGER FROM REPOSITORY!!! PLEASE DOWNLOAD IT FROM [RELEASES](https://github.com/tamago1908/Cursor-Changer.bat/releases) TAB!!!***  
 
 # 📰 - **Latest News** -
-### **Update released! (2025/02/21)**  
-**Cursor Changer 1.15β5 has been released!**  
-This update includes so many fixes and improvements!  
+### **Update released! (2025/03/25)**  
+**Cursor Changer 1.15 has been released!**  
+This update includes fixes and improvements! also, it's stable now!  
 Check the change log for more details.  
 
 
@@ -49,7 +49,7 @@ If you need any other backstory or detailed explanations, please visit the [Wiki
 &nbsp;  
 Main manu looks like This :  
 
-<img src="https://github.com/user-attachments/assets/65f13314-4a4a-4262-b2ac-1805a7e806b1" width="430px">  
+<img src="https://github.com/user-attachments/assets/fc13a9ea-7334-497e-8fb3-e3d74341371a" width="430px">  
 
 &nbsp;  
 
@@ -142,14 +142,29 @@ This disclaimer and license applies whether expressly or impliedly, only when yo
 **Thanks so much for giving me feedback!**  
 
 ## 📝 - **Chenge logs** -
->  **Beta latest : [1.15β5](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.5) (build 150)**  
->  **Stable latest : [1.14c](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.14.3) (build 91)**
+>  **Stable latest : [1.15](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/stable-1.15) (build 155)**  
+>  **Beta latest : [1.15β5](https://github.com/tamago1908/Cursor-Changer.bat/releases/tag/beta-1.15.5) (build 150, OUTDATE)**  
 
 > [!NOTE]  
 > > (Build numbers mean something like milestones)
 ___
 
-### - 1.15β5 build 150 (Beta Update, I'M NOT GONNA STOP DEVELOPPING THIS BATCH!!!) 🔥  
+### - 1.15 build 155 (Major Update) 🔥  
+
+Since 1.15β5 :  
+#### Changed :  
+- **`:cursorchage` is now uses for loop!**  
+- **Auto fixes are fixed!**  
+- **Password CUI is inproved!**  
+
+Since 1.14c :  
+***JUST SO MANY***  
+
+> 1.15 is stable now!  
+> If you find a bug or a glitch, please report it in an issue.  
+___
+
+### - 1.15β5 build 150 (Beta Update, I'M NOT GONNA STOP DEVELOPPING THIS BATCH!!!)  
 
 #### Added :  
 - **New version info UI!**
@@ -252,51 +267,6 @@ ___
 
 > This update is smaller than the usual updates, but it is more focused on improving the Setting CUI code.  
 > If you find a bug or a glitch, please report it in an issue.   
-___
-
-### - 1.15β2 build 111 (Beta Update, NO MORE OLD CODE)  
-
-#### Added : 
-- **New Start up / Shutdown Sound!**  
-  - (Tadaaa!!)  
-- **New Boot time warning message!**  
-  - (If you takes more than 15 seconds to start up, a warning message will be displayed)  
-
-#### Changed : 
-- **Windows Version check has been improved!**
-  - (It has been moved to be checked at the very beginning of the Cursor Changer code and now uses `leq` instead of `lss` in the `if` statement!) 
-- **The method of bypassing Windows version check has changed!**  
-  - (For detailed instructions, please refer to the Cursor Changer code. Also, the bypsvck argument has been removed)  
-- **`Typoswarning` setting has been replaced by a setting called `Playsound`!**
-  - (This setting toggles whether start up and shutdown sounds are allowed to be played)  
-- **Background now shows `Exit`, `Version info`, and `Update Available` Menu!**
-  - (With it, some UI elements are changed) 
-- **Updater is now uses Update Available UI!**  
-- **The part where changes to the settings are applied has been improved!**  
-  - (it's **-80%** shorter and more efficient!)  
-- Powersheller is sligtly improved  
-- `FullUpdater` function has been deleted from Powershller  
-- Halloween background is slightly improved  
-- Halloween command is sligtly improved  
-  - (Now you can toggle it!)  
-- BSOD has been changed for crashes in older windows environments to be more compatible  
-  - (`BSODErrors_OG`)  
-- Recovery menu UI code has been improved  
-  - (It's more shorter now!)  
-- `Please wait a while...` text changed to `Starting Cursor Changer...`  
-
-#### Fixed : 
-- VT100 syntax has been fixed  
-  - (With it, compatibility with older Windows has been improved)  
-- Some UI code has been fixed to be more efficient  
-- Some English grammar corrected
-  - (For example, `Uninstall of Cursor Changer` is changed to `Uninstall Cursor Changer`) 
-- Other minor bugs fixed  
-
-> This update increases the size of Cursor Changer to approximately **335KB**.
-> This increase is almost entirely accounted for by Start up / Shutdown sounds...  
-> I was able to reduce the increase by shortening some code and compressing the sounds.  
-> If you find a bug or a glitch, please report it in an issue.  
 ___
 
 
