@@ -1,6 +1,6 @@
 # <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" width="32px"> ***Cursor Changer.bat***  
 <div align="center">  
-<a href="https://github.com/tamago1908/Cursor-Changer.bat/files/14654847/Cursor_Changer_logo_placeholder.png.txt?raw=true">  
+<a href="https://github.com/user-attachments/files/20952961/Cursor_Changer_logo_placeholder.png.txt?raw=true">  
 <img src="https://github.com/tamago1908/Cursor-Changer.bat/blob/main/resource/Cursor_Changer_logo_placeholder.png?raw=true" alt="Cursor Changer placeholder logo" width="300px">  
 
 ***OS-like Scale Functionally + Changining Cursor Function***    
@@ -26,10 +26,10 @@ well.
 > # ***DO NOT DOWNLOAD CURSOR CHANGER FROM REPOSITORY!!! PLEASE DOWNLOAD IT FROM [RELEASES](https://github.com/tamago1908/Cursor-Changer.bat/releases) TAB!!!***  
 
 # 📰 - **Latest News** -
-### **Update released! (2025/03/25)**  
-**Cursor Changer 1.15 has been released!**  
-This update includes fixes and improvements! also, it's stable now!  
-Check the change log for more details.  
+### **Development News (2025/06/28)**  
+Development continues, with improvements to Powersheller, OOBE, and various internal logic improvements, but no major changes.  
+The biggest change, however, is that Powersheller no longer uses C# code, which was used for calling WinAPI and for OOBEMusic, but the former is now used for calling and the latter for OOBEMusic logic in Powershell without using C# The latter was achieved by changing the logic of OOBEMusic to an alternative method using Powershell instead of C#.  
+Also, I updated the Cursor Changer logo with a new look! I think it looks a little better than old one!
 
 
 &nbsp;
